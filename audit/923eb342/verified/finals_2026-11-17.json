@@ -1,0 +1,142 @@
+{
+ "schema": "nba2.verified.official-finals.v1",
+ "session": "arena/923eb342-nba2",
+ "date": "2026-11-17",
+ "n_games": 5,
+ "retrieved_at_utc": "2026-11-19T12:20Z",
+ "method": "final scores read from the official games page for the date in this session; quarter rows only from a committed official capture whose quarters sum to that score",
+ "records": [
+  {
+   "game_id": "0022600253",
+   "date": "2026-11-17",
+   "away": "NYK",
+   "home": "TOR",
+   "away_pts": 111,
+   "home_pts": 102,
+   "final_status": "Final",
+   "away_quarters": [
+    23,
+    31,
+    26,
+    31
+   ],
+   "home_quarters": [
+    29,
+    21,
+    33,
+    19
+   ],
+   "ot_periods": 0,
+   "quarters_status": "verified (committed official capture; quarters sum to the official final)",
+   "score_source_url": "https://www.nba.com/games?date=2026-11-17",
+   "score_read_at_utc": "2026-11-19T12:20Z",
+   "transport": "platform page-fetch tool (primary) \u2014 direct TLS from the sandbox to nba.com returned SSL_ERROR_SYSCALL / HTTP 000, so no urllib capture is possible here"
+  },
+  {
+   "game_id": "0022600255",
+   "date": "2026-11-17",
+   "away": "DET",
+   "home": "SAS",
+   "away_pts": 105,
+   "home_pts": 93,
+   "final_status": "Final",
+   "away_quarters": [
+    26,
+    29,
+    23,
+    27
+   ],
+   "home_quarters": [
+    33,
+    21,
+    18,
+    21
+   ],
+   "ot_periods": 0,
+   "quarters_status": "verified (committed official capture; quarters sum to the official final)",
+   "score_source_url": "https://www.nba.com/games?date=2026-11-17",
+   "score_read_at_utc": "2026-11-19T12:20Z",
+   "transport": "platform page-fetch tool (primary) \u2014 direct TLS from the sandbox to nba.com returned SSL_ERROR_SYSCALL / HTTP 000, so no urllib capture is possible here"
+  },
+  {
+   "game_id": "0022600254",
+   "date": "2026-11-17",
+   "away": "POR",
+   "home": "MIN",
+   "away_pts": 105,
+   "home_pts": 106,
+   "final_status": "Final",
+   "away_quarters": [
+    17,
+    31,
+    31,
+    26
+   ],
+   "home_quarters": [
+    29,
+    20,
+    30,
+    27
+   ],
+   "ot_periods": 0,
+   "quarters_status": "verified (committed official capture; quarters sum to the official final)",
+   "score_source_url": "https://www.nba.com/games?date=2026-11-17",
+   "score_read_at_utc": "2026-11-19T12:20Z",
+   "transport": "platform page-fetch tool (primary) \u2014 direct TLS from the sandbox to nba.com returned SSL_ERROR_SYSCALL / HTTP 000, so no urllib capture is possible here"
+  },
+  {
+   "game_id": "0022600257",
+   "date": "2026-11-17",
+   "away": "UTA",
+   "home": "LAC",
+   "away_pts": 132,
+   "home_pts": 107,
+   "final_status": "Final",
+   "away_quarters": [
+    35,
+    23,
+    30,
+    44
+   ],
+   "home_quarters": [
+    29,
+    33,
+    24,
+    21
+   ],
+   "ot_periods": 0,
+   "quarters_status": "verified (committed official capture; quarters sum to the official final)",
+   "score_source_url": "https://www.nba.com/games?date=2026-11-17",
+   "score_read_at_utc": "2026-11-19T12:20Z",
+   "transport": "platform page-fetch tool (primary) \u2014 direct TLS from the sandbox to nba.com returned SSL_ERROR_SYSCALL / HTTP 000, so no urllib capture is possible here"
+  },
+  {
+   "game_id": "0022600256",
+   "date": "2026-11-17",
+   "away": "CHA",
+   "home": "LAL",
+   "away_pts": 114,
+   "home_pts": 118,
+   "final_status": "Final/OT",
+   "away_quarters": [
+    34,
+    32,
+    28,
+    17,
+    3
+   ],
+   "home_quarters": [
+    30,
+    29,
+    22,
+    30,
+    7
+   ],
+   "ot_periods": 1,
+   "quarters_status": "verified (committed official capture; quarters sum to the official final)",
+   "score_source_url": "https://www.nba.com/games?date=2026-11-17",
+   "score_read_at_utc": "2026-11-19T12:20Z",
+   "transport": "platform page-fetch tool (primary) \u2014 direct TLS from the sandbox to nba.com returned SSL_ERROR_SYSCALL / HTTP 000, so no urllib capture is possible here"
+  }
+ ]
+}

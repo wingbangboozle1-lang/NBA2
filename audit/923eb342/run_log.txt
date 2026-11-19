@@ -1,0 +1,241 @@
+82 checks: FAIL 2, MISSING 32, PASS 19, STALE 5, SUPERSEDED (+1 games since retrieval) 24
+[STALE       ] R-WINDOW         date span of the published official result feed (data/v2/results.json rows)
+                  published: 2026-11-14..2026-11-14 (5 rows)
+                  official:  17 more games are final on the official site (5 on 11/17, 12 on 11/18)
+                  note:      the feed is a 2026-11-14 slice, not a current per-game feed
+[MISSING     ] R-0022600253     NYK @ TOR (2026-11-17) is in the official feed
+                  published: absent
+                  official:  NYK 111 – TOR 102
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600255     DET @ SAS (2026-11-17) is in the official feed
+                  published: absent
+                  official:  DET 105 – SAS 93
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600254     POR @ MIN (2026-11-17) is in the official feed
+                  published: absent
+                  official:  POR 105 – MIN 106
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600257     UTA @ LAC (2026-11-17) is in the official feed
+                  published: absent
+                  official:  UTA 132 – LAC 107
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600256     CHA @ LAL (2026-11-17) is in the official feed
+                  published: absent
+                  official:  CHA 114 – LAL 118
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600259     HOU @ IND (2026-11-18) is in the official feed
+                  published: absent
+                  official:  HOU 119 – IND 104
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600261     PHI @ ORL (2026-11-18) is in the official feed
+                  published: absent
+                  official:  PHI 121 – ORL 116
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600260     MIL @ MIA (2026-11-18) is in the official feed
+                  published: absent
+                  official:  MIL 130 – MIA 137
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600258     MEM @ CLE (2026-11-18) is in the official feed
+                  published: absent
+                  official:  MEM 124 – CLE 121
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600262     CHI @ BKN (2026-11-18) is in the official feed
+                  published: absent
+                  official:  CHI 137 – BKN 107
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600263     WAS @ TOR (2026-11-18) is in the official feed
+                  published: absent
+                  official:  WAS 103 – TOR 99
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600267     GSW @ DAL (2026-11-18) is in the official feed
+                  published: absent
+                  official:  GSW 94 – DAL 116
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600265     ATL @ OKC (2026-11-18) is in the official feed
+                  published: absent
+                  official:  ATL 117 – OKC 112
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600264     DET @ NOP (2026-11-18) is in the official feed
+                  published: absent
+                  official:  DET 122 – NOP 109
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600266     BOS @ DEN (2026-11-18) is in the official feed
+                  published: absent
+                  official:  BOS 101 – DEN 105
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600269     PHX @ SAC (2026-11-18) is in the official feed
+                  published: absent
+                  official:  PHX 128 – SAC 107
+                  note:      the game is final on the official site and is not a row in the published feed
+[MISSING     ] R-0022600268     UTA @ LAL (2026-11-18) is in the official feed
+                  published: absent
+                  official:  UTA 109 – LAL 97
+                  note:      the game is final on the official site and is not a row in the published feed
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-ATL       ATL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 8-6
+                  official:  9-6
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-BKN       BKN W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 3-10
+                  official:  3-11
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-BOS       BOS W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 11-3
+                  official:  11-4
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-CHI       CHI W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 3-10
+                  official:  4-10
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-CLE       CLE W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 8-7
+                  official:  8-8
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-DAL       DAL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 7-7
+                  official:  8-7
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-DEN       DEN W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 7-5
+                  official:  8-5
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-DET       DET W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 9-4
+                  official:  10-4
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-GSW       GSW W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 8-6
+                  official:  8-7
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-HOU       HOU W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 11-4
+                  official:  12-4
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-IND       IND W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 5-9
+                  official:  5-10
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-LAL       LAL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 13-2
+                  official:  13-3
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-MEM       MEM W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 10-4
+                  official:  11-4
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-MIA       MIA W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 8-6
+                  official:  9-6
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-MIL       MIL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 1-13
+                  official:  1-14
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-NOP       NOP W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 5-10
+                  official:  5-11
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-OKC       OKC W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 9-5
+                  official:  9-6
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-ORL       ORL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 6-7
+                  official:  6-8
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-PHI       PHI W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 12-3
+                  official:  13-3
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-PHX       PHX W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 6-7
+                  official:  7-7
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-SAC       SAC W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 1-12
+                  official:  1-13
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-TOR       TOR W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 5-9
+                  official:  5-10
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-UTA       UTA W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 2-13
+                  official:  3-13
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[SUPERSEDED (+1 games since retrieval)] S-SNAP-WAS       WAS W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json
+                  published: 4-11
+                  official:  5-11
+                  note:      snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error
+[MISSING     ] S-MODEL-PHI      PHI W-L used by the published model
+                  published: absent
+                  official:  [13, 3]
+[MISSING     ] S-MODEL-BOS      BOS W-L used by the published model
+                  published: absent
+                  official:  [11, 4]
+[MISSING     ] S-MODEL-MIL      MIL W-L used by the published model
+                  published: absent
+                  official:  [1, 14]
+[MISSING     ] S-MODEL-LAL      LAL W-L used by the published model
+                  published: absent
+                  official:  [13, 3]
+[STALE       ] S-HOME-MIA       MIA home record in the committed official snapshot
+                  published: 4-3
+                  official:  5-3
+[STALE       ] I-LATEST         the newest official injury release the repository holds
+                  published: 11/17/26 11:00 AM (v4 index retrieved 2026-11-17T16:41:00Z)
+                  official:  11/19/26 07:00 AM released 11/19/26, retrieved 2026-11-19T12:20Z
+                  note:      the 11/19 07:00 ET release exists on the official index and is not archived here
+[MISSING     ] I-Beal-Bradley   Beal, Bradley status on the 11/19/26 07:00 AM ET report
+                  published: no archived row
+                  official:  Out — Injury/Illness - Right Knee Injury Management
+                  note:      the player appears on today's official release but has no archived row here
+[MISSING     ] I-Harper-Dylan   Harper, Dylan status on the 11/19/26 07:00 AM ET report
+                  published: no archived row
+                  official:  Out — Injury/Illness - Left Hip Soreness
+                  note:      the player appears on today's official release but has no archived row here
+[MISSING     ] I-Edwards-Anthony Edwards, Anthony status on the 11/19/26 07:00 AM ET report
+                  published: no archived row
+                  official:  Out — Injury/Illness - Right Knee Arthroscopy
+                  note:      the player appears on today's official release but has no archived row here
+[MISSING     ] I-Beringer-Joan  Beringer, Joan status on the 11/19/26 07:00 AM ET report
+                  published: no archived row
+                  official:  Available — Injury/Illness - Face Mask
+                  note:      the player appears on today's official release but has no archived row here
+[MISSING     ] I-Avdija-Deni    Avdija, Deni status on the 11/19/26 07:00 AM ET report
+                  published: no archived row
+                  official:  Questionable — Injury/Illness - Left Foot Inflammation / Soreness
+                  note:      the player appears on today's official release but has no archived row here
+[MISSING     ] I-Morant-Ja      Morant, Ja status on the 11/19/26 07:00 AM ET report
+                  published: no archived row
+                  official:  Out — Injury/Illness - Left Hamstring Strain
+                  note:      the player appears on today's official release but has no archived row here
+[MISSING     ] B-COVERAGE       per-player log rows published for game 0022600259 (HOU@IND, 2026-11-18)
+                  published: 0 row(s)
+                  official:  18 Houston + 17 Indiana player rows on the official box score
+[MISSING     ] B-ReedSheppard   Reed Sheppard line, 2026-11-18 HOU@IND
+                  published: no row
+                  official:  24:52 min, 20 pts, 4 reb, 2 ast
+[MISSING     ] B-StevenAdams    Steven Adams line, 2026-11-18 HOU@IND
+                  published: no row
+                  official:  16:22 min, 2 pts, 5 reb, 2 ast
+[MISSING     ] B-MarcusSmart    Marcus Smart line, 2026-11-18 HOU@IND
+                  published: no row
+                  official:  18:16 min, 4 pts, 4 reb, 2 ast
+[MISSING     ] B-TariEason      Tari Eason line, 2026-11-18 HOU@IND
+                  published: no row
+                  official:  24:52 min, 4 pts, 11 reb, 3 ast
+[STALE       ] P-HORIZON        dates covered by the published originated lines
+                  published: 2026-11-15..2026-11-18 (34 lines)
+                  official:  2026-11-19 and 2026-11-20 are upcoming official slates
+                  note:      the brief asks for up to 3 days ahead; the published window has already elapsed
+[FAIL        ] P-SLATE-1119     the four 2026-11-19 games appear in the published lines
+                  published: 0/4 present
+                  official:  GSW@MEM, POR@MIL, NYK@MIN, LAC@SAS
+[FAIL        ] J-REFRESH        outcome of the last ten scheduled refresh runs (gh run list --workflow=refresh.yml)
+                  published: 10/10 concluded failure (2026-11-14T14:37Z … 2026-11-18T19:29Z)
+                  official:  a gate-passing scheduled refresh is what the brief requires
+                  note:      run 44381003145: capture job succeeded on every surface; publish job failed at 'Rebuild every tree from the committed capture'
+[STALE       ] M-HCA-MIA        MIA home split published in the model integrity block
+                  published: 4-3
+                  official:  5-3
