@@ -219,6 +219,34 @@ def write_union(doc: dict[str, Any], path: Path = UNION_PATH) -> None:
     path.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n")
 
 
+def settlement_document(body: dict[str, Any], previous: dict[str, Any] | None = None,
+                        now: datetime | None = None) -> dict[str, Any]:
+    """Stamp a changed settlement once; keep its first stamp on an unchanged rebuild.
+
+    ``settled_at_utc`` records when this exact settlement result was first produced. Re-running
+    the builder over identical official inputs must not make derived pages drift just because
+    the wall clock advanced. A changed report receives a fresh UTC timestamp.
+    """
+    old_stamp = previous.get("settled_at_utc") if isinstance(previous, dict) else None
+    if isinstance(old_stamp, str):
+        try:
+            parsed = datetime.fromisoformat(old_stamp.replace("Z", "+00:00"))
+        except ValueError:
+            parsed = None
+        old_body = {key: value for key, value in previous.items() if key != "settled_at_utc"}
+        if (parsed is not None and parsed.tzinfo is not None
+                and json.dumps(old_body, sort_keys=True, separators=(",", ":"),
+                               ensure_ascii=False)
+                == json.dumps(body, sort_keys=True, separators=(",", ":"),
+                              ensure_ascii=False)):
+            return {"settled_at_utc": old_stamp, **body}
+
+    stamp = now or datetime.now(timezone.utc)
+    if stamp.tzinfo is None or stamp.utcoffset() is None:
+        raise ValueError("settlement timestamp must be timezone-aware")
+    return {"settled_at_utc": stamp.astimezone(timezone.utc).isoformat(timespec="seconds"), **body}
+
+
 # --------------------------------------------------------------------------- settlement
 def settle_one(sealed: Path, finals: Path | None, union: dict[str, Any] | None = None) -> dict:
     ok, stored, recomp = LD.verify(sealed)
@@ -280,8 +308,7 @@ def main() -> int:
     finals = UNION_PATH if union["records"] else None
     print(f"finals snapshot: {UNION_PATH.name if finals else 'none committed (PENDING by design)'}")
     results = [settle_one(p, finals, union) for p in ledgers]
-    (ROOT / "data" / "settlement.json").write_text(json.dumps({
-        "settled_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    body = {
         "finals_snapshot": UNION_PATH.name if finals else None,
         "finals_sources_read": union["sources_read"],
         "finals_conflicts": union["conflicts"],
@@ -291,7 +318,13 @@ def main() -> int:
                  "Metrics stay unmeasured rather than assumed. Finals are the keyed union of every "
                  "committed official source (data/raw/official_finals_union.json); conflicting "
                  "games are excluded, never averaged."),
-    }, indent=2) + "\n")
+    }
+    settlement_path = ROOT / "data" / "settlement.json"
+    try:
+        previous = json.loads(settlement_path.read_text())
+    except (OSError, json.JSONDecodeError):
+        previous = None
+    settlement_path.write_text(json.dumps(settlement_document(body, previous), indent=2) + "\n")
     print("wrote data/settlement.json")
     return 0
 
