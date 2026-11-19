@@ -238,6 +238,15 @@ def sealed_ids() -> dict[str, set]:
 
 
 def graded_ids() -> tuple[set, dict]:
+    """The distinct game ids a sealed pick was actually scored against.
+
+    Only the ledgers' graded rows count. ``finals_used`` is provenance for which
+    finals the settlement *read* — its 2026-11-18 capture file spans 2026-11-13→17,
+    so counting it here would report the pre-request 11/13 games as graded although
+    no sealed pick ever existed for them (session arena/af5df7a7-nba2, 2026-11-19:
+    the same rule the test below pins — a game that was never pre-registered can be
+    settled, but it can never be *graded*).
+    """
     doc = maybe_load(SETTLED_ALL) or {}
     graded: set = set()
     per_ledger = []
@@ -248,10 +257,6 @@ def graded_ids() -> tuple[set, dict]:
         per_ledger.append({"ledger": L.get("ledger"), "n_graded": len(rows),
                            "n_ungraded": len(L.get("ungraded") or []),
                            "latest_graded_game_date": L.get("latest_graded_game_date")})
-    for r in doc.get("finals_used", []) or []:
-        gid = r.get("game_id")
-        if gid:
-            graded.add(gid)
     return graded, {"per_ledger": per_ledger,
                     "settled_at_utc": (doc.get("settlement") or {}).get("settled_at_utc"),
                     "latest_graded_game_date": (doc.get("settlement") or {}).get("latest_graded_game_date")}

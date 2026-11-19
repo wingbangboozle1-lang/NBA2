@@ -6,7 +6,7 @@
  "n_dates": 12,
  "n_games_known": 87,
  "n_games_with_final": 56,
- "n_games_graded": 22,
+ "n_games_graded": 27,
  "settlement": {
   "per_ledger": [
    {
@@ -17,19 +17,19 @@
    },
    {
     "ledger": "data/raw/ledger/sealed-2026-11-14.json",
-    "n_graded": 22,
-    "n_ungraded": 5,
-    "latest_graded_game_date": "2026-11-16"
+    "n_graded": 27,
+    "n_ungraded": 0,
+    "latest_graded_game_date": "2026-11-17"
    },
    {
     "ledger": "data/v3/ledger/sealed-2026-11-15.json",
-    "n_graded": 17,
-    "n_ungraded": 17,
-    "latest_graded_game_date": "2026-11-16"
+    "n_graded": 22,
+    "n_ungraded": 12,
+    "latest_graded_game_date": "2026-11-17"
    }
   ],
-  "settled_at_utc": "2026-11-16T23:59:59Z",
-  "latest_graded_game_date": "2026-11-16"
+  "settled_at_utc": "2026-11-17T23:59:59Z",
+  "latest_graded_game_date": "2026-11-17"
  },
  "rows": [
   {
@@ -185,11 +185,11 @@
    "date": "2026-11-17",
    "n_scheduled": 5,
    "n_finals_committed": 5,
-   "n_graded": 0,
+   "n_graded": 5,
    "n_missing_final": 0,
-   "n_missing_grade": 5,
-   "status": "incomplete",
-   "reason": "finals are committed for all 5 games but 5 are not scored against a sealed ledger — a game that was never pre-registered cannot be settled, so nothing is inferred for it",
+   "n_missing_grade": 0,
+   "status": "complete",
+   "reason": "complete — every scheduled game has an official final and is graded",
    "game_ids": [
     "0022600253",
     "0022600254",
@@ -2462,7 +2462,7 @@
    "period_schema": "regulation only",
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 23+31+26+31=111 vs 111; home 29+21+33+19=102 vs 102",
-   "graded": false,
+   "graded": true,
    "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600253",
    "gamebook_url": null,
    "finals_files": [
@@ -2502,7 +2502,7 @@
    "period_schema": "regulation only",
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 17+31+31+26=105 vs 105; home 29+20+30+27=106 vs 106",
-   "graded": false,
+   "graded": true,
    "source_url": "https://www.nba.com/game/por-vs-min-0022600254",
    "gamebook_url": null,
    "finals_files": [
@@ -2542,7 +2542,7 @@
    "period_schema": "regulation only",
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 26+29+23+27=105 vs 105; home 33+21+18+21=93 vs 93",
-   "graded": false,
+   "graded": true,
    "source_url": "https://www.nba.com/game/det-vs-sas-0022600255",
    "gamebook_url": null,
    "finals_files": [
@@ -2584,7 +2584,7 @@
    "period_schema": "all periods inline",
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 34+32+28+17+3=114 vs 114; home 30+29+22+30+7=118 vs 118",
-   "graded": false,
+   "graded": true,
    "source_url": "https://www.nba.com/game/cha-vs-lal-0022600256",
    "gamebook_url": null,
    "finals_files": [
@@ -2624,7 +2624,7 @@
    "period_schema": "regulation only",
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 35+23+30+44=132 vs 132; home 29+33+24+21=107 vs 107",
-   "graded": false,
+   "graded": true,
    "source_url": "https://www.nba.com/game/uta-vs-lac-0022600257",
    "gamebook_url": null,
    "finals_files": [

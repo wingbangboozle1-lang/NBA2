@@ -122,7 +122,7 @@
    "ok": true,
    "tested": 2,
    "passed": 2,
-   "detail": "2 measured samples, 0 inconsistent; WORSE THAN A COIN FLIP on SETTLED-22 — published as flag F-F5-08, not suppressed",
+   "detail": "2 measured samples, 0 inconsistent; WORSE THAN A COIN FLIP on SETTLED-27 — published as flag F-F5-08, not suppressed",
    "failures": [],
    "hard": true
   },
@@ -143,7 +143,7 @@
   "injury_releases_with_transcript": 8,
   "games_known": 87,
   "games_with_final": 56,
-  "games_graded": 22,
+  "games_graded": 27,
   "report_rows": 116,
   "players_matched": 12
  }

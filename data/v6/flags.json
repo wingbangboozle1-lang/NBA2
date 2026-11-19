@@ -33,7 +33,7 @@
    "severity": "gap",
    "official_source": "https://www.nba.com/games",
    "what_is_wrong": "The market-anchored prior (brief item 15) cannot be computed: no closing line has ever been captured, so the market's out-of-sample log-loss is unmeasured, so the blend weight is undefined. This is R-043 / R-101, carried from the first session as <code>F-V4-04</code>.",
-   "what_is_published": "The <a href=\"market-prior.html\" rel=\"noopener\" target=\"_blank\">market-prior page</a> publishes the pre-registered rule, both measured model log-losses (0.6234 over 167 2026-10-23 → 2026-11-13 games (better than the 0.6931 baseline); 0.7141 over 22 through 2026-11-16 games (worse than the 0.6931 baseline)), and a sensitivity grid over hypothetical market log-losses. The weight itself is a blank with this reason — not 0, not 0.5, not a guess.",
+   "what_is_published": "The <a href=\"market-prior.html\" rel=\"noopener\" target=\"_blank\">market-prior page</a> publishes the pre-registered rule, both measured model log-losses (0.6234 over 167 2026-10-23 → 2026-11-13 games (better than the 0.6931 baseline); 0.7058 over 27 through 2026-11-17 games (worse than the 0.6931 baseline)), and a sensitivity grid over hypothetical market log-losses. The weight itself is a blank with this reason — not 0, not 0.5, not a guess.",
    "where_to_check": "data/v6/market_prior.json"
   },
   {
@@ -56,8 +56,8 @@
    "id": "F-F5-08",
    "severity": "blocker",
    "official_source": "https://www.nba.com/games",
-   "what_is_wrong": "On the settled sample (22 distinct graded games), the model's out-of-sample log-loss is <b>0.7141</b> against a coin-flip baseline of <b>0.6931</b> — <b>worse than a coin flip</b>. The winner hit rate is still 16/22 (0.727), so the damage is concentrated in confident misses, not in picking sides. The Poisson-binomial tail is p = 0.078, i.e. inside the noise band.",
-   "what_is_published": "Published, not suppressed. The build does not fail on it — a research desk that gates its own bad news stops being one — and the consequence is stated plainly on <a href=\"market-prior.html\" rel=\"noopener\" target=\"_blank\">the market-prior page</a>: the pre-registered rule now gives the market the entire weight as soon as the market shows any skill, because the model has shown none on this sample. 22 games is a small sample and it is not staked; the bet surface still publishes zero rows.",
+   "what_is_wrong": "On the settled sample (27 distinct graded games), the model's out-of-sample log-loss is <b>0.7058</b> against a coin-flip baseline of <b>0.6931</b> — <b>worse than a coin flip</b>. The winner hit rate is still 19/27 (0.704), so the damage is concentrated in confident misses, not in picking sides. The Poisson-binomial tail is p = 0.085, i.e. inside the noise band.",
+   "what_is_published": "Published, not suppressed. The build does not fail on it — a research desk that gates its own bad news stops being one — and the consequence is stated plainly on <a href=\"market-prior.html\" rel=\"noopener\" target=\"_blank\">the market-prior page</a>: the pre-registered rule now gives the market the entire weight as soon as the market shows any skill, because the model has shown none on this sample. 27 games is a small sample and it is not staked; the bet surface still publishes zero rows.",
    "where_to_check": "data/v4/settlement/settled-all.json"
   },
   {

@@ -57,6 +57,10 @@ def finals_sources() -> list[Path]:
     paths: list[Path] = []
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "finals_*.json")))]
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "capture_*" / "results_*.json")))]
+    # gamebook captures carry the team-keyed quarter rows (SCORE BY PERIOD) for games
+    # whose only other committed row is a sparse score line (session arena/af5df7a7-nba2,
+    # 2026-11-19): e.g. 0022600231-240 have no quarter row anywhere else.
+    paths += [Path(p) for p in sorted(glob.glob(str(RAW / "capture_*" / "gamebooks_*.json")))]
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "results" / "results_*.json")))]
     v2 = ROOT / "data" / "v2" / "results.json"
     if v2.exists():
@@ -83,11 +87,26 @@ def _label(path: Path) -> str:
 
 
 def _records_of(doc: dict[str, Any]) -> list[dict[str, Any]]:
-    if isinstance(doc.get("records"), list):
-        return doc["records"]
-    if isinstance(doc.get("rows"), list):
-        return doc["rows"]
-    return []
+    """Every game-shaped row in the document, in document order.
+
+    ``data/raw/finals_2026-11-13.json`` carries the same nine games twice — a sparse
+    ``records`` list (game id, score, source) and a rich ``games`` list (date, teams,
+    venue) — and the gamebook captures carry them a third time with team-keyed quarter
+    rows. Reading one key dropped the rest, which is how union rows lost their teams and
+    quarters. Every row is returned as its own candidate: ``build_union`` keeps one
+    candidate list per game id, rejects disagreeing scores/clubs as conflicts, and prefers
+    a candidate whose quarter row sums to the final — so a within-file disagreement is
+    caught by the same rule as a cross-file one (session arena/af5df7a7-nba2, 2026-11-19).
+    """
+    out: list[dict[str, Any]] = []
+    for key in ("records", "rows", "games", "results"):
+        v = doc.get(key)
+        if not isinstance(v, list):
+            continue
+        for r in v:
+            if isinstance(r, dict) and r.get("game_id"):
+                out.append(r)
+    return out
 
 
 def _as_int(x: Any) -> int | None:
@@ -135,8 +154,12 @@ def normalise_source(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, s
         # Each official feed names its fields its own way (e.g. finals_2026-11-17.json uses
         # away_team / home_team / away_q / home_q / final_source_url). Read every known name;
         # a key that is missing in one feed must not erase a value another feed carries.
-        away_q_raw = _first_present(r, "away_quarters", "away_q")
-        home_q_raw = _first_present(r, "home_quarters", "home_q")
+        # The gamebook captures key quarters by side: ``{"quarters": {"away": [...], "home": [...]}}``
+        # (session arena/af5df7a7-nba2, 2026-11-19): without that fallback the quarter-sum
+        # rejection rule was silently skipped for those rows.
+        qmap = r.get("quarters") if isinstance(r.get("quarters"), dict) else {}
+        away_q_raw = _first_present(r, "away_quarters", "away_q") or qmap.get("away")
+        home_q_raw = _first_present(r, "home_quarters", "home_q") or qmap.get("home")
         # Quarter check: a quarter row that does not reproduce the final is not trusted.
         ot = r.get("ot_quarters") if isinstance(r.get("ot_quarters"), dict) else {}
         qa = _quarters_ok(a, away_q_raw, ot.get("away") or [])

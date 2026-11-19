@@ -28,6 +28,15 @@ Rules this module will not break
 Files read (all committed, each carrying its own retrieval stamp and source URL):
   ``data/raw/refresh_2026-11-15/results_2026-11-15.json``  (9 games, 11/15)
   ``data/raw/capture_2026-11-15/results_2026-11-14.json``  (5 games, 11/14)
+  ``data/raw/results/results_2026-11-15_recheck_2026-11-17.json``  (recheck, 11/15)
+  ``data/raw/results/results_2026-11-16.json``  (8 games, 11/16)
+  ``data/raw/finals_2026-11-17.json``  (5 games, 11/17)
+  ``data/raw/capture_2026-11-18/finals_2026-11-18.json``  (11/16–11/17, second feed)
+The last two were added 2026-11-19 (session arena/af5df7a7-nba2): the five sealed 11/17
+picks sat ungraded although their finals were committed and verified, because this list
+ended at 11/16. The two feeds cross-check each other through rule 3 — they are independent
+captures (``cmd_finals`` fallback vs ``nba2.v2.refresh`` server-rendered payload) and a
+score disagreement raises instead of settling.
 """
 
 from __future__ import annotations
@@ -51,6 +60,11 @@ FINALS_SOURCES = (
     # arena/669bccab-nba2 (2026-11-17): official finals for 2026-11-15 (recheck of 242-244) and 2026-11-16
     ("data/raw/results/results_2026-11-15_recheck_2026-11-17.json", "2026-11-15"),
     ("data/raw/results/results_2026-11-16.json", "2026-11-16"),
+    # arena/af5df7a7-nba2 (2026-11-19): the committed 11/17 finals — two independent
+    # official feeds (cmd_finals fallback capture; v2.refresh server-rendered payload).
+    # Rule 3 cross-checks them against each other and against the 11/16 overlap.
+    ("data/raw/finals_2026-11-17.json", "2026-11-17"),
+    ("data/raw/capture_2026-11-18/finals_2026-11-18.json", "2026-11-18"),
 )
 
 
@@ -75,7 +89,8 @@ def finals() -> tuple[list[dict], list[dict]]:
         provenance.append({
             "file": rel, "date": date,
             "retrieved_utc": doc.get("retrieved_utc") or doc.get("retrieved_at_utc"),
-            "method": doc.get("retrieval_method"),
+            "method": doc.get("retrieval_method")
+                      or "not filed in this capture file — see the source link",
             "settle_rule": doc.get("settle_rule"),
             "source_page": doc.get("source_page"),
             "n_games": len(doc.get("records", [])),
@@ -83,7 +98,10 @@ def finals() -> tuple[list[dict], list[dict]]:
         for r in doc.get("records", []):
             rec = {
                 "game_id": r["game_id"], "date": r.get("date") or date,
-                "away": r["away"], "home": r["home"],
+                # finals_2026-11-1x.json keys the clubs away_team/home_team; the other
+                # feeds use away/home. Both are committed official captures.
+                "away": r.get("away") or r.get("away_team"),
+                "home": r.get("home") or r.get("home_team"),
                 "away_pts": r["away_pts"], "home_pts": r["home_pts"],
                 "home_margin": r["home_pts"] - r["away_pts"],
                 "total_pts": r["home_pts"] + r["away_pts"],

@@ -294,6 +294,20 @@ jobs:
       - name: Rebuild every tree from the committed capture
         run: |
           set -euo pipefail
+          # AF-2 (session arena/af5df7a7-nba2, 2026-11-19): the finals union is written
+          # only by nba2.pipeline.settle, and nba2.settlement_page refuses to render on a
+          # stale union (fail-closed by design). Every scheduled run since 2026-11-17 died
+          # here: the capture job kept adding official finals sources and nothing merged
+          # them. The merge runs first so every tree below renders from one settlement.
+          # It runs only when the finals leg succeeded: when finals are unavailable the
+          # settlement files must stay byte-identical to HEAD (the guard step below checks)
+          # and the job still ends red with the visible settlement notice.
+          if [ "${{ needs.capture.outputs.finals }}" = "failure" ]; then
+            echo "::warning title=Settlement preserved::official finals were unavailable; data/settlement.json and data/v4/settlement stay as committed."
+          else
+            python3 -m nba2.pipeline.settle
+            python3 -m nba2.v4.settlement
+          fi
           python3 -m nba2.pipeline.build_site_data
           python3 -m nba2.pipeline.build_site
           python3 -m backtest.engine.build
@@ -351,7 +365,13 @@ jobs:
           set -uo pipefail
           git config user.name "nba2-ingest-bot"
           git config user.email "nba2-ingest-bot@users.noreply.github.com"
-          git add site data/v2 data/v3 data/v4 data/v6 data/site.json index.html pages 2>/dev/null || true
+          # AF-2: the commit list now matches the surfaces publish-parity.yml diffs
+          # (site + the v1 tree incl. data/site-built.json + root *.html) and adds what
+          # the settlement merge writes (data/settlement.json, the finals union), so the
+          # committed tree is always a fixed point of the rebuild above.
+          git add site data/v2 data/v3 data/v4 data/v5 data/v6 backtest \
+                  data/site.json data/site-built.json data/settlement.json \
+                  data/raw/official_finals_union.json index.html pages '*.html' 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "The rebuild matches what is committed — nothing to publish."
             exit 0
