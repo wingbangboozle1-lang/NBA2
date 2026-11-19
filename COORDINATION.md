@@ -5511,3 +5511,13 @@ fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 
 | 0B9-6 | PR → `main` → merge without approval (only if all checks green) → confirm Pages deploy by live fetch → record PR link and merge result here | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
 
 **Explicitly NOT edited:** `nba2/v2/**`, `nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**`, `nba2/v6/**`, `nba2/pipeline/refresh.py`, `nba2/v2/refresh.py`, `.github/workflows/**`, `data/raw/**`, sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `data/settlement.json`, `data/v4/settlement/**`, `site/**` (unless a checker requires a rebuild — then logged).
+
+### Session `arena/0b91edfc-nba2` — scope extension (2026-11-19, pushed before editing)
+
+PR #127 (parity job) fails at `Rebuild every generated tree` because the committed union is stale (R-3). Root cause found and measured: `nba2/pipeline/settle.py::normalise_source` reads only the keys `away`/`home`/`away_quarters`/`home_quarters`/`source_url`, but `data/raw/finals_2026-11-17.json` uses `away_team`/`home_team`/`away_q`/`home_q`/`final_source_url` (verified in the file). Result: the 5 games 0022600253–57 lose their clubs and quarters, and 0022600240 loses quarters because only one candidate is considered per game (R-1, R-2 are the same defect).
+
+| ID | Task | File scope | Verification rule |
+|----|------|-----------|-------------------|
+| 0B9-7 | Accept the feed's own key names in `normalise_source` (no new source, no new rule); pick quarter rows per side across sources; regression tests | `nba2/pipeline/settle.py`, `nba2/tests/test_settle_aliases.py` (new) | new tests + existing settle tests green; quarter rows re-summed to the final |
+| 0B9-8 | Regenerate `data/raw/official_finals_union.json` and settlement outputs **only** via `python -m nba2.pipeline.settle`; both sealed seals re-verified before and after; `data/raw/ledger/**` and `data/v3/ledger/**` untouched | `data/raw/official_finals_union.json`, `data/settlement.json`, `data/v4/settlement/**`, `data/v5/**` (generated) | `git diff --stat` on the ledger paths empty; seal digests printed before/after |
+| 0B9-9 | Re-run the parity chain; record the exact result; publish R-4 (v6) as still open | `analysis/session-0b91edfc-repo-check.md` (append) | parity job green on the PR, or the exact remaining failure recorded |
