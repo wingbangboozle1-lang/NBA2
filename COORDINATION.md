@@ -6449,6 +6449,51 @@ reintroduced.
 **Lesson recorded for the board:** a session that adds a page should not add a deployer. Adding content to a
 `legacy`-source Pages repo needs no workflow at all, and adding one silently competes with the canonical one.
 
+---
+
+## Session `arena/164d832b-nba2` — PR MERGED (2026-11-19 UTC)
+
+**PR:** https://github.com/wingbangboozle1-lang/NBA2/pull/141 — "Verification record for the
+2026-11-19 official read, plus the unknowns and improvement registers"
+**Merged:** 2026-11-19T13:10:36Z, merge commit `8d3ddac`, `--merge`, no approval waited for.
+**Merge gate at merge time:** 6/6 checks green — `parity`, `verify`, `v2`, `backtest`, `capture`,
+`refresh-dry-run`; `mergeable: MERGEABLE`, `mergeStateStatus: CLEAN`.
+**Pages deploy:** run **44530865638** (`Publish GitHub Pages`, push to main) concluded **success**.
+**Live verification:** https://wingbangboozle1-lang.github.io/NBA2/verify-1119.html renders the new
+page (fetched after the deploy; title, the twelve-document source table, the 30-club standings table
+and the reconstruction note all present).
+
+### The one real defect this session found and fixed
+
+`nba2/v6/inventory.py` scans `data/**/*.json` — **including its own output file**,
+`data/v6/injury_archive.json`. So the first build after a new official release URL is cited records
+that URL inside the archive and only the **second** build reaches a fixed point. My first commit was
+one build short, and CI's single-rebuild parity check caught it (run 44528463985, step "The published
+tree (site/) must equal a rebuild"). Fixed by building twice and committing the fixed point, then
+verified by cloning the pushed branch into a clean directory and running the full CI rebuild: **0
+changed files**. Recorded here because it is a latent trap for any future session whose work cites a
+new official document: build the v6 layer twice before committing, or the parity check fails.
+
+### Final state of this session's deliverables
+
+| page | what it is |
+|---|---|
+| `site/verify-1119.html` | the 2026-11-19 verification record: 12 official documents, 30 clubs, 12 finals, 4 scheduled games, 5 injury releases, the measured home-win rate, the two estimators and their disagreement — every row source-linked, plus the raw text of each page committed |
+| `site/unknowns.html` | 10 open questions, each with the missing dataset and how to obtain it |
+| `site/improvement.html` | 8 proposals, **none implemented**, each with effort, risk, dependency and this session's view |
+| `tools/session-164d832b-capture.py` | the fail-closed parser + 12-assertion selftest behind the pages |
+| `data/raw/verify_2026-11-19/**` | 12 verbatim official documents with URLs, retrieval times and sha256 |
+| `nba2/v8/**` | build + 17 tests, wired into `pages.yml` and `publish-parity.yml` before v6's grouping pass |
+
+### Flagged for review (published, non-blocking)
+
+The six irregularities listed in the progress record above are all on the published pages: extractor
+lossiness on the injury PDFs (F-style note on the verification record), two injury rows published
+without a club, quarter scores sourced from the earlier capture and labelled, the measured home-win
+rate being indistinguishable from 0.5 at n=221, the two estimators being algebraically tied (U-03),
+and the TLS transport limitation of the build sandbox.
+
+**Status: done and merged.**
 ### Where the verification desk is published — measured twice, wrong once (session `arena/923eb342-nba2`, 2026-11-19)
 
 **First attempt (wrong).** The desk was deployed as its own Pages artefact. It **replaced the repository's
