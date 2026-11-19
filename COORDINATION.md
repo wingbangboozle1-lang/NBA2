@@ -5884,3 +5884,18 @@ builders, never hand-edited.
 | 8C-07 | Add the settlement prerequisite to all rebuild/deploy/parity paths and persist its derived outputs only from a passing refresh | in progress | refresh-failure path preserves prior settlement; Pages/parity reproduce the committed tree |
 | 8C-08 | Preserve later official URLs while merging duplicate game results in v6 | in progress | regression test demonstrates official URL retained; G-V6-8 remains hard and conflicts remain blocking |
 | 8C-09 | Rebuild all generated trees, run every checker/test, verify internal links and fixed-point parity | pending | exact commands/results recorded; no sealed ledger changes |
+
+### Session `arena/8c7c8828-nba2` — scope amendment 3 (2026-11-19 UTC)
+
+The v6 check-only command is part of verification: `python3 -m nba2.v6 --check-only` reaches
+the non-writing branch, then raises `UnboundLocalError` because `injected` is only assigned by
+the rendering branch. This does not affect the normal scheduled render, but it makes the
+advertised check-only mode unusable. No open PR changes `nba2/v6/__main__.py`; this session
+adds a minimal initialization and regression test, without changing gate behavior.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-10 | Make v6 check-only mode return its measured gates without rendering | in progress | `build(write=False)` returns successfully and writes no files |
+
+**Scope amendment 3:** add `nba2/v6/__main__.py` and a check-only regression in
+`nba2/v6/test_v6.py`; existing v6 gates and generated output are unchanged by this fix.
