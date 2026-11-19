@@ -242,22 +242,6 @@ def scheduled() -> dict[str, dict]:
 
 
 # -------------------------------------------------------------- finals on disk
-def _merge_into(dst: dict, rec: dict) -> None:
-    """Fill the blanks of ``dst`` from ``rec``; a second sighting never overwrites.
-
-    A richer sighting of a game can add fields the sparse sighting lacks; a sparse
-    sighting can never blank or replace a value the first sighting already supplied
-    (the fill-blanks rule of session arena/af5df7a7-nba2, kept over the non-null
-    overwrite this helper first shipped with — the call-site contract is "fills blanks;
-    never overwrites a value already read"). Nulls are carried only for keys nothing has
-    filled yet, so a downstream reader can still tell "absent everywhere" (missing key)
-    from "present and blank in some feed" (key with None).
-    """
-    for k, val in rec.items():
-        if k not in dst:
-            dst[k] = val                      # absent everywhere: carry it (even None)
-        elif dst[k] in (None, "", []) and val not in (None, "", []):
-            dst[k] = val                      # fill a blank; never overwrite a value
 
 
 def _records_of(doc: dict) -> list[dict]:
@@ -288,12 +272,13 @@ def _records_of(doc: dict) -> list[dict]:
 # spellings were read off the committed files, not guessed: `finals_2026-11-13.json` and
 # `finals_2026-11-1{5,6}.json` use `away`/`home` + `source_url`; `finals_2026-11-14.json`
 # and `finals_2026-11-15.json` use `away_team`/`home_team` + `final_source_url`; the v5
-# union and the 11/17-11/18 captures use `source_url` again. Aliases are resolved per
-# sighting so a value present in the file always reaches the row it belongs to.
+# union and the 11/17-11/18 captures use `source_url` again; `official_finals_union.json`
+# (written by nba2.pipeline.settle) uses `source`. Aliases are resolved per sighting so a
+# value present in the file always reaches the row it belongs to.
 _ALIASES = {
     "away": ("away", "away_team", "visitor", "visitor_team"),
     "home": ("home", "home_team", "home_team_name"),
-    "source_url": ("source_url", "final_source_url", "official_source", "game_url"),
+    "source_url": ("source_url", "final_source_url", "official_source", "game_url", "source"),
     "gamebook_url": ("gamebook_url", "gamebook_source", "book_url"),
 }
 
@@ -304,6 +289,43 @@ def _alias(rec: dict, field: str):
         if v:
             return v
     return None
+
+
+def _official_url(row: dict, *keys: str) -> str | None:
+    """The first explicit official nba.com URL among ``keys``, else None.
+
+    ``source`` is not a convenience alias: ``nba2.pipeline.settle`` writes the official game
+    page into that key in ``official_finals_union.json``, the only file carrying the
+    11/14-11/16 finals, so leaving it out is what made those rows URL-less (session
+    arena/f4a5531f-nba2, measured 2026-11-19 at ``a5380e1``). The check stays strict - a
+    value that is not an https URL on an nba.com host is treated as absent - so a prose
+    label or a malformed field can never be published as a source link (session
+    arena/af5df7a7-nba2). The caller renders None as a blank with a reason; no URL is ever
+    synthesised.
+    """
+    for k in keys:
+        v = row.get(k)
+        if isinstance(v, str) and v.startswith("https://") and ".nba.com" in v:
+            return v
+    return None
+
+
+def _merge_into(dst: dict, rec: dict) -> None:
+    """Fill the blanks of ``dst`` from ``rec``; a second sighting never overwrites.
+
+    A richer sighting of a game can add fields the sparse sighting lacks; a sparse
+    sighting can never blank or replace a value the first sighting already supplied
+    (the fill-blanks rule of session arena/af5df7a7-nba2, kept over the non-null
+    overwrite this helper first shipped with — the call-site contract is "fills blanks;
+    never overwrites a value already read"). Nulls are carried only for keys nothing has
+    filled yet, so a downstream reader can still tell "absent everywhere" (missing key)
+    from "present and blank in some feed" (key with None).
+    """
+    for k, val in rec.items():
+        if k not in dst:
+            dst[k] = val                      # absent everywhere: carry it (even None)
+        elif dst[k] in (None, "", []) and val not in (None, "", []):
+            dst[k] = val                      # fill a blank; never overwrite a value
 
 
 def _https_url(value: object) -> str | None:
@@ -352,8 +374,8 @@ def _final_record(rec: dict, fallback_date: str | None, rel: str) -> dict | None
         "away_quarters": aq, "home_quarters": hq,
         "ot_periods": rec.get("ot_periods"),
         "period_schema": schema,
-        "source_url": _https_url(_alias(rec, "source_url")),
-        "gamebook_url": _https_url(_alias(rec, "gamebook_url")),
+        "source_url": _official_url(rec, *_ALIASES["source_url"]),
+        "gamebook_url": _official_url(rec, *_ALIASES["gamebook_url"]),
         "files": [rel],
     }
 
@@ -612,7 +634,7 @@ def build(today: str = AS_OF_DATE) -> dict:
             "period_schema": schema,
             "quarter_verdict": verdict, "quarter_detail": detail,
             "graded": gid in graded,
-            "source_url": (f or {}).get("source_url") or _https_url(g.get("source_url")),
+            "source_url": (f or {}).get("source_url") or _official_url(g, *_ALIASES["source_url"]),
             "gamebook_url": (f or {}).get("gamebook_url"),
             "finals_files": (f or {}).get("files", []),
             "slate_files": g.get("snapshots", []),

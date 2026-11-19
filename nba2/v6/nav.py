@@ -38,13 +38,13 @@ CATEGORIES: list[tuple[str, str, list[str]]] = [
     ("Projection — safe to publish",
      "Our originated numbers. Nothing here is priced or actionable: what we think, and how "
      "much the two estimators disagree.",
-     ["slate", "projections", "projection", "lines", "teams", "market-prior",
-      "correlations", "props", "gameflow", "lategame", "travel", "rotation",
-      "rotation-replacement", "minutes"]),
+     ["slate", "v7-slate", "v7-skill", "projections", "projection", "lines", "teams",
+      "market-prior", "correlations", "props", "gameflow", "lategame", "travel",
+      "rotation", "rotation-replacement", "minutes"]),
     ("Bet surface — gated",
      "Gated: no row here is actionable until its gates pass. The trigger level is the only "
      "number that would make acting rational.",
-     ["bet", "picks", "strategies", "strategy-lab", "trials"]),
+     ["bet", "picks", "v7-strategies", "strategies", "strategy-lab", "trials"]),
     ("Official record & settlement",
      "What the league published, what the sealed ledger predicted, and what has been "
      "settled against an official final.",
@@ -58,13 +58,9 @@ CATEGORIES: list[tuple[str, str, list[str]]] = [
     ("Verification & measured skill",
      "Gates, backtests, luck attribution and the live checks — the part that says whether "
      "any of the above is better than a coin flip.",
-     ["verification", "verification-v3", "v4-verify", "v5-verify", "v6-verify",
-      "live-verification", "backtest", "skill-attribution", "endpoints",
-      "capture-verification"]),
-    ("v7 — fresh 2026-11-19 snapshot",
-     "Cut from the official pages read on 2026-11-19: the originated three-day slate, the "
-     "gated strategy lab with its pre-registrations, and the walk-forward skill test.",
-     ["v7-slate", "v7-strategies", "v7-skill", "v7-methodology", "v7-verify"]),
+     ["verification", "v7-verify", "v7-methodology", "verification-v3", "v4-verify",
+      "v5-verify", "v6-verify", "live-verification", "backtest", "skill-attribution",
+      "endpoints", "capture-verification"]),
     ("Decisions, questions & flags",
      "What needs an owner decision before it is built, what we do not know, and everything "
      "flagged for review.",

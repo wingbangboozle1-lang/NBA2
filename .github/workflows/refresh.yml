@@ -321,6 +321,10 @@ jobs:
           python3 -m nba2.v4
           python3 -m nba2.v5
           python3 -m nba2.v6
+          # v7 is the last render in the chain (it inserts links into the sidebar v6 grouped
+          # and re-appends its section to flagged.html), so the scheduled rebuild includes it
+          # or every un-staged v7 page shows up as drift on the next parity run.
+          python3 -m nba2.v7
 
       - name: Gate — provenance and freshness on every published tree
         run: |
@@ -339,6 +343,7 @@ jobs:
           python3 -m unittest discover -s nba2/v4 -t . -p 'test_*.py'
           python3 -m unittest discover -s nba2/v5 -t . -p 'test_*.py'
           python3 -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
+          python3 -m unittest discover -s nba2/v7 -t . -p 'test_*.py'
           python3 -m nba2.pipeline.seal_predictions --verify
 
       - name: Restore the combined site after generator tests
@@ -389,7 +394,7 @@ jobs:
           # (site + the v1 tree incl. data/site-built.json + root *.html) and adds what
           # the settlement merge writes (data/settlement.json, the finals union), so the
           # committed tree is always a fixed point of the rebuild above.
-          git add site data/v2 data/v3 data/v4 data/v5 data/v6 backtest \
+          git add site data/v2 data/v3 data/v4 data/v5 data/v6 data/v7 backtest \
                   data/site.json data/site-built.json data/settlement.json \
                   data/raw/official_finals_union.json index.html pages '*.html' 2>/dev/null || true
           if git diff --cached --quiet; then

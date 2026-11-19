@@ -60,6 +60,26 @@ CHECKS = [
      "the 2026-11-19 report and its revision time",
      0, 0, O.SOURCES["injury"],
      "NOT READ - published as a blank with F-V7-AVAIL, not as a verified value"),
+    # ---------------------------------------------------------------------------------
+    # Independent re-read by the integration session (arena/585453f5-nba2) on
+    # 2026-11-19, after this transcription was committed. These rows test the committed
+    # numbers against the official pages again, rather than against themselves.
+    ("V-11", "advanced team stats, re-read",
+     "GP, W, L, OffRtg, DefRtg, NetRtg and PACE for 27 of 30 clubs, compared against the "
+     "transcription in nba2/v7/official.py",
+     27, 27, O.SOURCES["advanced"],
+     "integrated re-read 2026-11-19T12:20Z: every one of the 27 rows matched to the printed "
+     "decimal; the three clubs absent from the fetched pages (MIN, SAC, and the 30th row cut "
+     "off by pagination) were not re-compared and are therefore not counted"),
+    ("V-12", "standings, re-read",
+     "wins and losses for 26 clubs, cross-checked against the transcription",
+     26, 26, O.SOURCES["standings"],
+     "integrated re-read 2026-11-19T12:18Z: 26/26 matched, including the two-conference split"),
+    ("V-13", "2026-11-19 and 2026-11-20 slates, re-read",
+     "clubs, game ids and tip times for the 4 games on 11/19 and 9 games on 11/20",
+     13, 13, O.SOURCES["games_1120"],
+     "integrated re-read 2026-11-19T12:22Z: all 13 game ids and tip times matched; the 11/20 "
+     "page also confirms the Cup-group labels used in the slate"),
 ]
 
 

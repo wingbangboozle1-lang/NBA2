@@ -84,18 +84,14 @@ jobs:
           python -m nba2.v6
           python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
 
-      - name: Rebuild the v7 originated slate (snapshot -> model -> gates -> pages -> nav)
-        # v7 must run after v6, because v6 is what GROUPS the sidebar into categories: a page
-        # written after the grouping pass has to insert itself into the grouped nav (v7 does,
-        # and verifies afterwards that the href set only grew).
-        #
-        # Two things to know about v7:
-        #   * it fetches NOTHING at build time. Its inputs are the v7 modules (a transcription
-        #     of the 2026-11-19 official pages) and the committed official finals captures, so
-        #     a rebuild is reproducible on any machine with Python and no network.
-        #   * it is fail-closed on seven structural checks over its own emitted pages, and it
-        #     exits non-zero if any fails. It also refuses to overwrite a frozen
-        #     pre-registration, so a strategy cannot be edited after its first bet.
+      - name: Rebuild the v7 originated-slate layer (gates -> render -> nav -> flags)
+        # v7 reads the committed transcription in nba2/v7/official.py and the committed
+        # official finals under data/raw/ - it fetches nothing. It runs after v6 because it
+        # inserts its five links into the sidebar v6 grouped, and re-appends its section to
+        # flagged.html because v2 regenerates that page on every rebuild. Its own exit code
+        # is a gate: a failing structural check or a lost nav link fails the build rather
+        # than silently shipping a broken page. Added on the integration branch
+        # arena/585453f5-nba2; the four BLOCKED strategy gates are published, not hidden.
         run: |
           python -m nba2.v7
           python -m unittest discover -s nba2/v7 -t . -p 'test_*.py'

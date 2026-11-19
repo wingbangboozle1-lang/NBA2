@@ -77,6 +77,18 @@ FLAGS = [
      "— instead of a probability. Player-prop combos are blocked on that basis.",
      "data/v5/player_logs_union.json · site/v7-strategies.html"),
 
+    ("F-V7-FRESH", "info", ADV,
+     "The snapshot this layer is cut from is dated <b>2026-11-19T06:05Z</b> and the official "
+     "pages have since moved: an independent re-read on 2026-11-19 measures LAL at GP 16 "
+     "(13-3) and NOP at 16 GP, where this snapshot holds LAL 15 GP (13-2) and NOP 15 GP "
+     "(5-11). Two clubs are one game further on than the inputs on this page.",
+     "The inputs are <b>not</b> silently re-cut. The slate, the ratings and every derived "
+     "number stay pinned to the stamped snapshot, the later reading is published here rather "
+     "than being counted as a match, and a re-cut is a new snapshot with a new retrieval "
+     "stamp. A reader pricing Friday's games should prefer the "
+     "newer official page for those two clubs.",
+     "nba2/v7/verification.py (V-11..V-13) · this page"),
+
     ("F-V7-PREREG", "info", "https://github.com/wingbangboozle1-lang/NBA2",
      "Pre-registration hashes are committed in the same commit as the strategy definitions "
      "they freeze. That makes them tamper-evident against <i>later</i> edits, but not against "

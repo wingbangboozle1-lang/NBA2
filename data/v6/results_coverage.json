@@ -1,8 +1,8 @@
 {
  "schema": "nba2.v6.results-coverage.v1",
  "session": "arena/f5ac4e74-nba2",
- "as_of_utc": "2026-11-18T19:30:52Z",
- "today": "2026-11-18",
+ "as_of_utc": "2026-11-19T12:24:30Z",
+ "today": "2026-11-19",
  "n_dates": 12,
  "n_games_known": 87,
  "n_games_with_final": 56,
@@ -101,9 +101,9 @@
    "0022600256",
    "0022600257"
   ],
-  "settled_at_utc": "2026-11-19T12:45:03+00:00",
+  "settled_at_utc": "2026-11-19T13:09:38+00:00",
   "v4_settled_at_utc": "2026-11-17T23:59:59Z",
-  "pipeline_settled_at_utc": "2026-11-19T12:45:03+00:00",
+  "pipeline_settled_at_utc": "2026-11-19T13:09:38+00:00",
   "latest_graded_game_date": "2026-11-17"
  },
  "rows": [
@@ -282,8 +282,8 @@
    "n_graded": 0,
    "n_missing_final": 12,
    "n_missing_grade": 0,
-   "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:52Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "status": "incomplete",
+   "reason": "no official final is committed for any game on this date: the scoreboard endpoints the nightly job reads are unreachable (see the endpoint register, F-F5-02)",
    "game_ids": [
     "0022600258",
     "0022600259",
@@ -322,7 +322,7 @@
    "n_missing_final": 4,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:52Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:24:30Z = 2026-11-19 07:24 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600270",
     "0022600271",
@@ -345,7 +345,7 @@
    "n_missing_final": 9,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:52Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:24:30Z = 2026-11-19 07:24 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600043",
     "0022600044",
@@ -378,7 +378,7 @@
    "n_missing_final": 6,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:52Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:24:30Z = 2026-11-19 07:24 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600274",
     "0022600275",
