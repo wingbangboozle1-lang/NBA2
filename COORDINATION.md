@@ -6241,3 +6241,26 @@ inferred; sealed ledgers never rewritten; the site is never merged broken.
 | F4A-4 | Live GitHub Pages verification: every page reachable, per-row source links present, spot-check numbers vs official sources | pending | `audit/session-f4a5531f/**` | fetched page quoted; every claim tied to a URL |
 | F4A-5 | Flagged irregularities + requests logged for the integration sessions | pending | `analysis/session-f4a5531f-audit.md` | each item carries a file path, command, or official URL |
 | F4A-6 | PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
+
+### Completion record — session `arena/f4a5531f-nba2` (2026-11-19 UTC)
+
+Full write-up with sources: `analysis/session-f4a5531f-audit.md`; checker logs in
+`audit/session-f4a5531f/baseline/`; fresh official capture in
+`data/raw/capture_2026-11-19_f4a5531f/`.
+
+| ID | Task | Status | Result |
+|----|------|--------|--------|
+| F4A-1 | Board claim + push before work | done | claim commit `7956729` pushed before any work |
+| F4A-2 | Baseline checker chain | done | rebuild chain rc=0 ×17, fixed point holds; 526 tests OK (92/167/67/61/26/52/49/12); lint 1436 rows/50 tables; 7472 links; seals 22+27 VERIFIED; only crosscheck fail = disclosed CC-FRESH-01. Logs: `audit/session-f4a5531f/baseline/` |
+| F4A-3 | Live official-source verification + fresh capture | done | standings (30/30, W=222=L cross-check), 12 finals for 11/18 (not previously committed anywhere), HOU@IND quarter rows (sums verified), slate 11/19→22 (26 games, ids verified), injury release 11/19 07:00 AM ET (43 rows, transcript), 3 team-stat pages (measured: they render via platform fetch — transport-belief update). All in `data/raw/capture_2026-11-19_f4a5531f/` with URL + retrieval stamp per file |
+| F4A-4 | Live GitHub Pages verification | done | live index fetched; category dashboard, projection/bet wall, revision+retrieval injury stamp, pinned-HCA, luck band, possessions×PPP, rotation-availability column, seals/stamps all confirmed; row-level checks against local parity-identical files |
+| F4A-5 | Flags + requests logged | done | F4A-F1..F9 + RQ-F4A-1..3 recorded in `analysis/session-f4a5531f-audit.md` §4–§5; **site/**, requirements/**, nba2/** NOT edited (owned by concurrent sessions) — surfacing these on the published Flagged page is a logged request, not a self-merge |
+| F4A-6 | PR → merge → Pages confirm | in progress | recorded below when done |
+
+**Irregularities found (each carries a file, command, or official URL in the audit report):**
+stale model snapshot (CC-FRESH-01, disclosed); two failed scheduled nightly runs that pre-date the
+PR #132/#133 repair and are therefore an unverified fix in the scheduled environment; stale
+rolling-slate window (11/17→11/20) vs the captured fresh window (11/19→11/22); parlay ρ-pricing
+present but naive product not printed beside it; 11 of 12 finals for 11/18 stored with blank
+quarters + flag (gamebooks unread in this audit); two injury rows unattributed in parsed text
+(blank + flagged, never inferred); workflow_dispatch 403 from this session's integration.

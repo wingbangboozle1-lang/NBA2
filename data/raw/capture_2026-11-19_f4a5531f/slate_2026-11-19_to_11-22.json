@@ -1,0 +1,42 @@
+{
+ "schema": "nba2.slate-official.v2",
+ "window": {"start": "2026-11-19", "end": "2026-11-22", "label": "T+0..T+3 rolling slate"},
+ "retrieved_at_utc": "2026-11-19T12:19:30Z",
+ "capture_window_utc": "2026-11-19T12:19:00Z/12:22:30Z",
+ "retrieval_method": "platform page-fetch tool (Arena) reading the server-rendered game cards on https://www.nba.com/games?date=<D> for D in 2026-11-19..2026-11-22; matchup order, tip time, game id (from the card's official game link) and the records printed beside each club are transcribed verbatim by session arena/f4a5531f-nba2",
+ "source_urls": [
+  "https://www.nba.com/games?date=2026-11-19",
+  "https://www.nba.com/games?date=2026-11-20",
+  "https://www.nba.com/games?date=2026-11-21",
+  "https://www.nba.com/games?date=2026-11-22"
+ ],
+ "note": "away/home order is the order printed on the official card (first club = visitor). Game counts per date agree with the official calendar printed on the same pages (11-19: 4, 11-20: 9, 11-21: 6, 11-22: 7). Records beside each club agree with the standings captured the same session (standings_2026-11-19.json). 11-20 games carry Emirates NBA Cup group labels as printed. Odds shown on the page were HIDE-ODDS-flagged and are NOT transcribed: no odds field is captured.",
+ "games": [
+  {"date": "2026-11-19", "tip_et": "8:00 PM ET",  "away": "LAC", "home": "SAS", "game_id": "0022600273", "away_rec": "4-9",  "home_rec": "12-3"},
+  {"date": "2026-11-19", "tip_et": "8:00 PM ET",  "away": "GSW", "home": "MEM", "game_id": "0022600270", "away_rec": "8-7",  "home_rec": "11-4"},
+  {"date": "2026-11-19", "tip_et": "8:00 PM ET",  "away": "NYK", "home": "MIN", "game_id": "0022600272", "away_rec": "8-6",  "home_rec": "11-4"},
+  {"date": "2026-11-19", "tip_et": "8:00 PM ET",  "away": "POR", "home": "MIL", "game_id": "0022600271", "away_rec": "9-5",  "home_rec": "1-14"},
+  {"date": "2026-11-20", "tip_et": "7:00 PM ET",  "away": "CHA", "home": "ATL", "game_id": "0022600043", "away_rec": "4-10 (0-2)",  "home_rec": "9-6 (1-1)",  "cup": "East Group C"},
+  {"date": "2026-11-20", "tip_et": "7:30 PM ET",  "away": "TOR", "home": "DET", "game_id": "0022600046", "away_rec": "5-10 (1-1)",  "home_rec": "10-4 (1-0)", "cup": "East Group A"},
+  {"date": "2026-11-20", "tip_et": "7:30 PM ET",  "away": "IND", "home": "CLE", "game_id": "0022600045", "away_rec": "5-10 (1-1)",  "home_rec": "8-8 (1-1)",  "cup": "East Group B"},
+  {"date": "2026-11-20", "tip_et": "7:30 PM ET",  "away": "ORL", "home": "BKN", "game_id": "0022600044", "away_rec": "6-8 (2-0)",   "home_rec": "3-11 (0-1)", "cup": "East Group A"},
+  {"date": "2026-11-20", "tip_et": "8:00 PM ET",  "away": "NOP", "home": "OKC", "game_id": "0022600048", "away_rec": "5-11 (0-2)",  "home_rec": "9-6 (1-1)",  "cup": "West Group B"},
+  {"date": "2026-11-20", "tip_et": "8:00 PM ET",  "away": "WAS", "home": "CHI", "game_id": "0022600047", "away_rec": "5-11 (1-1)",  "home_rec": "4-10 (1-1)", "cup": "East Group C"},
+  {"date": "2026-11-20", "tip_et": "9:30 PM ET",  "away": "PHX", "home": "UTA", "game_id": "0022600049", "away_rec": "7-7 (0-1)",   "home_rec": "3-13 (0-2)", "cup": "West Group A"},
+  {"date": "2026-11-20", "tip_et": "10:00 PM ET", "away": "HOU", "home": "DEN", "game_id": "0022600050", "away_rec": "12-4 (1-1)",  "home_rec": "8-5 (1-0)",  "cup": "West Group A"},
+  {"date": "2026-11-20", "tip_et": "10:00 PM ET", "away": "SAC", "home": "LAL", "game_id": "0022600051", "away_rec": "1-13 (0-2)",  "home_rec": "13-3 (1-1)", "cup": "West Group C"},
+  {"date": "2026-11-21", "tip_et": "1:00 PM ET",  "away": "MIL", "home": "PHI", "game_id": "0022600274", "away_rec": "1-14", "home_rec": "13-3"},
+  {"date": "2026-11-21", "tip_et": "7:30 PM ET",  "away": "POR", "home": "NYK", "game_id": "0022600275", "away_rec": "9-5",  "home_rec": "8-6"},
+  {"date": "2026-11-21", "tip_et": "8:00 PM ET",  "away": "LAC", "home": "DAL", "game_id": "0022600276", "away_rec": "4-9",  "home_rec": "8-7"},
+  {"date": "2026-11-21", "tip_et": "8:00 PM ET",  "away": "MEM", "home": "MIN", "game_id": "0022600277", "away_rec": "11-4", "home_rec": "11-4"},
+  {"date": "2026-11-21", "tip_et": "8:00 PM ET",  "away": "NOP", "home": "SAS", "game_id": "0022600278", "away_rec": "5-11", "home_rec": "12-3"},
+  {"date": "2026-11-21", "tip_et": "10:00 PM ET", "away": "BOS", "home": "SAC", "game_id": "0022600279", "away_rec": "11-4", "home_rec": "1-13"},
+  {"date": "2026-11-22", "tip_et": "3:30 PM ET",  "away": "DET", "home": "ATL", "game_id": "0022600280", "away_rec": "10-4", "home_rec": "9-6"},
+  {"date": "2026-11-22", "tip_et": "6:00 PM ET",  "away": "OKC", "home": "MIA", "game_id": "0022600281", "away_rec": "9-6",  "home_rec": "9-6"},
+  {"date": "2026-11-22", "tip_et": "7:00 PM ET",  "away": "ORL", "home": "WAS", "game_id": "0022600282", "away_rec": "6-8",  "home_rec": "5-11"},
+  {"date": "2026-11-22", "tip_et": "7:00 PM ET",  "away": "DEN", "home": "CHI", "game_id": "0022600283", "away_rec": "8-5",  "home_rec": "4-10"},
+  {"date": "2026-11-22", "tip_et": "7:00 PM ET",  "away": "DAL", "home": "UTA", "game_id": "0022600284", "away_rec": "8-7",  "home_rec": "3-13"},
+  {"date": "2026-11-22", "tip_et": "8:00 PM ET",  "away": "IND", "home": "NYK", "game_id": "0022600285", "away_rec": "5-10", "home_rec": "8-6"},
+  {"date": "2026-11-22", "tip_et": "8:30 PM ET",  "away": "BOS", "home": "GSW", "game_id": "0022600286", "away_rec": "11-4", "home_rec": "8-7"}
+ ]
+}
