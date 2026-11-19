@@ -7,7 +7,7 @@
 | IN-1 | Board claim, pushed before any work | done | `arena/503146e4-nba2` | `COORDINATION.md` (append-only) | commit `e3f5d42` |
 | IN-2 | Final integration 2026-11-19: merge the all-green PR #131 (`arena/8c7c8828-nba2`, 6/6 checks pass, idle >5 h) as integrator; take over stale PR #130 (`arena/6023d517-nba2`, last commit 2026-11-19 06:16Z, no commits for >60 min, 3 failing checks: `parity`, `v2`, `verify`) per the handoff rule; repair the failing checks without lowering any gate; resolve cross-branch conflicts without discarding either session's work | done | `arena/503146e4-nba2` | merged PR branches on `arena/503146e4-nba2` (`e4a5e87`, `b01c935`); regenerated outputs only via committed builders (`settle` → `v4.settlement` → `build_site_data` → `build_site` → `backtest` → `v2` → `settlement_page` → `v3` → `v4` → `v5` → `v6` → `v7` chain); workflow/`nba2/v*` files only where the failing-check repair required | root 99 + v2 167 + v3 67 + v4 61 + v5 26 + v6 65 + v7 37 tests pass; v2/v3/v4/v6 checkers green; provenance lint 1,436 rows / 50 tables; 8,021 internal links OK; seals VERIFIED; fixed point byte-identical; full evidence + conflict rationale: `analysis/session-503146e4-integration-verification.md` |
 | IN-3 | Line-by-line re-verification of the combined tree; rebuild site; verify links; publish irregularities on the Flagged for Review page | done | `arena/503146e4-nba2` | `analysis/session-503146e4-integration-verification.md`, append-only `COORDINATION.md` | live re-read of official sources 2026-11-19 12:20–12:40 UTC: standings 30/30, 11/18 finals 12/12, 11/19 slate 4/4 vs [nba.com](https://www.nba.com/standings); injury index verified ([official.nba.com](https://official.nba.com/nba-injury-report-2026-27-season/)); `tools/crosscheck_site.py` 87 pass / 1 fail (`CC-FRESH-01`, disclosed) / 9 info; irregularities §4 of the report |
-| IN-4 | PR → main → merge → GitHub Pages live verification; record PR link and merge result here | in progress | `arena/503146e4-nba2` | `COORDINATION.md` | to be recorded below on completion |
+| IN-4 | PR → main → merge → GitHub Pages live verification; record PR link and merge result here | done | `arena/503146e4-nba2` | `COORDINATION.md` | PR [#147](https://github.com/wingbangboozle1-lang/NBA2/pull/147) — all 6 checks green (`backtest`, `capture`, `parity`, `refresh-dry-run`, `v2`, `verify`) — merged to `main` as `088a26f` (2026-11-19 13:38Z); Pages deploy `pages-build-deployment` **success**; live fetch verified: [landing](https://wingbangboozle1-lang.github.io/NBA2/) renders the category dashboard, [v7-slate](https://wingbangboozle1-lang.github.io/NBA2/v7-slate.html) publishes the 19-game window with the disagreement headline and 0.00 stakes, [flagged](https://wingbangboozle1-lang.github.io/NBA2/flagged.html) carries every irregularity with source links. PRs #130/#131 auto-marked MERGED (their head commits landed in `main` via #147). |
 
 **Takeover notes (handoff rule: claim >60 min old with no commits):**
 - PR #130 / branch `arena/6023d517-nba2` — last commit 2026-11-19 06:16Z (`b287d23`); failing
@@ -6857,3 +6857,63 @@ fixed point.
    the bad reading above was caught.
 3. A gate that globs `site/*.html` (v2 provenance, v6 nav grouping) does not see subdirectories. Anything
    added there must carry its own checker, which is why this desk has `audit/923eb342/check.py`.
+
+---
+
+### Session `arena/452034cb-nba2` — CLAIM (2026-11-19 UTC) — preserved verbatim by the integration session
+
+*The following claim was written on branch `arena/452034cb-nba2` (PR #137). Its integration
+work was superseded — the same PR #130/#131 integration landed in `main` via PR #147 — and
+only this board record was still unmerged, so it is preserved here per the append-only rule
+(integration session `arena/503146e4-nba2`, 2026-11-19 13:50Z).*
+
+- Base `41cfd81` = `main` @ PR #133 merge. Scope: `COORDINATION.md` (append-only),
+  `analysis/session-452034cb-*.md`, integration merges of PRs #130/#131 + regenerated
+  artefacts only. Tasks 452-1..452-6 (board claim; baseline fixed point; integrate PR #131;
+  integrate PR #130 + repair its failing checks; brief-coverage audit; PR/merge/Pages record).
+- Rules held: unconfirmed ⇒ blank + flagged; sealed ledgers never rewritten; nothing called
+  verified without a fetch or a reproduction; the site never merged broken.
+
+### Final integration record — session `arena/503146e4-nba2` (2026-11-19, IN-1..IN-4 done)
+
+**PR / merge / Pages (IN-4).** PR [#147](https://github.com/wingbangboozle1-lang/NBA2/pull/147)
+(“Final integration 2026-11-19: merge green PR #131 + stale-claim takeover of PR #130 (v7
+2026-11-19 layer), live official re-verification (46/46 match), README counts”) merged to
+`main` at 2026-11-19 13:38Z, merge commit `088a26f`. All six required checks passed on the
+merged head: `backtest`, `capture`, `parity`, `refresh-dry-run`, `v2`, `verify`. GitHub
+marked PRs **#130 and #131 MERGED** automatically when their head commits landed via #147.
+`pages-build-deployment` completed **success** and `Verify the published tree (zero tolerance
+for drift)` passed on `main` post-merge. Live-site verification by fetch:
+<https://wingbangboozle1-lang.github.io/NBA2/> (category dashboard; the projection/bet wall;
+the disclosure that the v2 snapshot is 2026-11-15-era),
+<https://wingbangboozle1-lang.github.io/NBA2/v7-slate.html> (19 games 11/19→11/21, both
+estimators, disagreement as the headline, rest/B2B/3-in-4, availability column published
+blank with `F-V7-AVAIL`, luck gates, 0.00 u stakes, per-row official links),
+<https://wingbangboozle1-lang.github.io/NBA2/flagged.html> (every irregularity with severity,
+disposition and source link).
+
+**What this session integrated** (full detail + conflict rationale:
+`analysis/session-503146e4-integration-verification.md`): PR #131's settlement-rebuild
+determinism + finals-transport tests + date-scoped v6 coverage; PR #130's v7 layer (cut from
+the official pages read 2026-11-19) + the G-V6-8 reader repair; the truth-first
+`graded_ids()` resolution (a game is graded only when a sealed pick was actually scored
+against it; `finals_used` is provenance); the derived as-of clock (broad committed-capture
+scan ∪ finals-success verdict, never wall-clock); `_official_url` accepting the `source` key
+the settle union writes (session f4a5531f's measured fix) with the strict https+nba.com
+check; README counts repaired (CC-DOC-01). Re-verified against the league's own pages live
+this session: standings 30/30, 11/18 finals 12/12, 11/19 slate 4/4 — 0 mismatches.
+
+**Build-chain note (logged for reviewers).** The merge of two builder lineages left the
+published tree at a mixed nav format that was no chain's output; the tree was converged to
+the stable fixed point of the canonical order (`settle → build_site_data → build_site →
+backtest → v2 → settlement_page → v3 → v4 → v5 → v8 → v6 → v7`) and re-verified idempotent
+under the exact `publish-parity.yml` chain (including its interleaved tests and second v7
+pass). The duplicate `python -m nba2.v7` invocation in `publish-parity.yml` is noted as a
+suggestion (cosmetic: both orders converge to the same fixed point, but the duplication is
+confusing); no gate was lowered.
+
+**Open items after this integration (unclaimed, non-blocking):** `CC-FRESH-01` legacy v1/v2
+snapshot age (a model re-cut to the 2026-11-19 capture is now claimed by session
+`arena/6b9f3bbe-nba2`, PR #155); `F-V7-AVAIL` 11/19 injury report not read into the
+availability column; the verdict-vs-run disagreement on scheduled run 44381003145 (cause
+unmeasured); RQ-AF6-1/RQ-AF6-2 salvages from closed PRs #125/#112.
