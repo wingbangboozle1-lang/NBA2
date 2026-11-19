@@ -1,6 +1,6 @@
 {
  "schema": "nba2.results-feed.v2",
- "retrieved_at_utc": "2026-11-19T14:49:34+00:00",
+ "retrieved_at_utc": "2026-11-19T19:35:16+00:00",
  "retrieval_method": "nba2.v2.refresh (www.nba.com/games?date= server-rendered payload)",
  "note": "quarter rows come from the same official payload and each is required to sum to the printed final; ot_periods counts periods beyond four",
  "records": [

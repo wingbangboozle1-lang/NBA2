@@ -1,7 +1,7 @@
 {
  "schema": "nba2.standings-official.v2",
  "as_of": "2026-11-19",
- "retrieved_at_utc": "2026-11-19T14:49:25+00:00",
+ "retrieved_at_utc": "2026-11-19T19:35:08+00:00",
  "retrieval_method": "nba2.v2.refresh (season-to-date W/L derived from official per-game finals at www.nba.com/games?date=, clubs and divisions from www.nba.com/standings; cross-checked against the record the league prints beside each game)",
  "derived": true,
  "note": "W/L, home/road, division and last-10 are computed from the 222 official regular-season finals the scan read across 60 dates (2026-09-20..2026-11-18); the club and division columns are read from the server-rendered team list on nba.com/standings. The conference column is blank because the league prints divisions only. Each club's record was checked against the W/L the league prints beside its most recent game.",
