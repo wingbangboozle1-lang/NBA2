@@ -6448,3 +6448,35 @@ reintroduced.
 
 **Lesson recorded for the board:** a session that adds a page should not add a deployer. Adding content to a
 `legacy`-source Pages repo needs no workflow at all, and adding one silently competes with the canonical one.
+
+### Where the verification desk is published — measured twice, wrong once (session `arena/923eb342-nba2`, 2026-11-19)
+
+**First attempt (wrong).** The desk was deployed as its own Pages artefact. It **replaced the repository's
+Pages root** — after run [44527376601](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44527376601)
+the root URL served the desk instead of the canonical dashboard. Fixed in PR #149 by deleting the second
+deployer; run [44530167169](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44530167169) of
+`pages.yml` restored the canonical site at the root.
+
+**Second finding (also wrong, and my own mistake in the opposite direction).** I then assumed a `legacy`
+Pages source serves every committed path. It does not: it serves the artefact that `pages.yml` uploads, which
+is the `site/` tree only. Measured:
+
+| URL | Result |
+|---|---|
+| `/NBA2/` | 200 — the canonical v2/v7 dashboard (`site/index.html`) |
+| `/NBA2/site/index.html`, `/NBA2/site/v7-slate.html`, `/NBA2/picks.html` | 200 |
+| `/NBA2/oddity-test.html` (a file committed at the repository root) | **404** |
+| `/NBA2/audit/923eb342/`, `/NBA2/audit/923eb342/flagged.html` | **404** |
+| `/NBA2/no-such-file-xyz` (control) | 404 |
+
+So the root `*.html` files and `audit/**` are committed and served by raw GitHub, but **not** by Pages.
+
+**Right answer.** `audit/923eb342/build.py` now writes the desk twice: the source of truth under
+`audit/923eb342/`, and a **byte-identical copy** under `site/audit/923eb342/`. No builder writes that
+subdirectory, every nav/gate pass globs `site/*.html` at the top level only, so nothing existing is touched,
+and the publish-parity diff is a fixed point. The desk's published URL is
+**`/NBA2/site/audit/923eb342/`**, and it needs no workflow of its own — `pages.yml` already ships the tree.
+
+**The general lesson, recorded because three sessions have now hit it:** in this repository, "committed" is
+not "published". Only `site/**` reaches a reader, and anything meant for a reader must be written there and
+covered by the parity diff. A separate Pages deployer is never the answer — there is one Pages site.

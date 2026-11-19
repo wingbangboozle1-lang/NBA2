@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Strategies &amp; preregistration — NBA2 verification desk</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a22;--muted:#5b6b7c;--line:#e2e7ee;--accent:#1f6feb;
+--good:#1a7f45;--bad:#b42318;--warn:#8a5a00;--info:#3b5bdb;--chip:#eef2f7}
+@media (prefers-color-scheme: dark){:root{--bg:#0d1117;--card:#151b23;--ink:#e6edf3;--muted:#9aa8b6;
+--line:#253040;--accent:#58a6ff;--good:#3fb950;--bad:#f85149;--warn:#d29922;--info:#7aa2f7;--chip:#1c2531}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{font-weight:700;letter-spacing:-.2px}
+.brand span{color:var(--muted);font-weight:400;font-size:13px;display:block;letter-spacing:0}
+nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px}
+nav a{color:var(--muted);padding:2px 0;border-bottom:2px solid transparent}
+nav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav a:hover{color:var(--ink);text-decoration:none}
+main{padding:26px 0 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+h2{font-size:17px;margin:30px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.lede{color:var(--muted);margin:0 0 18px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h4{margin:0 0 4px;font-size:13px;color:var(--muted);font-weight:600}
+.card .big{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.card p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:10px;overflow:hidden;font-size:13px;margin:8px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:600;
+background:var(--chip);color:var(--muted);white-space:nowrap}
+.pass{background:rgba(26,127,69,.12);color:var(--good)}.fail{background:rgba(180,35,24,.12);color:var(--bad)}
+.warn{background:rgba(138,90,0,.14);color:var(--warn)}.info{background:rgba(59,91,219,.12);color:var(--info)}
+.src{font-size:11.5px;word-break:break-all}
+.note{font-size:12.5px;color:var(--muted)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+border-radius:8px;padding:12px 14px;margin:0 0 18px}
+.banner h3{margin:0 0 4px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.finding h4{margin:0 0 6px;font-size:15px}
+.finding p{margin:0 0 8px;font-size:13.5px}
+.meta{font-size:12px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:18px 0 40px}
+ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
+</style></head><body>
+<header><div class="wrap"><div class="brand">NBA2 verification desk
+<span>Session arena/923eb342-nba2 · official sources read 2026-11-19 · nothing here is betting advice</span>
+</div><nav><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Overview</span> <a class="" href="index.html">Overview</a><a class="" href="executive-summary.html">Executive summary</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Evidence</span> <a class="" href="verification.html">Verification log</a><a class="" href="official-results.html">Official results</a><a class="" href="standings.html">Standings</a><a class="" href="injuries.html">Injuries</a><a class="" href="performance.html">Measured skill</a><a class="" href="sources.html">Sources &amp; method</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Decisions</span> <a class="" href="gates.html">Validation gates</a><a class="on" href="strategies.html">Strategies &amp; preregistration</a><a class="" href="questions.html">Open questions</a><a class="" href="suggestions.html">Suggestions</a><a class="" href="flagged.html">Flagged for review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Strategies &amp; preregistration</h1>
+<p class="lede">A strategy here is a written rule frozen before the first bet: signal, threshold,
+universe, settlement rule. The pre-registration hash is published with the build, so a rule cannot be
+adjusted after the results are known.</p>
+
+<div class="scroll"><table><thead><tr><th>ID</th><th>Strategy</th><th>Type</th><th>Signal</th><th>Gates that can pass today</th><th>Gates that fail today</th><th>Status</th><th>Source</th></tr></thead><tbody><tr><td>S1</td><td>Consensus-rating side</td><td>single bet</td><td>Bet the side implied by the average of two shrunk ratings when both estimators agree ≤1.0 pt.</td><td>G1,G2,G3,G4,G9</td><td>G6,G7,G8,G11,G12</td><td><span class="chip info">PUBLISHABLE AS A PROJECTION ONLY</span></td><td><a class="src" href="https://www.nba.com/stats/teams/advanced" target="_blank" rel="noopener">nba.com/stats/teams/advanced</a></td></tr><tr><td>S2</td><td>Total mean-reversion</td><td>single bet</td><td>Compare our total against the market total; act only on a ≥3.0 pt gap.</td><td>G1,G2,G3,G5,G9</td><td>G6,G7,G8</td><td><span class="chip info">BLOCKED — no market total</span></td><td><a class="src" href="https://www.nba.com/stats/teams/traditional" target="_blank" rel="noopener">nba.com/stats/teams/traditional</a></td></tr><tr><td>S3</td><td>Two-leg cross-game parlay</td><td>parlay</td><td>Two independent games, each leg passing S1, both legs at the same price level.</td><td>G1,G2,G3,G4,G10(cross-game part)</td><td>G6,G7</td><td><span class="chip info">BLOCKED — legs have no price</span></td><td><a class="src" href="https://www.nba.com/schedule?date=2026-11-15" target="_blank" rel="noopener">nba.com/schedule</a></td></tr><tr><td>S4</td><td>Same-game spread+total</td><td>parlay</td><td>Home cover and over in the same game, priced with a measured joint distribution.</td><td>G1,G2,G3</td><td>G6,G7,G10</td><td><span class="chip info">BLOCKED — correlation unmeasured</span></td><td><a class="src" href="https://www.nba.com/games?date=2026-11-13" target="_blank" rel="noopener">nba.com/games</a></td></tr><tr><td>S5</td><td>Player prop (points/rebounds/assists)</td><td>player prop</td><td>Player season rate × expected minutes, compared with a posted line.</td><td>G1(season rates only)</td><td>G2,G6,G7,G10</td><td><span class="chip info">BLOCKED — no minutes or game-log data</span></td><td><a class="src" href="https://www.nba.com/stats/players/traditional" target="_blank" rel="noopener">nba.com/stats/players/traditional</a></td></tr><tr><td>S6</td><td>Prop combo (points+rebounds)</td><td>player prop combo</td><td>Same-player correlation measured, then joint probability computed.</td><td>—</td><td>G2,G6,G7,G10</td><td><span class="chip info">BLOCKED — same-player correlation requires box scores</span></td><td><a class="src" href="https://www.nba.com/stats/players/traditional" target="_blank" rel="noopener">nba.com/stats/players/traditional</a></td></tr><tr><td>S7</td><td>Injury-availability fade</td><td>single bet</td><td>When a listed starter is Out, re-price with a measured replacement effect.</td><td>G1,G11,G12</td><td>G2,G7,G9</td><td><span class="chip info">BLOCKED — no on/off or usage data</span></td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-14_04_30AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr></tbody></table></div><p class="note">7 strategies. 'PUBLISHABLE AS A PROJECTION ONLY' means the number is derivable and the method backtested; it does not mean the bet can be staked.</p>
+
+<h2>Pre-registration files (frozen, hashed)</h2>
+<div class="scroll"><table><thead><tr><th>Strategy</th><th>Pre-registration hash</th><th>Frozen at</th><th>File</th></tr></thead><tbody><tr><td>S1</td><td><code>8cc2cddc2e5fe5ae…</code></td><td>2026-11-15T12:00:00Z</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/prereg/S1.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>S2</td><td><code>730bf57d75ea6107…</code></td><td>2026-11-15T12:00:00Z</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/prereg/S2.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>S3</td><td><code>3f793972849ec5e2…</code></td><td>2026-11-15T12:00:00Z</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/prereg/S3.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>S4</td><td><code>47f89f40bb58bd1d…</code></td><td>2026-11-15T12:00:00Z</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/prereg/S4.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>S5</td><td><code>fc9c6ddd510fc332…</code></td><td>2026-11-15T12:00:00Z</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/prereg/S5.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>S6</td><td><code>808a3d50633b22ab…</code></td><td>2026-11-15T12:00:00Z</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/prereg/S6.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>S7</td><td><code>7b222b926bf4ae47…</code></td><td>2026-11-15T12:00:00Z</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/prereg/S7.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr></tbody></table></div><p class="note">Hashes are computed over canonical JSON of the rule. Any edit after the freeze changes the hash and is visible.</p>
+
+<h2>Parlays and prop combos</h2>
+<p class="note">A parlay's price is the measured joint probability, and the naive product is printed beside
+it rather than withheld. Same-game legs are not independent: the site already demonstrates a ±26% price
+error from treating them as independent, so the joint pricing is the whole point of the page. Player-prop
+combos are the product the brief asks for most directly and the one most dependent on data that is not
+held: same-player correlation needs per-player box scores, and coverage of injury-report players is 10.3%.
+Both remain blocked, and blocking them is the correct outcome until the logs exist.</p>
+
+<h2>Leaderboard</h2>
+<p class="note">The leaderboard pays nobody while a gate fails, which is the right design. It has also
+never paid anybody, because G6 has never passed. A leaderboard in that state is a list of unproven claims,
+and it should be labelled that way wherever it appears — see <a href="suggestions.html">SG-923-10</a> for
+the minimum disclosure that would make it honest.</p>
+</div></main>
+<footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
+confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>
+page. Model output is derived, never official. Built 2026-11-19T12:20Z.</div></footer>
+</body></html>
