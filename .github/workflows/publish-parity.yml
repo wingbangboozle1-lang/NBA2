@@ -43,6 +43,7 @@ jobs:
 
       - name: Rebuild every generated tree from the committed inputs
         run: |
+          python -m nba2.pipeline.settle
           python -m nba2.pipeline.build_site_data
           python -m nba2.pipeline.build_site
           python -m backtest.engine.build

@@ -12,7 +12,8 @@ Three sets are built from committed files only:
   corroboration, not a second row);
 * **finals committed** — the union of every committed official result file, plus the v4
   settlement's own ``finals_used`` list. A game counts only when a final score is present;
-* **graded** — the distinct game ids the v4 settlement actually scored.
+* **graded** — the distinct game ids scored by either the v4 settlement or the nightly
+  sealed-ledger settlement in ``data/settlement.json``.
 
 The difference between those three numbers is the settlement backlog, and each row says
 which of the three is missing and why.
@@ -22,7 +23,10 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+from zoneinfo import ZoneInfo
 
 from .common import DATA, RAW, ROOT, maybe_load
 
@@ -45,19 +49,73 @@ RESULT_GLOBS = [
 ]
 
 SETTLED_ALL = DATA / "v4" / "settlement" / "settled-all.json"
+PIPELINE_SETTLEMENT = DATA / "settlement.json"
 SEALED_GLOBS = [DATA / "raw" / "ledger" / "sealed-*.json",
                 DATA / "v3" / "ledger" / "sealed-*.json"]
 
 _DATE_IN_NAME = re.compile(r"(\d{4}-\d{2}-\d{2})")
 BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book\.pdf$")
 
-# Frozen clock: the capture in `data/raw/capture_2026-11-18/finals_2026-11-18.json`
-# records retrieved_at_utc=2026-11-18T19:30:20+00:00. Using the committed source time
-# keeps the game-day classification reproducible and prevents a later wall-clock rebuild
-# from claiming that unobserved games are final. November is UTC-5 in US Eastern.
-AS_OF_UTC = "2026-11-18T19:30:20Z"
-AS_OF_ET = "2026-11-18 14:30 ET"
-AS_OF_DATE = "2026-11-18"
+# The result-feed page's "has this game day ended?" cutoff comes from committed capture
+# metadata, so rebuilds are deterministic and the displayed as-of stamp advances with the
+# scheduled ingest. A failed finals attempt never advances the clock; we fall back to the
+# newest committed official finals/result capture. The final fallback is the last explicitly
+# recorded capture in the original result-coverage snapshot.
+_FALLBACK_AS_OF_UTC = "2026-11-17T15:52:00Z"
+_EASTERN = ZoneInfo("America/New_York")
+
+
+def _parse_utc(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        stamp = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if stamp.tzinfo is None:
+        return None
+    return stamp.astimezone(timezone.utc).replace(microsecond=0)
+
+
+def _as_of() -> tuple[str, str, str]:
+    """Latest successful official results capture as UTC stamp, ET stamp, ET date."""
+    raw = DATA / "raw"
+    candidates: list[datetime] = []
+
+    verdict_path = raw / "refresh_verdict.json"
+    try:
+        verdict = json.loads(verdict_path.read_text())
+    except (OSError, json.JSONDecodeError):
+        verdict = {}
+    if (verdict.get("surfaces") or {}).get("finals") == "success":
+        stamp = _parse_utc(verdict.get("attempted_at_utc"))
+        if stamp is not None:
+            candidates.append(stamp)
+
+    capture_paths = set(raw.glob("finals_*.json"))
+    for pattern in ("results/*.json", "refresh_*/results_*.json",
+                    "capture_*/results_*.json"):
+        capture_paths.update(raw.glob(pattern))
+    capture_paths.update(raw.glob("refresh_*/capture_index.json"))
+    capture_paths.update(raw.glob("capture_*/capture_index.json"))
+    for path in sorted(capture_paths):
+        try:
+            doc = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        for key in ("retrieved_at_utc", "retrieved_utc"):
+            stamp = _parse_utc(doc.get(key))
+            if stamp is not None:
+                candidates.append(stamp)
+
+    latest = max(candidates) if candidates else _parse_utc(_FALLBACK_AS_OF_UTC)
+    assert latest is not None  # the committed fallback above is a valid UTC timestamp
+    et = latest.astimezone(_EASTERN)
+    return (latest.isoformat(timespec="seconds").replace("+00:00", "Z"),
+            et.strftime("%Y-%m-%d %H:%M ET"), et.date().isoformat())
+
+
+AS_OF_UTC, AS_OF_ET, AS_OF_DATE = _as_of()
 
 
 def _glob(paths) -> list[Path]:
@@ -65,6 +123,17 @@ def _glob(paths) -> list[Path]:
     for pat in paths:
         out.extend(sorted(Path(ROOT).glob(str(Path(pat).relative_to(ROOT)))))
     return out
+
+
+def _schedule_url_for_date(url: object, date: object) -> str | None:
+    """Accept only an official NBA schedule URL whose query names this exact date."""
+    if not isinstance(url, str) or not isinstance(date, str):
+        return None
+    parsed = urlparse(url)
+    if (parsed.scheme != "https" or parsed.netloc.lower() not in {"nba.com", "www.nba.com"}
+            or parsed.path not in {"/schedule", "/games"}):
+        return None
+    return url if parse_qs(parsed.query).get("date") == [date] else None
 
 
 # ------------------------------------------------------------------- scheduled
@@ -79,27 +148,35 @@ def scheduled() -> dict[str, dict]:
         games = doc.get("games") or []
         if not isinstance(games, list):
             continue
-        list_url = doc.get("source") if isinstance(doc.get("source"), str) else None
+        source = doc.get("source")
+        list_urls = [doc.get("source_url")]
+        if isinstance(source, str):
+            list_urls.append(source)
+        elif isinstance(source, dict):
+            list_urls.append(source.get("url"))
         for g in games:
             gid = g.get("game_id")
             if not gid:
                 continue
             row = out.setdefault(gid, {
                 "game_id": gid, "date": g.get("date"),
-                "away": g.get("away") or g.get("away_team"),
-                "home": g.get("home") or g.get("home_team"),
-                "matchup": g.get("matchup"),
+                "away": g.get("away"), "home": g.get("home"),
+                "matchup": g.get("matchup") or f"{g.get('away')} @ {g.get('home')}",
                 "source_url": g.get("source_url"),
                 "snapshots": [],
             })
             rel = str(p.relative_to(ROOT))
             if rel not in row["snapshots"]:
                 row["snapshots"].append(rel)
-            for key in ("source_url", "list_url"):
-                if not row.get(key) and g.get(key):
-                    row[key] = g[key]
-            if not row.get("list_url") and list_url:
-                row["list_url"] = list_url
+            if not row.get("source_url") and g.get("source_url"):
+                row["source_url"] = g["source_url"]
+            game_date = g.get("date") or row.get("date")
+            for candidate in (g.get("list_url"), *list_urls):
+                date_url = _schedule_url_for_date(candidate, game_date)
+                if date_url:
+                    if not row.get("list_url"):
+                        row["list_url"] = date_url
+                    break
     return out
 
 
@@ -172,15 +249,13 @@ def finals_committed() -> dict[str, dict]:
                       else "all periods inline" if (aq and len(aq) > 4)
                       else "regulation only")
             rec = {
-                "game_id": gid, "date": r.get("date") or fallback_date,
-                "away": r.get("away") or r.get("away_team"),
-                "home": r.get("home") or r.get("home_team"),
-                "away_pts": ap, "home_pts": hp,
+                "game_id": gid, "date": r.get("date") or fallback_date, "away": r.get("away"),
+                "home": r.get("home"), "away_pts": ap, "home_pts": hp,
                 "away_quarters": aq, "home_quarters": hq,
                 "ot_periods": r.get("ot_periods"),
                 "period_schema": schema,
-                # Each committed feed names its URL field differently. Accept the feed's
-                # own HTTPS URL only; a prose source label is never promoted into a link.
+                # Each committed feed names its URL field differently; read the feed's own key.
+                # `source` is used only when it is itself an https URL (never an inferred one).
                 "source_url": (r.get("source_url") or r.get("final_source_url")
                                or r.get("official_source")
                                or (r.get("source") if str(r.get("source") or "").startswith("https://") else None)),
@@ -190,35 +265,30 @@ def finals_committed() -> dict[str, dict]:
             prev = out.get(gid)
             if prev is None:
                 out[gid] = rec
-                continue
-
-            if rel not in prev["files"]:
-                prev["files"].append(rel)
-            # Conflicting finals are a finding, not something to average or enrich from.
-            if (prev["away_pts"], prev["home_pts"]) != (ap, hp):
-                prev.setdefault("conflicts", []).append(
-                    {"file": rel, "away_pts": ap, "home_pts": hp})
-                continue
-
-            # Several independent official captures can describe the same game. Earlier
-            # score-only rows often lack team names or document links; preserve those blanks
-            # until a later row with the SAME official game ID and matching final supplies
-            # the metadata. Never construct a URL from a date or matchup.
-            team_conflict = any(
-                prev.get(k) and rec.get(k) and prev[k] != rec[k]
-                for k in ("away", "home"))
-            if team_conflict:
-                prev.setdefault("conflicts", []).append({
-                    "file": rel, "reason": "sources disagree on the clubs",
-                    "previous_teams": [prev.get("away"), prev.get("home")],
-                    "new_teams": [rec.get("away"), rec.get("home")],
-                })
-                continue
-
-            for key in ("date", "away", "home", "away_quarters", "home_quarters",
-                        "ot_periods", "period_schema", "source_url", "gamebook_url"):
-                if prev.get(key) in (None, "") and rec.get(key) not in (None, ""):
-                    prev[key] = rec[key]
+            else:
+                if rel not in prev["files"]:
+                    prev["files"].append(rel)
+                # Conflicting finals or team identities are findings, never values to average.
+                if (prev["away_pts"], prev["home_pts"]) != (ap, hp):
+                    prev.setdefault("conflicts", []).append(
+                        {"file": rel, "away_pts": ap, "home_pts": hp})
+                    continue
+                team_conflict = any(
+                    prev.get(k) and rec.get(k) and prev[k] != rec[k]
+                    for k in ("away", "home"))
+                if team_conflict:
+                    prev.setdefault("conflicts", []).append({
+                        "file": rel, "reason": "sources disagree on the clubs",
+                        "previous_teams": [prev.get("away"), prev.get("home")],
+                        "new_teams": [rec.get("away"), rec.get("home")],
+                    })
+                    continue
+                # Consistent, independently committed source rows can fill only absent fields.
+                for field in ("date", "away", "home", "away_quarters", "home_quarters",
+                              "ot_periods", "period_schema", "source_url", "gamebook_url"):
+                    existing, candidate = prev.get(field), rec.get(field)
+                    if existing in (None, "", []) and candidate not in (None, "", []):
+                        prev[field] = candidate
     return out
 
 
@@ -239,27 +309,41 @@ def sealed_ids() -> dict[str, set]:
 
 
 def graded_ids() -> tuple[set, dict]:
-    """The distinct game ids a sealed pick was actually scored against.
-
-    Only the ledgers' graded rows count. ``finals_used`` is provenance for which
-    finals the settlement *read* — its 2026-11-18 capture file spans 2026-11-13→17,
-    so counting it here would report the pre-request 11/13 games as graded although
-    no sealed pick ever existed for them (session arena/af5df7a7-nba2, 2026-11-19:
-    the same rule the test below pins — a game that was never pre-registered can be
-    settled, but it can never be *graded*).
-    """
+    """Union distinct game ids explicitly settled by the v4 and nightly ledgers."""
     doc = maybe_load(SETTLED_ALL) or {}
+    pipeline = maybe_load(PIPELINE_SETTLEMENT) or {}
     graded: set = set()
     per_ledger = []
-    for L in doc.get("ledgers", []) or []:
-        rows = L.get("graded") or []
+    for ledger in doc.get("ledgers", []) or []:
+        rows = ledger.get("graded") or []
         ids = {r.get("game_id") for r in rows if isinstance(r, dict) and r.get("game_id")}
         graded |= ids
-        per_ledger.append({"ledger": L.get("ledger"), "n_graded": len(rows),
-                           "n_ungraded": len(L.get("ungraded") or []),
-                           "latest_graded_game_date": L.get("latest_graded_game_date")})
+        per_ledger.append({"ledger": ledger.get("ledger"), "n_graded": len(rows),
+                           "n_ungraded": len(ledger.get("ungraded") or []),
+                           "latest_graded_game_date": ledger.get("latest_graded_game_date"),
+                           "settlement_source": "data/v4/settlement/settled-all.json"})
+    pipeline_ledgers = []
+    for ledger in pipeline.get("ledgers", []) or []:
+        rows = ledger.get("settled_rows") or []
+        ids = {r.get("game_id") for r in rows if isinstance(r, dict) and r.get("game_id")}
+        graded |= ids
+        pipeline_ledgers.append({"ledger": ledger.get("ledger"),
+                                 "n_graded": len(ids),
+                                 "games_settled": ledger.get("games_settled"),
+                                 "games_expected": ledger.get("games_expected"),
+                                 "status": ledger.get("status"),
+                                 "settlement_source": "data/settlement.json"})
+
+    v4_settled = (doc.get("settlement") or {}).get("settled_at_utc")
+    pipeline_settled = pipeline.get("settled_at_utc")
+    stamps = [stamp for stamp in (v4_settled, pipeline_settled)
+              if _parse_utc(stamp) is not None]
+    latest_stamp = max(stamps, key=lambda stamp: _parse_utc(stamp)) if stamps else None
     return graded, {"per_ledger": per_ledger,
-                    "settled_at_utc": (doc.get("settlement") or {}).get("settled_at_utc"),
+                    "pipeline_ledgers": pipeline_ledgers,
+                    "settled_at_utc": latest_stamp,
+                    "v4_settled_at_utc": v4_settled,
+                    "pipeline_settled_at_utc": pipeline_settled,
                     "latest_graded_game_date": (doc.get("settlement") or {}).get("latest_graded_game_date")}
 
 
@@ -285,6 +369,11 @@ def build(today: str = AS_OF_DATE) -> dict:
     sched = scheduled()
     fin = finals_committed()
     graded, settle_info = graded_ids()
+    graded_dates = [fin[gid].get("date") for gid in graded
+                    if gid in fin and fin[gid].get("date")]
+    known_graded_dates = [d for d in [settle_info.get("latest_graded_game_date"),
+                                      *graded_dates] if d]
+    settle_info["latest_graded_game_date"] = max(known_graded_dates) if known_graded_dates else None
     sealed = sealed_ids()
 
     dates = sorted({g["date"] for g in sched.values() if g.get("date")}
@@ -303,7 +392,7 @@ def build(today: str = AS_OF_DATE) -> dict:
         if d >= today:
             # The published tree must not depend on the wall clock: pages.yml rebuilds the
             # site and fails if it differs from what is committed, so "has this date ended"
-            # is answered from the frozen AS_OF constant, not from datetime.now().
+            # is answered from the latest committed successful results capture, not now().
             reason = (f"this date has not ended yet (as-of {AS_OF_UTC} = "
                       f"{AS_OF_ET}) — no official final is claimed for a game that "
                       "has not finished")
@@ -334,8 +423,8 @@ def build(today: str = AS_OF_DATE) -> dict:
             "reason": reason,
             "game_ids": gids,
             "missing_final_ids": missing_final,
-            "list_url": next((g.get("list_url") for g in gs
-                              if g.get("list_url") and d in g.get("list_url", "")), None)
+            "list_url": next((_schedule_url_for_date(g.get("list_url"), d)
+                               for g in gs if _schedule_url_for_date(g.get("list_url"), d)), None)
                         or f"https://www.nba.com/schedule?date={d}",
         })
 
@@ -350,19 +439,12 @@ def build(today: str = AS_OF_DATE) -> dict:
             schema = "regulation quarters + a separate ot_quarters row (both committed feeds)"
         if not f:
             schema = "no final committed — no period row to hold"
-        # Committed feeds name the clubs their own way (away vs away_team); read every
-        # known name, and when no committed row carries the clubs the matchup cell stays
-        # BLANK — never the string "None @ None" (session arena/af5df7a7-nba2, 2026-11-19).
-        a_name = (g.get("away") or g.get("away_team")
-                  or (f or {}).get("away") or (f or {}).get("away_team"))
-        h_name = (g.get("home") or g.get("home_team")
-                  or (f or {}).get("home") or (f or {}).get("home_team"))
         games.append({
             "game_id": gid, "date": g.get("date") or (f or {}).get("date"),
-            "matchup": g.get("matchup")
-                       or (f"{a_name} @ {h_name}" if a_name and h_name else ""),
-            "away": a_name,
-            "home": h_name,
+            "matchup": g.get("matchup") or f"{g.get('away')} @ {g.get('home')}"
+                       or f"{(f or {}).get('away')} @ {(f or {}).get('home')}",
+            "away": g.get("away") or (f or {}).get("away"),
+            "home": g.get("home") or (f or {}).get("home"),
             "away_pts": (f or {}).get("away_pts"), "home_pts": (f or {}).get("home_pts"),
             "away_quarters": (f or {}).get("away_quarters"),
             "home_quarters": (f or {}).get("home_quarters"),
