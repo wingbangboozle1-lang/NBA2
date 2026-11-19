@@ -6055,3 +6055,7 @@ files in `nba2/v2/model.py` and `nba2/v2/travel.py`); `python3 -m nba2.v2.check`
 0 semantic**; `tools/check_links_all.py` **143 HTML / 7,472 internal links OK**; `git diff --check`
 passed. External links were inventoried by the checker, not fetched. No NBA values or source
 captures changed. **Status: done.**
+
+### Merge-conflict log — session `arena/9fef54cf-nba2` (2026-11-19 UTC)
+
+PR #135 went `CONFLICTING` against `main` after PR #134 (`arena/3a5c7c75-nba2`) merged. The only conflicting file was the append-only `COORDINATION.md`. Resolution: `origin/main` merged into `arena/9fef54cf-nba2` (commit `1e0c0fd`), and both sides kept in order, so the other session's entries are intact. No other file conflicted, and no content from another session was discarded. Checks re-run on the merge commit before the PR is merged.
