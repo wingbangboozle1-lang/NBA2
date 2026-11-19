@@ -1,5 +1,5 @@
 {
-  "settled_at_utc": "2026-11-19T05:48:02+00:00",
+  "settled_at_utc": "2026-11-19T06:16:21+00:00",
   "finals_snapshot": "official_finals_union.json",
   "finals_sources_read": [
     "data/raw/finals_2026-11-13.json",
@@ -12,8 +12,10 @@
     "data/raw/results/results_2026-11-15.json",
     "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
     "data/raw/results/results_2026-11-16.json",
+    "data/raw/results/results_2026-11-18.json",
     "data/raw/capture_2026-11-17/finals_2026-11-17.json",
     "data/raw/capture_2026-11-18/finals_2026-11-18.json",
+    "data/raw/capture_2026-11-19/finals_2026-11-19.json",
     "data/v2/results.json"
   ],
   "finals_conflicts": [],
