@@ -146,7 +146,7 @@
    "n_missing_final": 12,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:29:18Z = 2026-11-18 14:29 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600258",
     "0022600259",
@@ -185,7 +185,7 @@
    "n_missing_final": 4,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:29:18Z = 2026-11-18 14:29 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600270",
     "0022600271",
@@ -208,7 +208,7 @@
    "n_missing_final": 9,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:29:18Z = 2026-11-18 14:29 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600043",
     "0022600044",
@@ -241,7 +241,7 @@
    "n_missing_final": 6,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:29:18Z = 2026-11-18 14:29 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600274",
     "0022600275",
@@ -265,7 +265,7 @@
   {
    "game_id": "0022600034",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "NYK @ IND",
    "away": "NYK",
    "home": "IND",
    "away_pts": 104,
@@ -289,7 +289,7 @@
   {
    "game_id": "0022600035",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "MIL @ ORL",
    "away": "MIL",
    "home": "ORL",
    "away_pts": 99,
@@ -313,7 +313,7 @@
   {
    "game_id": "0022600036",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "CLE @ MIA",
    "away": "CLE",
    "home": "MIA",
    "away_pts": 121,
@@ -337,7 +337,7 @@
   {
    "game_id": "0022600037",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "ATL @ CHI",
    "away": "ATL",
    "home": "CHI",
    "away_pts": 117,
@@ -361,7 +361,7 @@
   {
    "game_id": "0022600038",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "MEM @ NOP",
    "away": "MEM",
    "home": "NOP",
    "away_pts": 142,
@@ -385,7 +385,7 @@
   {
    "game_id": "0022600039",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "UTA @ HOU",
    "away": "UTA",
    "home": "HOU",
    "away_pts": 118,
@@ -409,7 +409,7 @@
   {
    "game_id": "0022600040",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "GSW @ SAS",
    "away": "GSW",
    "home": "SAS",
    "away_pts": 85,
@@ -433,7 +433,7 @@
   {
    "game_id": "0022600041",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "POR @ SAC",
    "away": "POR",
    "home": "SAC",
    "away_pts": 120,
@@ -457,7 +457,7 @@
   {
    "game_id": "0022600042",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "OKC @ LAC",
    "away": "OKC",
    "home": "LAC",
    "away_pts": 112,
@@ -697,9 +697,9 @@
   {
    "game_id": "0022600231",
    "date": "2026-11-14",
-   "matchup": "None @ None",
-   "away": null,
-   "home": null,
+   "matchup": "DEN @ NOP",
+   "away": "DEN",
+   "home": "NOP",
    "away_pts": 116,
    "home_pts": 108,
    "away_quarters": [
@@ -719,8 +719,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 29+27+30+30=116 vs 116; home 23+28+31+26=108 vs 108",
    "graded": true,
-   "source_url": "https://www.nba.com/game/den-vs-nop-0022600231",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DENNOP_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-14.json",
     "data/raw/finals_all.json",
@@ -734,9 +734,9 @@
   {
    "game_id": "0022600232",
    "date": "2026-11-14",
-   "matchup": "None @ None",
-   "away": null,
-   "home": null,
+   "matchup": "DAL @ CLE",
+   "away": "DAL",
+   "home": "CLE",
    "away_pts": 117,
    "home_pts": 127,
    "away_quarters": [
@@ -756,8 +756,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 33+20+38+26=117 vs 117; home 33+38+34+22=127 vs 127",
    "graded": true,
-   "source_url": "https://www.nba.com/game/dal-vs-cle-0022600232",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DALCLE_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-14.json",
     "data/raw/finals_all.json",
@@ -771,9 +771,9 @@
   {
    "game_id": "0022600233",
    "date": "2026-11-14",
-   "matchup": "None @ None",
-   "away": null,
-   "home": null,
+   "matchup": "DET @ MIA",
+   "away": "DET",
+   "home": "MIA",
    "away_pts": 117,
    "home_pts": 137,
    "away_quarters": [
@@ -793,8 +793,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 39+21+26+31=117 vs 117; home 37+31+35+34=137 vs 137",
    "graded": true,
-   "source_url": "https://www.nba.com/game/det-vs-mia-0022600233",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_DETMIA_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-14.json",
     "data/raw/finals_all.json",
@@ -808,9 +808,9 @@
   {
    "game_id": "0022600234",
    "date": "2026-11-14",
-   "matchup": "None @ None",
-   "away": null,
-   "home": null,
+   "matchup": "BKN @ MEM",
+   "away": "BKN",
+   "home": "MEM",
    "away_pts": 110,
    "home_pts": 129,
    "away_quarters": [
@@ -830,8 +830,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 23+31+30+26=110 vs 110; home 38+33+32+26=129 vs 129",
    "graded": true,
-   "source_url": "https://www.nba.com/game/bkn-vs-mem-0022600234",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_BKNMEM_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-14.json",
     "data/raw/finals_all.json",
@@ -845,9 +845,9 @@
   {
    "game_id": "0022600235",
    "date": "2026-11-14",
-   "matchup": "None @ None",
-   "away": null,
-   "home": null,
+   "matchup": "CHI @ MIN",
+   "away": "CHI",
+   "home": "MIN",
    "away_pts": 117,
    "home_pts": 106,
    "away_quarters": [
@@ -867,8 +867,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 29+29+30+29=117 vs 117; home 17+28+35+26=106 vs 106",
    "graded": true,
-   "source_url": "https://www.nba.com/game/chi-vs-min-0022600235",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_CHIMIN_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-14.json",
     "data/raw/finals_all.json",
@@ -904,8 +904,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 35+22+30+37=124 vs 124; home 29+29+39+34=131 vs 131",
    "graded": true,
-   "source_url": "https://www.nba.com/game/ind-vs-phi-0022600236",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -943,8 +943,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 33+31+40+27=131 vs 131; home 24+30+26+43=123 vs 123",
    "graded": true,
-   "source_url": "https://www.nba.com/game/lal-vs-phx-0022600237",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -982,8 +982,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 21+31+31+22=105 vs 105; home 22+29+33+29=113 vs 113",
    "graded": true,
-   "source_url": "https://www.nba.com/game/cha-vs-lac-0022600238",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -1021,8 +1021,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 31+27+23+29=110 vs 110; home 33+22+26+21=102 vs 102",
    "graded": true,
-   "source_url": "https://www.nba.com/game/sas-vs-uta-0022600239",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -1060,8 +1060,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 9+28+34+23=94 vs 94; home 42+25+37+27=131 vs 131",
    "graded": true,
-   "source_url": "https://www.nba.com/game/dal-vs-bos-0022600240",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -1097,12 +1097,12 @@
     13
    ],
    "ot_periods": 1,
-   "period_schema": "all periods inline",
+   "period_schema": "regulation quarters + a separate ot_quarters row (both committed feeds)",
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 23+24+20+28+17=112 vs 112; home 17+26+31+21+13=108 vs 108",
    "graded": true,
-   "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600241",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -1140,8 +1140,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 36+37+46+28=147 vs 147; home 31+23+34+31=119 vs 119",
    "graded": true,
-   "source_url": "https://www.nba.com/game/hou-vs-was-0022600242",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -1179,8 +1179,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 18+37+32+26=113 vs 113; home 37+16+27+26=106 vs 106",
    "graded": true,
-   "source_url": "https://www.nba.com/game/atl-vs-mil-0022600243",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -1218,8 +1218,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 32+30+32+31=125 vs 125; home 24+26+30+23=103 vs 103",
    "graded": true,
-   "source_url": "https://www.nba.com/game/okc-vs-sac-0022600244",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-15.json",
     "data/raw/finals_all.json",
@@ -1257,8 +1257,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 20+30+25+40=115 vs 115; home 17+24+36+28=105 vs 105",
    "graded": true,
-   "source_url": "https://www.nba.com/game/orl-vs-bos-0022600245",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-16.json",
     "data/raw/finals_all.json",
@@ -1296,8 +1296,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 31+17+31+36=115 vs 115; home 25+32+31+38=126 vs 126",
    "graded": true,
-   "source_url": "https://www.nba.com/game/chi-vs-cle-0022600246",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_CHICLE_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-16.json",
     "data/raw/finals_all.json",
@@ -1335,8 +1335,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 33+26+42+35=136 vs 136; home 35+34+18+33=120 vs 120",
    "graded": true,
-   "source_url": "https://www.nba.com/game/mem-vs-was-0022600247",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_MEMWAS_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-16.json",
     "data/raw/finals_all.json",
@@ -1374,8 +1374,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 33+45+27+30=135 vs 135; home 26+33+36+28=123 vs 123",
    "graded": true,
-   "source_url": "https://www.nba.com/game/phi-vs-bkn-0022600248",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHIBKN_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-16.json",
     "data/raw/finals_all.json",
@@ -1413,8 +1413,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 15+31+35+29=110 vs 110; home 29+33+39+27=128 vs 128",
    "graded": true,
-   "source_url": "https://www.nba.com/game/hou-vs-mia-0022600249",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_HOUMIA_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-16.json",
     "data/raw/finals_all.json",
@@ -1452,8 +1452,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 26+25+22+25=98 vs 98; home 26+33+28+19=106 vs 106",
    "graded": true,
-   "source_url": "https://www.nba.com/game/por-vs-min-0022600250",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PORMIN_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-16.json",
     "data/raw/finals_all.json",
@@ -1491,8 +1491,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 11+25+29+29=94 vs 94; home 35+26+32+22=115 vs 115",
    "graded": true,
-   "source_url": "https://www.nba.com/game/gsw-vs-nop-0022600251",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_GSWNOP_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-16.json",
     "data/raw/finals_all.json",
@@ -1530,8 +1530,8 @@
    "quarter_verdict": "quarters sum to the final",
    "quarter_detail": "away 20+36+34+27=117 vs 117; home 24+29+29+23=105 vs 105",
    "graded": true,
-   "source_url": "https://www.nba.com/game/phx-vs-den-0022600252",
-   "gamebook_url": null,
+   "source_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261116/20261116_PHXDEN_book.pdf",
    "finals_files": [
     "data/raw/finals_2026-11-16.json",
     "data/raw/finals_all.json",

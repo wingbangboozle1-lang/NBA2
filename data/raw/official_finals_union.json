@@ -419,18 +419,8 @@
         "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15.json"
       ],
-      "away_quarters": [
-        9,
-        28,
-        34,
-        23
-      ],
-      "home_quarters": [
-        42,
-        25,
-        37,
-        27
-      ],
+      "away_quarters": null,
+      "home_quarters": null,
       "ot_periods": 0,
       "ot_quarters": null
     },
@@ -450,18 +440,23 @@
         23,
         24,
         20,
-        28,
-        17
+        28
       ],
       "home_quarters": [
         17,
         26,
         31,
-        21,
-        13
+        21
       ],
       "ot_periods": 1,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [
+          17
+        ],
+        "home": [
+          13
+        ]
+      }
     },
     {
       "game_id": "0022600242",
@@ -488,7 +483,10 @@
         31
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600243",
@@ -515,7 +513,10 @@
         26
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600244",
@@ -542,7 +543,10 @@
         23
       ],
       "ot_periods": 0,
-      "ot_quarters": null
+      "ot_quarters": {
+        "away": [],
+        "home": []
+      }
     },
     {
       "game_id": "0022600245",
@@ -762,8 +766,8 @@
     },
     {
       "game_id": "0022600253",
-      "away": "NYK",
-      "home": "TOR",
+      "away": null,
+      "home": null,
       "away_pts": 111,
       "home_pts": 102,
       "source": "https://www.nba.com/game/nyk-vs-tor-0022600253",
@@ -771,25 +775,15 @@
         "data/raw/finals_2026-11-17.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": [
-        23,
-        31,
-        26,
-        31
-      ],
-      "home_quarters": [
-        29,
-        21,
-        33,
-        19
-      ],
+      "away_quarters": null,
+      "home_quarters": null,
       "ot_periods": 0,
       "ot_quarters": null
     },
     {
       "game_id": "0022600254",
-      "away": "POR",
-      "home": "MIN",
+      "away": null,
+      "home": null,
       "away_pts": 105,
       "home_pts": 106,
       "source": "https://www.nba.com/game/por-vs-min-0022600254",
@@ -797,25 +791,15 @@
         "data/raw/finals_2026-11-17.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": [
-        17,
-        31,
-        31,
-        26
-      ],
-      "home_quarters": [
-        29,
-        20,
-        30,
-        27
-      ],
+      "away_quarters": null,
+      "home_quarters": null,
       "ot_periods": 0,
       "ot_quarters": null
     },
     {
       "game_id": "0022600255",
-      "away": "DET",
-      "home": "SAS",
+      "away": null,
+      "home": null,
       "away_pts": 105,
       "home_pts": 93,
       "source": "https://www.nba.com/game/det-vs-sas-0022600255",
@@ -823,25 +807,15 @@
         "data/raw/finals_2026-11-17.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": [
-        26,
-        29,
-        23,
-        27
-      ],
-      "home_quarters": [
-        33,
-        21,
-        18,
-        21
-      ],
+      "away_quarters": null,
+      "home_quarters": null,
       "ot_periods": 0,
       "ot_quarters": null
     },
     {
       "game_id": "0022600256",
-      "away": "CHA",
-      "home": "LAL",
+      "away": null,
+      "home": null,
       "away_pts": 114,
       "home_pts": 118,
       "source": "https://www.nba.com/game/cha-vs-lal-0022600256",
@@ -849,27 +823,15 @@
         "data/raw/finals_2026-11-17.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": [
-        34,
-        32,
-        28,
-        17,
-        3
-      ],
-      "home_quarters": [
-        30,
-        29,
-        22,
-        30,
-        7
-      ],
+      "away_quarters": null,
+      "home_quarters": null,
       "ot_periods": 1,
       "ot_quarters": null
     },
     {
       "game_id": "0022600257",
-      "away": "UTA",
-      "home": "LAC",
+      "away": null,
+      "home": null,
       "away_pts": 132,
       "home_pts": 107,
       "source": "https://www.nba.com/game/uta-vs-lac-0022600257",
@@ -877,18 +839,8 @@
         "data/raw/finals_2026-11-17.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": [
-        35,
-        23,
-        30,
-        44
-      ],
-      "home_quarters": [
-        29,
-        33,
-        24,
-        21
-      ],
+      "away_quarters": null,
+      "home_quarters": null,
       "ot_periods": 0,
       "ot_quarters": null
     }

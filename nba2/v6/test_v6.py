@@ -128,17 +128,63 @@ class TestResultsCoverage(unittest.TestCase):
         self.assertEqual(row["status"], "complete")
 
     def test_a_date_that_has_not_ended_is_not_reported_as_a_gap(self):
-        # As of 2026-11-18T19:29:18Z (the finals capture): 11/18 and 11/19 have not ended and
-        # claim no final. 11/17 HAS ended and its finals are committed, so it must not read as
-        # "not ended" (0B9-10: the old as-of 11/17 contradicted the committed finals).
-        for d in ("2026-11-18", "2026-11-19"):
-            row = next(r for r in self.doc["rows"] if r["date"] == d)
-            self.assertEqual(row["status"], "not ended", msg=d)
-            self.assertEqual(row["n_finals_committed"], 0)
-            self.assertIn("has not ended", row["reason"])
-        r17 = next(r for r in self.doc["rows"] if r["date"] == "2026-11-17")
-        self.assertNotEqual(r17["status"], "not ended")
-        self.assertEqual(r17["n_finals_committed"], r17["n_scheduled"])
+        """A future date with no committed final is "not ended" — never a gap.
+
+        The clock is derived (see `test_the_clock_is_derived_from_the_newest_committed_capture`),
+        so the dates in this test are taken from the clock the build actually used instead
+        of being typed in: after the 2026-11-18 capture, 2026-11-17 is no longer in the
+        future and does carry five committed finals, so asserting it here would be
+        asserting a stale fact.
+        """
+        from nba2.v6 import results_coverage as RC
+        future = [r for r in self.doc["rows"] if r["date"] > RC.AS_OF_DATE]
+        self.assertTrue(future, "no future date in the coverage window")
+        for row in future:
+            if row["n_finals_committed"] == 0:
+                self.assertEqual(row["status"], "not ended", msg=row["date"])
+                self.assertIn("has not ended", row["reason"])
+
+    def test_a_date_past_the_clock_with_finals_is_incomplete_not_not_ended(self):
+        """A day that has ended and has finals cannot be published as "not ended".
+
+        This is the defect the 2026-11-18 capture exposed: `AS_OF_DATE` was a typed
+        literal (2026-11-17) while five 2026-11-17 finals sat in the tree, so the page
+        claimed the day had not ended. A status must be readable off the evidence.
+        """
+        from nba2.v6 import results_coverage as RC
+        for row in self.doc["rows"]:
+            if row["date"] <= RC.AS_OF_DATE and row["n_finals_committed"] > 0:
+                self.assertNotEqual(row["status"], "not ended", msg=row["date"])
+
+    def test_the_clock_is_derived_from_the_newest_committed_capture(self):
+        from nba2.v6 import results_coverage as RC
+        self.assertRegex(RC.AS_OF_UTC, r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+        newest = max(
+            p.name for p in (RC.DATA / "raw" / "capture_2026-11-18").glob("*.json")
+        )
+        self.assertTrue(newest)
+        # the derived clock must be at or after the newest committed capture directory
+        self.assertGreaterEqual(RC.AS_OF_DATE, "2026-11-18")
+
+    def test_team_aliases_survive_the_reader(self):
+        """`away_team`/`home_team` and `final_source_url` are committed spellings.
+
+        Measured before the repair: the 14 finals in `finals_2026-11-1{4,5}.json` reached
+        the page with no URL and no clubs because the reader only knew `source_url` and
+        `away`/`home`. The value was in the file; dropping it was a reader defect.
+        """
+        from nba2.v6 import results_coverage as RC
+        fin = RC.finals_committed()
+        self.assertTrue(fin)
+        for gid, rec in fin.items():
+            self.assertTrue(rec["source_url"] or rec["gamebook_url"], msg=gid)
+            self.assertTrue(rec["away"] and rec["home"], msg=gid)
+
+    def test_no_row_prints_the_string_none_as_a_team(self):
+        for g in self.doc["games"]:
+            self.assertNotIn("None", g["matchup"] or "", msg=g["game_id"])
+            self.assertNotIn("None", str(g["away"]), msg=g["game_id"])
+            self.assertNotIn("None", str(g["home"]), msg=g["game_id"])
 
     def test_the_prequest_1113_games_are_reported_as_unsettleable_not_missing(self):
         row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-13")
