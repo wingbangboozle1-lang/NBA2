@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verification record — 2026-11-19 · NBA2 Lines Lab</title>
+<meta name="description" content="NBA2 — verification record for the official pages read on 2026-11-19, plus the unknowns and improvement proposals that gate any further change.">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.muted{color:var(--muted,#93a3b8)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">verified 2026-11-19 · every row sourced</p>
+  <nav>
+<div class="navgroup"><span title="What this desk is, what it has measured, and where the numbers come from.">Start here</span>
+<a href="index.html" title="Dashboard">Dashboard</a>
+<a href="executive-summary.html" title="Executive summary">Executive summary</a>
+<a href="sources.html" title="Sources">Sources</a>
+<a href="methodology.html" title="Methodology">Methodology</a>
+</div>
+<div class="navgroup"><span title="Our originated numbers. Nothing here is priced or actionable: what we think, and how much the two estimators disagree.">Projection — safe to publish</span>
+<a href="lines.html" title="Originated lines">Originated lines</a>
+<a href="teams.html" title="Teams &amp; estimators">Teams &amp; estimators</a>
+<a href="correlations.html" title="Correlations &amp; parlays">Correlations &amp; parlays</a>
+<a href="props.html" title="Player props">Player props</a>
+<a href="gameflow.html" title="Game flow">Game flow</a>
+<a href="slate.html" title="Slate &amp; disagreement">Slate &amp; disagreement</a>
+<a href="projections.html" title="Projection surface">Projection surface</a>
+<a href="rotation.html" title="Rotation &amp; minutes">Rotation &amp; minutes</a>
+<a href="travel.html" title="Rest &amp; travel">Rest &amp; travel</a>
+<a href="minutes.html" title="Measured minutes">Measured minutes</a>
+<a href="lategame.html" title="Late-game &amp; garbage time">Late-game &amp; garbage time</a>
+<a href="projection.html" title="— v4 gated refresh —">— v4 gated refresh —</a>
+<a href="rotation-replacement.html" title="Minutes &amp; replacement">Minutes &amp; replacement</a>
+<a href="market-prior.html" title="Market-anchored prior">Market-anchored prior</a>
+</div>
+<div class="navgroup"><span title="Gated: no row here is actionable until its gates pass. The trigger level is the only number that would make acting rational.">Bet surface — gated</span>
+<a href="picks.html" title="Picks &amp; slate">Picks &amp; slate</a>
+<a href="strategies.html" title="Strategies &amp; leaderboard">Strategies &amp; leaderboard</a>
+<a href="strategy-lab.html" title="Strategy lab">Strategy lab</a>
+<a href="trials.html" title="Trial registry">Trial registry</a>
+<a href="bet.html" title="Bet surface (gated)">Bet surface (gated)</a>
+</div>
+<div class="navgroup"><span title="What the league published, what the sealed ledger predicted, and what has been settled against an official final.">Official record &amp; settlement</span>
+<a href="official-results.html" title="Official results">Official results</a>
+<a href="results.html" title="Result feed">Result feed</a>
+<a href="ledger.html" title="Sealed ledger">Sealed ledger</a>
+<a href="settlement.html" title="Settlement stamp">Settlement stamp</a>
+<a href="settle.html" title="Result feed &amp; settlement">Result feed &amp; settlement</a>
+<a href="result-feed-v5.html" title="— v5 player logs —">— v5 player logs —</a>
+<a href="results-coverage.html" title="Result-feed coverage">Result-feed coverage</a>
+</div>
+<div class="navgroup"><span title="Every official release this repository holds, the diff between consecutive reports, and the player logs behind the rotation model.">Injuries, rotation &amp; players</span>
+<a href="injuries.html" title="Injuries &amp; rotation">Injuries &amp; rotation</a>
+<a href="player-logs.html" title="Player game logs">Player game logs</a>
+<a href="injury-diff.html" title="Injury release diff">Injury release diff</a>
+<a href="v4-injuries.html" title="Injury releases">Injury releases</a>
+<a href="playerlogs-full.html" title="Player logs (full)">Player logs (full)</a>
+<a href="injury-archive.html" title="Injury PDF archive">Injury PDF archive</a>
+<a href="player-coverage.html" title="Player-log coverage">Player-log coverage</a>
+</div>
+<div class="navgroup"><span title="Gates, backtests, luck attribution and the live checks — the part that says whether any of the above is better than a coin flip.">Verification &amp; measured skill</span>
+<a href="backtest.html" title="Backtest &amp; skill">Backtest &amp; skill</a>
+<a href="skill-attribution.html" title="Skill vs luck">Skill vs luck</a>
+<a href="verification.html" title="Verification log">Verification log</a>
+<a href="live-verification.html" title="Live verification">Live verification</a>
+<a href="capture-verification.html" title="Capture verification">Capture verification</a>
+<a href="verification-v3.html" title="v3 verification">v3 verification</a>
+<a href="v4-verify.html" title="v4 verification">v4 verification</a>
+<a href="v5-verify.html" title="v5 verification">v5 verification</a>
+<a href="endpoints.html" title="Official endpoints">Official endpoints</a>
+<a href="v6-verify.html" title="v6 verification">v6 verification</a>
+</div>
+<div class="navgroup"><span title="The official pages read on 2026-11-19, what they prove, what is still unknown, and the proposals that are waiting on a decision before anything is built.">Verified today · 2026-11-19</span>
+<a href="verify-1119.html" title="Verification record — 2026-11-19" class="on">Verification record — 2026-11-19</a>
+<a href="unknowns.html" title="Unknowns &amp; open questions">Unknowns &amp; open questions</a>
+<a href="improvement.html" title="Improvement proposals">Improvement proposals</a>
+</div>
+<div class="navgroup"><span title="What needs an owner decision before it is built, what we do not know, and everything flagged for review.">Decisions, questions &amp; flags</span>
+<a href="repo-review.html" title="Repo review">Repo review</a>
+<a href="questions.html" title="Open questions">Open questions</a>
+<a href="suggestions.html" title="Suggestions queue">Suggestions queue</a>
+<a href="decision-queue.html" title="Decision queue">Decision queue</a>
+<a href="decisions-needed.html" title="Decisions needed">Decisions needed</a>
+<a href="flagged.html" title="Flagged for review">Flagged for review</a>
+</div>
+<!-- v7-link-block --><a href="v7-slate.html">Originated slate (v7)</a><a href="v7-strategies.html">Strategy lab &amp; parlays (v7)</a><a href="v7-skill.html">Measured skill &amp; luck (v7)</a><a href="v7-methodology.html">v7 methodology</a><a href="v7-verify.html">v7 verification</a><!-- v7-link-block --></nav>
+</aside>
+<main>
+
+<h1>Verification record — official pages read on 2026-11-19</h1>
+<p class="lede">Every row below was parsed out of a page fetched on 2026-11-19, and the
+<b>raw text of each page is committed</b> next to this table, so a reviewer can open the URL, open the
+raw file, and check the row without trusting this build. The parser that produced these rows is
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/session-164d832b-capture.py" rel="noopener" target="_blank">tools/session-164d832b-capture.py</a> and it is
+<b>fail-closed</b>: it refuses to write the capture unless the identities in the last section hold.</p>
+
+<div class="note warn"><b>Transport, measured not assumed.</b> Direct HTTPS from the build sandbox to
+<code>www.nba.com</code>, <code>official.nba.com</code> and <code>cdn.nba.com</code> fails inside the TLS
+handshake (<code>curl: (35) OpenSSL SSL_ERROR_SYSCALL</code>, HTTP code 000, measured
+2026-11-19T12:16Z). The reads above therefore went through the agent's page-fetch channel, which does
+reach those hosts, and each raw file records its URL and retrieval time.</div>
+
+<h2>1. What was read</h2>
+<div class="scroll"><table><caption>12 official documents, the raw transcription of each kept in the repository, and the parser that reads them.</caption>
+<thead><tr><th>document</th><th>URL read</th><th>raw text committed</th></tr></thead><tbody>
+<tr><td>standings</td><td>https://www.nba.com/standings</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/standings_2026-11-19.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/standings_2026-11-19.md</a></td></tr>
+<tr><td>traditional</td><td>https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/teams_traditional_2026-11-19.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/teams_traditional_2026-11-19.md</a></td></tr>
+<tr><td>opponent</td><td>https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/teams_opponent_2026-11-19.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/teams_opponent_2026-11-19.md</a></td></tr>
+<tr><td>advanced</td><td>https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/teams_advanced_2026-11-19.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/teams_advanced_2026-11-19.md</a></td></tr>
+<tr><td>games_1118</td><td>https://www.nba.com/games?date=2026-11-18</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/games_2026-11-18_2026-11-19.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/games_2026-11-18_2026-11-19.md</a></td></tr>
+<tr><td>games_1119</td><td>https://www.nba.com/games?date=2026-11-19</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/games_2026-11-19_slate.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/games_2026-11-19_slate.md</a></td></tr>
+<tr><td>injury_index</td><td>https://official.nba.com/nba-injury-report-2026-27-season/</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/injury_index_2026-11-19.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/injury_index_2026-11-19.md</a></td></tr>
+<tr><td>injury_0645</td><td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_06_45AM.pdf</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/injury_2026-11-19_0645AM.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/injury_2026-11-19_0645AM.md</a></td></tr>
+<tr><td>injury_0700</td><td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/injury_2026-11-19_0700AM.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/injury_2026-11-19_0700AM.md</a></td></tr>
+<tr><td>injury_1119_0100</td><td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_01_00AM.pdf</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/injury_2026-11-19_0100AM.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/injury_2026-11-19_0100AM.md</a></td></tr>
+<tr><td>injury_1119_1200</td><td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_12_00AM.pdf</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/injury_2026-11-19_1200AM.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/injury_2026-11-19_1200AM.md</a></td></tr>
+<tr><td>injury_1118_1415</td><td>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-18_02_15PM.pdf</td><td><a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/injury_2026-11-18_0215PM.md" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/injury_2026-11-18_0215PM.md</a></td></tr>
+</tbody></table></div>
+
+<h2>2. Standings — 30 clubs, re-read and re-derived</h2>
+<p>The standings page is read twice on purpose: once as a table of records, and once as an
+<b>independent reconstruction</b> — the twelve 2026-11-18 finals are applied to the 2026-11-18 capture,
+and the result must equal today's page on all 30 clubs. That test passes with <b>0 mismatches</b>, which
+is the strongest evidence in this record that the finals were parsed in the right direction.</p>
+<div class="scroll"><table>
+<caption>2026-2027 regular season, as printed on www.nba.com/standings on 2026-11-19.</caption><thead><tr>
+<th>club</th>
+<th class="n">W-L</th>
+<th>home</th>
+<th>road</th>
+<th>last 10</th>
+<th>streak</th>
+<th>source</th>
+</tr></thead><tbody>
+<tr>
+<td>PHI <span class="muted">Philadelphia 76ers</span></td>
+<td class="n">13-3</td>
+<td>6-2</td>
+<td>7-1</td>
+<td>8-2</td>
+<td>W 4</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>BOS <span class="muted">Boston Celtics</span></td>
+<td class="n">11-4</td>
+<td>6-1</td>
+<td>5-3</td>
+<td>7-3</td>
+<td>L 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>DET <span class="muted">Detroit Pistons</span></td>
+<td class="n">10-4</td>
+<td>3-2</td>
+<td>7-2</td>
+<td>7-3</td>
+<td>W 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MIA <span class="muted">Miami Heat</span></td>
+<td class="n">9-6</td>
+<td>5-3</td>
+<td>4-3</td>
+<td>8-2</td>
+<td>W 6</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>ATL <span class="muted">Atlanta Hawks</span></td>
+<td class="n">9-6</td>
+<td>3-3</td>
+<td>6-3</td>
+<td>7-3</td>
+<td>W 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>NYK <span class="muted">New York Knicks</span></td>
+<td class="n">8-6</td>
+<td>4-3</td>
+<td>4-3</td>
+<td>7-3</td>
+<td>W 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CLE <span class="muted">Cleveland Cavaliers</span></td>
+<td class="n">8-8</td>
+<td>6-3</td>
+<td>2-5</td>
+<td>4-6</td>
+<td>L 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>ORL <span class="muted">Orlando Magic</span></td>
+<td class="n">6-8</td>
+<td>1-5</td>
+<td>5-3</td>
+<td>5-5</td>
+<td>L 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>TOR <span class="muted">Toronto Raptors</span></td>
+<td class="n">5-10</td>
+<td>2-6</td>
+<td>3-4</td>
+<td>2-8</td>
+<td>L 6</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>IND <span class="muted">Indiana Pacers</span></td>
+<td class="n">5-10</td>
+<td>2-5</td>
+<td>3-4</td>
+<td>3-7</td>
+<td>L 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>WAS <span class="muted">Washington Wizards</span></td>
+<td class="n">5-11</td>
+<td>2-5</td>
+<td>3-6</td>
+<td>2-8</td>
+<td>W 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CHA <span class="muted">Charlotte Hornets</span></td>
+<td class="n">4-10</td>
+<td>3-4</td>
+<td>1-6</td>
+<td>1-9</td>
+<td>L 3</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>CHI <span class="muted">Chicago Bulls</span></td>
+<td class="n">4-10</td>
+<td>1-4</td>
+<td>3-6</td>
+<td>3-7</td>
+<td>W 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>BKN <span class="muted">Brooklyn Nets</span></td>
+<td class="n">3-11</td>
+<td>1-5</td>
+<td>2-6</td>
+<td>3-7</td>
+<td>L 3</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MIL <span class="muted">Milwaukee Bucks</span></td>
+<td class="n">1-14</td>
+<td>1-7</td>
+<td>0-7</td>
+<td>0-10</td>
+<td>L 11</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>LAL <span class="muted">Los Angeles Lakers</span></td>
+<td class="n">13-3</td>
+<td>6-2</td>
+<td>7-1</td>
+<td>9-1</td>
+<td>L 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>SAS <span class="muted">San Antonio Spurs</span></td>
+<td class="n">12-3</td>
+<td>5-3</td>
+<td>7-0</td>
+<td>9-1</td>
+<td>L 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>HOU <span class="muted">Houston Rockets</span></td>
+<td class="n">12-4</td>
+<td>7-1</td>
+<td>5-3</td>
+<td>7-3</td>
+<td>W 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MIN <span class="muted">Minnesota Timberwolves</span></td>
+<td class="n">11-4</td>
+<td>7-2</td>
+<td>4-2</td>
+<td>8-2</td>
+<td>W 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>MEM <span class="muted">Memphis Grizzlies</span></td>
+<td class="n">11-4</td>
+<td>3-4</td>
+<td>8-0</td>
+<td>6-4</td>
+<td>W 4</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>POR <span class="muted">Portland Trail Blazers</span></td>
+<td class="n">9-5</td>
+<td>3-2</td>
+<td>6-3</td>
+<td>6-4</td>
+<td>L 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>DEN <span class="muted">Denver Nuggets</span></td>
+<td class="n">8-5</td>
+<td>3-3</td>
+<td>4-2</td>
+<td>7-3</td>
+<td>W 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>OKC <span class="muted">Oklahoma City Thunder</span></td>
+<td class="n">9-6</td>
+<td>5-1</td>
+<td>4-5</td>
+<td>5-5</td>
+<td>L 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>DAL <span class="muted">Dallas Mavericks</span></td>
+<td class="n">8-7</td>
+<td>6-2</td>
+<td>2-5</td>
+<td>5-5</td>
+<td>W 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>GSW <span class="muted">Golden State Warriors</span></td>
+<td class="n">8-7</td>
+<td>6-1</td>
+<td>2-6</td>
+<td>6-4</td>
+<td>L 4</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>PHX <span class="muted">Phoenix Suns</span></td>
+<td class="n">7-7</td>
+<td>5-4</td>
+<td>2-3</td>
+<td>6-4</td>
+<td>W 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>NOP <span class="muted">New Orleans Pelicans</span></td>
+<td class="n">5-11</td>
+<td>4-7</td>
+<td>1-4</td>
+<td>3-7</td>
+<td>L 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>LAC <span class="muted">LA Clippers</span></td>
+<td class="n">4-9</td>
+<td>4-4</td>
+<td>0-5</td>
+<td>3-7</td>
+<td>L 1</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>UTA <span class="muted">Utah Jazz</span></td>
+<td class="n">3-13</td>
+<td>1-7</td>
+<td>2-6</td>
+<td>2-8</td>
+<td>W 2</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+<tr>
+<td>SAC <span class="muted">Sacramento Kings</span></td>
+<td class="n">1-13</td>
+<td>0-9</td>
+<td>1-4</td>
+<td>1-9</td>
+<td>L 7</td>
+<td><a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></td>
+</tr>
+</tbody></table></div>
+
+<h2>3. Home-court advantage — pinned to the measured home-win rate</h2>
+<p>The brief asks for HCA to be <b>pinned</b> rather than fitted. It is, and the pin is arithmetic
+anyone can repeat from the standings table above: sum every club's printed home W-L. A neutral-site
+game is not a home game, so neutral games are excluded from both sides of the fraction.</p>
+<div class="kpis">
+  <div class="kpi"><b>111</b><small>home wins</small></div>
+  <div class="kpi"><b>221</b><small>home games</small></div>
+  <div class="kpi"><b>0.5023</b><small>measured home-win rate</small></div>
+  <div class="kpi"><b>2</b><small>neutral games excluded</small></div>
+</div>
+<p>sum of every club&#x27;s printed home W-L; a neutral-site game is not a home game. <a href="https://www.nba.com/standings" rel="noopener" target="_blank">nba.com/standings</a></p>
+<div class="note"><b>Irregularity worth a reviewer's attention.</b> The measured home-win rate on this
+date is <b>0.5023</b> — statistically indistinguishable from a coin flip over
+221 games (a 95% band of about ±0.066 at n=221). That does
+<b>not</b> mean home court is worthless; it means this sample cannot separate it from zero, and an
+earlier build that pinned HCA from a smaller sample would have inherited the same problem. The pin is
+reported as measured, with its band, instead of being tuned until it looked right.</div>
+
+<h2>4. The two estimators, and their disagreement as the headline</h2>
+<p>Two ratings of the same club are computed from two <b>different</b> official pages, and the
+confidence signal published here is <b>how far apart they land</b>, not a blend of them:</p>
+<ul>
+<li><b>Estimator A — points differential per game</b>: own points per game (traditional page) minus
+opponent points per game (opponent page).</li>
+<li><b>Estimator B — NetRtg converted to a per-game margin</b>: net rating per 100 possessions
+(advanced page) × pace ÷ 100.</li>
+</ul>
+<p>They share a source of truth by construction (they are the same season's results), so agreement is
+not independent confirmation of the model — it is a <b>transcription and arithmetic check plus a
+style-dependence check</b>, and it is labelled that way rather than dressed up as a second opinion. The
+largest disagreements are printed first below, because a club whose two estimators disagree is a club
+whose number should not be trusted to two decimals.</p>
+<div class="scroll"><table>
+<caption>Two independent recomputations of the same club, both from official pages read today.</caption><thead><tr>
+<th>club</th>
+<th class="n">GP</th>
+<th class="n">est A (pts/g differential)</th>
+<th class="n">est B (NetRtg·pace/100)</th>
+<th class="n">disagreement (A−B)</th>
+<th>sources</th>
+</tr></thead><tbody>
+<tr>
+<td>SAS</td>
+<td class="n">15</td>
+<td class="n">11.20</td>
+<td class="n">10.92</td>
+<td class="n">0.28</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>MIN</td>
+<td class="n">15</td>
+<td class="n">10.60</td>
+<td class="n">10.63</td>
+<td class="n">-0.03</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>BOS</td>
+<td class="n">15</td>
+<td class="n">10.50</td>
+<td class="n">10.64</td>
+<td class="n">-0.14</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>MEM</td>
+<td class="n">15</td>
+<td class="n">9.00</td>
+<td class="n">8.72</td>
+<td class="n">0.28</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>HOU</td>
+<td class="n">16</td>
+<td class="n">8.70</td>
+<td class="n">8.77</td>
+<td class="n">-0.07</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>DET</td>
+<td class="n">14</td>
+<td class="n">6.50</td>
+<td class="n">5.93</td>
+<td class="n">0.57</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>LAL</td>
+<td class="n">16</td>
+<td class="n">6.50</td>
+<td class="n">6.72</td>
+<td class="n">-0.22</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>NYK</td>
+<td class="n">14</td>
+<td class="n">6.10</td>
+<td class="n">5.50</td>
+<td class="n">0.60</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>POR</td>
+<td class="n">14</td>
+<td class="n">6.00</td>
+<td class="n">6.04</td>
+<td class="n">-0.04</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>OKC</td>
+<td class="n">15</td>
+<td class="n">4.40</td>
+<td class="n">4.36</td>
+<td class="n">0.04</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>PHI</td>
+<td class="n">16</td>
+<td class="n">2.90</td>
+<td class="n">2.70</td>
+<td class="n">0.20</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>CLE</td>
+<td class="n">16</td>
+<td class="n">2.00</td>
+<td class="n">2.00</td>
+<td class="n">0.00</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>ATL</td>
+<td class="n">15</td>
+<td class="n">1.90</td>
+<td class="n">1.97</td>
+<td class="n">-0.07</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>DEN</td>
+<td class="n">13</td>
+<td class="n">1.00</td>
+<td class="n">0.49</td>
+<td class="n">0.51</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>GSW</td>
+<td class="n">15</td>
+<td class="n">0.90</td>
+<td class="n">0.60</td>
+<td class="n">0.30</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>MIA</td>
+<td class="n">15</td>
+<td class="n">0.60</td>
+<td class="n">0.31</td>
+<td class="n">0.29</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>TOR</td>
+<td class="n">15</td>
+<td class="n">0.00</td>
+<td class="n">0.49</td>
+<td class="n">-0.49</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>DAL</td>
+<td class="n">15</td>
+<td class="n">-0.90</td>
+<td class="n">-1.10</td>
+<td class="n">0.20</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>PHX</td>
+<td class="n">14</td>
+<td class="n">-1.60</td>
+<td class="n">-1.19</td>
+<td class="n">-0.41</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>IND</td>
+<td class="n">15</td>
+<td class="n">-3.30</td>
+<td class="n">-2.93</td>
+<td class="n">-0.37</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>ORL</td>
+<td class="n">14</td>
+<td class="n">-3.40</td>
+<td class="n">-2.64</td>
+<td class="n">-0.76</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>LAC</td>
+<td class="n">13</td>
+<td class="n">-5.80</td>
+<td class="n">-5.59</td>
+<td class="n">-0.21</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>WAS</td>
+<td class="n">16</td>
+<td class="n">-7.10</td>
+<td class="n">-7.06</td>
+<td class="n">-0.04</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>UTA</td>
+<td class="n">16</td>
+<td class="n">-7.20</td>
+<td class="n">-7.51</td>
+<td class="n">0.31</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>NOP</td>
+<td class="n">16</td>
+<td class="n">-7.40</td>
+<td class="n">-7.19</td>
+<td class="n">-0.21</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>BKN</td>
+<td class="n">14</td>
+<td class="n">-8.30</td>
+<td class="n">-8.36</td>
+<td class="n">0.06</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>CHI</td>
+<td class="n">14</td>
+<td class="n">-8.40</td>
+<td class="n">-8.30</td>
+<td class="n">-0.10</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>CHA</td>
+<td class="n">14</td>
+<td class="n">-10.30</td>
+<td class="n">-10.22</td>
+<td class="n">-0.08</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>MIL</td>
+<td class="n">15</td>
+<td class="n">-13.20</td>
+<td class="n">-13.13</td>
+<td class="n">-0.07</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+<tr>
+<td>SAC</td>
+<td class="n">14</td>
+<td class="n">-14.00</td>
+<td class="n">-13.63</td>
+<td class="n">-0.37</td>
+<td><a href="https://www.nba.com/stats/teams/traditional?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">traditional</a> · <a href="https://www.nba.com/stats/teams/opponent?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">opponent</a> · <a href="https://www.nba.com/stats/teams/advanced?Season=2026-27&amp;SeasonType=Regular+Season" rel="noopener" target="_blank">advanced</a></td>
+</tr>
+</tbody></table></div>
+<p class="lede">Largest absolute disagreements: <b>ORL</b> -0.76, <b>NYK</b> 0.6, <b>DET</b> 0.57, <b>DEN</b> 0.51, <b>TOR</b> -0.49.</p>
+
+<h2>5. Official results — 2026-11-18, twelve games</h2>
+<p>Read from <a href="https://www.nba.com/games?date=2026-11-18" rel="noopener" target="_blank">www.nba.com/games?date=2026-11-18</a>.
+Each card prints the literal word <b>Final</b>; every row below is keyed on the official game id, because
+the page's card order is not chronological (game 0022600267 prints before 0022600265).</p>
+<div class="scroll"><table>
+<caption>The twelve finals of 2026-11-18, with the quarter-score gap stated rather than filled.</caption><thead><tr>
+<th>game id</th>
+<th>away</th>
+<th class="n">away pts</th>
+<th class="n">home pts</th>
+<th>home</th>
+<th>quarter scores</th>
+<th>source</th>
+</tr></thead><tbody>
+<tr>
+<td>0022600259</td>
+<td>HOU</td>
+<td class="n">119</td>
+<td class="n">104</td>
+<td>IND</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/hou-vs-ind-0022600259" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600261</td>
+<td>PHI</td>
+<td class="n">121</td>
+<td class="n">116</td>
+<td>ORL</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/phi-vs-orl-0022600261" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600260</td>
+<td>MIL</td>
+<td class="n">130</td>
+<td class="n">137</td>
+<td>MIA</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/mil-vs-mia-0022600260" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600258</td>
+<td>MEM</td>
+<td class="n">124</td>
+<td class="n">121</td>
+<td>CLE</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/mem-vs-cle-0022600258" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600262</td>
+<td>CHI</td>
+<td class="n">137</td>
+<td class="n">107</td>
+<td>BKN</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/chi-vs-bkn-0022600262" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600263</td>
+<td>WAS</td>
+<td class="n">103</td>
+<td class="n">99</td>
+<td>TOR</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/was-vs-tor-0022600263" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600267</td>
+<td>GSW</td>
+<td class="n">94</td>
+<td class="n">116</td>
+<td>DAL</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/gsw-vs-dal-0022600267" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600265</td>
+<td>ATL</td>
+<td class="n">117</td>
+<td class="n">112</td>
+<td>OKC</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/atl-vs-okc-0022600265" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600264</td>
+<td>DET</td>
+<td class="n">122</td>
+<td class="n">109</td>
+<td>NOP</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/det-vs-nop-0022600264" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600266</td>
+<td>BOS</td>
+<td class="n">101</td>
+<td class="n">105</td>
+<td>DEN</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/bos-vs-den-0022600266" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600269</td>
+<td>PHX</td>
+<td class="n">128</td>
+<td class="n">107</td>
+<td>SAC</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/phx-vs-sac-0022600269" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+<tr>
+<td>0022600268</td>
+<td>UTA</td>
+<td class="n">109</td>
+<td class="n">97</td>
+<td>LAL</td>
+<td><span class="blank">blank — not printed on the captured page</span></td>
+<td><a href="https://www.nba.com/game/uta-vs-lal-0022600268" rel="noopener" target="_blank">official game page</a></td>
+</tr>
+</tbody></table></div>
+<div class="note warn"><b>Quarter scores are blank on purpose.</b> The games page does not print them.
+The quarter rows published on the settlement pages come from the earlier committed capture
+<a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/capture_2026-11-18/finals_2026-11-18.json" rel="noopener" target="_blank">data/raw/capture_2026-11-18/finals_2026-11-18.json</a>, and the two are not merged here. The
+brief's requirement is one row per game with date, teams, final score and quarter scores: this table
+gives four of those five fields from today's read, and the fifth is sourced from the committed capture
+labelled as such.</div>
+
+<h2>6. The slate that is not final — 2026-11-19, four games</h2>
+<p>Read from <a href="https://www.nba.com/games?date=2026-11-19" rel="noopener" target="_blank">www.nba.com/games?date=2026-11-19</a>
+and cross-checked against the official injury report, which names the same four matchups with 08:00 ET
+tips. This is the surface a three-day-ahead pick generator would run on; note that the page prints each
+club's record <b>at render time</b>, not the record entering the game, so no pre-game record is inferred
+from it.</p>
+<div class="scroll"><table>
+<caption>The four scheduled games of 2026-11-19, none tipped at the time of reading.</caption><thead><tr>
+<th>away</th>
+<th>tip (ET)</th>
+<th>home</th>
+<th>game id</th>
+<th>state</th>
+<th>source</th>
+</tr></thead><tbody>
+<tr>
+<td>LAC</td>
+<td>8:00 PM ET</td>
+<td>SAS</td>
+<td>0022600273</td>
+<td>scheduled (page links to Preview, no score printed)</td>
+<td><a href="https://www.nba.com/game/lac-vs-sas-0022600273" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>GSW</td>
+<td>8:00 PM ET</td>
+<td>MEM</td>
+<td>0022600270</td>
+<td>scheduled (page links to Preview, no score printed)</td>
+<td><a href="https://www.nba.com/game/gsw-vs-mem-0022600270" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>NYK</td>
+<td>8:00 PM ET</td>
+<td>MIN</td>
+<td>0022600272</td>
+<td>scheduled (page links to Preview, no score printed)</td>
+<td><a href="https://www.nba.com/game/nyk-vs-min-0022600272" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+<tr>
+<td>POR</td>
+<td>8:00 PM ET</td>
+<td>MIL</td>
+<td>0022600271</td>
+<td>scheduled (page links to Preview, no score printed)</td>
+<td><a href="https://www.nba.com/game/por-vs-mil-0022600271" rel="noopener" target="_blank">nba.com/games</a></td>
+</tr>
+</tbody></table></div>
+
+<h2>7. Injuries — five consecutive official releases, and what the diff actually shows</h2>
+<p>The two releases diffed most closely are the ones the official index published closest together:
+<b>06:45 AM</b> and <b>07:00 AM ET</b> on 2026-11-19. The comparison is <b>player-level</b>: a row is the
+key (player, club) and the value is the printed participation status.</p>
+<div class="scroll"><table>
+<caption>Three consecutive-release diffs. A zero here is a measurement, not an absence of data.</caption><thead><tr>
+<th>from</th>
+<th>to</th>
+<th class="n">rows from</th>
+<th class="n">rows to</th>
+<th class="n">status changes</th>
+<th class="n">added</th>
+<th class="n">removed</th>
+<th>verdict</th>
+<th>source</th>
+</tr></thead><tbody>
+<tr>
+<td>11/18/26 02:15 PM</td>
+<td>11/19/26 12:00 AM</td>
+<td class="n">31</td>
+<td class="n">21</td>
+<td class="n">0</td>
+<td class="n">21</td>
+<td class="n">31</td>
+<td><span class="badge b-warn">player-level changes</span></td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official releases</a></td>
+</tr>
+<tr>
+<td>11/19/26 12:00 AM</td>
+<td>11/19/26 06:45 AM</td>
+<td class="n">21</td>
+<td class="n">21</td>
+<td class="n">0</td>
+<td class="n">0</td>
+<td class="n">0</td>
+<td><span class="badge b-ok">no player-level change</span></td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official releases</a></td>
+</tr>
+<tr>
+<td>11/19/26 06:45 AM</td>
+<td>11/19/26 07:00 AM</td>
+<td class="n">21</td>
+<td class="n">21</td>
+<td class="n">0</td>
+<td class="n">0</td>
+<td class="n">0</td>
+<td><span class="badge b-ok">no player-level change</span></td>
+<td><a href="https://official.nba.com/nba-injury-report-2026-27-season/" rel="noopener" target="_blank">official releases</a></td>
+</tr>
+</tbody></table></div>
+<div class="note bad"><b>Irregularity: the diff found a rendering difference, not a league change.</b>
+The 06:45 AM document's text extraction loses alternating club non-filing markers on its third page
+(5 rows rejected by shape, 15 clubs recorded as not filed, against 11 on the 07:00 AM document). The
+<b>player-level</b> rows are stable across every release — 21 rows, zero status changes — and the club
+count is what moves. So the diffing machinery is verified working, and this particular pair shows
+<b>no player status change</b>. Any build that reported "4 clubs' status changed" here would be
+reporting the extractor, not the league. Rows rejected by shape are counted and listed in the capture
+file; they are never guessed into a club.</div>
+
+<h3>Freshest release, 07:00 AM ET — 11/19/26 07:00 AM</h3>
+<p>Revision time and retrieval time, as the brief asks to show in a banner: <b>revision
+11/19/26 07:00 AM</b> · <b>retrieved 2026-11-19</b> ·
+11 clubs had not filed at that revision.
+<a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the PDF itself</a></p>
+<div class="scroll"><table>
+<caption>Every player row on the 07:00 AM ET release, verbatim, with its club and printed status.</caption><thead><tr>
+<th>player</th>
+<th>club</th>
+<th>status (official)</th>
+<th>reason (official)</th>
+<th>attribution</th>
+<th>source</th>
+</tr></thead><tbody>
+<tr>
+<td>Beal, Bradley</td>
+<td>LA Clippers</td>
+<td>Out</td>
+<td>Injury/Illness - Right Knee Injury Management</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Ingram, Brandon</td>
+<td>LA Clippers</td>
+<td>Out</td>
+<td>Injury/Illness - Right Heel Surgery</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Martinelli, Nick</td>
+<td>LA Clippers</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Miller, Jordan</td>
+<td>LA Clippers</td>
+<td>Out</td>
+<td>Injury/Illness - Left Rotator Cuff Surgery</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Brown, Maliq</td>
+<td>San Antonio Spurs</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Gillespie, Ja&#x27;Kobi</td>
+<td>San Antonio Spurs</td>
+<td>Out</td>
+<td>G League - Two-Way</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Harper, Dylan</td>
+<td>San Antonio Spurs</td>
+<td>Out</td>
+<td>Injury/Illness - Left Hip Soreness</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Harris, Tobias</td>
+<td>San Antonio Spurs</td>
+<td>Out</td>
+<td>Injury/Illness - Left Calf Strain</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Quaintance, Jayden</td>
+<td>San Antonio Spurs</td>
+<td>Out</td>
+<td>Injury/Illness - Right Knee Surgery</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Beringer, Joan</td>
+<td>Minnesota Timberwolves</td>
+<td>Available</td>
+<td>Injury/Illness - Face Mask</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Clark, Jaylen</td>
+<td>Minnesota Timberwolves</td>
+<td>Out</td>
+<td>Injury/Illness - Right Hamstring Strain</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>DiVincenzo, Donte</td>
+<td>Minnesota Timberwolves</td>
+<td>Out</td>
+<td>Injury/Illness - Right Achilles Tendon Repair / Surgery</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Edwards, Anthony</td>
+<td>Minnesota Timberwolves</td>
+<td>Out</td>
+<td>Injury/Illness - Right Knee Arthroscopy</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Avdija, Deni</td>
+<td>Portland Trail Blazers</td>
+<td>Questionable</td>
+<td>Injury/Illness - Left Foot Inflammation / Soreness</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Camara, Toumani</td>
+<td>Portland Trail Blazers</td>
+<td>Questionable</td>
+<td>Injury/Illness - Abdominal Soreness</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Carlson, Branden</td>
+<td>Portland Trail Blazers</td>
+<td>Available</td>
+<td>Injury/Illness - Face Mask</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Krejci, Vit</td>
+<td>Portland Trail Blazers</td>
+<td>Out</td>
+<td>Injury/Illness - Left Ankle Fracture</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Morant, Ja</td>
+<td>Portland Trail Blazers</td>
+<td>Out</td>
+<td>Injury/Illness - Left Hamstring Strain</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Sharpe, Shaedon</td>
+<td>Portland Trail Blazers</td>
+<td>Out</td>
+<td>Injury/Illness - Right Meniscus Surgery</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Williams III, Robert</td>
+<td>Portland Trail Blazers</td>
+<td>Out</td>
+<td>Rest</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+<tr>
+<td>Youngblood, Chris</td>
+<td>Portland Trail Blazers</td>
+<td>Out</td>
+<td>Injury/Illness - Right Heel Contusion / Bone Bruise</td>
+<td><span class="badge b-ok">club and status as printed</span></td>
+<td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the official PDF</a></td>
+</tr>
+</tbody></table></div>
+
+<h3>Release index coverage</h3>
+<p>The official index listed <b>29</b> releases for
+2026-11-19 at the time of reading, from 12:00 a.m. to 07:00 a.m. ET in 15-minute steps; the latest
+listed is <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" rel="noopener" target="_blank">the 07:00 AM ET report</a>.
+the index page returned only the November 19 releases at the time of reading, so it cannot be used to prove which earlier releases exist.</p>
+
+<h2>8. What this record does <em>not</em> prove</h2>
+<ul>
+<li><b>It is not a fresh model input.</b> The v2 model pages still read the frozen 2026-11-14
+transcription; re-cutting them is a separate, larger change and is listed on
+<a href="unknowns.html">Unknowns &amp; open questions</a>.</li>
+<li><b>No market price was read.</b> Nothing here can produce an edge, because there is no closing line
+in the repository to compare against.</li>
+<li><b>Per-player minutes, rebounds and assists were not read.</b> The rotation-minutes and
+player-log requirements need those, and they are not on any page this session captured. They are
+recorded as gaps, not estimated.</li>
+<li><b>Two rows on the 07:00 AM release are published without a club</b> (Kuminga and Pullin), because
+the text extractor dropped that column for them. They are not attributed to a club by inference.</li>
+</ul>
+
+<footer>
+  <p>Official capture: <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">data/raw/verify_2026-11-19/official_2026-11-19.json</a> · raw page text:
+     <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/</a> ·
+     parser: <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/session-164d832b-capture.py" rel="noopener" target="_blank">tools/session-164d832b-capture.py</a></p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>

@@ -72,6 +72,18 @@ jobs:
           python -m nba2.v5
           python -m unittest discover -s nba2/v5 -t . -p 'test_*.py'
 
+      - name: Build the v8 verification, unknowns and improvement pages
+        # v8 renders three pages from the 2026-11-19 official capture
+        # (data/raw/verify_2026-11-19/official_2026-11-19.json, produced by the fail-closed parser
+        # tools/session-164d832b-capture.py) and appends its own nav block to every page v2..v5
+        # wrote. It runs BEFORE v6's grouping pass so the category v6 assigns to those three pages
+        # is applied to them (v8 is listed in nba2/v6/nav.py CATEGORIES for exactly that reason).
+        # It fetches nothing and it refuses to render if the capture is missing: a page full of
+        # holes would otherwise look like a page full of answers.
+        run: |
+          python -m nba2.v8
+          python -m unittest discover -s nba2/v8 -t . -p 'test_*.py'
+
       - name: Rebuild the v6 measurement pages (inventory -> gates -> render -> nav -> group)
         # v6 fetches nothing: it measures the coverage of what is already committed (injury
         # PDF archive, result feed, player-log coverage, market prior, endpoint

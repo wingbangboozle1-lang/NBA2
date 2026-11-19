@@ -61,9 +61,13 @@ jobs:
           # v6 renders six more pages, injects its nav block and then GROUPS the whole sidebar
           # into categories, so it runs after v5 and must be in this rebuild or the diff below
           # reports v6's own contribution as drift. It fetches nothing.
+          # v8 renders the 2026-11-19 verification/unknowns/improvement pages. It runs BEFORE
+          # v6's grouping pass so the category v6 assigns to those three pages applies to them.
+          python -m nba2.v8
           python -m nba2.v6
           python -m nba2.v7
           python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
+          python -m unittest discover -s nba2/v8 -t . -p 'test_*.py'
           # v7 inserts its five links into the sidebar v6 grouped and re-appends its section
           # to flagged.html (v2 regenerates that page), so it must be in this rebuild or the
           # diff below reports v7's own contribution as drift. It fetches nothing.

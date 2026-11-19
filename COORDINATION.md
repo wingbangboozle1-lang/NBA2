@@ -6396,6 +6396,104 @@ capture-versus-publish disclosure. The first fetch immediately after deploy retu
 transient GitHub outage/404 response; a cache-busted follow-up returned the deployed dashboard.
 Full details and verification limitations are recorded in
 `analysis/session-3a5c7c75-refresh-disclosure.md`.
+## Session `arena/164d832b-nba2` — CLAIM (2026-11-19 UTC)
+
+**Task:** requirements-coverage audit + line-by-line verification of the published surface
+against the official NBA pages read today (2026-11-19), with targeted repairs where a briefed
+requirement has no implementation or no test. Then integrate and publish.
+
+**File scope:** `analysis/session-164d832b-*.md` (new audit records), `requirements/COVERAGE-164d832b.json`
+(new machine-readable matrix), `nba2/v2/content.py` + `nba2/v2/build.py` only if a published page
+must gain a row/column that the verification shows is missing, regenerated `site/**` +
+`data/v2/content.json`, and this append-only board.
+
+**Explicitly NOT in scope (owned by open, in-flight sessions):** `nba2/v6/**` and the v7 layer
+(PR #130, `arena/6023d517-nba2`), the settlement/date-scoped coverage repair (PR #131,
+`arena/8c7c8828-nba2`), any sealed ledger file, and `nba2/v4/**`/`nba2/v5/**` model inputs.
+If a defect is found in those files it is recorded in the audit report and in the board, not fixed here.
+
+**Claim verification:** read this board and `README.md`; branch `arena/164d832b-nba2` at `41cfd81`,
+clean tree. Baseline reproduced locally before any change: full `pages.yml` build chain
+(v2 → v2.check → settlement_page → v3 → v3.check → v4 → v4.check → v5 → v6) rc=0 with a
+**byte-identical** rebuild, `tools/check_links_all.py` 143 files / 7,472 internal links OK,
+`tools/crosscheck_site.py` 87 pass / 1 fail / 9 info (the one failure is `CC-FRESH-01`, the
+2026-11-14 legacy model snapshot being 5 days old).
+
+**Transport note (measured, not assumed):** direct HTTPS from this sandbox to
+`www.nba.com`, `official.nba.com` and `cdn.nba.com` fails at the TLS handshake
+(`curl (35) SSL_ERROR_SYSCALL`). Official pages were therefore read through the agent's
+page-fetch channel, which returns HTTP content from those hosts; every capture row below
+records the URL and the retrieval time so the read can be re-checked manually.
+
+
+---
+
+## Session `arena/164d832b-nba2` — progress record (2026-11-19 UTC)
+
+**Work completed so far** (commits on branch `arena/164d832b-nba2`):
+
+| ID | Task | Status | Files | Verification |
+|----|------|--------|-------|--------------|
+| V8-1 | Read and archive the official pages for 2026-11-19 verbatim | done | `data/raw/verify_2026-11-19/raw/**` | 9 documents; each raw file names its URL + retrieval time; sha256 in the capture |
+| V8-2 | Fail-closed parser + identities | done | `tools/session-164d832b-capture.py`, `data/raw/verify_2026-11-19/official_2026-11-19.json` | 30 clubs, 12 finals, 4 scheduled, 21 injury rows; refuses to write on any identity failure; 12 selftest assertions incl. the 12-final → 11/19 standings reconstruction (0 mismatches) |
+| V8-3 | Verification-record page | done | `nba2/v8/build.py`, `site/verify-1119.html` | every row carries a source link; `nba2.v2.check` 0 structural / 0 semantic |
+| V8-4 | Unknowns register (10 entries, each with a route to the answer) | done | `site/unknowns.html` | each row names the missing dataset and how to get it |
+| V8-5 | Improvement proposals (8, none implemented) | done | `site/improvement.html` | explicitly states nothing is implemented; each has effort/risk + dependency |
+| V8-6 | Chain wiring + tests | done | `.github/workflows/pages.yml`, `.github/workflows/publish-parity.yml`, `nba2/v8/test_v8.py` | 17 v8 tests pass; v8 runs last so it inherits the categorised nav |
+
+**Local verification performed:** full chain v2 → v2.check → settlement_page → v3 → v3.check → v4
+→ v4.check → v5 → v6 → v8, `nba2.v2.check` 0/0, `nba2.v8` 3 pages, 17 v8 tests OK, 146 HTML files /
+7,814 internal links OK.
+
+**Irregularities found and recorded (published on the site, not blocking):**
+1. **Extractor lossiness on the injury PDFs.** The 06:45 AM release's text extraction drops
+   alternating club cells on page 3 (15 clubs "not filed" vs 11 on 07:00 AM). Player-level rows are
+   identical across all five releases (21 rows, zero status changes), so the diff is reported as a
+   rendering difference, not a league change. Rows that do not match the league's printed shape are
+   counted in `rejected_rows`, never guessed into a club.
+2. **Two injury rows (Kuminga, Pullin) are published without a club** because the extractor dropped
+   that column. They are labelled, not attributed.
+3. **Quarter scores are not on the games page.** The published quarter rows come from the earlier
+   committed capture `data/raw/capture_2026-11-18/finals_2026-11-18.json`, labelled as such.
+4. **Measured home-win rate is 0.5023 over 221 home games** (111 wins), i.e. indistinguishable from
+   0.5 at this sample size. Published as measured, with the band — not tuned.
+5. **The two "independent" estimators are algebraically tied** (points differential per game =
+   NetRtg × pace/100), so their agreement is a transcription check, not independent confirmation.
+   Recorded as U-03 on the unknowns page.
+6. **Transport:** direct HTTPS from the sandbox to nba.com / official.nba.com / cdn.nba.com fails in
+   the TLS handshake (curl 35, code 000). All reads went through the agent page-fetch channel; every
+   raw file states this.
+
+**Open requests (NOT fixed here — files owned by other sessions):** the v2 model snapshot is still
+2026-11-14 (`CC-FRESH-01`); `nba2/tests/test_pipeline.TestReproducibility` still has the
+`data/site.json` stateful side effect recorded by `arena/53c5afeb-nba2`; v6/settlement work is owned
+by PRs #130/#131. Re-cutting the model inputs to the 2026-11-19 capture is the deferred ACF-7 task
+and is listed as U-09/U-10 on the published unknowns page.
+
+
+
+### Completion addendum — session `arena/164d832b-nba2` (2026-11-19 UTC)
+
+Two adjustments made after the first build of the v8 pages, both required for a clean chain:
+
+1. **Build order.** v8 now runs **after v5 and before v6**, not last. v6 owns the categorising nav
+   pass and its `test_every_published_page_is_in_some_category` correctly failed when v8 appended
+   pages after v6 had grouped the sidebar. The three v8 pages are now registered in
+   `nba2/v6/nav.py` CATEGORIES under a new group, **"Verified today · 2026-11-19"** — the first
+   *content* change to that shared file, made because the alternative (v8 owning its own nav
+   grouping) would leave two files writing the same sidebar. `pages.yml` and `publish-parity.yml`
+   were reordered to match.
+2. **Nav label escaping.** The categorised nav carries entity-escaped labels, so v8 unescapes once
+   before escaping for its own pages; without that a rebuild turned `Teams &amp; estimators` into
+   `Teams &amp;amp; estimators` and the parity diff never reached a fixed point. The rebuild is now
+   a byte-identical fixed point (`git status` clean after a second full chain).
+
+**Final local verification (this tree, 2026-11-19):**
+`v2` → `v2.check` → `settlement_page` → `v3` → `v3.check` → `v4` → `v4.check` → `v5` → `v8` → `v6`,
+all rc=0; **rebuild produces 0 changed files**; suites: `nba2/tests` 92, `v2` 167, `v3` 67, `v4` 61,
+`v5` 26, `v6` 52, **`v8` 17** — all OK; `nba2.v2.check` **0 structural / 0 semantic**;
+`tools/check_links_all.py` **146 files / 7,814 internal links OK**; capture `--selftest` OK
+(30 clubs, 12 finals, 4 scheduled, 21 injury rows).
 
 ## Session `arena/923eb342-nba2` — CLAIM (2026-11-19 UTC)
 
@@ -6652,3 +6750,27 @@ RQ-923-1…4 are all published; every finding is on the Flagged for review page 
 (baseline logs + capture evidence) · `data/raw/capture_2026-11-19_f4a5531f/**` (standings 30/30,
 12 finals for 11/18 with one full quarter-row set, slate 11/19→22, injury release 11/19 07:00 AM ET
 transcript, three team-stat page samples with identity checks).
+
+### Regression found and fixed — session `arena/923eb342-nba2` (2026-11-19 UTC)
+
+**What happened.** The verification desk's workflow originally uploaded `audit/923eb342/` with
+`actions/upload-pages-artifact` + `actions/deploy-pages`. That **replaced the repository's Pages root**:
+after run [44527376601](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44527376601) the root URL
+served the desk instead of the canonical dashboard. Git history was never affected — `site/index.html` and
+the root pointer page were untouched in the repository — but the published surface changed without anyone
+asking for it, which is exactly the "a reader should never have to work out which dashboard they are
+reading" failure this session filed as F-923-02/Q-923-10.
+
+**Root cause.** The repository's Pages configuration is `build_type: legacy`, source `main /`. Under legacy,
+**every committed path is already served** — `audit/923eb342/index.html` was live at
+`/NBA2/audit/923eb342/` from the moment it was on `main`, with no deployment of its own. A second Pages
+artefact was therefore both unnecessary and destructive.
+
+**Fix.** The desk workflow no longer deploys. `pages: write`, `id-token: write`, `configure-pages`,
+`upload-pages-artifact` and the `deploy` job are removed; the workflow now only regenerates the pages,
+checks them, and fails on drift. `.github/workflows/pages.yml` remains the single deployer, and the next run
+of it restores the canonical artefact. The reason is written into the workflow header so it is not
+reintroduced.
+
+**Lesson recorded for the board:** a session that adds a page should not add a deployer. Adding content to a
+`legacy`-source Pages repo needs no workflow at all, and adding one silently competes with the canonical one.

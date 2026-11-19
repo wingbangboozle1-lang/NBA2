@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unknowns &amp; open questions · NBA2 Lines Lab</title>
+<meta name="description" content="NBA2 — verification record for the official pages read on 2026-11-19, plus the unknowns and improvement proposals that gate any further change.">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.muted{color:var(--muted,#93a3b8)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">verified 2026-11-19 · every row sourced</p>
+  <nav>
+<div class="navgroup"><span title="What this desk is, what it has measured, and where the numbers come from.">Start here</span>
+<a href="index.html" title="Dashboard">Dashboard</a>
+<a href="executive-summary.html" title="Executive summary">Executive summary</a>
+<a href="sources.html" title="Sources">Sources</a>
+<a href="methodology.html" title="Methodology">Methodology</a>
+</div>
+<div class="navgroup"><span title="Our originated numbers. Nothing here is priced or actionable: what we think, and how much the two estimators disagree.">Projection — safe to publish</span>
+<a href="lines.html" title="Originated lines">Originated lines</a>
+<a href="teams.html" title="Teams &amp; estimators">Teams &amp; estimators</a>
+<a href="correlations.html" title="Correlations &amp; parlays">Correlations &amp; parlays</a>
+<a href="props.html" title="Player props">Player props</a>
+<a href="gameflow.html" title="Game flow">Game flow</a>
+<a href="slate.html" title="Slate &amp; disagreement">Slate &amp; disagreement</a>
+<a href="projections.html" title="Projection surface">Projection surface</a>
+<a href="rotation.html" title="Rotation &amp; minutes">Rotation &amp; minutes</a>
+<a href="travel.html" title="Rest &amp; travel">Rest &amp; travel</a>
+<a href="minutes.html" title="Measured minutes">Measured minutes</a>
+<a href="lategame.html" title="Late-game &amp; garbage time">Late-game &amp; garbage time</a>
+<a href="projection.html" title="— v4 gated refresh —">— v4 gated refresh —</a>
+<a href="rotation-replacement.html" title="Minutes &amp; replacement">Minutes &amp; replacement</a>
+<a href="market-prior.html" title="Market-anchored prior">Market-anchored prior</a>
+</div>
+<div class="navgroup"><span title="Gated: no row here is actionable until its gates pass. The trigger level is the only number that would make acting rational.">Bet surface — gated</span>
+<a href="picks.html" title="Picks &amp; slate">Picks &amp; slate</a>
+<a href="strategies.html" title="Strategies &amp; leaderboard">Strategies &amp; leaderboard</a>
+<a href="strategy-lab.html" title="Strategy lab">Strategy lab</a>
+<a href="trials.html" title="Trial registry">Trial registry</a>
+<a href="bet.html" title="Bet surface (gated)">Bet surface (gated)</a>
+</div>
+<div class="navgroup"><span title="What the league published, what the sealed ledger predicted, and what has been settled against an official final.">Official record &amp; settlement</span>
+<a href="official-results.html" title="Official results">Official results</a>
+<a href="results.html" title="Result feed">Result feed</a>
+<a href="ledger.html" title="Sealed ledger">Sealed ledger</a>
+<a href="settlement.html" title="Settlement stamp">Settlement stamp</a>
+<a href="settle.html" title="Result feed &amp; settlement">Result feed &amp; settlement</a>
+<a href="result-feed-v5.html" title="— v5 player logs —">— v5 player logs —</a>
+<a href="results-coverage.html" title="Result-feed coverage">Result-feed coverage</a>
+</div>
+<div class="navgroup"><span title="Every official release this repository holds, the diff between consecutive reports, and the player logs behind the rotation model.">Injuries, rotation &amp; players</span>
+<a href="injuries.html" title="Injuries &amp; rotation">Injuries &amp; rotation</a>
+<a href="player-logs.html" title="Player game logs">Player game logs</a>
+<a href="injury-diff.html" title="Injury release diff">Injury release diff</a>
+<a href="v4-injuries.html" title="Injury releases">Injury releases</a>
+<a href="playerlogs-full.html" title="Player logs (full)">Player logs (full)</a>
+<a href="injury-archive.html" title="Injury PDF archive">Injury PDF archive</a>
+<a href="player-coverage.html" title="Player-log coverage">Player-log coverage</a>
+</div>
+<div class="navgroup"><span title="Gates, backtests, luck attribution and the live checks — the part that says whether any of the above is better than a coin flip.">Verification &amp; measured skill</span>
+<a href="backtest.html" title="Backtest &amp; skill">Backtest &amp; skill</a>
+<a href="skill-attribution.html" title="Skill vs luck">Skill vs luck</a>
+<a href="verification.html" title="Verification log">Verification log</a>
+<a href="live-verification.html" title="Live verification">Live verification</a>
+<a href="capture-verification.html" title="Capture verification">Capture verification</a>
+<a href="verification-v3.html" title="v3 verification">v3 verification</a>
+<a href="v4-verify.html" title="v4 verification">v4 verification</a>
+<a href="v5-verify.html" title="v5 verification">v5 verification</a>
+<a href="endpoints.html" title="Official endpoints">Official endpoints</a>
+<a href="v6-verify.html" title="v6 verification">v6 verification</a>
+</div>
+<div class="navgroup"><span title="The official pages read on 2026-11-19, what they prove, what is still unknown, and the proposals that are waiting on a decision before anything is built.">Verified today · 2026-11-19</span>
+<a href="verify-1119.html" title="Verification record — 2026-11-19">Verification record — 2026-11-19</a>
+<a href="unknowns.html" title="Unknowns &amp; open questions" class="on">Unknowns &amp; open questions</a>
+<a href="improvement.html" title="Improvement proposals">Improvement proposals</a>
+</div>
+<div class="navgroup"><span title="What needs an owner decision before it is built, what we do not know, and everything flagged for review.">Decisions, questions &amp; flags</span>
+<a href="repo-review.html" title="Repo review">Repo review</a>
+<a href="questions.html" title="Open questions">Open questions</a>
+<a href="suggestions.html" title="Suggestions queue">Suggestions queue</a>
+<a href="decision-queue.html" title="Decision queue">Decision queue</a>
+<a href="decisions-needed.html" title="Decisions needed">Decisions needed</a>
+<a href="flagged.html" title="Flagged for review">Flagged for review</a>
+</div>
+<!-- v7-link-block --><a href="v7-slate.html">Originated slate (v7)</a><a href="v7-strategies.html">Strategy lab &amp; parlays (v7)</a><a href="v7-skill.html">Measured skill &amp; luck (v7)</a><a href="v7-methodology.html">v7 methodology</a><a href="v7-verify.html">v7 verification</a><!-- v7-link-block --></nav>
+</aside>
+<main>
+
+<h1>Unknowns &amp; open questions</h1>
+<p class="lede">This is the list a decision has to clear before it can be made on evidence. Every entry
+states <b>what we do not know</b>, <b>what information would settle it</b>, and <b>how to obtain that
+information</b>. Nothing here is a hunch: each one names the missing dataset or the missing decision,
+and each one is something this build could <em>not</em> answer from the data in the repository today.</p>
+
+<div class="note"><b>How to read the state column.</b>
+<span class="badge b-bad">Decision needed (owner)</span> — no amount of building answers it; someone has to choose.
+<span class="badge b-bad">Blocked — external data purchase</span> — the data is not public.
+<span class="badge b-bad">Blocked — infrastructure</span> — the pipeline exists but is not running green.
+<span class="badge b-warn">Blocked — time</span> — needs a sample that can only accrue.
+<span class="badge b-warn">Research task</span> / <span class="badge b-info">Buildable</span> — a known job, with the first step named.
+</div>
+
+<div class="scroll"><table>
+<caption>Ten questions that block a decision, with the route to answering each one.</caption><thead><tr>
+<th>id</th>
+<th>the question</th>
+<th>the information that would settle it</th>
+<th>how to get it</th>
+<th>state</th>
+<th>source</th>
+</tr></thead><tbody>
+<tr>
+<td>U-01</td>
+<td><b>Is the model's disagreement with itself small enough to publish a line at all?</b><br>The per-club disagreement between estimators A and B is now measured (see the verification page), but the <b>decision rule</b> — at what disagreement a line is suppressed — has never been set. Without a pre-set threshold, 'suppress when they disagree' is a rule that can be fitted after the results are known.</td>
+<td>An owner decision on the threshold, written down before the next slate.</td>
+<td>Write the threshold into the pre-registration file for the strategy that uses it, then grade the next slates against it. Nothing else is needed — the numbers already exist.</td>
+<td><span class="badge b-bad">Decision needed (owner)</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-02</td>
+<td><b>What is the closing line, for every game we priced?</b><br>The brief asks for a market-anchored prior weighted by measured out-of-sample log-loss. That requires closing lines. <b>None are in this repository</b>, and no official source publishes them: this is a commercial data purchase, not a web page.</td>
+<td>A licensed odds feed (or a personally collected archive of closing lines with timestamps).</td>
+<td>Buy or record it. Until then the market prior cannot be computed, and any page implying otherwise is wrong. This is why no stake is published anywhere on the site.</td>
+<td><span class="badge b-bad">Blocked — external data purchase</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-03</td>
+<td><b>Why does the two-estimator disagreement here agree to two decimals?</b><br>A and B are mathematically tied: points differential per game and net rating per 100 possessions are the same quantity rescaled by pace. Agreement is therefore a <b>transcription check</b>, not independent confirmation — and it means the 'independent estimators' requirement is only satisfied in the weak sense until a genuinely different estimator (e.g. one built on opponent-adjusted possession data) is added.</td>
+<td>A second estimator built from a different data source, not a different algebraic route to the same number.</td>
+<td>Add an opponent-strength-adjusted rating from the official advanced page&#x27;s components, or a ridge-regressed point margin from the game-by-game finals already committed. Either is a research task, not a data purchase.</td>
+<td><span class="badge b-bad">Research task</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-04</td>
+<td><b>Does the model beat the naive rule on the games that are left?</b><br>The published skill page records that the model's accuracy is not distinguishable from 'back the team with the better prior record' (McNemar p = 0.2962). Every sample since then is small. The honest answer to 'is this skill?' is still <b>unknown</b>.</td>
+<td>A pre-registered forward sample of at least 300 graded games, with the naive-rule comparison computed on exactly the same games.</td>
+<td>Keep grading. The sealed ledger already enforces the pre-registration; the sample size is the binding constraint, and no amount of analysis substitutes for it.</td>
+<td><span class="badge b-bad">Blocked — time</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-05</td>
+<td><b>What are the per-player minutes, and what happens to them when a player is out?</b><br>The brief asks for the top-8 minutes shares per club and the replacement shares when a player is out. The official team-stat pages this session read print <b>team</b> minutes, not player minutes. Per-player game logs exist on nba.com and in committed gamebooks for a subset of games, but not for the clubs on tonight's slate in a form this build can read.</td>
+<td>Per-player game logs (minutes, points, rebounds, assists, opponent) for the players named on an injury report — the exact dataset the brief asks for.</td>
+<td>The pages exist at &lt;code&gt;nba.com/player/&amp;lt;id&amp;gt;/&amp;lt;slug&amp;gt;&lt;/code&gt; and in the gamebook PDFs already used for a handful of games; the work is a scraper plus a recall gate. Until it runs, every minutes-redistribution cell stays blank with this reason.</td>
+<td><span class="badge b-bad">Buildable — data acquisition task</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-06</td>
+<td><b>Are the quarter scores on the settlement pages the ones the league printed?</b><br>The quarter rows in the repository come from a committed capture, not from today's read: the games page does not print quarters. They were internally consistent (each row sums to the printed final) when the capture was made, but this session did not re-read them.</td>
+<td>The official gamebook or box-score page for each of the twelve games.</td>
+<td>The box-score URL is on every game card (&lt;code&gt;/game/&amp;lt;slug&amp;gt;/box-score&lt;/code&gt;). Reading twelve of them is a bounded task and would close the quarter-score provenance question.</td>
+<td><span class="badge b-warn">Buildable — verification task</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-07</td>
+<td><b>Which injury releases exist that the index no longer lists?</b><br>The official index returned <b>only</b> the 2026-11-19 releases at the time of reading. Twenty-one PDFs are archived in the repository, but the index cannot confirm completeness for older dates, and the archive's own manifest records several files with no transcript and no retrieval time.</td>
+<td>A dated capture of the index page every day (so the listing itself is archived), plus a transcript for each PDF.</td>
+<td>The daily refresh workflow already fetches the index; making it commit the index &lt;b&gt;page&lt;/b&gt; alongside the PDF closes this. Transcripts are the larger job.</td>
+<td><span class="badge b-warn">Buildable — process fix</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-08</td>
+<td><b>What is the right minimum sample before a strategy may be ranked?</b><br>The leaderboard publishes a minimum and a closure rule, but the numbers are proposals. With three days of slates at a time, a 300-game gate is a season-long commitment; a 100-game gate would rank noise.</td>
+<td>An owner decision informed by the power calculation: to detect a 3-point edge in cover probability at 80% power needs roughly 1,000 bets, not 300.</td>
+<td>Publish the power calculation next to the gate so the choice is quantitative rather than temperamental.</td>
+<td><span class="badge b-warn">Decision needed (owner)</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-09</td>
+<td><b>Which of the two published HCA pins is right?</b><br>This record measures a home-win rate of 0.5023 over 221 home games on 2026-11-19. The v2 model pins HCA from a 2026-11-14 transcription with a different sample. Both are 'measured'; they are not the same number, and the band around either is wide.</td>
+<td>A single agreed definition (which games count as home games) and one sample window.</td>
+<td>State the definition beside the constant, and widen the reporting band to the sample it came from. Deciding &lt;em&gt;when&lt;/em&gt; the pin is re-cut is an owner decision.</td>
+<td><span class="badge b-warn">Decision needed (owner)</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+<tr>
+<td>U-10</td>
+<td><b>Does the three-day-ahead generator exist, or only a three-day window?</b><br>There is a committed window of games with originated lines. There is <b>no</b> scheduled job that discovers the next window and originates lines for it — the most recent scheduled ingest run concluded failure. So the brief's 'generate picks for every upcoming slate up to 3 days out' is partly aspirational.</td>
+<td>A green scheduled run that (a) fetches, (b) passes the freshness and provenance gates, and (c) commits regenerated artefacts.</td>
+<td>Watch the Actions tab for the next scheduled run; if it fails, the failing step names the transport. The capture workflow that succeeds already proves the transport works from a runner.</td>
+<td><span class="badge b-bad">Blocked — infrastructure</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">official capture this register was written against</a></td>
+</tr>
+</tbody></table></div>
+
+<h2>What is <em>not</em> on this list, and why</h2>
+<p>Anything the verified capture already answers is absent on purpose. The 2026-11-19 slate, the twelve
+2026-11-18 finals, every club's record, the two estimators and their disagreement, the five injury
+releases and the diff between them, and the measured home-win rate are all settled — with the source
+linked — on the <a href="verify-1119.html">verification record</a>. Repeating a settled number here would
+make the register look bigger and be less useful.</p>
+
+<footer>
+  <p>Official capture: <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">data/raw/verify_2026-11-19/official_2026-11-19.json</a> · raw page text:
+     <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/</a> ·
+     parser: <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/session-164d832b-capture.py" rel="noopener" target="_blank">tools/session-164d832b-capture.py</a></p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>
