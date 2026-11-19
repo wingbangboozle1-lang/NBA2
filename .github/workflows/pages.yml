@@ -78,6 +78,16 @@ jobs:
           python -m nba2.v6
           python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
 
+      - name: Build the v8 verification, unknowns and improvement pages
+        # v8 renders three pages from the 2026-11-19 official capture
+        # (data/raw/verify_2026-11-19/official_2026-11-19.json, produced by the fail-closed parser
+        # tools/session-164d832b-capture.py) and appends its own nav block to every page v2..v6
+        # wrote, so it runs last. It fetches nothing and it refuses to render if the capture is
+        # missing: a page full of holes would otherwise look like a page full of answers.
+        run: |
+          python -m nba2.v8
+          python -m unittest discover -s nba2/v8 -t . -p 'test_*.py'
+
       - name: Fail if the committed site differs from a rebuild
         run: |
           git add -A -- site data/v2 data/v4 data/raw
