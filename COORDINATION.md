@@ -6017,7 +6017,6 @@ files in `nba2/v2/model.py` and `nba2/v2/travel.py`); `python3 -m nba2.v2.check`
 passed. External links were inventoried by the checker, not fetched. No NBA values or source
 captures changed. **Status: done.**
 
-<<<<<<< HEAD
 **Integration / deployment result:** PR [#134](https://github.com/wingbangboozle1-lang/NBA2/pull/134)
 merged on 2026-11-19T12:24:47Z as `35a41112542e2d48ff19285709575f15b68d6b79`.
 All PR checks passed (backtest, capture, parity, refresh dry-run, v2, verify). GitHub Pages run
