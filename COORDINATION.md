@@ -5817,3 +5817,34 @@ record a change request in this board rather than editing it.
 | 8C-03 | Repair refresh/finals transport only where the official response and parser contract are demonstrated | pending | retain all gates; record exact official URLs and acquisition method; no fabricated fixtures |
 | 8C-04 | Add targeted regression coverage and run affected suites | pending | positive + failure-path tests; no gate weakened |
 | 8C-05 | Record findings, remaining source/reachability limits, and disposition | pending | report linked here; unresolved values left blank and flagged |
+
+### Session `arena/8c7c8828-nba2` — evidence-based scope update (2026-11-19 UTC)
+
+The recorded run `44381003145` reports all four capture surfaces successful, but its publish
+job fails at **“Rebuild every tree from the committed capture”**; the gate and tests are then
+skipped. The Actions log download is currently unreachable from this environment, so the cause
+was reproduced locally without using an inferred log message: archive the committed tree,
+run the workflow's rebuild commands in order, and it exits in `python -m nba2.settlement_page`
+with `data/raw/official_finals_union.json is stale — run: python -m nba2.pipeline.settle`.
+In that same isolated copy, `finals_all.json` contains 36 records while the committed official
+union contains 31; running `python -m nba2.pipeline.settle` rebuilds the union from 11 committed
+source files (36 records, 0 score conflicts, 0 invalid quarter rows), verifies both sealed
+ledgers, and allows `python -m nba2.settlement_page` to complete. Sealed ledgers were not
+modified in the reproduction.
+
+This is a **build-order defect**, not an observed official-endpoint transport failure. PR #112's
+head has had no commit since 2026-11-16 19:36Z; its `.github/workflows/refresh.yml` patch only
+changes the semantic-crosscheck step and does not add the settlement prerequisite. Under the
+board's stale-claim handoff rule, this session takes over only the missing settlement-before-
+render step in that stale workflow scope. PR #112's unrelated crosscheck, site, and data changes
+remain untouched.
+
+**Scope amendment:** add `.github/workflows/refresh.yml` solely to run the committed-finals
+settlement builder before the settlement page and dependent publication checks. Existing
+freshness/provenance gates, skipped-on-gate-failure behavior, crosscheck policy, and all other
+workflow steps remain unchanged. The explicit exclusion above is amended only for this file.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-02 | Reproduce the latest scheduled publish failure | done | exact failing module reproduced from committed capture; no cause inferred from run conclusion |
+| 8C-06 | Add the missing official-settlement build prerequisite to the stale workflow scope | in progress | settle from committed official sources before rendering; fail closed on seal/source conflicts |
