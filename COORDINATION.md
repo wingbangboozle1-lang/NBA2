@@ -6028,3 +6028,31 @@ capture-versus-publish disclosure. The first fetch immediately after deploy retu
 transient GitHub outage/404 response; a cache-busted follow-up returned the deployed dashboard.
 Full details and verification limitations are recorded in
 `analysis/session-3a5c7c75-refresh-disclosure.md`.
+## Session `arena/164d832b-nba2` — CLAIM (2026-11-19 UTC)
+
+**Task:** requirements-coverage audit + line-by-line verification of the published surface
+against the official NBA pages read today (2026-11-19), with targeted repairs where a briefed
+requirement has no implementation or no test. Then integrate and publish.
+
+**File scope:** `analysis/session-164d832b-*.md` (new audit records), `requirements/COVERAGE-164d832b.json`
+(new machine-readable matrix), `nba2/v2/content.py` + `nba2/v2/build.py` only if a published page
+must gain a row/column that the verification shows is missing, regenerated `site/**` +
+`data/v2/content.json`, and this append-only board.
+
+**Explicitly NOT in scope (owned by open, in-flight sessions):** `nba2/v6/**` and the v7 layer
+(PR #130, `arena/6023d517-nba2`), the settlement/date-scoped coverage repair (PR #131,
+`arena/8c7c8828-nba2`), any sealed ledger file, and `nba2/v4/**`/`nba2/v5/**` model inputs.
+If a defect is found in those files it is recorded in the audit report and in the board, not fixed here.
+
+**Claim verification:** read this board and `README.md`; branch `arena/164d832b-nba2` at `41cfd81`,
+clean tree. Baseline reproduced locally before any change: full `pages.yml` build chain
+(v2 → v2.check → settlement_page → v3 → v3.check → v4 → v4.check → v5 → v6) rc=0 with a
+**byte-identical** rebuild, `tools/check_links_all.py` 143 files / 7,472 internal links OK,
+`tools/crosscheck_site.py` 87 pass / 1 fail / 9 info (the one failure is `CC-FRESH-01`, the
+2026-11-14 legacy model snapshot being 5 days old).
+
+**Transport note (measured, not assumed):** direct HTTPS from this sandbox to
+`www.nba.com`, `official.nba.com` and `cdn.nba.com` fails at the TLS handshake
+(`curl (35) SSL_ERROR_SYSCALL`). Official pages were therefore read through the agent's
+page-fetch channel, which returns HTTP content from those hosts; every capture row below
+records the URL and the retrieval time so the read can be re-checked manually.
