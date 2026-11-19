@@ -6004,3 +6004,21 @@ Claimed before any edit. Preconditions verified at claim time: PR #115 merged (2
 | 6B9-5 | Record + PR → merge → Pages verify → completion record | `analysis/session-6b9f3bbe-nba2-recut.md` (new), `COORDINATION.md` (completion, append-only) | `gh pr merge` with all checks green; live fetch of the deployed site |
 
 **Explicitly NOT edited:** sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `.github/workflows/**`, `nba2/v2/refresh.py` transport (RQ-8892-01 stays open, unclaimed), `nba2/v6/**` logic, other sessions' claimed files, `docs/**`, `backtest/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `tools/**`, `README.md` (except proven count drift, counts only).
+
+## Completion record — session `arena/6b9f3bbe-nba2` (2026-11-19 UTC, RQ-8892-02 executed in full)
+
+Full write-up with exact commands and evidence: `analysis/session-6b9f3bbe-nba2-recut.md`.
+
+| ID | Task | Status | Result |
+|----|------|--------|--------|
+| 6B9-1 | Claim + push before edits | done | claim `59f3ea8` pushed before any work |
+| 6B9-2 | Fresh official capture 2026-11-19 | done | `data/raw/refresh_2026-11-19/` (standings, 3 team-stat pages, 26-game window, 44 injury rows) + `data/raw/finals_2026-11-18.json` (12 finals, day strip **and** gamebook reads agree); selftest CLEAN; commit `0f08729` pushed before the re-cut |
+| 6B9-3 | Model re-cut per the 7-step spec | done | v2 `TEAMS`/anchors/slate/injuries (PF/PA re-basing disclosed); `report.py` reconstruction exact (222 finals → card 30/30, hole 0); v3 `_T/_S/_R/_I` + anchors + own seal; v4 window/card/3 stat pages/injury rendering/played pool (222); v5 injury dirs; v6 frozen clock |
+| 6B9-4 | Regenerate + verify | done | rebuild byte-identical fixed point; suites 92+167+67+61+26+53+backtest all OK; v2/v3/v4 checks 0 problems, gates 8/8 everywhere; lint 1429 rows / 50 tables sourced; links 7472 OK; **crosscheck 100 checks: 91 pass / 0 fail / 9 info — CC-FRESH-01 PASS** |
+| 6B9-5 | Record + PR → merge → Pages | done | see the PR & merge result below |
+
+**Seals:** `sealed-2026-11-13.json` (22) and `sealed-2026-11-14.json` (27) VERIFIED and byte-identical (never touched); new pre-tip seals `data/raw/ledger/sealed-2026-11-19.json` (26 predictions, sha256 `7e5406959a8aea3f…`, sealed before the window's first tip) and `data/v3/ledger/sealed-2026-11-19.json` (26 rows, digest `10358d28cf58e85c…`). Settlement now grades through 2026-11-18: 22/22 and 27/27 settled, union 48 records, 0 conflicts, 0 rejected quarter rows.
+
+**Flagged for review (non-blocking, on the site):** the GSW road-splits re-read (transcription, not the page), the injury-PDF page-break carry-over (Kuminga/Pullin, "C" attribution), the NYK@MIN listing with no New York rows, blank arenas for 11/21-22 (day strips do not print them), the now-disjoint cross-session windows (xlines/three-way disclosed as empty), and CC-FRESH-03 remaining informational (RQ-8892-01 transport still open and unclaimed).
+
+**Sources for manual review:** [NBA.com Standings](https://www.nba.com/standings), [Teams Traditional](https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame), [Teams Opponent](https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame), [Teams Advanced](https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame), [Games day strips](https://www.nba.com/games?date=2026-11-19), [11/18 gamebooks](https://statsdmz.nba.com/pdfs/20261118/20261118_HOUIND_book.pdf), [Injury report index](https://official.nba.com/nba-injury-report-2026-27-season/), [11/19 07:15 AM report](https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf).
