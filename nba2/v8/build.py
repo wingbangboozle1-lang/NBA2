@@ -103,7 +103,7 @@ def _shell(name: str, title: str, body: str, nav: list[tuple[str, str]]) -> None
     parts = []
     for href, label in nav:
         on = ' class="on"' if href == name else ""
-        parts.append(f'<a href="{esc(href)}"{on}>{label}</a>')
+        parts.append(f'<a href="{esc(href)}"{on}>{esc(_nav_text(label))}</a>')
     doc = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,6 +137,12 @@ def _shell(name: str, title: str, body: str, nav: list[tuple[str, str]]) -> None
 </html>
 """
     (SITE / name).write_text(doc)
+
+
+def _nav_text(label: str) -> str:
+    """A nav label as HTML: the categorised nav carries entity-escaped labels ("&amp;") and this
+    tree must not double-escape them into "&amp;amp;" on a rebuild."""
+    return html.unescape(label)
 
 
 def _load_nav() -> list[tuple[str, str]]:

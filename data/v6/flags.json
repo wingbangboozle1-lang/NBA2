@@ -24,7 +24,7 @@
    "id": "F-F5-03",
    "severity": "gap",
    "official_source": "https://official.nba.com/nba-injury-report-2026-27-season/",
-   "what_is_wrong": "<b>1</b> of the <b>21</b> official injury reports this repository knows about (the newest is 11:00 AM ET) are not archived as PDF bytes. 20 are; the rest exist only as a transcript, or as a citation inside another document, or as a URL in a capture.",
+   "what_is_wrong": "<b>5</b> of the <b>25</b> official injury reports this repository knows about (the newest is 12:00 AM ET) are not archived as PDF bytes. 20 are; the rest exist only as a transcript, or as a citation inside another document, or as a URL in a capture.",
    "what_is_published": "The full inventory is published with one row per release, its revision stamp, its retrieval time and whether bytes exist: <a href=\"injury-archive.html\" rel=\"noopener\" target=\"_blank\">the injury PDF archive</a>. The ingester that closes the gap exists (<a href=\"https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/injury_backfill.py\" rel=\"noopener\" target=\"_blank\">nba2/v6/injury_backfill.py</a>) and runs from a GitHub runner where the CDN answers; a release the league has since withdrawn will be recorded as unreachable with its HTTP status, never backfilled with a substitute.",
    "where_to_check": "data/v6/injury_archive.json"
   },
