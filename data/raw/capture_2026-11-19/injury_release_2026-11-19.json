@@ -1,0 +1,467 @@
+{
+ "schema": "nba2.injury-transcript.v2",
+ "revision_time_et": "2026-11-19 01:00 AM ET",
+ "revision_stamp_source": "the PDF's own running head, 'Injury Report: 11/19/26 01:00 AM'",
+ "retrieval_time_utc": "2026-11-19T06:20:00+00:00",
+ "revision_to_retrieval_minutes": 80,
+ "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_01_00AM.pdf",
+ "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+ "retrieval_method": "PDF text read from the official URL with the nba2 platform page-fetch tool (1 chunk, 3 printed pages, hasMore=false); the sandbox cannot hold the raw bytes, see byte_archive",
+ "revisions_listed_on_index_for_2026_11_19": [
+  {
+   "stamp_et": "12:00 a.m.",
+   "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_12_00AM.pdf"
+  },
+  {
+   "stamp_et": "12:15 a.m.",
+   "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_12_15AM.pdf"
+  },
+  {
+   "stamp_et": "12:30 a.m.",
+   "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_12_30AM.pdf"
+  },
+  {
+   "stamp_et": "12:45 a.m.",
+   "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_12_45AM.pdf"
+  },
+  {
+   "stamp_et": "1:00 a.m.",
+   "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_01_00AM.pdf"
+  }
+ ],
+ "newest_release_for_this_game_day": true,
+ "noon_release_expected_at_et": "2026-11-19 11:00-13:00 local game-day window; the 1 p.m. release applies to the second night of a back-to-back, which none of the 11/19 clubs are on",
+ "byte_archive": {
+  "status": "not written by this session",
+  "reason": "raw PDF bytes need a host with direct egress to ak-static.cms.nba.com; measured SSL_ERROR_SYSCALL from this sandbox. The byte archive is refresh.yml surface 1 (nba2.pipeline.refresh cmd_injuries + nba2.v4.injury_ingest + nba2.v6.injury_backfill) on a GitHub runner, which writes data/raw/pdf/<release>.pdf and .txt; the transcription above is independent of it.",
+  "target_path": "data/raw/pdf/Injury-Report_2026-11-19_01_00AM.pdf"
+ },
+ "coverage": {
+  "games_on_11_19_in_report": 4,
+  "games_on_11_19_in_slate": 4,
+  "games_on_11_20_in_report": 9,
+  "games_on_11_20_in_slate": 9,
+  "games_on_11_21_in_slate": 6,
+  "note": "every 11/19 and 11/20 game appears in the release; the six 11/21 games are absent because their 5 p.m. day-before filing deadline (11/20) has not passed - blank by policy, never estimated. Of the eight team blocks on 11/19, three (Golden State Warriors, Memphis Grizzlies, Milwaukee Bucks) printed NOT YET SUBMITTED and five had filed rows (LA Clippers, San Antonio Spurs, Minnesota Timberwolves, Portland Trail Blazers, plus the two unattributed NYK@MIN rows in unattributed_rows)."
+ },
+ "row_count": 44,
+ "named_player_rows": 23,
+ "not_yet_submitted_rows": 21,
+ "unattributed_rows": [
+  {
+   "players": [
+    "Kuminga, Jonathan",
+    "Pullin, Zyon"
+   ],
+   "team": null,
+   "reason": "the PDF page break left the Game Date / Game Time / Matchup / Team cells blank on these two rows. Their matchup is the one that was still open (NYK@MIN, both rows print the 08:00 (ET) column), but the team is genuinely ambiguous: carrying the block over would attribute them to Minnesota Timberwolves, while they may equally be the first two rows of the New York Knicks block whose header was lost with the page break. The team cell is therefore left null and flagged rather than guessed; the repo's carry-over convention (FLAG-V2-INJ-ATTR) would say 'C' = carried over, and it is recorded as a candidate, not a value.",
+   "carry_over_candidate": "Minnesota Timberwolves",
+   "flag": "F-19C"
+  }
+ ],
+ "rows": [
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "GSW@MEM",
+   "team": "Golden State Warriors",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "GSW@MEM",
+   "team": "Memphis Grizzlies",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "LA Clippers",
+   "player": "Beal, Bradley",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Injury Management"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "LA Clippers",
+   "player": "Ingram, Brandon",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Heel Surgery"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "LA Clippers",
+   "player": "Martinelli, Nick",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "LA Clippers",
+   "player": "Miller, Jordan",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Rotator Cuff Surgery"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "San Antonio Spurs",
+   "player": "Brown, Maliq",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "San Antonio Spurs",
+   "player": "Gillespie, Ja'Kobi",
+   "status": "Out",
+   "reason": "G League - Two-Way"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "San Antonio Spurs",
+   "player": "Harper, Dylan",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Hip Soreness"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "San Antonio Spurs",
+   "player": "Harris, Tobias",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Calf Strain"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "LAC@SAS",
+   "team": "San Antonio Spurs",
+   "player": "Quaintance, Jayden",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Surgery"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "NYK@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Beringer, Joan",
+   "status": "Available",
+   "reason": "Injury/Illness - Face Mask"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "NYK@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Clark, Jaylen",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Hamstring Strain"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "NYK@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "DiVincenzo, Donte",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "NYK@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Edwards, Anthony",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Arthroscopy"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "NYK@MIN",
+   "team": null,
+   "player": "Kuminga, Jonathan",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Right Shoulder Contusion"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "NYK@MIN",
+   "team": null,
+   "player": "Pullin, Zyon",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Right Quadriceps Contusion"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Avdija, Deni",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Left Foot Inflammation / Soreness"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Camara, Toumani",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Abdominal Soreness"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Carlson, Branden",
+   "status": "Available",
+   "reason": "Injury/Illness - Face Mask"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Krejci, Vit",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Ankle Fracture"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Morant, Ja",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Hamstring Strain"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Sharpe, Shaedon",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Meniscus Surgery"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Williams III, Robert",
+   "status": "Out",
+   "reason": "Rest"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Youngblood, Chris",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Heel Contusion / Bone Bruise"
+  },
+  {
+   "game_date": "11/19/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "POR@MIL",
+   "team": "Milwaukee Bucks",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "07:00 (ET)",
+   "matchup": "CHA@ATL",
+   "team": "Charlotte Hornets",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "07:00 (ET)",
+   "matchup": "CHA@ATL",
+   "team": "Atlanta Hawks",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "07:30 (ET)",
+   "matchup": "IND@CLE",
+   "team": "Indiana Pacers",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "07:30 (ET)",
+   "matchup": "IND@CLE",
+   "team": "Cleveland Cavaliers",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "07:30 (ET)",
+   "matchup": "ORL@BKN",
+   "team": "Orlando Magic",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "07:30 (ET)",
+   "matchup": "ORL@BKN",
+   "team": "Brooklyn Nets",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "07:30 (ET)",
+   "matchup": "TOR@DET",
+   "team": "Toronto Raptors",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "07:30 (ET)",
+   "matchup": "TOR@DET",
+   "team": "Detroit Pistons",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "NOP@OKC",
+   "team": "New Orleans Pelicans",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "NOP@OKC",
+   "team": "Oklahoma City Thunder",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "WAS@CHI",
+   "team": "Washington Wizards",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "08:00 (ET)",
+   "matchup": "WAS@CHI",
+   "team": "Chicago Bulls",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "09:30 (ET)",
+   "matchup": "PHX@UTA",
+   "team": "Phoenix Suns",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "09:30 (ET)",
+   "matchup": "PHX@UTA",
+   "team": "Utah Jazz",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "10:00 (ET)",
+   "matchup": "HOU@DEN",
+   "team": "Houston Rockets",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "10:00 (ET)",
+   "matchup": "HOU@DEN",
+   "team": "Denver Nuggets",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "10:00 (ET)",
+   "matchup": "SAC@LAL",
+   "team": "Sacramento Kings",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "game_date": "11/20/2026",
+   "game_time_et": "10:00 (ET)",
+   "matchup": "SAC@LAL",
+   "team": "Los Angeles Lakers",
+   "player": null,
+   "status": null,
+   "reason": "NOT YET SUBMITTED"
+  }
+ ],
+ "note": "the newest release on the index at retrieval; transcribed in full, 26 printed rows. Nothing here is carried forward from the 2026-11-18 02:15 PM ET release, which remains the last one covering the 11/18 games and is committed at data/raw/capture_2026-11-18/injury_release_2026-11-18.json.",
+ "retrieved_by": "arena/fb1d73b2-nba2",
+ "verbatim_fetch": {
+  "path": "data/raw/capture_2026-11-19/injury_release_2026-11-19.fetch.md",
+  "sha256": "5d4f0c21af0b8424",
+  "note": "the page-fetch rendering of the PDF, stored so the transcription is checkable against the source text"
+ }
+}

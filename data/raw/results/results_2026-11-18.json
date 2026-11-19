@@ -1,0 +1,779 @@
+{
+ "schema": "nba2.results-feed.v3",
+ "retrieval_method": "nba2 platform page-fetch tool (sandbox TLS egress to nba.com is blocked; measured SSL_ERROR_SYSCALL) reading the official gamebook PDF at statsdmz.nba.com, one fetch per game; final scores independently cross-read from https://www.nba.com/games?date=2026-11-18 and https://www.nba.com/schedule",
+ "retrieved_by": "arena/fb1d73b2-nba2",
+ "note": "one row per game: date, clubs, final score, quarter scores. Every quarter row was required to sum to the printed final; three PDF text layers printed a period row twice or across lines - the variant that sums to the final was used and the anomaly recorded per row. ot_periods 0 for all twelve games. Nothing back-solved: a period row that did not sum was rejected.",
+ "records": [
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600258",
+   "away": "MEM",
+   "home": "CLE",
+   "away_pts": 124,
+   "home_pts": 121,
+   "away_q": [
+    30,
+    41,
+    29,
+    24
+   ],
+   "home_q": [
+    37,
+    35,
+    27,
+    22
+   ],
+   "ot_periods": 0,
+   "arena": "Rocket Arena",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_MEMCLE_book.pdf",
+   "source_url": "https://www.nba.com/game/mem-vs-cle-0022600258",
+   "inactives": {
+    "away": [
+     "Jackson (Injury/Illness - Left 5th Metatarsal Fracture)",
+     "Jerome (Injury/Illness - Right Hip Impingement)",
+     "Pippen Jr. (Injury/Illness - Lumbar Disc Herniation)",
+     "Saunders (Injury/Illness - Right Knee Surgery)",
+     "Stewart (Injury/Illness - Illness)"
+    ],
+    "home": [
+     "Mobley (Injury/Illness - Left Great Toe Sprain)",
+     "Tomlin (Injury/Illness - Low Back Stress Reaction)",
+     "Tyson (Injury/Illness - Right Ankle Injury Management)",
+     "Udeh Jr. (G League - Two-Way)",
+     "Watson (Injury/Illness - Low Back Contusion)"
+    ]
+   },
+   "memo": "Cam Spencer season high in points",
+   "biggest_lead": "MEM 5, CLE 10",
+   "lead_changes": 22,
+   "times_tied": 14,
+   "status": "final",
+   "away_quarters": [
+    30,
+    41,
+    29,
+    24
+   ],
+   "home_quarters": [
+    37,
+    35,
+    27,
+    22
+   ],
+   "home_margin": -3,
+   "total_pts": 245,
+   "quarter_status": "read",
+   "quarter_note": "MEM 30+41+29+24 = 124 sums to the final; CLE 37+35+27+22 = 121 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/mem-vs-cle-0022600258",
+   "arena_city": "Cleveland, OH",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600259",
+   "away": "HOU",
+   "home": "IND",
+   "away_pts": 119,
+   "home_pts": 104,
+   "away_q": [
+    39,
+    23,
+    31,
+    26
+   ],
+   "home_q": [
+    28,
+    18,
+    30,
+    28
+   ],
+   "ot_periods": 0,
+   "arena": "Gainbridge Fieldhouse",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_HOUIND_book.pdf",
+   "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259",
+   "inactives": {
+    "away": [
+     "Capela (Injury/Illness - Right Ankle Sprain)",
+     "Copeland (G League - Two-Way)",
+     "Phillips (G League - Two-Way)"
+    ],
+    "home": [
+     "Furphy (Injury/Illness - Right ACL Repair / Surgery)",
+     "Haliburton (Injury/Illness - Left Hamstring Strain)",
+     "Nembhard (Injury/Illness - Left Hip Soreness / Tightness)",
+     "Sheppard (Injury/Illness - Left Meniscus Surgery)"
+    ]
+   },
+   "biggest_lead": "HOU 21, IND 4",
+   "lead_changes": 3,
+   "times_tied": 0,
+   "ejection": "IND Carlisle 7:21 2nd",
+   "status": "final",
+   "away_quarters": [
+    39,
+    23,
+    31,
+    26
+   ],
+   "home_quarters": [
+    28,
+    18,
+    30,
+    28
+   ],
+   "home_margin": -15,
+   "total_pts": 223,
+   "quarter_status": "read",
+   "quarter_note": "HOU 39+23+31+26 = 119 sums to the final; IND 28+18+30+28 = 104 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/hou-vs-ind-0022600259",
+   "arena_city": "Indianapolis, IN",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600260",
+   "away": "MIL",
+   "home": "MIA",
+   "away_pts": 130,
+   "home_pts": 137,
+   "away_q": [
+    23,
+    25,
+    38,
+    44
+   ],
+   "home_q": [
+    34,
+    40,
+    38,
+    25
+   ],
+   "ot_periods": 0,
+   "arena": "Kaseya Center",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_MILMIA_book.pdf",
+   "source_url": "https://www.nba.com/game/mil-vs-mia-0022600260",
+   "inactives": {
+    "away": [
+     "Dieng (Injury/Illness - Left Finger Fracture)",
+     "Jones (G League - Two-Way)",
+     "Markovic (G League - On Assignment)",
+     "Nance (G League - Two-Way)",
+     "Ryan (G League - Two-Way)"
+    ],
+    "home": [
+     "Goldin (G League - Two-Way)",
+     "Johnson (no reason printed in the book)"
+    ]
+   },
+   "biggest_lead": "MIL 0, MIA 30",
+   "lead_changes": 0,
+   "times_tied": 0,
+   "dnp_dnd": "MIA Gardner DND - Right Hamstring Tightness / Soreness",
+   "status": "final",
+   "away_quarters": [
+    23,
+    25,
+    38,
+    44
+   ],
+   "home_quarters": [
+    34,
+    40,
+    38,
+    25
+   ],
+   "home_margin": 7,
+   "total_pts": 267,
+   "quarter_status": "read",
+   "quarter_note": "MIL 23+25+38+44 = 130 sums to the final; MIA 34+40+38+25 = 137 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/mil-vs-mia-0022600260",
+   "arena_city": "Miami, FL",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600261",
+   "away": "PHI",
+   "home": "ORL",
+   "away_pts": 121,
+   "home_pts": 116,
+   "away_q": [
+    27,
+    37,
+    28,
+    29
+   ],
+   "home_q": [
+    40,
+    29,
+    28,
+    19
+   ],
+   "ot_periods": 0,
+   "arena": "Kia Center",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_PHIORL_book.pdf",
+   "source_url": "https://www.nba.com/game/phi-vs-orl-0022600261",
+   "inactives": {
+    "away": [
+     "Barlow (Injury/Illness - Low Back Stress Reaction)",
+     "Bona (Injury/Illness - Cervical Spine Sprain)",
+     "Brown (Injury/Illness - Left Hamstring Strain)",
+     "Hukporti (Injury/Illness - Right Achilles Tendon Rupture / Tear)",
+     "Maxey (DND - Right Foot Soreness, did not dress)",
+     "Wade (DND - Left Hamstring Tightness / Soreness, did not dress)"
+    ],
+    "home": [
+     "Banchero (Injury/Illness - Right High Ankle Sprain)",
+     "Castleton (no reason printed in the book)",
+     "Isaac (Injury/Illness - Left Knee Injury Management)",
+     "Nelson (Injury/Illness - Left Ankle Injury Recovery)",
+     "Penda (Injury/Illness - Right Partially Torn Hamstring)"
+    ]
+   },
+   "biggest_lead": "PHI 8, ORL 17",
+   "lead_changes": 4,
+   "times_tied": 3,
+   "status": "final",
+   "away_quarters": [
+    27,
+    37,
+    28,
+    29
+   ],
+   "home_quarters": [
+    40,
+    29,
+    28,
+    19
+   ],
+   "home_margin": -5,
+   "total_pts": 237,
+   "quarter_status": "read",
+   "quarter_note": "PHI 27+37+28+29 = 121 sums to the final; ORL 40+29+28+19 = 116 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/phi-vs-orl-0022600261",
+   "arena_city": "Orlando, FL",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600262",
+   "away": "CHI",
+   "home": "BKN",
+   "away_pts": 137,
+   "home_pts": 107,
+   "away_q": [
+    37,
+    39,
+    35,
+    26
+   ],
+   "home_q": [
+    21,
+    30,
+    26,
+    30
+   ],
+   "ot_periods": 0,
+   "arena": "Barclays Center",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_CHIBKN_book.pdf",
+   "source_url": "https://www.nba.com/game/chi-vs-bkn-0022600262",
+   "inactives": {
+    "away": [
+     "Awaka (Injury/Illness - Disc Irritation)",
+     "Hawkins (no reason printed in the book)",
+     "Robinson (G League - On Assignment)",
+     "Sellers (G League - Two-Way)",
+     "Wilson (Injury/Illness - Right Metacarpal Fracture)"
+    ],
+    "home": [
+     "Bilodeau (G League - Two-Way)",
+     "Jefferson (G League - On Assignment)",
+     "Nelson (G League - Two-Way)",
+     "Powell (G League - On Assignment)",
+     "Saraf (G League - On Assignment)"
+    ]
+   },
+   "biggest_lead": "CHI 37, BKN 2",
+   "lead_changes": 1,
+   "times_tied": 0,
+   "status": "final",
+   "away_quarters": [
+    37,
+    39,
+    35,
+    26
+   ],
+   "home_quarters": [
+    21,
+    30,
+    26,
+    30
+   ],
+   "home_margin": -30,
+   "total_pts": 244,
+   "quarter_status": "read",
+   "quarter_note": "CHI 37+39+35+26 = 137 sums to the final; BKN 21+30+26+30 = 107 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/chi-vs-bkn-0022600262",
+   "arena_city": "Brooklyn, NY",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600263",
+   "away": "WAS",
+   "home": "TOR",
+   "away_pts": 103,
+   "home_pts": 99,
+   "away_q": [
+    29,
+    20,
+    29,
+    25
+   ],
+   "home_q": [
+    23,
+    24,
+    32,
+    20
+   ],
+   "ot_periods": 0,
+   "arena": "Scotiabank Arena",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_WASTOR_book.pdf",
+   "source_url": "https://www.nba.com/game/was-vs-tor-0022600263",
+   "inactives": {
+    "away": [
+     "Beekman (Injury/Illness - Right AC Joint Injury)",
+     "Champagnie (Injury/Illness - Right Foot Surgery)",
+     "Okpara (G League - Two-Way)",
+     "Vukcevic (Injury/Illness - Left Hip Impingement)",
+     "Watkins (Injury/Illness - Left ACL Repair / Surgery)"
+    ],
+    "home": [
+     "Barnes (Injury/Illness - Left Groin Injury Management)",
+     "Barrett (Injury/Illness - Right Hamstring Tightness / Soreness)",
+     "Bittle (Injury/Illness - Right Foot Avulsion Fracture)",
+     "Leonard (Injury/Illness - Left Knee Injury Management)"
+    ]
+   },
+   "biggest_lead": "WAS 10, TOR 3",
+   "lead_changes": 14,
+   "times_tied": 10,
+   "ocr_note": "the PDF text layer printed the Toronto period row once as 'RAPTORS 23 24 32 20 99' (sums to the final) and once garbled as 'PARTS 2 3 4 5 100'; the summing row is used",
+   "status": "final",
+   "away_quarters": [
+    29,
+    20,
+    29,
+    25
+   ],
+   "home_quarters": [
+    23,
+    24,
+    32,
+    20
+   ],
+   "home_margin": -4,
+   "total_pts": 202,
+   "quarter_status": "read",
+   "quarter_note": "WAS 29+20+29+25 = 103 sums to the final; TOR 23+24+32+20 = 99 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/was-vs-tor-0022600263",
+   "arena_city": "Toronto, ON",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600264",
+   "away": "DET",
+   "home": "NOP",
+   "away_pts": 122,
+   "home_pts": 109,
+   "away_q": [
+    31,
+    36,
+    25,
+    30
+   ],
+   "home_q": [
+    31,
+    29,
+    26,
+    23
+   ],
+   "ot_periods": 0,
+   "arena": "Smoothie King Center",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_DETNOP_book.pdf",
+   "source_url": "https://www.nba.com/game/det-vs-nop-0022600264",
+   "inactives": {
+    "away": [
+     "Duren (Injury/Illness - Right Hamstring Strain)",
+     "Holland II (Injury/Illness - Left Knee Contusion / Bone Bruise)",
+     "Okorie (G League - On Assignment)",
+     "Onyenso (G League - Two-Way)",
+     "Prince (Injury/Illness - Right Knee Soreness)",
+     "Robinson (Injury/Illness - Left Quadriceps Strain)",
+     "Cunningham (DND - Right Knee Soreness, did not dress)"
+    ],
+    "home": [
+     "Mathurin (Injury/Illness - Left Plantar Fasciitis)",
+     "McGowens (Injury/Illness - Left Elbow Infection)",
+     "Murphy III (Injury/Illness - Bilateral Patellar Tendinopathy)",
+     "Murray (Injury/Illness - Left Ankle Sprain)",
+     "Watford (Injury/Illness - Right Ankle Sprain)"
+    ]
+   },
+   "biggest_lead": "DET 19, NOP 5",
+   "lead_changes": 6,
+   "times_tied": 14,
+   "status": "final",
+   "away_quarters": [
+    31,
+    36,
+    25,
+    30
+   ],
+   "home_quarters": [
+    31,
+    29,
+    26,
+    23
+   ],
+   "home_margin": -13,
+   "total_pts": 231,
+   "quarter_status": "read",
+   "quarter_note": "DET 31+36+25+30 = 122 sums to the final; NOP 31+29+26+23 = 109 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/det-vs-nop-0022600264",
+   "arena_city": "New Orleans, LA",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600265",
+   "away": "ATL",
+   "home": "OKC",
+   "away_pts": 117,
+   "home_pts": 112,
+   "away_q": [
+    31,
+    33,
+    19,
+    34
+   ],
+   "home_q": [
+    29,
+    22,
+    32,
+    29
+   ],
+   "ot_periods": 0,
+   "arena": "Paycom Center",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_ATLOKC_book.pdf",
+   "source_url": "https://www.nba.com/game/atl-vs-okc-0022600265",
+   "inactives": {
+    "away": [
+     "Castro (G League - Two-Way)",
+     "Gueye (Injury/Illness - Left Foot Fracture)",
+     "Landale (Injury/Illness - Right Hip Inflammation)",
+     "McCollum (Injury/Illness - Left Calf Strain)",
+     "Newell (Injury/Illness - Left Great Toe Surgery)",
+     "Veesaar (Injury/Illness - Right ACL Tear)",
+     "Flemings (DND - Lumbar Strain, did not dress)"
+    ],
+    "home": [
+     "Dix (G League - Two-Way)",
+     "Holmgren (Injury/Illness - Right Knee/ Injury Recovery )",
+     "Peavy (G League - Two-Way)",
+     "Sorber (Injury/Illness - Right Knee Surgery )",
+     "Wallace (Injury/Illness - Left Shoulder Surgery )",
+     "Williams (Injury/Illness - Left Ankle Surgery )"
+    ]
+   },
+   "biggest_lead": "ATL 14, OKC 7",
+   "lead_changes": 5,
+   "times_tied": 9,
+   "status": "final",
+   "away_quarters": [
+    31,
+    33,
+    19,
+    34
+   ],
+   "home_quarters": [
+    29,
+    22,
+    32,
+    29
+   ],
+   "home_margin": -5,
+   "total_pts": 229,
+   "quarter_status": "read",
+   "quarter_note": "ATL 31+33+19+34 = 117 sums to the final; OKC 29+22+32+29 = 112 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/atl-vs-okc-0022600265",
+   "arena_city": "Oklahoma City, OK",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600266",
+   "away": "BOS",
+   "home": "DEN",
+   "away_pts": 101,
+   "home_pts": 105,
+   "away_q": [
+    30,
+    31,
+    19,
+    21
+   ],
+   "home_q": [
+    24,
+    25,
+    31,
+    25
+   ],
+   "ot_periods": 0,
+   "arena": "Ball Arena",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_BOSDEN_book.pdf",
+   "source_url": "https://www.nba.com/game/bos-vs-den-0022600266",
+   "inactives": {
+    "away": [
+     "Carter (no reason printed in the book)",
+     "Mitchell (G League - Two-Way)",
+     "Williams (G League - Two-Way)"
+    ],
+    "home": [
+     "Holmes II (G League - On Assignment)",
+     "Nembhard (G League - Two-Way)",
+     "Strawther (Injury/Illness - Left Knee Sprain)",
+     "Whitmore (G League - Two-Way)"
+    ]
+   },
+   "biggest_lead": "BOS 17, DEN 4",
+   "lead_changes": 15,
+   "times_tied": 8,
+   "ocr_note": "the PDF text layer split Denver's period row across two lines ('NUGGETS 24 25 31' + '25 105'); the four periods sum to the printed final 105",
+   "status": "final",
+   "away_quarters": [
+    30,
+    31,
+    19,
+    21
+   ],
+   "home_quarters": [
+    24,
+    25,
+    31,
+    25
+   ],
+   "home_margin": 4,
+   "total_pts": 206,
+   "quarter_status": "read",
+   "quarter_note": "BOS 30+31+19+21 = 101 sums to the final; DEN 24+25+31+25 = 105 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/bos-vs-den-0022600266",
+   "arena_city": "Denver, CO",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600267",
+   "away": "GSW",
+   "home": "DAL",
+   "away_pts": 94,
+   "home_pts": 116,
+   "away_q": [
+    25,
+    24,
+    23,
+    22
+   ],
+   "home_q": [
+    35,
+    27,
+    30,
+    24
+   ],
+   "ot_periods": 0,
+   "arena": "American Airlines Center",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_GSWDAL_book.pdf",
+   "source_url": "https://www.nba.com/game/gsw-vs-dal-0022600267",
+   "inactives": {
+    "away": [
+     "Butler III (Injury/Illness - Right ACL Repair / Surgery)",
+     "Curry (Injury/Illness - Right Oblique Tear)",
+     "Horford (Injury/Illness - Bilateral Low Back Injury Management)",
+     "Moody (Injury/Illness - Left Patellar Tendon Repair / Surgery)",
+     "Porzingis (Not With Team)",
+     "Williams (Injury/Illness - Left Hamstring Strain)"
+    ],
+    "home": [
+     "Biberovic (Injury/Illness - Right Heel Bursitis)",
+     "de Larrea (Injury/Illness - Right Knee Sprain)",
+     "Howard (G League - Two-Way)",
+     "Lawal (Injury/Illness - Right Groin Tightness)",
+     "Lively II (Injury/Illness - Right Foot Surgery)"
+    ]
+   },
+   "biggest_lead": "GSW 2, DAL 29",
+   "lead_changes": 3,
+   "times_tied": 1,
+   "status": "final",
+   "away_quarters": [
+    25,
+    24,
+    23,
+    22
+   ],
+   "home_quarters": [
+    35,
+    27,
+    30,
+    24
+   ],
+   "home_margin": 22,
+   "total_pts": 210,
+   "quarter_status": "read",
+   "quarter_note": "GSW 25+24+23+22 = 94 sums to the final; DAL 35+27+30+24 = 116 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/gsw-vs-dal-0022600267",
+   "arena_city": "Dallas, TX",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600268",
+   "away": "UTA",
+   "home": "LAL",
+   "away_pts": 109,
+   "home_pts": 97,
+   "away_q": [
+    29,
+    27,
+    22,
+    31
+   ],
+   "home_q": [
+    34,
+    20,
+    22,
+    21
+   ],
+   "ot_periods": 0,
+   "arena": "Crypto.com Arena",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_UTALAL_book.pdf",
+   "source_url": "https://www.nba.com/game/uta-vs-lal-0022600268",
+   "inactives": {
+    "away": [
+     "Bufkin (G League - Two-Way)",
+     "Ingram (G League - Two-Way)",
+     "Jackson Jr. (Injury/Illness - Right MCL Tear)",
+     "Markkanen (Injury/Illness - Right Hand Fracture)",
+     "Nurkic (Injury/Illness - Right Foot; 2nd Plantar Plate Tear)"
+    ],
+    "home": [
+     "Kaluma (G League - Two-Way)",
+     "Manon (G League - Two-Way)",
+     "Reaves (Injury/Illness - Left Heel Contusion / Bone Bruise)"
+    ]
+   },
+   "biggest_lead": "UTA 18, LAL 8",
+   "lead_changes": 13,
+   "times_tied": 14,
+   "status": "final",
+   "away_quarters": [
+    29,
+    27,
+    22,
+    31
+   ],
+   "home_quarters": [
+    34,
+    20,
+    22,
+    21
+   ],
+   "home_margin": -12,
+   "total_pts": 206,
+   "quarter_status": "read",
+   "quarter_note": "UTA 29+27+22+31 = 109 sums to the final; LAL 34+20+22+21 = 97 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/uta-vs-lal-0022600268",
+   "arena_city": "Los Angeles, CA",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600269",
+   "away": "PHX",
+   "home": "SAC",
+   "away_pts": 128,
+   "home_pts": 107,
+   "away_q": [
+    36,
+    29,
+    34,
+    29
+   ],
+   "home_q": [
+    31,
+    29,
+    24,
+    23
+   ],
+   "ot_periods": 0,
+   "arena": "Golden 1 Center",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_PHXSAC_book.pdf",
+   "source_url": "https://www.nba.com/game/phx-vs-sac-0022600269",
+   "inactives": {
+    "away": [
+     "Reath (G League - Two-Way)",
+     "Spencer (G League - Two-Way)",
+     "Timme (G League - Two-Way)",
+     "Williams (Injury/Illness - Left Shoulder Surgery)"
+    ],
+    "home": [
+     "Mogbo (G League - Two-Way)",
+     "Pedulla (G League - Two-Way)",
+     "Raynaud (Injury/Illness - Right Patella Subluxation)",
+     "Simmons (Injury/Illness - Right Achilles Tendon Repair / Surgery)"
+    ]
+   },
+   "biggest_lead": "PHX 27, SAC 2",
+   "lead_changes": 12,
+   "times_tied": 6,
+   "ocr_note": "the PDF text layer printed Sacramento's period row twice: 'KINGS 31 29 24 23 107' (sums to the final, used) and 'KINS 24 28 24 28 107' (does not sum; rejected)",
+   "status": "final",
+   "away_quarters": [
+    36,
+    29,
+    34,
+    29
+   ],
+   "home_quarters": [
+    31,
+    29,
+    24,
+    23
+   ],
+   "home_margin": -21,
+   "total_pts": 235,
+   "quarter_status": "read",
+   "quarter_note": "PHX 36+29+34+29 = 128 sums to the final; SAC 31+29+24+23 = 107 sums to the final",
+   "list_url": "https://www.nba.com/games?date=2026-11-18",
+   "final_source_url": "https://www.nba.com/game/phx-vs-sac-0022600269",
+   "arena_city": "Sacramento, CA",
+   "arena_source_url": "https://www.nba.com/schedule?date=2026-11-19"
+  }
+ ],
+ "game_date": "2026-11-18",
+ "retrieved_utc": "2026-11-19T06:05:00+00:00",
+ "settle_rule": "settle only when the game carries an official final read from the gamebook and each team's quarter rows sum to that final; otherwise leave the row unsettled",
+ "source_page": "https://www.nba.com/games?date=2026-11-18"
+}

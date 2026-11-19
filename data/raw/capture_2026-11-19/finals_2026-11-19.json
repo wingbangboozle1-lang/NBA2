@@ -1,0 +1,322 @@
+{
+ "schema": "nba2.results-feed.v2",
+ "game_date": "2026-11-18",
+ "retrieved_at_utc": "2026-11-19T06:20:00+00:00",
+ "retrieval_method": "nba2 platform page-fetch tool reading the live official page (sandbox TLS egress to nba.com is blocked - measured SSL_ERROR_SYSCALL); no stats.nba.com JSON call was attempted or simulated",
+ "retrieved_by": "arena/fb1d73b2-nba2",
+ "note": "finals for the most recent completed game day as read on 2026-11-19; no 2026-11-19 game had tipped at retrieval, so this capture carries no 11/19 final. quarter rows come from the official gamebook SCORE BY PERIOD block and each row is required to sum to the printed final.",
+ "records": [
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600258",
+   "home": "CLE",
+   "away": "MEM",
+   "home_pts": 121,
+   "away_pts": 124,
+   "home_q": [
+    37,
+    35,
+    27,
+    22
+   ],
+   "away_q": [
+    30,
+    41,
+    29,
+    24
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/mem-vs-cle-0022600258",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_MEMCLE_book.pdf",
+   "arena": "Rocket Arena",
+   "arena_city": "Cleveland, OH",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600259",
+   "home": "IND",
+   "away": "HOU",
+   "home_pts": 104,
+   "away_pts": 119,
+   "home_q": [
+    28,
+    18,
+    30,
+    28
+   ],
+   "away_q": [
+    39,
+    23,
+    31,
+    26
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_HOUIND_book.pdf",
+   "arena": "Gainbridge Fieldhouse",
+   "arena_city": "Indianapolis, IN",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600260",
+   "home": "MIA",
+   "away": "MIL",
+   "home_pts": 137,
+   "away_pts": 130,
+   "home_q": [
+    34,
+    40,
+    38,
+    25
+   ],
+   "away_q": [
+    23,
+    25,
+    38,
+    44
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/mil-vs-mia-0022600260",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_MILMIA_book.pdf",
+   "arena": "Kaseya Center",
+   "arena_city": "Miami, FL",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600261",
+   "home": "ORL",
+   "away": "PHI",
+   "home_pts": 116,
+   "away_pts": 121,
+   "home_q": [
+    40,
+    29,
+    28,
+    19
+   ],
+   "away_q": [
+    27,
+    37,
+    28,
+    29
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/phi-vs-orl-0022600261",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_PHIORL_book.pdf",
+   "arena": "Kia Center",
+   "arena_city": "Orlando, FL",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600262",
+   "home": "BKN",
+   "away": "CHI",
+   "home_pts": 107,
+   "away_pts": 137,
+   "home_q": [
+    21,
+    30,
+    26,
+    30
+   ],
+   "away_q": [
+    37,
+    39,
+    35,
+    26
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/chi-vs-bkn-0022600262",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_CHIBKN_book.pdf",
+   "arena": "Barclays Center",
+   "arena_city": "Brooklyn, NY",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600263",
+   "home": "TOR",
+   "away": "WAS",
+   "home_pts": 99,
+   "away_pts": 103,
+   "home_q": [
+    23,
+    24,
+    32,
+    20
+   ],
+   "away_q": [
+    29,
+    20,
+    29,
+    25
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/was-vs-tor-0022600263",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_WASTOR_book.pdf",
+   "arena": "Scotiabank Arena",
+   "arena_city": "Toronto, ON",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600264",
+   "home": "NOP",
+   "away": "DET",
+   "home_pts": 109,
+   "away_pts": 122,
+   "home_q": [
+    31,
+    29,
+    26,
+    23
+   ],
+   "away_q": [
+    31,
+    36,
+    25,
+    30
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/det-vs-nop-0022600264",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_DETNOP_book.pdf",
+   "arena": "Smoothie King Center",
+   "arena_city": "New Orleans, LA",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600265",
+   "home": "OKC",
+   "away": "ATL",
+   "home_pts": 112,
+   "away_pts": 117,
+   "home_q": [
+    29,
+    22,
+    32,
+    29
+   ],
+   "away_q": [
+    31,
+    33,
+    19,
+    34
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/atl-vs-okc-0022600265",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_ATLOKC_book.pdf",
+   "arena": "Paycom Center",
+   "arena_city": "Oklahoma City, OK",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600266",
+   "home": "DEN",
+   "away": "BOS",
+   "home_pts": 105,
+   "away_pts": 101,
+   "home_q": [
+    24,
+    25,
+    31,
+    25
+   ],
+   "away_q": [
+    30,
+    31,
+    19,
+    21
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/bos-vs-den-0022600266",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_BOSDEN_book.pdf",
+   "arena": "Ball Arena",
+   "arena_city": "Denver, CO",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600267",
+   "home": "DAL",
+   "away": "GSW",
+   "home_pts": 116,
+   "away_pts": 94,
+   "home_q": [
+    35,
+    27,
+    30,
+    24
+   ],
+   "away_q": [
+    25,
+    24,
+    23,
+    22
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/gsw-vs-dal-0022600267",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_GSWDAL_book.pdf",
+   "arena": "American Airlines Center",
+   "arena_city": "Dallas, TX",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600268",
+   "home": "LAL",
+   "away": "UTA",
+   "home_pts": 97,
+   "away_pts": 109,
+   "home_q": [
+    34,
+    20,
+    22,
+    21
+   ],
+   "away_q": [
+    29,
+    27,
+    22,
+    31
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/uta-vs-lal-0022600268",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_UTALAL_book.pdf",
+   "arena": "Crypto.com Arena",
+   "arena_city": "Los Angeles, CA",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  },
+  {
+   "date": "2026-11-18",
+   "game_id": "0022600269",
+   "home": "SAC",
+   "away": "PHX",
+   "home_pts": 107,
+   "away_pts": 128,
+   "home_q": [
+    31,
+    29,
+    24,
+    23
+   ],
+   "away_q": [
+    36,
+    29,
+    34,
+    29
+   ],
+   "ot_periods": 0,
+   "source_url": "https://www.nba.com/game/phx-vs-sac-0022600269",
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_PHXSAC_book.pdf",
+   "arena": "Golden 1 Center",
+   "arena_city": "Sacramento, CA",
+   "arena_status": "read - www.nba.com/schedule?date=2026-11-19 game card, and the gamebook PDF header"
+  }
+ ]
+}
