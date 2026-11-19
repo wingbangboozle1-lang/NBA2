@@ -291,6 +291,21 @@ jobs:
               print("all four surfaces captured")
           PY
 
+      # Added 2026-11-19 (session arena/fb1d73b2-nba2). The capture job writes official finals
+      # into data/raw/, but the union that settlement reads is a *derived* artefact
+      # (data/raw/official_finals_union.json + data/settlement.json). nba2.settlement_page
+      # refuses to build when the committed union is not a fresh rebuild of the committed
+      # finals sources, so with no step here producing that rebuild the publish job failed at
+      # "Rebuild every tree" for three consecutive nights — the site could not refresh even on
+      # a night when all four surfaces were captured green. Rebuilding the union first is the
+      # "settle as soon as the game day ends" half of the brief; nothing downstream is relaxed:
+      # the rebuild still has to pass every gate, and the settlement guard below still fires
+      # when the finals leg failed.
+      - name: Rebuild the official-finals union and settle the sealed ledgers from it
+        run: |
+          set -euo pipefail
+          python3 -m nba2.pipeline.settle
+
       - name: Rebuild every tree from the committed capture
         run: |
           set -euo pipefail
@@ -352,6 +367,11 @@ jobs:
           git config user.name "nba2-ingest-bot"
           git config user.email "nba2-ingest-bot@users.noreply.github.com"
           git add site data/v2 data/v3 data/v4 data/v6 data/site.json index.html pages 2>/dev/null || true
+          # The union and the settlement it produced are the audit trail of "settled from
+          # official finals at the end of the game day". They are committed with the rebuild so
+          # the published site and the settlement artefacts can never diverge (a stale union is
+          # what made nba2.settlement_page refuse to build).
+          git add data/settlement.json data/raw/official_finals_union.json 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "The rebuild matches what is committed — nothing to publish."
             exit 0

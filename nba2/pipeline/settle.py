@@ -58,6 +58,13 @@ def finals_sources() -> list[Path]:
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "finals_*.json")))]
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "capture_*" / "results_*.json")))]
     paths += [Path(p) for p in sorted(glob.glob(str(RAW / "results" / "results_*.json")))]
+    # The rolling surface of the nightly job (nba2.v2.refresh --write) writes the finals feed it
+    # gates on as ``data/raw/capture_<date>/finals_<date>.json`` in schema
+    # ``nba2.results-feed.v2``. Until 2026-11-19 this module only looked for
+    # ``capture_*/results_*.json``, so every nightly finals capture was invisible to settlement:
+    # the union froze at 31 games while 50 later official finals sat unread on the same branch,
+    # and ``nba2.settlement_page`` then refused to build (publish job failed, nightly red).
+    paths += [Path(p) for p in sorted(glob.glob(str(RAW / "capture_*" / "finals_*.json")))]
     v2 = ROOT / "data" / "v2" / "results.json"
     if v2.exists():
         paths.append(v2)
@@ -124,21 +131,28 @@ def normalise_source(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, s
         if a is None or h is None:
             continue
         # Quarter check: a quarter row that does not reproduce the final is not trusted.
+        # Two committed schemas spell the period rows differently — ``*_quarters``
+        # (nba2.results-feed.v1/v3, the gamebook-derived feeds) and ``*_q``
+        # (nba2.results-feed.v2, the nba.com/games server-rendered payload). Read both; a
+        # quarter row that fails the sum test rejects its source for that game either way.
         ot = r.get("ot_quarters") if isinstance(r.get("ot_quarters"), dict) else {}
-        qa = _quarters_ok(a, r.get("away_quarters"), ot.get("away") or [])
-        qh = _quarters_ok(h, r.get("home_quarters"), ot.get("home") or [])
+        away_q = r.get("away_quarters") if r.get("away_quarters") is not None else r.get("away_q")
+        home_q = r.get("home_quarters") if r.get("home_quarters") is not None else r.get("home_q")
+        qa = _quarters_ok(a, away_q, ot.get("away") or [])
+        qh = _quarters_ok(h, home_q, ot.get("home") or [])
         if qa is False or qh is False:
             rejected.append({"game_id": gid, "source": name,
                              "reason": "quarter row does not sum to the final score; source ignored for this game"})
             continue
         out.append({
             "game_id": gid,
+            "date": r.get("date"),
             "away": r.get("away"), "home": r.get("home"),
             "away_pts": a, "home_pts": h,
             "source": r.get("source_url") or r.get("source") or "",
             "origin": name,
-            "away_quarters": r.get("away_quarters") if qa else None,
-            "home_quarters": r.get("home_quarters") if qh else None,
+            "away_quarters": away_q if qa else None,
+            "home_quarters": home_q if qh else None,
             "ot_periods": r.get("ot_periods"),
             "ot_quarters": {"away": ot.get("away"), "home": ot.get("home")} if ot else None,
         })
@@ -175,8 +189,9 @@ def build_union(paths: list[Path] | None = None) -> dict[str, Any]:
             continue
         best = next((c for c in cs if c["away_quarters"] and c["home_quarters"]), cs[0])
         away, home = (teams.pop() if teams else (best["away"], best["home"]))
+        date = next((c["date"] for c in cs if c.get("date")), None)
         records.append({
-            "game_id": gid, "away": away, "home": home,
+            "game_id": gid, "date": date, "away": away, "home": home,
             "away_pts": best["away_pts"], "home_pts": best["home_pts"],
             "source": best["source"] or next((c["source"] for c in cs if c["source"]), ""),
             "sources": sorted({c["origin"] for c in cs}),
