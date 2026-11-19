@@ -144,3 +144,34 @@ re-run before every commit — VERIFIED); every gate kept fail-closed (G-V6-8's 
 standard unchanged — it now *passes* because the reader finally surfaces the provenance the
 gate demands; the union's quarter-sum rejection now runs on *more* rows); small commits;
 `git pull --rebase` before every push.
+
+---
+
+## Integration addendum (same session, 2026-11-19)
+
+`main` moved underneath this work: PRs **#126–#129** (sessions `0b91edfc`, `be1ea6bf`,
+`53c5afeb`) independently fixed parts of the same breakage and merged before this session's
+PR. Per the board's reconciliation precedent ("keep the CI-verified fixed point; keep only
+what is unique"), the integration merge (`d787919`, logged conflict-by-conflict in its
+commit message) took main's versions of the doubly-fixed v6 files and kept this session's
+unique deltas: the refresh.yml settle-in-rebuild wiring + full commit add-list, the
+`pipeline/settle.py` gamebook/`_records_of`/team-keyed-quarters reader extensions, the
+`v4/settlement.py` 11/17 finals gap (61/83 → **71/83 graded**), the `v3/test_v3.py`
+`_preserved()` fix, and the `graded_ids()` `finals_used` removal (which the merged
+combination had turned into a false "9 graded" for the never-registered 11/13 games —
+reproduced in CI-equivalent tests before the fix).
+
+- **PR #132** (nightly publish repair + integration) — merged; all required checks green
+  including the zero-tolerance publish-parity. https://github.com/wingbangboozle1-lang/NBA2/pull/132
+- **PR #133** (coverage-page `None @ None` matchups + stale schedule-link dates, found
+  while verifying the live deploy) — merged. https://github.com/wingbangboozle1-lang/NBA2/pull/133
+- **Pages**: `pages build and deployment` green on both merges (legacy Jekyll from
+  `main /`); live fetches of the root landing, `settle.html` and `results-coverage.html`
+  show the merged tree (71/83 graded, deterministic stamp `2026-11-17T23:59:59Z`, quarter
+  sums per row, never-pre-registered 11/13 games reported as 0 graded, per-date schedule
+  links, resolved matchups). GitHub's edge caches pages for minutes after a deploy — a
+  `?v=` query bypasses it (verified against the GitHub contents API first).
+- **Parallel PRs**: #131 (stable settlement stamp — welcome as a focused PR on current
+  main; its workflow band-aid superseded by `_preserved()`) and #130 (v7 layer — left open
+  with explicit status: needs rebase + line-by-line re-verification, takeover-able past the
+  60-minute rule). Status comments posted on both.
