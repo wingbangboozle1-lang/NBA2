@@ -117,6 +117,7 @@ def build(write: bool = True) -> tuple[list[str], dict]:
             raise SystemExit(1)
     else:
         nav_report = {"n_pages": 0, "n_links": 0, "href_set_preserved": True, "problems": []}
+        injected = 0
         css_changed = cards = flagged = False
 
     return written, {"n_gates": checks["n_gates"],

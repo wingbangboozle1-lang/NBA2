@@ -6010,3 +6010,191 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
   count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
   era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
   RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+---
+
+## Session `arena/8c7c8828-nba2` — CLAIM (2026-11-19 UTC, current branch `arena/8c7c8828-nba2`)
+
+**Base and initial state:** this session is on the Arena-assigned branch, based at
+`a5380e1e7163578b17700f945a99f2c140e67f2f` (the 2026-11-18 official-capture commit); the
+working tree was clean before this claim. The branch name is fixed by Arena and will not be
+renamed or replaced with a worktree/branch.
+
+**Board and handoff check:** the existing `arena/acf5db08-nba2` refresh-transport claim is
+still listed with its transport tasks pending. Its latest board activity is dated 2026-11-17.
+Open PR #80's head is `3dd1961` (last commit 2026-11-16 00:44Z); PR #112's head is `dd90163`
+(last commit 2026-11-16 19:36Z). The latest scheduled refresh runs on 2026-11-18
+(44328569212 and 44381003145) both concluded failure. Under the board's >60-minute no-commit
+handoff rule, this session takes over only the **refresh/finals transport diagnosis and
+repair** portions of the stale ACF claim and the overlapping stale PR scopes. The existing
+claims and records are retained; this is not a takeover of their unrelated audit, data, site,
+or integration work.
+
+**Claimed file scope (no other paths will be edited):**
+- `COORDINATION.md` — append-only claim and completion record.
+- `nba2/v2/refresh.py` — inspect/repair the official-source fetch and provenance plumbing;
+  do not weaken freshness, inventory, standings-reconciliation, or fail-closed gates.
+- `nba2/pipeline/refresh.py` — inspect/repair official-final feed transport only; do not
+  change settlement semantics or rewrite sealed artefacts.
+- `nba2/v2/test_refresh_pages.py` and `nba2/tests/test_finals_pages.py` — new targeted tests
+  only, if required by measured defects.
+- `analysis/session-8c7c8828-refresh.md` — new verification record, source URLs, observed
+  transport results, changed behavior, and unresolved flags.
+
+**Explicit exclusions:** no edits to `data/**`, `data/raw/ledger/**` or `data/v3/ledger/**`
+(sealed/read-only), generated `site/**`, root HTML, model/strategy code, other workflow files,
+other sessions' analysis files, or any existing task registers. If a fix requires one of these,
+record a change request in this board rather than editing it.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-01 | Board claim and push before implementation | in progress | claim commit pushed to this branch |
+| 8C-02 | Reproduce the latest scheduled refresh failure and map it to a concrete stage | in progress | use committed workflow/run evidence; no cause inferred from the conclusion alone |
+| 8C-03 | Repair refresh/finals transport only where the official response and parser contract are demonstrated | pending | retain all gates; record exact official URLs and acquisition method; no fabricated fixtures |
+| 8C-04 | Add targeted regression coverage and run affected suites | pending | positive + failure-path tests; no gate weakened |
+| 8C-05 | Record findings, remaining source/reachability limits, and disposition | pending | report linked here; unresolved values left blank and flagged |
+
+### Session `arena/8c7c8828-nba2` — evidence-based scope update (2026-11-19 UTC)
+
+The recorded run `44381003145` reports all four capture surfaces successful, but its publish
+job fails at **“Rebuild every tree from the committed capture”**; the gate and tests are then
+skipped. The Actions log download is currently unreachable from this environment, so the cause
+was reproduced locally without using an inferred log message: archive the committed tree,
+run the workflow's rebuild commands in order, and it exits in `python -m nba2.settlement_page`
+with `data/raw/official_finals_union.json is stale — run: python -m nba2.pipeline.settle`.
+In that same isolated copy, `finals_all.json` contains 36 records while the committed official
+union contains 31; running `python -m nba2.pipeline.settle` rebuilds the union from 11 committed
+source files (36 records, 0 score conflicts, 0 invalid quarter rows), verifies both sealed
+ledgers, and allows `python -m nba2.settlement_page` to complete. Sealed ledgers were not
+modified in the reproduction.
+
+This is a **build-order defect**, not an observed official-endpoint transport failure. PR #112's
+head has had no commit since 2026-11-16 19:36Z; its `.github/workflows/refresh.yml` patch only
+changes the semantic-crosscheck step and does not add the settlement prerequisite. Under the
+board's stale-claim handoff rule, this session takes over only the missing settlement-before-
+render step in that stale workflow scope. PR #112's unrelated crosscheck, site, and data changes
+remain untouched.
+
+**Scope amendment:** add `.github/workflows/refresh.yml` solely to run the committed-finals
+settlement builder before the settlement page and dependent publication checks. Existing
+freshness/provenance gates, skipped-on-gate-failure behavior, crosscheck policy, and all other
+workflow steps remain unchanged. The explicit exclusion above is amended only for this file.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-02 | Reproduce the latest scheduled publish failure | done | exact failing module reproduced from committed capture; no cause inferred from run conclusion |
+| 8C-06 | Add the missing official-settlement build prerequisite to the stale workflow scope | in progress | settle from committed official sources before rendering; fail closed on seal/source conflicts |
+
+### Session `arena/8c7c8828-nba2` — scope amendment 2 (2026-11-19 UTC)
+
+A second isolated reproduction, after running the missing settlement prerequisite, proceeds
+through v5 but then v6 correctly blocks publication at `G-V6-8` for 14 game rows. Inspection
+of the committed sources shows the URLs are present in later same-game captures (for example,
+`data/v5/results_union.json` has the official gamebook URL for `0022600231`), but
+`nba2/v6/results_coverage.py::finals_committed()` keeps the first sparse row and, for duplicate
+game ids, records only the additional filename; it drops later non-null source/gamebook URL
+fields. This is an aggregation defect, not evidence that the official documents are missing.
+The fix will only enrich missing fields from another committed row with the same game id; score
+conflicts remain visible and are never selected or averaged. The v6 URL gate remains hard.
+
+The same stale-union check is present in all three rebuild paths: `refresh.yml`, `pages.yml`,
+and `publish-parity.yml` call `nba2.settlement_page` without first rebuilding the union from
+committed official captures. PR #112 touches only the nightly workflow among these; PR #125
+contains settlement data but no workflow file. No currently open PR touches `pages.yml`,
+`publish-parity.yml`, or `nba2/v6/results_coverage.py`. This session claims those paths for this
+bounded integration fix; generated outputs will be changed only by running their committed
+builders, never hand-edited.
+
+**Scope amendment 2:**
+- `.github/workflows/refresh.yml`, `.github/workflows/pages.yml`,
+  `.github/workflows/publish-parity.yml` — explicit committed-finals settlement prerequisite;
+  preserve the finals-failure policy and stage only the derived union/settlement files.
+- `nba2/v6/results_coverage.py` and `nba2/v6/test_v6.py` — merge missing provenance fields
+  across duplicate same-game rows without changing scores or suppressing conflicts.
+- `nba2/tests/test_refresh_workflow.py` — regression tests for workflow order and output staging.
+- Generated build outputs from the committed builders only (`site/**`, plus directly generated
+  data copies if the builders change them); no hand-authored row or unverified value.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-07 | Add the settlement prerequisite to all rebuild/deploy/parity paths and persist its derived outputs only from a passing refresh | in progress | refresh-failure path preserves prior settlement; Pages/parity reproduce the committed tree |
+| 8C-08 | Preserve later official URLs while merging duplicate game results in v6 | in progress | regression test demonstrates official URL retained; G-V6-8 remains hard and conflicts remain blocking |
+| 8C-09 | Rebuild all generated trees, run every checker/test, verify internal links and fixed-point parity | pending | exact commands/results recorded; no sealed ledger changes |
+
+### Session `arena/8c7c8828-nba2` — scope amendment 3 (2026-11-19 UTC)
+
+The v6 check-only command is part of verification: `python3 -m nba2.v6 --check-only` reaches
+the non-writing branch, then raises `UnboundLocalError` because `injected` is only assigned by
+the rendering branch. This does not affect the normal scheduled render, but it makes the
+advertised check-only mode unusable. No open PR changes `nba2/v6/__main__.py`; this session
+adds a minimal initialization and regression test, without changing gate behavior.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-10 | Make v6 check-only mode return its measured gates without rendering | in progress | `build(write=False)` returns successfully and writes no files |
+
+**Scope amendment 3:** add `nba2/v6/__main__.py` and a check-only regression in
+`nba2/v6/test_v6.py`; existing v6 gates and generated output are unchanged by this fix.
+
+### Session `arena/8c7c8828-nba2` — generated-output integration scope (2026-11-19 UTC)
+
+To verify the full Pages/parity chain after the workflow and v6 fixes, the integration session
+must run the committed builders from the just-captured official inputs. Those builders write
+shared, tracked outputs; the board reserves those outputs for final integration. This session
+now explicitly assumes that role for the current branch. It will modify generated files only by
+running their committed builders, and will record the before/after seal digests. No sealed
+ledger or hand-authored result row is in scope.
+
+**Generated-output scope:** `data/settlement.json`, `data/raw/official_finals_union.json`,
+`data/site.json`, `data/v2/**`, `data/v3/**` (derived copies only), `data/v4/**` (derived outputs
+only; never `data/v3/ledger/**` or `data/raw/ledger/**`), `data/v5/**`, `data/v6/**`,
+`index.html`, `flagged.html`, `pages/**`, and `site/**`. These paths are edited only by
+`python -m nba2.pipeline.settle`, `python -m nba2.pipeline.build_site_data`,
+`python -m nba2.pipeline.build_site`, `python -m backtest.engine.build`, and the committed
+v2–v6 builders. This is not permission to hand-edit or overwrite any source capture.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-11 | Regenerate the official settlement, summaries, and published site from committed inputs | in progress | source builds only; sealed-ledger hashes identical before/after; all source/gate checks green |
+
+### Session `arena/8c7c8828-nba2` — scope amendment 4 (2026-11-19 UTC)
+
+The full rebuild exposed a second parity defect: `nba2.pipeline.settle` stamps
+`data/settlement.json` with the wall clock on every invocation, even when every settled row and
+metric is unchanged. `build_site_data.input_digest()` includes that JSON, so repeated settlement
+rebuilds change the v1 input digest and the settlement text rendered into `data/site.json` and
+`pages/**`. This makes an unchanged settlement non-reproducible; it is separate from the score
+union and source-alias fixes already merged on main.
+
+**Scope amendment 4:** add `nba2/pipeline/settle.py` plus a regression in
+`nba2/tests/test_finals_pages.py`. Preserve the existing `settled_at_utc` only when the newly
+computed settlement document is byte-equivalent after removing that timestamp; stamp a new
+UTC time when any settlement content changes. Do not change score/source selection, gate
+semantics, or sealed ledgers. Regenerate dependent data/pages only with the committed builders.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-12 | Make unchanged settlement rebuilds a fixed point for publish parity | in progress | repeated build preserves the first stamp and produces byte-identical derived trees; changed settlement content advances the stamp; all seals remain unchanged |
+
+### Session `arena/8c7c8828-nba2` — completion record (pre-PR; 2026-11-19 UTC)
+
+After PR #129 merged, fetched `origin/main` at `7b16b6d` and rebased this branch onto it before final verification. The rebase preserved both the merged `arena/be1ea6bf-nba2` board record and every 8C section; no code from the merge was dropped. The current branch diff is limited to the claimed workflow, v6, settlement, generated-output, test, board, and report paths. The source capture and all sealed ledgers remain untouched.
+
+| ID | Status | Result / evidence |
+|---|---|---|
+| 8C-01 | done | Claim was pushed before implementation; rebased onto current `main` before the completion push. |
+| 8C-02 | done | Local committed-tree reproduction stopped in `nba2.settlement_page` on a stale official-finals union; settlement rebuild from the 11 committed source files produced 36 finals, 0 conflicts, 0 rejected quarter rows, then the page built. The failed-run Actions log itself remained unavailable, so its exact runner-side exception is not claimed. |
+| 8C-03 | closed — no transport patch supported | No official endpoint was fetched live in this session and no transport/parser defect was demonstrated. The report records the source boundary; no unverified transport change was made. |
+| 8C-04 | done | Post-rebase suites passed: `nba2/tests` 99, v2 167, v3 67, v4 61, v5 26, v6 56; targeted refresh-workflow tests 4/4, settlement timestamp tests 3/3, v6 coverage tests 17/17. |
+| 8C-05 | done | Source, verification, settlement/coverage metrics, limitations, irregularities and pending handoff are recorded in `analysis/session-8c7c8828-refresh.md`. |
+| 8C-06 | done | Refresh workflow now rebuilds official settlement before rendering; the refresh failure guard and derived-output staging are preserved. |
+| 8C-07 | done | Refresh, Pages and parity rebuild paths have the settlement prerequisite; workflow-order and failure-path tests pass. |
+| 8C-08 | done | v6 same-game provenance enrichment and date-matched official NBA schedule links are covered by regressions; hard gates and score-conflict reporting remain in place. |
+| 8C-09 | done | Ordered builders, gates, lint, links, prediction-seal verification and fixed-point checks pass. `nba2.v6` is 13/13; check-only is 12/12 and writes no files; internal-link check is 7,472/7,472. |
+| 8C-10 | done | `python3 -m nba2.v6 --check-only` returns its measured 12/12 gates without rendering or changing files. |
+| 8C-11 | done | Rebuilt published outputs from committed builders only; 36 finals settled, ledgers 22/22 and 27/27; four sealed-ledger SHA-256 values unchanged. |
+| 8C-12 | done | Unchanged settlement timestamp is preserved; the repeated ordered rebuild is a fixed point. No sealed-ledger or generated-output diff remains after verification. |
+
+**Known non-gating crosscheck findings remain visible:** 97 checks = 86 pass, 9 info, 2 fail. `CC-DOC-01` is the README count (92 shown vs 99 measured); `CC-FRESH-01` is the five-day-old legacy snapshot. Both are explicitly non-gating; no values were inferred or marked verified to make the checks green. The full details are in the report.
+
+**PR / merge / Pages deployment:** pending. Update this record with the PR URL, merge commit, Pages workflow result, and live-site verification after completion.

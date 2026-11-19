@@ -292,6 +292,8 @@ jobs:
           PY
 
       - name: Rebuild every tree from the committed capture
+        env:
+          CAPTURE_FINALS: ${{ needs.capture.outputs.finals }}
         run: |
           set -euo pipefail
           # AF-2 (session arena/af5df7a7-nba2, 2026-11-19): the finals union is written
@@ -299,14 +301,16 @@ jobs:
           # stale union (fail-closed by design). Every scheduled run since 2026-11-17 died
           # here: the capture job kept adding official finals sources and nothing merged
           # them. The merge runs first so every tree below renders from one settlement.
-          # It runs only when the finals leg succeeded: when finals are unavailable the
-          # settlement files must stay byte-identical to HEAD (the guard step below checks)
-          # and the job still ends red with the visible settlement notice.
-          if [ "${{ needs.capture.outputs.finals }}" = "failure" ]; then
-            echo "::warning title=Settlement preserved::official finals were unavailable; data/settlement.json and data/v4/settlement stay as committed."
-          else
+          # Re-settle only when this run captured a usable official finals surface
+          # (session arena/8c7c8828-nba2): if the finals endpoint failed, the existing
+          # settlement and its visible stamp must stay unchanged while the rolling
+          # surfaces are independently gated, and the job still ends red with the visible
+          # settlement notice (the guard step below checks byte-identity vs HEAD).
+          if [ "${CAPTURE_FINALS:-}" = "success" ]; then
             python3 -m nba2.pipeline.settle
             python3 -m nba2.v4.settlement
+          else
+            echo "::warning title=Settlement preserved::Official finals unavailable; preserve the committed settlement inputs. data/settlement.json and data/v4/settlement stay as committed."
           fi
           python3 -m nba2.pipeline.build_site_data
           python3 -m nba2.pipeline.build_site
@@ -336,6 +340,22 @@ jobs:
           python3 -m unittest discover -s nba2/v5 -t . -p 'test_*.py'
           python3 -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
           python3 -m nba2.pipeline.seal_predictions --verify
+
+      - name: Restore the combined site after generator tests
+        # The v3 page test calls B.build(), which rewrites v3-owned pages/data after the
+        # initial v6 grouping pass. Rebuild the affected suffix so the generated trees and
+        # grouped nav match the inputs that are committed below.
+        run: |
+          set -euo pipefail
+          python3 -m nba2.v3
+          python3 -m nba2.v4
+          python3 -m nba2.v5
+          python3 -m nba2.v6
+          python3 -m nba2.v2.check
+          python3 -m nba2.v3.check
+          python3 -m nba2.v4.check
+          python3 -m nba2.v6 --check-only
+          python3 -m nba2.pipeline.lint
 
       - name: Guard prior settlement when the finals leg failed
         if: ${{ always() && needs.capture.outputs.finals == 'failure' }}
