@@ -51,11 +51,10 @@ SEALED_GLOBS = [DATA / "raw" / "ledger" / "sealed-*.json",
 _DATE_IN_NAME = re.compile(r"(\d{4}-\d{2}-\d{2})")
 BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book\.pdf$")
 
-# Frozen clock. The result-feed page must answer "has this game day ended?" the same way on
-# every rebuild, because pages.yml fails the deploy if a rebuild differs from what is
-# committed. AS_OF is the timestamp of the most recent official capture in this repository
-# (the 2026-11-17T15:52:00Z capture by session arena/8892d20c-nba2), converted to Eastern with the November UTC-5
-# offset. It is stated on the page, so a reader can age it.
+# Frozen clock: the capture in `data/raw/capture_2026-11-18/finals_2026-11-18.json`
+# records retrieved_at_utc=2026-11-18T19:30:20+00:00. Using the committed source time
+# keeps the game-day classification reproducible and prevents a later wall-clock rebuild
+# from claiming that unobserved games are final. November is UTC-5 in US Eastern.
 AS_OF_UTC = "2026-11-18T19:30:20Z"
 AS_OF_ET = "2026-11-18 14:30 ET"
 AS_OF_DATE = "2026-11-18"
@@ -179,8 +178,11 @@ def finals_committed() -> dict[str, dict]:
                 "away_quarters": aq, "home_quarters": hq,
                 "ot_periods": r.get("ot_periods"),
                 "period_schema": schema,
-                "source_url": (r.get("source_url") or r.get("official_source")
-                               or r.get("final_source_url") or r.get("source")),
+                # Each committed feed names its URL field differently. Accept the feed's
+                # own HTTPS URL only; a prose source label is never promoted into a link.
+                "source_url": (r.get("source_url") or r.get("final_source_url")
+                               or r.get("official_source")
+                               or (r.get("source") if str(r.get("source") or "").startswith("https://") else None)),
                 "gamebook_url": r.get("gamebook_url") or r.get("gamebook_source"),
                 "files": [rel],
             }
@@ -364,7 +366,7 @@ def build(today: str = AS_OF_DATE) -> dict:
     return {
         "schema": "nba2.v6.results-coverage.v1",
         "session": "arena/f5ac4e74-nba2",
-        "as_of_utc": "2026-11-17T00:00:00Z",
+        "as_of_utc": AS_OF_UTC,
         "today": today,
         "n_dates": len(rows),
         "n_games_known": len(games),

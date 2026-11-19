@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import unittest
 
-from nba2.v6.results_coverage import build, finals_committed
+from nba2.v6.results_coverage import AS_OF_UTC, build, finals_committed
 
 
 class TestResultProvenanceMerge(unittest.TestCase):
@@ -25,6 +25,9 @@ class TestResultProvenanceMerge(unittest.TestCase):
             urls = [url for url in (row.get("source_url"), row.get("gamebook_url")) if url]
             self.assertTrue(urls, msg=f"{row['game_id']} has no committed document URL")
             self.assertTrue(any("nba.com" in url for url in urls), msg=row["game_id"])
+
+    def test_reported_as_of_matches_the_committed_capture_timestamp(self):
+        self.assertEqual(build()["as_of_utc"], AS_OF_UTC)
 
     def test_urls_are_not_synthesized_for_unknown_game_ids(self):
         rows = finals_committed()
