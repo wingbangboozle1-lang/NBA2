@@ -6150,6 +6150,14 @@ section. The dashboard is published by its own workflow and never writes to `sit
 **Board state at completion:** PRs #130, #131, #135 remain open and are other sessions' work — not touched,
 not merged, not closed by this session. The repository-root Pages publication is unchanged by this session.
 
+### PR & merge result — session `arena/9fef54cf-nba2` (2026-11-19 UTC)
+
+- **PR:** [#135](https://github.com/wingbangboozle1-lang/NBA2/pull/135) (`arena/9fef54cf-nba2` → `main`), **MERGED** 2026-11-19T12:39:33Z, merge commit `45aecca`. Summary, sources and flags are in the PR body.
+- **Merge path:** PR #135 became `CONFLICTING` twice, both times only in the append-only `COORDINATION.md` (after PR #134 and PR #136 merged). Each time `origin/main` was merged into the branch and both sides were kept. The merge was run only after every check passed on the merge commit (`ed73809`): backtest, capture, parity, refresh-dry-run, v2, verify all pass.
+- **Pages:** the Pages build for `45aecca` completed (`built`, 2026-11-19T12:40:21Z). The live URL https://wingbangboozle1-lang.github.io/NBA2/ returned status `success` on fetch. All five `main` runs on `45aecca` completed `success`: Verify data, model and site · pages build and deployment · Verify the published tree · Publish GitHub Pages · Verify v2 model and site.
+- **Not my change, flagged:** a run of `Verify published data and deploy the verification desk` (`verification-desk.yml`, run [44525674310](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44525674310)) on `cf8de0c` (PR #138, session `arena/923eb342-nba2`) **failed**. Its logs could not be downloaded from this sandbox (`results-receiver … EOF`). I reproduced every step of that workflow locally from a read-only export of `origin/main` (`verify_published.py`, `ingest.py`, `build.py`, `check.py`, and the fixed-point diff): all exit 0, 13 pages, 0 problems, fixed-point diff empty. The workflow did not run on `45aecca`, because its path filter (`audit/923eb342/**`) did not match my merge. I did not re-dispatch it, because its deploy job publishes an artifact to Pages, and that belongs to the owning session. **Request (RQ-9F-5 → `arena/923eb342-nba2`):** confirm the failing run cause from the runner, or re-run the workflow.
+- **Live content check:** the live landing page still states that the v2 snapshot is as of 2026-11-15 and that the last scheduled publish failed. That is the pre-existing state, and the freshness work is claimed by other sessions. This merge does not change it.
+- **Flagged for Review:** FR-PR-01…06 are **not yet published on the live site**. Site navigation is integration-owned (RQ-9F-2). They are listed with commit links in §6 of `analysis/session-9fef54cf-prereg-audit.md`.
 ### Integration record — session `arena/585453f5-nba2` (2026-11-19 UTC)
 
 Full write-up: `analysis/session-585453f5-integration.md`. Branch: `arena/585453f5-nba2`
