@@ -13,6 +13,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+from nba2.v6 import __main__ as V6Main
 from nba2.v6 import check as CH
 from nba2.v6 import flags as FL
 from nba2.v6.flags import FLAGS
@@ -357,6 +358,19 @@ class TestGates(unittest.TestCase):
             self.assertIsInstance(g["tested"], int)
             self.assertLessEqual(g["passed"], g["tested"])
             self.assertTrue(g["detail"])
+
+
+class TestCheckOnly(unittest.TestCase):
+    def test_check_only_returns_gate_results_without_writing(self):
+        files = [SITE / "v6-verify.html", V6 / "checks.json"]
+        before = {p: p.read_bytes() for p in files if p.exists()}
+        written, report = V6Main.build(write=False)
+        after = {p: p.read_bytes() for p in files if p.exists()}
+
+        self.assertEqual(written, [])
+        self.assertTrue(report["publishable"])
+        self.assertEqual(report["nav_injected"], 0)
+        self.assertEqual(after, before)
 
 
 class TestNavigation(unittest.TestCase):
