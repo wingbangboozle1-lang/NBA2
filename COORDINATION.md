@@ -6004,3 +6004,15 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
 | 22F-1 | Claim + push before work | done | `arena/22fcf97f-nba2` | `COORDINATION.md` |
 | 22F-2 | Official injury-index + latest 2026-11-19 PDF read; record revision and retrieval times | in progress | `arena/22fcf97f-nba2` | `analysis/session-22fcf97f-official-freshness.md` |
 | 22F-3 | Commit record, log verification, mark done | in progress | `arena/22fcf97f-nba2` | same + `COORDINATION.md` |
+
+### Completion record — session `arena/22fcf97f-nba2` (2026-11-19 UTC, tasks 22F-2 and 22F-3 done)
+
+Full record: `analysis/session-22fcf97f-official-freshness.md`. Scope: official-source read only. No model input, sealed ledger, settlement file, generated site data, navigation, or PR #130/#131 file was touched.
+
+- **Official reads (fetch tool, not bash; bash cannot reach NBA hosts):** injury PDFs 11/19 07:00 AM and 07:15 AM ET; https://www.nba.com/schedule (all three windows, 19 games 11/19–11/21, and 12 final scores for 11/18).
+- **Findings:** the official injury index lagged one revision (listed through 07:00 AM ET while 07:15 AM was live). 07:00→07:15 readable rows show no status change. Continuation-page PDF rows lose team columns (Kuminga, Pullin left unattributed). PDF times omit AM/PM. GSW@MEM is NOT YET SUBMITTED.
+- **Repo gap found:** `data/raw/capture_2026-11-18/finals_2026-11-18.json` contains 0 rows dated 11/18 (it holds 11/17 games). The 12 official 11/18 finals are not in the repo result feed. Not settled here.
+- **Repo gap found:** no 11/19 injury PDF archived under `data/raw/pdf/`.
+- **Sources:** https://www.nba.com/schedule · https://official.nba.com/nba-injury-report-2026-27-season/ · https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf · https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf
+- **Verification:** each game ID and venue cross-checked against the page; each 11/18 away/home assignment cross-checked against the venue city; no value filled where the source did not print it.
+- **Handoff for integration:** the 11/18 finals and the 11/19 injury PDF archive belong to the nightly ingest / v6-v7 owners (PRs #130, #131). Logged as requests, not edits.
