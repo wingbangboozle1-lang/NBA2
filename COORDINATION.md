@@ -5990,3 +5990,28 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
   count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
   era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
   RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+## Session `arena/452034cb-nba2` — CLAIM (2026-11-19 UTC, branch `arena/452034cb-nba2`, base `41cfd81` = `main` @ PR #133 merge)
+
+**State read at claim time (verified, not assumed).**
+- `main` = `41cfd81` (PR #133 merged). Working tree clean. `python3 -m nba2.v2.check` → "OK — 0 structural, 0 semantic"; v2 suite 167/167 OK (55.8s).
+- Open PRs: **#130** (`arena/6023d517-nba2`, v7 layer from 2026-11-19 snapshot — checks: v2/parity/verify FAIL, backtest/capture/refresh-dry-run PASS; mergeable CONFLICTING vs current main), **#131** (`arena/8c7c8828-nba2`, settlement parity — all checks PASS; mergeable CONFLICTING vs current main).
+- Known open gaps on this board: CC-FRESH-01 (v2 snapshot 2026-11-14/15 era; RQ-8892-02 / ACF-7 re-cut owed), CC-DOC-01 (README counts), RQ-AF6-1/2/3.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim + completion record, **append-only**.
+- `analysis/session-452034cb-*.md` — new verification notes, new files only.
+- Integration merges of `origin/arena/8c7c8828-nba2` (PR #131) and `origin/arena/6023d517-nba2` (PR #130) into this branch, with conflict resolution limited to the files those PRs touch, plus regenerated artefacts **only as direct build output** of the committed builders (never hand-edited).
+
+**Explicitly NOT edited:** sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `data/raw/capture_*/**` (official captures), `.github/workflows/**` (unless a build step is proven broken and then minimally).
+
+**Rules this session holds itself to:** a value is published only if fetched from an official source in this session or reproduced from a committed snapshot by running the committed code; unconfirmed ⇒ blank + flagged, never inferred; sealed ledgers are never rewritten; nothing is called verified that was not fetched or reproduced; flagged irregularities do not block the merge but appear on the Flagged for Review page with their source link; the site is never merged in a broken state; small frequent commits; `git pull --rebase origin main` before every push.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| 452-1 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| 452-2 | Baseline: full pages.yml build chain on current main | pending | read-only run | every step rc=0; tree clean after rebuild (fixed point) |
+| 452-3 | Integrate PR #131 (settlement parity) onto current main | pending | PR #131 files + regenerated artefacts | suites + checks green; sealed-ledger hashes unchanged |
+| 452-4 | Integrate PR #130 (v7 layer) onto current main; repair its failing v2/parity/verify checks | pending | PR #130 files + regenerated artefacts | all CI checks green on the integrated tree |
+| 452-5 | Brief-coverage audit: map each brief requirement to its implementation + source, flag gaps | pending | `analysis/session-452034cb-brief-audit.md` (new) | every claim cites a committed file or official URL |
+| 452-6 | PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
