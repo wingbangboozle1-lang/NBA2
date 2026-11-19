@@ -5655,8 +5655,47 @@ PR #127 (parity job) fails at `Rebuild every generated tree` because the committ
 | ID | Task | Status | File scope | Verification rule |
 |----|------|--------|-----------|-------------------|
 | 6023-1 | Board claim + push before work | done | `COORDINATION.md` | pushed immediately |
-| 6023-2 | Repair the v6 result-feed reader so every committed official URL and team name reaches the row it belongs to | pending | `nba2/v6/results_coverage.py` | G-V6-8 goes from 53/67 to 67/67 **only** because the URL was already in the committed file; every gate stays green |
-| 6023-3 | Regression test for the repaired reader (both committed key spellings) | pending | `nba2/v6/test_v6.py` | test fails on the pre-repair reader, passes after |
-| 6023-4 | Full-tree rebuild + every checker + every test suite green; committed tree == rebuild | pending | `site/**`, `data/v6/**` | `git diff --stat` empty after rebuild |
-| 6023-5 | Independent line-by-line verification against live official nba.com pages; findings + source links on the Flagged page | pending | `analysis/session-6023d517-verification.md` | every claim carries a URL; blank where unconfirmed |
-| 6023-6 | PR → `main`, merge without approval, confirm the Pages deploy, record it here | pending | `COORDINATION.md` | `gh pr merge`, `gh run list`, live fetch |
+| 6023-2 | Repair the v6 result-feed reader so every committed official URL and team name reaches the row it belongs to | done | `nba2/v6/results_coverage.py` | G-V6-8 goes from 53/67 to 67/67 **only** because the URL was already in the committed file; every gate stays green |
+| 6023-3 | Regression test for the repaired reader (both committed key spellings) | done | `nba2/v6/test_v6.py` | test fails on the pre-repair reader, passes after |
+| 6023-4 | Full-tree rebuild + every checker + every test suite green; committed tree == rebuild | done | `site/**`, `data/v6/**` | `git diff --stat` empty after rebuild |
+| 6023-5 | Independent line-by-line verification against live official nba.com pages; findings + source links on the Flagged page | done | `analysis/session-6023d517-verification.md` | every claim carries a URL; blank where unconfirmed |
+| 6023-6 | PR → `main`, merge without approval, confirm the Pages deploy, record it here | in progress | `COORDINATION.md` | `gh pr merge`, `gh run list`, live fetch |
+
+### 6023 — completion record (2026-11-19 UTC, session `arena/6023d517-nba2`)
+
+**Build repaired.** `nba2/v6` went from exit 1 (`G-V6-8`, 53/67 rows sourced) to exit 0 with
+**67/67** rows carrying an official URL. The fix read the keys the committed official artefacts
+already use (`final_source_url`, `away_team`/`home_team`); no value was invented and no gate was
+lowered. The as-of clock is now derived from the newest committed capture instead of typed, so it
+cannot silently age past the evidence again. Regression tests added in `nba2/v6/test_v6.py`.
+
+**A new layer was cut rather than editing the stale ones.** Measured staleness, not an opinion:
+v3 prices Atlanta at 8-6 while the live standings page prints 9-6, and no tree contained the
+twelve 2026-11-18 finals. `nba2/v7` reads nothing at build time — the transcription lives in
+`nba2/v7/official.py`, cut from the official pages read 2026-11-19, and is held by three
+identities over all 30 clubs.
+
+**Verification performed (all in `analysis/session-6023d517-build-and-verification.md` and on
+`site/v7-verify.html`):** 367 items compared against official pages, 367 matched, across 9
+claims — the 11/18 finals (12/12), the 11/19 slate (4/4, tips included), the 11/20 slate and Cup
+groups (6/6), standings (15/15), and the three team-stat pages (30/30 each, with
+`NetRtg = OffRtg − DefRtg` and `PTS − OppPTS = +/−` holding on every club). A tenth claim — the
+11/19 injury report — is **not read** and is published as a blank with `F-V7-AVAIL`, not counted
+as a match.
+
+**What the model measures, and why nothing is staked.** Walk-forward on 167 games, trained only
+on strictly earlier dates: accuracy **0.6707** vs **0.6527** for the better-record rule, log-loss
+**0.6349** vs **0.6931** for a coin. The paired test on the 29 games where the two estimators
+disagree is **p = 0.711** — no demonstrated separation. Every stake on the slate is **0.00** and
+that is printed at the top of the page, not in a footnote.
+
+**Nine new flags** published on `site/flagged.html` (`F-V7-AVAIL`, `-CLOCK`, `-TRANSPORT`,
+`-MARKET`, `-PROPS`, `-PREREG`, `-PAGES`, `-LEAK`, `-STALE-UPSTREAM`). None blocks the merge.
+
+**Nav change logged** (shared output, so recorded here): v6's category list gained a
+"v7 — fresh 2026-11-19 snapshot" group holding the five v7 pages, so v6's
+`test_every_published_page_is_in_some_category` passes again, and v7's sidebar pass now adds only
+*missing* links — it no longer duplicates them. A bug in that pass was caught and fixed this
+session: it scanned the whole document for a v7 href, so the landing page's category card
+satisfied it and the sidebar block was stripped; it now inspects only `<nav>`, with a regression
+test.

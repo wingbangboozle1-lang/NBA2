@@ -62,7 +62,11 @@ def _inject(doc: str, active: str | None) -> str:
     """
     if MARKER in doc:
         doc = re.sub(re.escape(MARKER) + r".*?" + re.escape(MARKER), "", doc, flags=re.S)
-    present = re.findall(r'<a href="(v7-[a-z]+\.html)"', doc)
+    # Only the sidebar counts. The landing page also carries v7 links inside its category card,
+    # and scanning the whole document would let that card masquerade as a sidebar entry — which
+    # is exactly how the first version of this function deleted the sidebar links and reported
+    # href_set_preserved=False on index.html.
+    present = _hrefs(doc)
     need = [h for h in LABELS if h not in present]
     if not need:
         return doc
@@ -122,6 +126,8 @@ def run() -> dict:
                     idx.write_text(doc)
                     cards_added = CARDS in idx.read_text()
 
+    card_present = idx.exists() and CARDS in idx.read_text()
     return {"pages_touched": changed, "links": len(LABELS),
-            "links_lost": lost, "landing_cards": cards_added,
+            "links_lost": lost, "landing_card_present": card_present,
+            "landing_card_added_this_run": cards_added,
             "href_set_preserved": not lost}

@@ -51,6 +51,9 @@ SOURCES = {
                  "?Season=2026-27&SeasonType=Regular+Season"),
     "standings": "https://www.nba.com/standings",
     "games": "https://www.nba.com/games?date={date}",
+    "games_1119": "https://www.nba.com/games?date=2026-11-19",
+    "games_1120": "https://www.nba.com/games?date=2026-11-20",
+    "injury": "https://official.nba.com/nba-injury-report-2026-27-season/",
 }
 
 GAMES_PLAYED_AS_OF = "2026-11-17"   # the /stats/teams/* pages' GP totals imply this date

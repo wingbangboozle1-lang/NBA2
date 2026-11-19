@@ -459,12 +459,34 @@ def page_verify(res: dict, gates: list[dict], checks: list[dict]) -> str:
               f'{"OK" if c["ok"] else "FAIL"}</span>',
               src("https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v7/check.py",
                   "check.py")] for c in checks]
+    from . import verification as VER
+    v = VER.build()
+    vrows = []
+    for r in v["rows"]:
+        status = ('<span class="blank">not read</span>' if r["not_read"]
+                  else f'<span class="badge {"b-ok" if r["ok"] else "b-bad"}">'
+                       f'{esc(str(r["matched"]))}/{esc(str(r["n"]))}</span>')
+        vrows.append([f'<b>{esc(r["id"])}</b>', esc(r["claim"]), esc(r["compared"]),
+                      esc(str(r["n"])) if not r["not_read"] else "0",
+                      status, esc(r["method"]),
+                      src(r["source"], "official page")])
     body = f"""
-<div class="cards">{kpi("Gates", f'{sum(1 for g in gates if g["status"]=="PASS")}/{len(gates)}',
-      "on this build")}
+<div class="cards">{kpi("Publishable", "yes" if all(c["ok"] for c in checks) else "no", "fail-closed")}
+{kpi("Verification", f'{v["n_matched"]}/{v["n_compared"]}', "items matched")}
+{kpi("Claims checked", f'{v["n_claims"] - v["n_not_read"]}/{v["n_claims"]}', "against an official page")}
+{kpi("Not read", f'{v["n_not_read"]}', "blank + flagged")}</div>
+
+<h2>Line-by-line verification against the official pages</h2>
+<p class="note">One row per claim this layer rests on, the page it was checked against, how many
+items were compared, and how many matched. A row where nothing could be read is printed as a
+blank in the status column and carries its flag, rather than being counted as a match. The
+identities in the method column are the reason the check is re-runnable: they are encoded in
+<code>nba2/v7/test_v7.py</code>, so drift breaks the build.</p>
+{tbl(["ID", "Claim", "What was compared", "N", "Matched", "Method", "Source"], vrows)}
+
+{kpi("Gates", f'{sum(1 for g in gates if g["status"]=="PASS")}/{len(gates)}', "on this build")}
 {kpi("Structural checks", f'{sum(1 for c in checks if c["ok"])}/{len(checks)}', "on the emitted tree")}
-{kpi("Snapshot", esc(O.RETRIEVED_AT_UTC), "official pages read")}
-{kpi("Publishable", "yes" if all(c["ok"] for c in checks) else "no", "fail-closed")}</div>
+{kpi("Snapshot", esc(O.RETRIEVED_AT_UTC), "official pages read")}</div>
 
 <h2>Structural checks over the emitted pages</h2>
 {tbl(["ID", "What", "Result", "Status", "Source"], crows)}

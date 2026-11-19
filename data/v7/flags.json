@@ -1,0 +1,80 @@
+{
+ "schema": "nba2.v7.flags.v1",
+ "session": "arena/6023d517-nba2",
+ "n_flags": 9,
+ "published_on": "site/flagged.html (appended after v2's register and v6's findings)",
+ "flags": [
+  {
+   "id": "F-V7-AVAIL",
+   "severity": "gap",
+   "official_source": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "what_is_wrong": "The 2026-11-19 official injury report was <b>not read</b> in this session, so the availability column on the slate has nothing to put in it. An availability number invented from a stale report would be worse than no number, because the whole point of the column is that it is current.",
+   "what_is_published": "Every slate row prints the column as a blank with <code>F-V7-AVAIL</code> as the reason, and gate <b>G-V7-8</b> fails while it is blank. Rotation-availability strategies are therefore blocked rather than quietly dropped.",
+   "where_to_check": "nba2/v7/official.py (INJURY_REPORT_READ=False)"
+  },
+  {
+   "id": "F-V7-CLOCK",
+   "severity": "info",
+   "official_source": "https://www.nba.com/standings",
+   "what_is_wrong": "The league's own pages disagree by one date: the three team-stat pages run through <b>2026-11-17</b>, while <code>/standings</code> includes <b>2026-11-18</b>. Measured on Utah, whose stat-page games played (15) is one short of its standings record (3-13 = 16), the extra game being the 11/18 win over the Lakers.",
+   "what_is_published": "Both clocks are published side by side with the size of the gap, instead of being blended into a single as-of date that is true of neither page.",
+   "where_to_check": "site/v7-skill.html · site/v7-methodology.html"
+  },
+  {
+   "id": "F-V7-TRANSPORT",
+   "severity": "info",
+   "official_source": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season",
+   "what_is_wrong": "The transcription cannot be reproduced from this sandbox — <code>nba.com</code> resets the TLS handshake (curl exit 000), so no number could be re-read by script — and it cannot be reproduced from a GitHub runner either, where <code>stats.nba.com</code> times out and <code>cdn.nba.com</code> returns 403.",
+   "what_is_published": "The numbers were read page by page and committed to <code>nba2/v7/official.py</code>, and three arithmetic identities are tested over all 30 clubs so a transcription slip fails the build instead of reaching a reader: NetRtg = OffRtg − DefRtg (30/30), PTS − OppPTS = +/− (30/30), and every club's W equals its wins in the committed finals (30/30 over 222 games).",
+   "where_to_check": "nba2/v7/test_v7.py · data/raw/egress_probe.json"
+  },
+  {
+   "id": "F-V7-MARKET",
+   "severity": "gap",
+   "official_source": "https://www.nba.com/games?date=2026-11-19",
+   "what_is_wrong": "No market price exists anywhere in this repository — no closing line, no opening line, no spread or total quote — so <b>no edge is computable</b> and the blend weight against the closing line is undefined.",
+   "what_is_published": "Every stake on the slate is <b>0.00</b>. Gate G-V7-6 blocks every price-dependent strategy. The strategies are written and published in the blocked state rather than deleted, so the gate's arithmetic is visible.",
+   "where_to_check": "site/v7-strategies.html · site/v7-slate.html"
+  },
+  {
+   "id": "F-V7-PROPS",
+   "severity": "gap",
+   "official_source": "https://www.nba.com/stats/players/traditional",
+   "what_is_wrong": "Player props cannot be priced: the largest committed per-player log set holds <b>3 games</b> for the best-covered player (421 players, max 3 games each), while a ±5-point line needs about 15 games before a residual standard deviation means anything.",
+   "what_is_published": "The props section prints the arithmetic — the sample it has against the sample it needs — instead of a probability. Player-prop combos are blocked on that basis.",
+   "where_to_check": "data/v5/player_logs_union.json · site/v7-strategies.html"
+  },
+  {
+   "id": "F-V7-PREREG",
+   "severity": "info",
+   "official_source": "https://github.com/wingbangboozle1-lang/NBA2",
+   "what_is_wrong": "Pre-registration hashes are committed in the same commit as the strategy definitions they freeze. That makes them tamper-evident against <i>later</i> edits, but not against a rewrite of the commit that introduced both — a hash stored beside its own input proves only ordering, not authorship.",
+   "what_is_published": "Ten pre-registration files are written and the build refuses to overwrite an existing one, so any change to a strategy's signal, thresholds, universe or settlement rule after freezing fails the build. The stronger fix is a suggestion, not a silent claim.",
+   "where_to_check": "data/v7/prereg/ · SG-V7-04"
+  },
+  {
+   "id": "F-V7-PAGES",
+   "severity": "info",
+   "official_source": "https://wingbangboozle1-lang.github.io/NBA2/",
+   "what_is_wrong": "GitHub Pages is configured with <code>build_type: legacy</code>, source branch <code>main</code>, path <code>/</code>. Under legacy mode the uploaded <code>site/</code> artefact is not what gets served from the root, and a push alone does not trigger a redeploy — the deploy must be dispatched explicitly.",
+   "what_is_published": "The workflow now dispatches <code>pages.yml</code> explicitly, and this session re-dispatched and then re-read the live page to confirm the deployment landed rather than assuming the push was enough.",
+   "where_to_check": "COORDINATION.md · SG-V7-12"
+  },
+  {
+   "id": "F-V7-LEAK",
+   "severity": "info",
+   "official_source": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season",
+   "what_is_wrong": "The first draft of the v7 model cut its team ratings from the 2026-11-19 pages and then used those same ratings to 'test' October games — a leak of future information into every historical prediction.",
+   "what_is_published": "<b>Fixed before publication.</b> The measured symptom was a 34.1% walk-forward accuracy, which is the signature of a sign or leak bug rather than a bad model; the fix restricts every historical cut to <code>ratings_as_of(cutoff)</code>, and a test now fails if a future rating is used. Corrected walk-forward: 67.1% accuracy, log-loss 0.6349.",
+   "where_to_check": "nba2/v7/model.py · nba2/v7/test_v7.py"
+  },
+  {
+   "id": "F-V7-STALE-UPSTREAM",
+   "severity": "info",
+   "official_source": "https://www.nba.com/standings",
+   "what_is_wrong": "The v3/v4/v5 trees are measurably stale on the inputs that matter: v3 prices Atlanta at <b>8-6</b> while the live standings page prints <b>9-6</b>, and no tree in the repository contained the twelve 2026-11-18 finals. They were not edited in place — that is another session's scope — a new layer was cut instead.",
+   "what_is_published": "The v7 slate is cut entirely from the 2026-11-19 snapshot and reconciles 30/30 against the committed finals. The older surfaces keep their published numbers and their own as-of dates, and the discrepancy is stated here rather than quietly patched.",
+   "where_to_check": "site/v7-verify.html · COORDINATION.md"
+  }
+ ]
+}

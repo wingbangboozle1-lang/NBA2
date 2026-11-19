@@ -24,6 +24,8 @@ from pathlib import Path
 
 from nba2.v7 import build as B
 from nba2.v7 import check as CH
+from nba2.v7 import flags as FLAGS
+from nba2.v7 import nav as NAV
 from nba2.v7 import model as M
 from nba2.v7 import official as O
 from nba2.v7 import strategies as S
@@ -208,6 +210,89 @@ class TestHonesty(unittest.TestCase):
             outside = [t for t in (row["away"], row["home"])
                        if res["luck"].get(t, {}).get("outside")]
             self.assertEqual(row["luck_gate"]["blocks"], bool(outside), msg=row["game_id"])
+
+
+class TestNav(unittest.TestCase):
+    """The sidebar pass, tested on synthetic documents.
+
+    Regression: the first version searched the *whole* document for a v7 href to decide whether
+    the sidebar already had one. The landing page also carries v7 links inside its category
+    card, so that card looked like a sidebar entry, the sidebar block was stripped, and the run
+    reported a lost link on index.html. A nav pass must look at the nav.
+    """
+
+    def _doc(self, nav_body: str, main_body: str = "") -> str:
+        return f"<html><body><aside><nav>{nav_body}</nav></aside><main>{main_body}</main></body></html>"
+
+    def test_missing_links_are_added_once_and_are_idempotent(self):
+        doc = self._doc('<a href="index.html">Start</a>')
+        once = NAV._inject(doc, None)
+        twice = NAV._inject(once, None)
+        self.assertEqual(once, twice)
+        for h in NAV.LABELS:
+            self.assertEqual(once.count(f'href="{h}"'), 1, h)
+
+    def test_a_v7_link_outside_the_sidebar_does_not_count_as_sidebar_presence(self):
+        card = "".join(f'<a href="{h}">{h}</a>' for h in NAV.LABELS)
+        doc = self._doc('<a href="index.html">Start</a>', main_body=card)
+        out = NAV._inject(doc, "v7-slate.html")
+        nav = re.search(r"<nav>(.*?)</nav>", out, re.S).group(1)
+        self.assertEqual(set(re.findall(r'href="(v7-[a-z]+\.html)"', nav)),
+                         set(NAV.LABELS))
+
+    def test_an_existing_sidebar_link_is_not_duplicated(self):
+        nav = "".join(f'<a href="{h}">x</a>' for h in NAV.LABELS)
+        doc = self._doc(nav)
+        self.assertEqual(NAV._inject(doc, None), doc)
+
+    def test_no_sidebar_link_is_ever_dropped(self):
+        doc = self._doc('<a href="index.html">Start</a><a href="flagged.html">F</a>')
+        out = NAV._inject(doc, None)
+        self.assertTrue(NAV._hrefs(doc) <= NAV._hrefs(out))
+
+
+class TestVerificationLedger(unittest.TestCase):
+    def setUp(self):
+        from nba2.v7 import verification as V
+        self.v = V.build()
+
+    def test_every_checked_claim_matched(self):
+        bad = [r["id"] for r in self.v["rows"] if not r["not_read"] and not r["ok"]]
+        self.assertFalse(bad, bad)
+
+    def test_an_unread_source_is_never_counted_as_a_match(self):
+        for r in self.v["rows"]:
+            if r["not_read"]:
+                self.assertEqual(r["n"], 0, r["id"])
+                self.assertEqual(r["matched"], 0, r["id"])
+                self.assertFalse(r["ok"], r["id"])
+
+    def test_every_row_has_an_official_url(self):
+        for r in self.v["rows"]:
+            self.assertTrue(r["source"].startswith("https://"), r["id"])
+
+    def test_the_ledger_is_not_empty(self):
+        self.assertGreaterEqual(self.v["n_claims"], 8)
+        self.assertGreater(self.v["n_compared"], 100)
+
+
+class TestFlags(unittest.TestCase):
+    def test_every_flag_names_a_source_and_a_disposition(self):
+        for fid, sev, url, wrong, instead, where in FLAGS.FLAGS:
+            with self.subTest(flag=fid):
+                self.assertTrue(url.startswith("https://"), fid)
+                self.assertIn(sev, {"gap", "info", "blocker"}, fid)
+                self.assertGreater(len(wrong), 40, fid)
+                self.assertGreater(len(instead), 40, fid)
+                self.assertTrue(where, fid)
+
+    def test_flag_ids_are_unique_and_render_with_an_anchor(self):
+        ids = [f[0] for f in FLAGS.FLAGS]
+        self.assertEqual(len(ids), len(set(ids)))
+        section = FLAGS.build_section()
+        for fid in ids:
+            self.assertIn(f'id="{fid}"', section)
+        self.assertEqual(section.count("<tr>"), len(ids) + 1)  # +1 header row
 
 
 class TestPages(unittest.TestCase):
