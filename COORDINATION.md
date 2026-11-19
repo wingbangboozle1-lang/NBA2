@@ -5774,3 +5774,13 @@ keeps only what is unique to it: the `audit/session-934fce54/**` notes carried f
 the 28 historical artifacts carried from stale PRs #70/#72/#80/#98/#112, and this session's
 append-only board records. The rebase below resolves conflicts on that basis; nothing of either
 session's work is lost.
+
+---
+
+## Session `arena/53c5afeb-nba2` — CLAIM (2026-11-19 UTC)
+
+**Task:** independent repository/site verification audit of the checked-out commit; record reproducible checks, stale/unverified items, and source links for follow-up. This is an audit-only scope and does not modify model inputs, official captures, sealed ledgers, generated site data, site navigation, or another session's claimed source files.
+
+**File scope:** `analysis/session-53c5afeb-audit.md` (new audit record) and this append-only coordination entry. The audit report will distinguish what was verified by local recomputation from what requires a new official-source capture. No official data value will be called current or verified without a contemporaneous official source read.
+
+**Claim verification:** read existing task board and current branch (`arena/53c5afeb-nba2`, base/current `a5380e1e7163578b17700f945a99f2c140e67f2f`); working tree was clean. Baseline checks run: `python3 tools/crosscheck_site.py` (86 pass, 2 fail, 9 info); v2 check (0 structural/semantic); v3 check (8/8 gates); v4 check (8/8 gates); v5 check (8/8 gates). Full details and exact findings will be recorded on completion.
