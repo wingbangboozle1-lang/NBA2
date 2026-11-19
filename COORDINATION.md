@@ -6032,3 +6032,26 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
 - **RQ-9F-4 → owner decision on the 11/14 ledger seal time** (F-PR-06): only an external record can settle 00:49:16 vs 00:58:54.
 
 **Scope check.** Only `audit/9fef54cf/**`, `analysis/session-9fef54cf-prereg-audit.md` and this board were changed. No prereg file, sealed ledger, model input, official capture, generated site data, or site navigation was touched.
+## Session `arena/3a5c7c75-nba2` — CLAIM (2026-11-19 UTC)
+
+**Task:** correct the canonical dashboard's refresh-status wording. The page currently says the latest scheduled ingest "failed before rebuilding," while the committed run verdict says all four capture surfaces succeeded and the workflow run records the later publish/rebuild job failure. Preserve the fail-closed stale-data disclosure, but distinguish successful capture from failed publication so readers are not misled.
+
+**File scope:** `nba2/v2/build.py` (landing-page wording), regenerated `site/index.html`, a focused regression test under `nba2/v2/`, this append-only coordination entry, and its audit note `analysis/session-3a5c7c75-refresh-disclosure.md`. No raw captures, model inputs, ledger, shared navigation, or unrelated generated pages are in scope.
+
+**Evidence available at claim time:** `data/raw/refresh_verdict.json` records run `44381003145`, event `schedule`, and `success` for injuries, finals, rolling, and v4; `gh run list --workflow refresh.yml` reports that run concluded `failure`; official-source freshness is not re-verified by this task. The official run record is https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145.
+
+**Claim verification:** checkout is clean on the platform-assigned branch `arena/3a5c7c75-nba2` at base commit `41cfd812d2794db529090cd026e7056ca3c1b0cd`. This scope does not overlap a source-capture or model-input task.
+
+### Completion — session `arena/3a5c7c75-nba2` (2026-11-19 UTC)
+
+The landing banner and generator were corrected; full evidence and limits are in
+`analysis/session-3a5c7c75-refresh-disclosure.md`. The text now distinguishes the 2026-11-18
+capture verdict (four surfaces succeeded) from the failed publish job, gives the v2 snapshot's
+actual `O.AS_OF` date, and links to the exact Actions run. The job-level failure was verified
+with `gh run view 44381003145`; it is not represented as an official NBA-source check.
+
+**Verification:** v2 suite **167 passed** (with existing `ResourceWarning`s for unclosed history
+files in `nba2/v2/model.py` and `nba2/v2/travel.py`); `python3 -m nba2.v2.check` **0 structural,
+0 semantic**; `tools/check_links_all.py` **143 HTML / 7,472 internal links OK**; `git diff --check`
+passed. External links were inventoried by the checker, not fetched. No NBA values or source
+captures changed. **Status: done.**

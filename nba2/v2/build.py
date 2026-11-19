@@ -417,7 +417,7 @@ See <a href="injuries.html">Injuries &amp; rotation</a> for the diff, and the ra
 
 <div class="note"><b>Read this first.</b> The model can price a game; it cannot price a <em>bet</em>.
 A bet needs a price to beat, and no odds feed is connected to this build — so the picks page publishes a
-lean and a trigger price for all {n_lines} games but holds every stake at 0.00 units and prints the gate that did it. Official input facts are captured with dated NBA source links; model outputs are derived from those inputs and labeled accordingly. The snapshot is not a live refresh, and the latest scheduled ingest failed before rebuilding. <a href="verification.html">See the verification log</a> and <a href="flagged.html">Flagged for review</a>.</div>
+lean and a trigger price for all {n_lines} games but holds every stake at 0.00 units and prints the gate that did it. Official input facts are captured with dated NBA source links; model outputs are derived from those inputs and labeled accordingly. This v2 model snapshot is as of {O.AS_OF}, not a live refresh. The latest scheduled run checked here (2026-11-18 19:29 UTC) captured all four refresh surfaces successfully, but its publish/rebuild job failed, so that capture did not update this page. <a href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145" target="_blank" rel="noopener">Review the run and job outcomes</a>; <a href="verification.html">see the verification log</a> and <a href="flagged.html">Flagged for review</a>.</div>
 
 <h2>Start here</h2>
 <div class="cards">
