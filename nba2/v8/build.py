@@ -99,6 +99,13 @@ def _fmt(v, nd=2):
 
 
 # --------------------------------------------------------------------------- shell
+STYLE = """<style>
+.muted{color:var(--muted,#93a3b8)}
+</style>""" if not (SITE / "assets" / "site.css").exists() or "\.muted" not in (
+    (SITE / "assets" / "site.css").read_text() if (SITE / "assets" / "site.css").exists() else "") \
+    else ""
+
+
 def _shell(name: str, title: str, body: str, nav: list[tuple[str, str]]) -> None:
     parts = []
     for href, label in nav:
@@ -112,6 +119,7 @@ def _shell(name: str, title: str, body: str, nav: list[tuple[str, str]]) -> None
 <title>{esc(title)} · NBA2 Lines Lab</title>
 <meta name="description" content="NBA2 — verification record for the official pages read on 2026-11-19, plus the unknowns and improvement proposals that gate any further change.">
 <link rel="stylesheet" href="assets/site.css">
+{STYLE}
 </head>
 <body>
 <div class="wrap">
@@ -230,7 +238,7 @@ handshake (<code>curl: (35) OpenSSL SSL_ERROR_SYSCALL</code>, HTTP code 000, mea
 reach those hosts, and each raw file records its URL and retrieval time.</div>
 
 <h2>1. What was read</h2>
-<div class="scroll"><table><caption>Nine official documents, the raw transcription kept in the repository, and the parser that reads them.</caption>
+<div class="scroll"><table><caption>{len(d['retrieval']['sources'])} official documents, the raw transcription of each kept in the repository, and the parser that reads them.</caption>
 <thead><tr><th>document</th><th>URL read</th><th>raw text committed</th></tr></thead><tbody>
 {rows_html}
 </tbody></table></div>
@@ -241,7 +249,8 @@ reach those hosts, and each raw file records its URL and retrieval time.</div>
 and the result must equal today's page on all 30 clubs. That test passes with <b>0 mismatches</b>, which
 is the strongest evidence in this record that the finals were parsed in the right direction.</p>
 {table(["club", "W-L", "home", "road", "last 10", "streak", "source"],
-       [[esc(r["team"]), f"{esc(r['w'])}-{esc(r['l'])}", esc(r["home"]), esc(r["road"]),
+       [[esc(r["team"]) + ' <span class="muted">' + esc(r["name"]) + '</span>',
+         f"{esc(r['w'])}-{esc(r['l'])}", esc(r["home"]), esc(r["road"]),
          esc(r["last10"]), esc(r["streak"]), link(r["source_url"], "nba.com/standings")]
         for r in d["standings"]],
        "2026-2027 regular season, as printed on www.nba.com/standings on 2026-11-19.", num=(1,))}
