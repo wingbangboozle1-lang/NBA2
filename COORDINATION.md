@@ -5939,3 +5939,26 @@ semantics, or sealed ledgers. Regenerate dependent data/pages only with the comm
 | ID | Task | Status | Acceptance / verification |
 |---|---|---|---|
 | 8C-12 | Make unchanged settlement rebuilds a fixed point for publish parity | in progress | repeated build preserves the first stamp and produces byte-identical derived trees; changed settlement content advances the stamp; all seals remain unchanged |
+
+### Session `arena/8c7c8828-nba2` — completion record (pre-PR; 2026-11-19 UTC)
+
+After PR #129 merged, fetched `origin/main` at `7b16b6d` and rebased this branch onto it before final verification. The rebase preserved both the merged `arena/be1ea6bf-nba2` board record and every 8C section; no code from the merge was dropped. The current branch diff is limited to the claimed workflow, v6, settlement, generated-output, test, board, and report paths. The source capture and all sealed ledgers remain untouched.
+
+| ID | Status | Result / evidence |
+|---|---|---|
+| 8C-01 | done | Claim was pushed before implementation; rebased onto current `main` before the completion push. |
+| 8C-02 | done | Local committed-tree reproduction stopped in `nba2.settlement_page` on a stale official-finals union; settlement rebuild from the 11 committed source files produced 36 finals, 0 conflicts, 0 rejected quarter rows, then the page built. The failed-run Actions log itself remained unavailable, so its exact runner-side exception is not claimed. |
+| 8C-03 | closed — no transport patch supported | No official endpoint was fetched live in this session and no transport/parser defect was demonstrated. The report records the source boundary; no unverified transport change was made. |
+| 8C-04 | done | Post-rebase suites passed: `nba2/tests` 99, v2 167, v3 67, v4 61, v5 26, v6 56; targeted refresh-workflow tests 4/4, settlement timestamp tests 3/3, v6 coverage tests 17/17. |
+| 8C-05 | done | Source, verification, settlement/coverage metrics, limitations, irregularities and pending handoff are recorded in `analysis/session-8c7c8828-refresh.md`. |
+| 8C-06 | done | Refresh workflow now rebuilds official settlement before rendering; the refresh failure guard and derived-output staging are preserved. |
+| 8C-07 | done | Refresh, Pages and parity rebuild paths have the settlement prerequisite; workflow-order and failure-path tests pass. |
+| 8C-08 | done | v6 same-game provenance enrichment and date-matched official NBA schedule links are covered by regressions; hard gates and score-conflict reporting remain in place. |
+| 8C-09 | done | Ordered builders, gates, lint, links, prediction-seal verification and fixed-point checks pass. `nba2.v6` is 13/13; check-only is 12/12 and writes no files; internal-link check is 7,472/7,472. |
+| 8C-10 | done | `python3 -m nba2.v6 --check-only` returns its measured 12/12 gates without rendering or changing files. |
+| 8C-11 | done | Rebuilt published outputs from committed builders only; 36 finals settled, ledgers 22/22 and 27/27; four sealed-ledger SHA-256 values unchanged. |
+| 8C-12 | done | Unchanged settlement timestamp is preserved; the repeated ordered rebuild is a fixed point. No sealed-ledger or generated-output diff remains after verification. |
+
+**Known non-gating crosscheck findings remain visible:** 97 checks = 86 pass, 9 info, 2 fail. `CC-DOC-01` is the README count (92 shown vs 99 measured); `CC-FRESH-01` is the five-day-old legacy snapshot. Both are explicitly non-gating; no values were inferred or marked verified to make the checks green. The full details are in the report.
+
+**PR / merge / Pages deployment:** pending. Update this record with the PR URL, merge commit, Pages workflow result, and live-site verification after completion.
