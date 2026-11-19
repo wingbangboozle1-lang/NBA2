@@ -1000,8 +1000,11 @@ def p_suggestions() -> str:
              f'<a class="chip" href="#{esc(i)}">choose</a>'] for i, t, d, sev, impact in SUGGESTIONS]
     detail = []
     for i, t, d, sev, impact in SUGGESTIONS:
-        detail.append(f"""<div class="finding" id="{esc(i)}"><h4>{esc(i)} · {md(t)}</h4>
-<p>{md(d)}</p><div class="meta">Severity {esc(sev)} · Impact: {md(impact)}</div></div>""")
+        detail.append(
+            f'<div class="card" id="{esc(i)}" style="margin:10px 0">'
+            f'<h4 style="margin:0 0 6px;font-size:15px;color:var(--ink)">{esc(i)} · {md(t)}</h4>'
+            f'<p style="margin:0 0 8px">{md(d)}</p>'
+            f'<div class="meta">Severity {esc(sev)} · Impact: {md(impact)}</div></div>')
     body = f"""
 <h1>Suggestions</h1>
 <p class="lede">A section reserved for proposals, so that one can be reviewed and chosen before anything
