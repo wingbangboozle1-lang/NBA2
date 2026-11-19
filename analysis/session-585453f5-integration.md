@@ -173,3 +173,77 @@ sealed ledgers                                         -> 22 and 27 picks VERIFI
 * The **live site HTML** could not be fetched (F-5854-05).
 * Arena coordinates remain third-party and are flagged from an earlier session
   (FLAG-V2-ARENA-COORDS); v7 does not publish travel distance.
+
+---
+
+## 9. The nightly refresh failure, measured and repaired (follow-up, same session)
+
+After the integration merged (`30d67f8`, PR #139, Pages deploy `44527199288` success) the
+brief's core requirement — *refresh the four official surfaces on a rolling slate, then rebuild
+only after the freshness and provenance gates pass* — was still not working in production.
+`gh run list --workflow=refresh.yml --limit 12` shows **10/10 scheduled runs concluded
+`failure`**, the newest at 2026-11-18T19:29Z, and every one of them failed in the same job:
+
+```
+capture  success   (all four official surfaces read)
+publish  failure   failed step: "Rebuild every tree from the committed capture"
+```
+
+The Actions job log is not retrievable from this sandbox
+(`results-receiver.actions.githubusercontent.com` is outside the reachable set), so the failure
+was **reproduced** instead of guessed. Replaying the publish job's exact module sequence in a
+worktree pinned at the capture commit the last run acted on (`a5380e1`,
+`ingest(bot): official capture — 2026-11-18T19:30:52Z`) reproduces it:
+
+```
+python3 -m nba2.v6   ->  HARD GATE FAILURE — nothing is rendered
+    G-V6-8: every game row points at an official nba.com document
+        ! 0022600231: no official URL at all          (… through 0022600240)
+```
+
+### Root cause (two defects, both in the reader — the data was fine)
+
+`G-V6-8` says those ten rows have no official URL. They do. The URL is in
+`data/raw/official_finals_union.json`, the file `nba2.pipeline.settle` writes moments earlier,
+under the key **`source`**:
+
+```json
+{"game_id": "0022600231", "away": "DEN", "home": "NOP", "away_pts": 116, "home_pts": 108,
+ "source": "https://www.nba.com/game/den-vs-nop-0022600231", …}
+```
+
+1. **`_records_of` merged rows wrongly.** Its null-guard was nested inside a second null-guard,
+   so the *last* row for a game id could overwrite a non-null value from an earlier row with an
+   explicit `null`. Fixed: a non-null always wins; a `null` only fills a key that is absent.
+2. **The extractor did not accept every key the feeds actually use**, and its `source`
+   fallback was applied inconsistently. Replaced with `_official_url()`, which takes the first
+   value among `source_url`, `final_source_url`, `official_source`, `source` **only if it is
+   an `https://` URL on an `nba.com` host**. A prose label, a relative path or a third-party
+   URL is treated as absent, so no link is ever invented.
+
+### Why the gate was not lowered
+
+A fix that made `G-V6-8` pass unconditionally would be worse than the bug. The new
+`nba2/v6/test_results_union_source.py` (7 tests) pins **both** directions: the URL is
+surfaced when the file carries it, and a row with no official URL still has to fail. Two of
+the seven read the *committed* union and every row `finals_committed()` publishes, so a future
+regression breaks the build rather than the deploy.
+
+### Proof
+
+The same eleven-module sequence that failed, run at `a5380e1` with only the two patched files
+copied in:
+
+```
+nba2.pipeline.settle 0 · nba2.v4.settlement 0 · build_site_data 0 · build_site 0 ·
+backtest.engine.build 0 · nba2.v2 0 · settlement_page 0 · nba2.v3 0 · nba2.v4 0 ·
+nba2.v5 0 · nba2.v6 0        <-- the step that failed ten times now exits 0
+```
+
+On the merged tree: the full 10-module rebuild is still a **fixed point (0 drift)**, 92/59/37
+root+v6+v7 tests pass, `nba2.v6.check` exits 0, 8024 internal links OK, 1436 sourced rows.
+
+**Still open and flagged:** whether the *production* run now succeeds will only be known at the
+next scheduled fire (or after a manual dispatch). This session can prove the sequence is
+reproducible from the committed inputs — which is exactly what the publish job does — but it
+cannot observe the next cron run.
