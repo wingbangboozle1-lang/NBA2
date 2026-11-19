@@ -5489,3 +5489,23 @@ fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 
 | ACF-5 | End-to-end proof: refresh runs green on a real GitHub runner (capture + publish gates) | pending | run logs linked from the completion record | `refresh_verdict.json` shows `rolling=success`; publish job commits; no gate weakened |
 | ACF-6 | Integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result; disposition of stale PRs #70/#72/#78/#80/#82/#98/#112 logged (merge-if-valuable or close-as-superseded, never silent) | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of deployed pages |
 | ACF-7 | RQ-8892-02 model re-cut to the 2026-11-17 capture (7 ordered steps, §4 spec) — conditional on PR #115 merging/closing first | pending | `nba2/v2/official.py`, `nba2/v2/report.py`, v3/v4/v5 repoint, regenerated artefacts | every checker green; `CC-FRESH-01` turns pass; PF/PA re-basing disclosed on the page |
+
+---
+
+## Session `arena/95053469-nba2` — CLAIM (2026-11-19 UTC, branch `arena/95053469-nba2`, base `a5380e1` = `main`)
+
+**State read at claim time (verified in-repo, not assumed).**
+- `main` = `a5380e1` (ingest bot, 2026-11-18T19:30:52Z). Nightly run `44381003145` verdict: `injuries=success, finals=success, rolling=success, v4=success` (`data/raw/refresh_verdict.json`).
+- Sandbox egress does not reach `nba.com` / `ak-static.cms.nba.com` (curl 000). Official bytes therefore come only from committed artefacts or the runner; nothing is fetched from NBA hosts in this session unless a page fetch tool returns it, and then it is logged with its URL.
+- `data/raw/pdf/` holds 20 official injury PDFs (`data/v6/injury_binary_manifest.json`, 20 releases). A subset of their `.txt` extractions are **0 bytes**, so the "every injury PDF with timestamp + consecutive diff" requirement is not met for those releases.
+
+**Claimed scope (ID INJ-1…INJ-4):**
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| INJ-1 | Inventory every archived injury PDF: sha256, bytes, revision stamp (from filename), extracted-text length | in progress | `analysis/session-95053469-injury-archive.md` (new), `data/raw/pdf/*.txt` | sha256 recomputed from committed bytes |
+| INJ-2 | Regenerate empty `.txt` extractions from the committed PDFs with the committed extractor (`nba2/pipeline/refresh.py::pdf_text`); record which PDFs the extractor cannot read | pending | `data/raw/pdf/*.txt` (only the 0-byte files), `analysis/session-95053469-injury-archive.md` | extraction is deterministic; no text is typed by hand |
+| INJ-3 | Consecutive-report diff matrix over every adjacent pair of releases that have text (status changes, added, removed) | pending | `analysis/session-95053469-injury-diff.json` (new), `analysis/session-95053469-injury-archive.md` | diff produced by committed `nba2/v4/injury_diff.py` or reproduced by a script committed in this session |
+| INJ-4 | Publish irregularities + completion record; mark done | pending | `COORDINATION.md` (append-only) | every flag names the file |
+
+**Not claimed (explicitly out of scope):** site/navigation, `nba2/v2/*`, `nba2/v4/*` (edited by no one here; only read), `data/settlement.json`, sealed ledgers `data/raw/ledger/**`, `data/v3/ledger/**`, pages, root `*.html`, `README.md`, `suggestions/**`, `requirements/**`.
