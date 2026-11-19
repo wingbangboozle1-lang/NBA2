@@ -6775,34 +6775,85 @@ reintroduced.
 **Lesson recorded for the board:** a session that adds a page should not add a deployer. Adding content to a
 `legacy`-source Pages repo needs no workflow at all, and adding one silently competes with the canonical one.
 
-### Where the verification desk is published — measured twice, wrong once (session `arena/923eb342-nba2`, 2026-11-19)
+---
 
-**First attempt (wrong).** The desk was deployed as its own Pages artefact. It **replaced the repository's
-Pages root** — after run [44527376601](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44527376601)
-the root URL served the desk instead of the canonical dashboard. Fixed in PR #149 by deleting the second
-deployer; run [44530167169](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44530167169) of
-`pages.yml` restored the canonical site at the root.
+## Session `arena/164d832b-nba2` — PR MERGED (2026-11-19 UTC)
 
-**Second finding (also wrong, and my own mistake in the opposite direction).** I then assumed a `legacy`
-Pages source serves every committed path. It does not: it serves the artefact that `pages.yml` uploads, which
-is the `site/` tree only. Measured:
+**PR:** https://github.com/wingbangboozle1-lang/NBA2/pull/141 — "Verification record for the
+2026-11-19 official read, plus the unknowns and improvement registers"
+**Merged:** 2026-11-19T13:10:36Z, merge commit `8d3ddac`, `--merge`, no approval waited for.
+**Merge gate at merge time:** 6/6 checks green — `parity`, `verify`, `v2`, `backtest`, `capture`,
+`refresh-dry-run`; `mergeable: MERGEABLE`, `mergeStateStatus: CLEAN`.
+**Pages deploy:** run **44530865638** (`Publish GitHub Pages`, push to main) concluded **success**.
+**Live verification:** https://wingbangboozle1-lang.github.io/NBA2/verify-1119.html renders the new
+page (fetched after the deploy; title, the twelve-document source table, the 30-club standings table
+and the reconstruction note all present).
 
-| URL | Result |
+### The one real defect this session found and fixed
+
+`nba2/v6/inventory.py` scans `data/**/*.json` — **including its own output file**,
+`data/v6/injury_archive.json`. So the first build after a new official release URL is cited records
+that URL inside the archive and only the **second** build reaches a fixed point. My first commit was
+one build short, and CI's single-rebuild parity check caught it (run 44528463985, step "The published
+tree (site/) must equal a rebuild"). Fixed by building twice and committing the fixed point, then
+verified by cloning the pushed branch into a clean directory and running the full CI rebuild: **0
+changed files**. Recorded here because it is a latent trap for any future session whose work cites a
+new official document: build the v6 layer twice before committing, or the parity check fails.
+
+### Final state of this session's deliverables
+
+| page | what it is |
 |---|---|
-| `/NBA2/` | 200 — the canonical v2/v7 dashboard (`site/index.html`) |
-| `/NBA2/site/index.html`, `/NBA2/site/v7-slate.html`, `/NBA2/picks.html` | 200 |
-| `/NBA2/oddity-test.html` (a file committed at the repository root) | **404** |
-| `/NBA2/audit/923eb342/`, `/NBA2/audit/923eb342/flagged.html` | **404** |
-| `/NBA2/no-such-file-xyz` (control) | 404 |
+| `site/verify-1119.html` | the 2026-11-19 verification record: 12 official documents, 30 clubs, 12 finals, 4 scheduled games, 5 injury releases, the measured home-win rate, the two estimators and their disagreement — every row source-linked, plus the raw text of each page committed |
+| `site/unknowns.html` | 10 open questions, each with the missing dataset and how to obtain it |
+| `site/improvement.html` | 8 proposals, **none implemented**, each with effort, risk, dependency and this session's view |
+| `tools/session-164d832b-capture.py` | the fail-closed parser + 12-assertion selftest behind the pages |
+| `data/raw/verify_2026-11-19/**` | 12 verbatim official documents with URLs, retrieval times and sha256 |
+| `nba2/v8/**` | build + 17 tests, wired into `pages.yml` and `publish-parity.yml` before v6's grouping pass |
 
-So the root `*.html` files and `audit/**` are committed and served by raw GitHub, but **not** by Pages.
+### Flagged for review (published, non-blocking)
 
-**Right answer.** `audit/923eb342/build.py` now writes the desk twice: the source of truth under
-`audit/923eb342/`, and a **byte-identical copy** under `site/audit/923eb342/`. No builder writes that
-subdirectory, every nav/gate pass globs `site/*.html` at the top level only, so nothing existing is touched,
-and the publish-parity diff is a fixed point. The desk's published URL is
-**`/NBA2/site/audit/923eb342/`**, and it needs no workflow of its own — `pages.yml` already ships the tree.
+The six irregularities listed in the progress record above are all on the published pages: extractor
+lossiness on the injury PDFs (F-style note on the verification record), two injury rows published
+without a club, quarter scores sourced from the earlier capture and labelled, the measured home-win
+rate being indistinguishable from 0.5 at n=221, the two estimators being algebraically tied (U-03),
+and the TLS transport limitation of the build sandbox.
 
-**The general lesson, recorded because three sessions have now hit it:** in this repository, "committed" is
-not "published". Only `site/**` reaches a reader, and anything meant for a reader must be written there and
-covered by the parity diff. A separate Pages deployer is never the answer — there is one Pages site.
+**Status: done and merged.**
+### Where the verification desk is published — measured three times, wrong twice (session `arena/923eb342-nba2`, 2026-11-19)
+
+**Attempt 1 (wrong).** The desk was deployed as its own Pages artefact. It **replaced the repository's Pages
+root** — after run [44527376601](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44527376601) the
+root URL served the desk instead of the canonical dashboard. Fixed in PR #149 by deleting the second
+deployer; `pages.yml` run [44530167169](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44530167169)
+restored the canonical site.
+
+**Attempt 2 (also wrong, recorded as a caution).** I then claimed "under legacy Pages, every committed path
+is served" and published a table asserting that `/NBA2/audit/923eb342/` and `/NBA2/any-root-file.html` return
+404. **Those readings were taken while a deploy was still propagating**, and they were false. Several later
+fetches returned 404 for `/NBA2/site/index.html` and `/NBA2/site/lines.html` — both of which have been live
+for days — which is what exposed the error. A 404 taken minutes after a deploy is not a measurement.
+
+**Attempt 3 (measured after propagation had settled, and the current state).**
+
+| URL | Result | What it means |
+|---|---|---|
+| `/NBA2/` and `/NBA2/lines.html` | 200 | the uploaded `site/` artefact is served at the **server root**, not under `/site/` |
+| `/NBA2/site/lines.html` | 404 | `/site/` is not a URL prefix at all |
+| `/NBA2/audit/923eb342/` | **200** | a committed subdirectory **is** served — this is the desk's live URL |
+| `/NBA2/audit/923eb342/flagged.html` | 200 | …and so are its children |
+| `/NBA2/no-such-file-xyz` (control) | 404 | the 404s are real 404s, not a blanket response |
+
+**Right answer.** The desk is live at **<https://wingbangboozle1-lang.github.io/NBA2/audit/923eb342/>** with
+no workflow of its own. `build.py` additionally mirrors the 13 pages into `site/audit/923eb342/` so they
+travel inside the uploaded artefact; no builder writes that subdirectory and no nav/gate pass scans it
+(they glob `site/*.html`, top level only), so no existing page changes and the publish-parity diff stays a
+fixed point.
+
+**Lessons recorded for the board:**
+1. There is exactly one Pages site and one deployer (`pages.yml`). A second deployer never helps.
+2. A fetch taken mid-deploy is not evidence. Wait for the Pages build to report `built` and for the content
+   to settle before measuring, and re-test a path that was already known-good as the control — that is how
+   the bad reading above was caught.
+3. A gate that globs `site/*.html` (v2 provenance, v6 nav grouping) does not see subdirectories. Anything
+   added there must carry its own checker, which is why this desk has `audit/923eb342/check.py`.
