@@ -6272,3 +6272,42 @@ rolling-slate window (11/17→11/20) vs the captured fresh window (11/19→11/22
 present but naive product not printed beside it; 11 of 12 finals for 11/18 stored with blank
 quarters + flag (gamebooks unread in this audit); two injury rows unattributed in parsed text
 (blank + flagged, never inferred); workflow_dispatch 403 from this session's integration.
+
+### Deployment result — session `arena/923eb342-nba2` (2026-11-19 UTC)
+
+**PR [#138](https://github.com/wingbangboozle1-lang/NBA2/pull/138) MERGED** 2026-11-19T12:37:52Z as
+`cf8de0c002e6b725fe10471ada6dceaf2cdeaeb1` (all six checks green: backtest, capture, parity,
+refresh-dry-run, v2, verify; conflict with PR #136's board record resolved by keeping **both** sessions'
+sections — nothing discarded).
+
+**PR [#142](https://github.com/wingbangboozle1-lang/NBA2/pull/142) MERGED** (deploy fix, see below).
+**PR [#144](https://github.com/wingbangboozle1-lang/NBA2/pull/144) MERGED** 2026-11-19T12:48:48Z
+(prose-rendering + count fixes).
+
+**Pages deploy of the verification desk:** run
+[44527376601](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44527376601) — verify success,
+build success, **deploy success**. Live and fetched:
+<https://wingbangboozle1-lang.github.io/NBA2/audit/923eb342/>.
+
+**Defects found in my own work by reading the live site (all fixed and redeployed):**
+1. The first Pages build **failed** its fixed-point check because `build.py` embedded the live output of
+   `tools/crosscheck_site.py`. The generator now shells out to nothing and shows the pipeline's committed
+   `data/v6/checks.json` status instead (PR #142). This is the same class of defect as F-923-07 — a
+   non-deterministic input breaking a reproducible build — and it is now fixed in my own tree.
+2. Literal backticks and `**` appeared in the Flagged-for-review prose; a small escaping-aware `md()`
+   helper converts code spans and bold **after** HTML escaping (PR #144).
+3. The leaderboard note said "two of the strategies" where the data says **6 of 6** below the 300-bet
+   floor. The sentence is now counted from `strategy_lab.json`, not asserted in prose (PR #144).
+4. The suggestions index anchor `#SG-…` scrolled to the top; the detail blocks are now cards
+   with the anchor id (PR #144).
+
+**Pages configuration note (unchanged by this session, worth an owner decision):** the repository's Pages
+site is `build_type: legacy`, source `main /`, so the site that was already live
+(<https://wingbangboozle1-lang.github.io/NBA2/>) is served from the repository root. The verification desk
+is a separate Pages artefact deployed to `/NBA2/audit/923eb342/` and is reachable at that URL. Two deploy
+workflows now target the same Pages environment in sequence; the later one wins the domain until the next
+run of the other. Flipping Pages to "GitHub Actions" with a single published tree is suggestion SG-923-07 /
+Q-923-10 and needs an owner decision, not a code change.
+
+**Status: done.** Verified rows, harness, dashboard, findings, questions, suggestions and the requests
+RQ-923-1…4 are all published; every finding is on the Flagged for review page with its official URL.
