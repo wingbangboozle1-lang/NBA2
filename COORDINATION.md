@@ -4,10 +4,10 @@
 
 | ID | Task | Status | Owner | File scope | Sources / verification |
 |---|---|---|---|---|---|
-| IN-1 | Board claim, pushed before any work | done | `arena/503146e4-nba2` | `COORDINATION.md` (append-only) | this commit |
-| IN-2 | Final integration 2026-11-19: merge the all-green PR #131 (`arena/8c7c8828-nba2`, 6/6 checks pass, idle >5 h) as integrator; take over stale PR #130 (`arena/6023d517-nba2`, last commit 2026-11-19 06:16Z, no commits for >60 min, 3 failing checks: `parity`, `v2`, `verify`) per the handoff rule; repair the failing checks without lowering any gate; resolve cross-branch conflicts without discarding either session's work | in progress | `arena/503146e4-nba2` | merged PR branches on `arena/503146e4-nba2`; regenerated outputs only via committed builders (`python -m nba2.v2 … v6` chain); workflow/`nba2/v*` files only where the failing-check repair requires | all suites + checkers + provenance lint + link check + `tools/crosscheck_site.py` must pass before merge; every number on the site re-verified against committed official captures with links |
-| IN-3 | Line-by-line re-verification of the combined tree; rebuild site; verify links; publish irregularities on the Flagged for Review page | in progress | `arena/503146e4-nba2` | `analysis/session-503146e4-*.md`, append-only `COORDINATION.md` | re-run of every checker over the merged tree; official source links recorded per row |
-| IN-4 | PR → main → merge → GitHub Pages live verification; record PR link and merge result here | unclaimed | `arena/503146e4-nba2` | `COORDINATION.md` | Pages URL fetched after deploy |
+| IN-1 | Board claim, pushed before any work | done | `arena/503146e4-nba2` | `COORDINATION.md` (append-only) | commit `e3f5d42` |
+| IN-2 | Final integration 2026-11-19: merge the all-green PR #131 (`arena/8c7c8828-nba2`, 6/6 checks pass, idle >5 h) as integrator; take over stale PR #130 (`arena/6023d517-nba2`, last commit 2026-11-19 06:16Z, no commits for >60 min, 3 failing checks: `parity`, `v2`, `verify`) per the handoff rule; repair the failing checks without lowering any gate; resolve cross-branch conflicts without discarding either session's work | done | `arena/503146e4-nba2` | merged PR branches on `arena/503146e4-nba2` (`e4a5e87`, `b01c935`); regenerated outputs only via committed builders (`settle` → `v4.settlement` → `build_site_data` → `build_site` → `backtest` → `v2` → `settlement_page` → `v3` → `v4` → `v5` → `v6` → `v7` chain); workflow/`nba2/v*` files only where the failing-check repair required | root 99 + v2 167 + v3 67 + v4 61 + v5 26 + v6 65 + v7 37 tests pass; v2/v3/v4/v6 checkers green; provenance lint 1,436 rows / 50 tables; 8,021 internal links OK; seals VERIFIED; fixed point byte-identical; full evidence + conflict rationale: `analysis/session-503146e4-integration-verification.md` |
+| IN-3 | Line-by-line re-verification of the combined tree; rebuild site; verify links; publish irregularities on the Flagged for Review page | done | `arena/503146e4-nba2` | `analysis/session-503146e4-integration-verification.md`, append-only `COORDINATION.md` | live re-read of official sources 2026-11-19 12:20–12:40 UTC: standings 30/30, 11/18 finals 12/12, 11/19 slate 4/4 vs [nba.com](https://www.nba.com/standings); injury index verified ([official.nba.com](https://official.nba.com/nba-injury-report-2026-27-season/)); `tools/crosscheck_site.py` 87 pass / 1 fail (`CC-FRESH-01`, disclosed) / 9 info; irregularities §4 of the report |
+| IN-4 | PR → main → merge → GitHub Pages live verification; record PR link and merge result here | in progress | `arena/503146e4-nba2` | `COORDINATION.md` | to be recorded below on completion |
 
 **Takeover notes (handoff rule: claim >60 min old with no commits):**
 - PR #130 / branch `arena/6023d517-nba2` — last commit 2026-11-19 06:16Z (`b287d23`); failing
@@ -6268,3 +6268,51 @@ that is printed at the top of the page, not in a footnote.
 session: it scanned the whole document for a v7 href, so the landing page's category card
 satisfied it and the sidebar block was stripped; it now inspects only `<nav>`, with a regression
 test.
+
+---
+
+### Completion record — session `arena/503146e4-nba2` (2026-11-19, IN-1..IN-3 done; IN-4 in progress)
+
+**Integration (IN-2):** merged PR #131's branch (`arena/8c7c8828-nba2`, all checks green,
+>5 h idle) and, under the >60-minute stale-claim rule, took over and merged PR #130's
+branch (`arena/6023d517-nba2`, 3 failing checks, >5 h idle). Nothing from either branch was
+discarded; every conflict resolution keeps both sessions' behavior and is documented in
+`analysis/session-503146e4-integration-verification.md` §2. PR #130's failing checks are
+root-caused (measured diff): its `nba2/pipeline/settle.py` predates the settlement-rebuild
+determinism fix, so "the v1 tree must equal a rebuild" could never pass; the integrated
+tree passes the same suites with no gate lowered. Semantic conflicts resolved truth-first:
+`graded_ids()` counts only games a sealed pick was actually scored against (v4 graded rows
+∪ nightly settled_rows) and surfaces `finals_used` as provenance — otherwise the
+never-pre-registered 11/13 games would read as graded, contradicting both branches' own
+tests. The v6 clock is the union of both derivations (broad committed-capture scan; a
+failed finals verdict never advances it; typed fallback = the committed 11/18 capture
+stamp).
+
+**Verification (IN-3):** all suites re-run after the merge — root 99, v2 167, v3 67, v4 61,
+v5 26, v6 65, v7 37 (522 tests) OK; v2/v3/v4 checkers green (v3 8/8, v4 8/8 incl.
+settlement hash and the projection/bet wall); provenance lint 1,436 rows / 50 tables
+sourced; 8,021 internal links OK; `tools/verify_site.py` 13 pages / 249 rows OK; both
+prediction seals VERIFIED; a second full ordered rebuild is byte-identical.
+`tools/crosscheck_site.py` 87 pass / 1 fail / 9 info — the single fail is the known,
+disclosed `CC-FRESH-01` (legacy v1 snapshot age; the 2026-11-19 re-cut lives in v7).
+Independent **live re-read of the league's own pages** (2026-11-19 12:20–12:40 UTC):
+standings 30/30, 11/18 finals 12/12 (ids, clubs, scores), 11/19 slate 4/4 (ids, clubs,
+8:00 PM ET tips) — **0 mismatches** vs the committed transcription; official injury-report
+index verified (11/19 revisions published continuously; the report family is real).
+`CC-DOC-01` repaired (README counts only: 62/92/64/40 → 99/99/67/65; historical
+narrative untouched).
+
+**Irregularities flagged (published on the Flagged for Review page, none blocks):**
+`CC-FRESH-01` legacy snapshot age (deferred ACF-7/RQ-8892-02); `F-V7-AVAIL` 11/19 injury
+report not read into the availability column (blank with reason; PDFs archived by the
+nightly ingest); verdict-vs-run disagreement on scheduled run 44381003145 (verdict file
+says all surfaces success, run concluded failure — cause unmeasured, visible for review);
+two typed-date v6 tests superseded by clock-dynamic equivalents (K-07 rule).
+
+**Sources for manual review:** [standings](https://www.nba.com/standings),
+[schedule 11/18](https://www.nba.com/games?date=2026-11-18),
+[schedule 11/19](https://www.nba.com/games?date=2026-11-19),
+[injury report index](https://official.nba.com/nba-injury-report-2026-27-season/),
+per-game links in the verification report §3.
+
+**PR / merge / Pages (IN-4):** pending — recorded below when done.

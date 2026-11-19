@@ -122,7 +122,7 @@ review, and they are **not** published. Nothing was deleted to get here; moving 
 | `nba2/config.py` | markets, parameters (each with `status` + `source`), 10 gates, 9 strategies, tiers, reward weights |
 | `nba2/models/` | `ratings` `lines` `gates` `correlation` `props` `injuries` `gameflow` `leaderboard` `ledger` |
 | `nba2/pipeline/` | `build_site_data` → `build_site` → `lint`, plus `seal_predictions`, `settle`, `reconcile` |
-| `nba2/tests/` | 62 standard-library tests (verified 2026-11-14): statistics, invariants, published-artefact checks, determinism |
+| `nba2/tests/` | 99 standard-library tests (verified 2026-11-19): statistics, invariants, published-artefact checks, determinism |
 | `requirements/`, `suggestions/` | registers rendered on the site (requirements, questions, repo review, suggestions) |
 | `COORDINATION.md` | shared board: sessions, claims, conflicts, completion log |
 
@@ -142,7 +142,7 @@ honest map rather than a claim that there is one generator — and only `site/` 
 ## Reproduce everything
 
 ```bash
-python -m unittest discover -s nba2/tests -t .   # statistics + invariants (92 tests)
+python -m unittest discover -s nba2/tests -t .   # statistics + invariants (99 tests)
 python -m nba2.pipeline.seal_predictions          # pre-register the window's lines, hash them
 python -m nba2.pipeline.build_site_data           # snapshots -> data/site.json
 python -m nba2.pipeline.build_site                 # data/site.json -> index.html + pages/**
@@ -335,7 +335,7 @@ python3 -m nba2.v2.refresh    # rolling ingest with freshness/provenance gates (
 python3 -m nba2.v2.backtest   # walk-forward backtest only
 python3 -m nba2.v2.check      # every row has an official source link; every blank has a reason
 python3 -m unittest discover -s nba2/v2 -t . -p 'test_*.py'   # 167 tests
-python3 -m unittest discover -s nba2/tests -t .                # 92 tests (counted from the files)
+python3 -m unittest discover -s nba2/tests -t .                # 99 tests (counted from the files)
 ```
 
 What the v2 build changed, in one paragraph: lines are originated from **official** inputs only
@@ -438,7 +438,7 @@ captured live from official pages on **2026-11-15**. It publishes the window
 python3 -m nba2.v3            # rebuild the v3 pages into site/  (12 pages)
 python3 -m nba2.v3.check      # every row sourced, every blank explained, numbers re-derived
 python3 -m nba2.v3.official   # the transcription's own arithmetic selftest
-python3 -m unittest discover -s nba2/v3 -t . -p 'test_*.py'   # 64 tests
+python3 -m unittest discover -s nba2/v3 -t . -p 'test_*.py'   # 67 tests
 ```
 
 | Page | What it shows |
@@ -507,7 +507,7 @@ surfaces are separate groups, because the brief requires them never to mix.
 
 ```bash
 python -m nba2.v6                       # measure -> gate -> render -> group the nav
-python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'   # 40 tests
+python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'   # 65 tests
 python -m nba2.v6.injury_backfill --dry-run   # the 17-release archive inventory
 ```
 
