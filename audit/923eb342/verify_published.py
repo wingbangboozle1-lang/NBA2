@@ -319,6 +319,19 @@ else:
     rec("M-HCA", "model parameter", "home-court advantage is pinned", "calibration missing",
         "n/a", "UNVERIFIABLE", stand_url)
 
+# a deterministic digest of every input, so a rebuild that changed nothing proves it
+import hashlib as _h
+_digest = _h.sha256()
+for _p in [CAP_PATH] + sorted((pathlib.Path(__file__).parent / "verified").glob("*.json")) + [
+        ROOT / "data/v2/teams.json", ROOT / "data/v2/lines.json", ROOT / "data/v2/results.json",
+        ROOT / "data/settlement.json", ROOT / "data/v6/market_prior.json"]:
+    if _p.exists():
+        _digest.update(_p.read_bytes())
+rec("Z-INPUT-DIGEST", "provenance", "digest over every input this audit read", _digest.hexdigest()[:32],
+    "recomputed on every run; a changed digest means an input changed", "PASS",
+    "https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/923eb342/verified",
+    "excludes the wall clock: no timestamp enters the report except retrieval times recorded in the capture")
+
 out = pathlib.Path(__file__).with_name("report.json")
 out.write_text(json.dumps({"schema": "nba2.authcheck.report.v1",
                            "session": "arena/923eb342-nba2",

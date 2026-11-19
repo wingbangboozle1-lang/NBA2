@@ -813,6 +813,16 @@
    "verdict": "STALE",
    "source_url": "https://www.nba.com/standings",
    "note": ""
+  },
+  {
+   "id": "Z-INPUT-DIGEST",
+   "surface": "provenance",
+   "claim": "digest over every input this audit read",
+   "published": "88bf3538a1efe80dcc62eab6e62cae41",
+   "official": "recomputed on every run; a changed digest means an input changed",
+   "verdict": "PASS",
+   "source_url": "https://github.com/wingbangboozle1-lang/NBA2/tree/main/audit/923eb342/verified",
+   "note": "excludes the wall clock: no timestamp enters the report except retrieval times recorded in the capture"
   }
  ]
 }

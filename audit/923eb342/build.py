@@ -130,6 +130,20 @@ FINDINGS = [
      "second cause of the publish failure and a certain cause of it after any successful refresh.",
      "nba2/v2/check.py semantic(): n_slate = 34, sum(...) != 188",
      "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/check.py"),
+    ("F-923-13", "high", "The leaderboard ranks a 7-bet strategy first while declaring 300 bets the minimum to rank",
+     "`data/v2/strategy_lab.json` sets `min_sample_to_rank` 300, then ranks S4 ('road side when model fades "
+     "home by 3+') first by log-loss on **n = 7** with a 100% hit rate and a calibration gap of −0.4002. A "
+     "board that shows a 7-0 strategy at the top of a 300-bet-minimum ranking is inviting exactly the luck "
+     "the project says it removes.",
+     "strategy_lab.json → leaderboard.min_sample_to_rank = 300; leaderboard.ranked[0] = { sid: S4, n: 7, hit_rate: 1.0, rank_by_log_loss: 1 }",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json"),
+    ("F-923-14", "high", "The model's accuracy is not distinguishable from a one-line prior, by its own test",
+     "The lab's paired comparison on the games where the model and the 'back the better prior win%' baseline "
+     "disagree: model 14, baseline 20, McNemar exact p = 0.3915, model hit rate 0.6453 against the "
+     "baseline's 0.6928. The site's largest-sample skill claim fails its own significance test, and the "
+     "lab's own verdict says so.",
+     "strategy_lab.json → skill_attribution.headline_vs_win_pct_baseline",
+     "https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json"),
     ("F-923-12", "info", "Sealed ledgers cannot be extended to new game days",
      "Both sealed ledgers cover 2026-11-14..11-17 only. Once those are settled there is nothing sealed "
      "for 11/18 onward, so the tamper-evident pick stream stops while the site keeps publishing. The "
@@ -764,6 +778,25 @@ def p_performance() -> str:
          f"coverage {PCOV.get('coverage')}", badge("measured"),
          src("https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/player_coverage.json")],
     ]
+    LEADER = LAB.get("leaderboard") or {}
+    lrow = []
+    for r_ in LEADER.get("ranked", []):
+        n = r_.get("n") or 0
+        lrow.append([str(r_.get("rank_by_log_loss")), esc(r_.get("name")),
+                     str(n) + ("" if n >= LEADER.get("min_sample_to_rank", 0) else
+                               ' <span class="chip warn">below floor</span>'),
+                     esc(r_.get("hit_rate")), esc(r_.get("log_loss")),
+                     esc(r_.get("calibration_gap")),
+                     badge("yes") if r_.get("eligible_for_reward") else badge("no — " + str(r_.get("blocked_by"))),
+                     src("https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json")])
+    sk = (LAB.get("skill_attribution") or {}).get("headline_vs_win_pct_baseline") or {}
+    SKILL_TXT = (
+        "Model {} on the {} games both rules scored; the \"back the better prior win percentage\" "
+        "baseline {}. They disagree on {} games and the baseline wins those {} to {} (McNemar exact "
+        "p = {}). The lab's own verdict: {}."
+    ).format(sk.get("model_hit_rate_same_games"), sk.get("baseline_n"), sk.get("baseline_hit_rate"),
+             sk.get("discordant_games"), sk.get("baseline_won_those"), sk.get("model_won_those"),
+             sk.get("mcnemar_exact_p"), sk.get("verdict"))
     crow = []
     for c in corr:
         r = c.get("r")
@@ -810,6 +843,22 @@ one does, neither number should be quoted alone.</div>
         for n, k, h, s, e in SEALED],
        "Both digests recompute from the committed prediction arrays, so neither can have been edited "
        "after sealing. Verified this session by the CI-equivalent command in ci.yml.")}
+
+<h2>Luck vs skill: the leaderboard, as it scores itself</h2>
+{table(["Rank", "Strategy", "Bets", "Hit rate", "Log-loss", "Calibration gap", "Eligible for reward", "Source"], lrow,
+       f"The board's own minimum sample to rank is <b>{LEADER.get('min_sample_to_rank')}</b> bets. Two of the "
+       "strategies listed are ranked on fewer than that; the top row has "
+       f"{LEADER.get('ranked', [{}])[0].get('n') if LEADER.get('ranked') else '—'} bets. Ranked on log-loss, "
+       "a proper scoring rule, which is the right choice — the sample floor is what is not enforced.")}
+
+<h2>The paired test that decides whether the model beats a one-line rule</h2>
+<p class="note">{esc(SKILL_TXT)}</p>
+{table(["Rule", "Hit rate", "Bets", "Source"],
+       [[esc(b["baseline"]), esc(b["hit_rate"]), str(b["n"]),
+         src("https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json")]
+        for b in (LAB.get("baselines") or {}).get("baselines", [])],
+       "Baselines skip ties rather than guessing them, so the sample differs from the model's; the paired "
+       "comparison above uses only the games both rules scored.")}
 
 <h2>Correlations used in parlay pricing</h2>
 {table(["Quantity", "Pearson r", "n", "95% CI", "Status", "Source"], crow,
