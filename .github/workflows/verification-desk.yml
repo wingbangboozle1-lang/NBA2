@@ -1,12 +1,24 @@
-name: Verify published data and deploy the verification desk
+name: Verify published data and the verification desk
 
+# TWO JOBS, AND NO DEPLOY ON PURPOSE.
+#
+# The first version of this workflow uploaded `audit/923eb342/` with
+# `actions/upload-pages-artifact` + `deploy-pages`. That took over the repository's Pages root and
+# replaced the canonical dashboard with this session's desk (observed: the root URL served the desk
+# while `/site/` held the canonical tree). The repository's Pages source is `build_type: legacy`,
+# `main /`, so **every committed path is already served** — `audit/923eb342/index.html` is live at
+# `/NBA2/audit/923eb342/` the moment it is on `main`, with no deployment at all. Deploying a second
+# artefact is therefore both unnecessary and destructive. Removed; the canonical
+# `.github/workflows/pages.yml` remains the only thing that deploys this site.
+#
 # Two jobs, in this order:
 #
 #   verify  — re-runs this session's line-by-line audit against the official capture and re-runs the
 #             repository's own semantic checker. It is informational for the deploy (a finding is a
 #             result, not a build error) but it is *not* silent: the whole report is published.
 #   build   — regenerates the dashboard from the capture + committed files, checks every link, every
-#             row's source and every blank's reason, and fails the deploy if any of that is broken.
+#             row's source and every blank's reason, and fails if any of that is broken or if the
+#             committed pages are not a fixed point of a rebuild.
 #
 # The deployed artefact is `audit/923eb342/` only. This workflow never writes to `site/`, `pages/` or
 # `data/` — those belong to the canonical pipeline and to other live sessions (open PRs #130/#131).
@@ -21,8 +33,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: verification-desk
@@ -75,17 +85,3 @@ jobs:
           fi
           echo "dashboard matches a rebuild of the committed capture"
 
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: audit/923eb342
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
