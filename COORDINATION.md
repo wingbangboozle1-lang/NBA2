@@ -6008,3 +6008,17 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
 | ED-3 | Assess open implementation PR integration readiness without editing their branches | pending | read-only | GitHub PR/check status recorded; no duplicate claims |
 | ED-4 | Record findings and handoff recommendations | pending | `analysis/session-ede2dbd0-readiness.md`, append-only `COORDINATION.md` | claims linked to repo files, checks, and official source pages; uncertain values marked unverified |
 
+
+### Completion record — session `arena/ede2dbd0-nba2` (2026-11-19 UTC)
+
+**ED-1..ED-4 complete.** Full evidence: `analysis/session-ede2dbd0-readiness.md`.
+
+- Current-tree validation: nba2 root 92/92, v2 167/167, v3 67/67, v4 61/61, v5 26/26, v6 52/52, backtest 49/49; v2–v6 checks passed; provenance lint 1,436 rows/50 tables; all-site internal links 143 HTML/7,472 links; `verify_site.py` 13 pages/249 rows passed.
+- `tools/crosscheck_site.py` is **87 pass / 1 fail / 9 info**. The single failure is `CC-FRESH-01` (five-day-old snapshot; five dates inside/past the published window). `CC-FRESH-02` reports a missing stale banner although the generated `site/index.html` has a stale/not-live note; recorded as checker wording mismatch, not as a freshness pass.
+- Official pages directly fetched during this audit: NBA schedule for 2026-11-19, standings, traditional/opponent/advanced team statistics, and the official 2026–27 injury report index. The report distinguishes those live reads from older committed captures and does not transcribe unpersisted values.
+- GitHub checks: latest listed refresh run [44381003145](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145) failed; Pages API says legacy `main /` and `built`; Pages action [44476981781](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44476981781) succeeded, but live root content was older than the committed redirect and `/site/` returned a GitHub outage page, so current live-content parity is **unverified**.
+- [PR #130](https://github.com/wingbangboozle1-lang/NBA2/pull/130) is conflicting with verify/parity/v2 failures; [PR #131](https://github.com/wingbangboozle1-lang/NBA2/pull/131) has successful checks but conflicts. Existing integration comments call for selective port + full re-verification. This session did not edit or merge either PR and did not touch shared model/data/site outputs.
+- Source URLs and irregularities are recorded in the report. Open official manual-review sources include [NBA schedule](https://www.nba.com/games?date=2026-11-19), [standings](https://www.nba.com/standings), [traditional](https://www.nba.com/stats/teams/traditional), [opponent](https://www.nba.com/stats/teams/opponent), [advanced](https://www.nba.com/stats/teams/advanced), and [injury report index](https://official.nba.com/nba-injury-report-2026-27-season/).
+
+**Disposition:** audit task is done; freshness, integration, and live-publication irregularities remain visible and are explicitly not called verified. No PR/merge is opened by this audit-only scope because the current official-data and public-site parity gates are not satisfied. The pre-existing final integration session must resolve the stale/conflicting implementation PRs and re-run the full chain before site publication.
+
