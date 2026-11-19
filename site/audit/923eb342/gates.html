@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Validation gates — NBA2 verification desk</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a22;--muted:#5b6b7c;--line:#e2e7ee;--accent:#1f6feb;
+--good:#1a7f45;--bad:#b42318;--warn:#8a5a00;--info:#3b5bdb;--chip:#eef2f7}
+@media (prefers-color-scheme: dark){:root{--bg:#0d1117;--card:#151b23;--ink:#e6edf3;--muted:#9aa8b6;
+--line:#253040;--accent:#58a6ff;--good:#3fb950;--bad:#f85149;--warn:#d29922;--info:#7aa2f7;--chip:#1c2531}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{font-weight:700;letter-spacing:-.2px}
+.brand span{color:var(--muted);font-weight:400;font-size:13px;display:block;letter-spacing:0}
+nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px}
+nav a{color:var(--muted);padding:2px 0;border-bottom:2px solid transparent}
+nav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav a:hover{color:var(--ink);text-decoration:none}
+main{padding:26px 0 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+h2{font-size:17px;margin:30px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.lede{color:var(--muted);margin:0 0 18px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h4{margin:0 0 4px;font-size:13px;color:var(--muted);font-weight:600}
+.card .big{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.card p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:10px;overflow:hidden;font-size:13px;margin:8px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:600;
+background:var(--chip);color:var(--muted);white-space:nowrap}
+.pass{background:rgba(26,127,69,.12);color:var(--good)}.fail{background:rgba(180,35,24,.12);color:var(--bad)}
+.warn{background:rgba(138,90,0,.14);color:var(--warn)}.info{background:rgba(59,91,219,.12);color:var(--info)}
+.src{font-size:11.5px;word-break:break-all}
+.note{font-size:12.5px;color:var(--muted)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+border-radius:8px;padding:12px 14px;margin:0 0 18px}
+.banner h3{margin:0 0 4px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.finding h4{margin:0 0 6px;font-size:15px}
+.finding p{margin:0 0 8px;font-size:13.5px}
+.meta{font-size:12px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:18px 0 40px}
+ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
+</style></head><body>
+<header><div class="wrap"><div class="brand">NBA2 verification desk
+<span>Session arena/923eb342-nba2 · official sources read 2026-11-19 · nothing here is betting advice</span>
+</div><nav><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Overview</span> <a class="" href="index.html">Overview</a><a class="" href="executive-summary.html">Executive summary</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Evidence</span> <a class="" href="verification.html">Verification log</a><a class="" href="official-results.html">Official results</a><a class="" href="standings.html">Standings</a><a class="" href="injuries.html">Injuries</a><a class="" href="performance.html">Measured skill</a><a class="" href="sources.html">Sources &amp; method</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Decisions</span> <a class="on" href="gates.html">Validation gates</a><a class="" href="strategies.html">Strategies &amp; preregistration</a><a class="" href="questions.html">Open questions</a><a class="" href="suggestions.html">Suggestions</a><a class="" href="flagged.html">Flagged for review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Validation gates</h1>
+<p class="lede">The gates are the only thing standing between a research number and something a reader
+might act on. They are listed here with the basis for each threshold, because a gate whose number comes
+from nowhere is a gate that can be argued away.</p>
+
+<div class="banner"><h3>The gate that matters today is G6</h3>
+There is no market price in this repository for any game. Without a price there is no edge, no stake and
+no return, so every strategy that depends on comparing our number with a price is blocked — not
+conservatively, but definitionally.</div>
+
+<div class="scroll"><table><thead><tr><th>ID</th><th>Gate</th><th>Rule</th><th>Basis for the threshold</th><th>Status today</th><th>Source</th></tr></thead><tbody><tr><td>G1</td><td>Source class</td><td>Every input field resolves to an official NBA page or the official injury PDF.</td><td>PROPOSED — policy</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td></tr><tr><td>G2</td><td>Completeness</td><td>No required input is blank. A blank anywhere fails the strategy for that slate.</td><td>PROPOSED — policy</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/stats/teams/traditional" target="_blank" rel="noopener">nba.com/stats/teams/traditional</a></td></tr><tr><td>G3</td><td>Sample floor</td><td>≥ 10 official games observed by BOTH teams before a line may be graded above C.</td><td>PROPOSED — derived from reliability</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td></tr><tr><td>G4</td><td>Estimator agreement</td><td>Two independent ratings (net points/game; NetRtg) must imply spreads within 2.0 pts.</td><td>COMPUTED this build (observed max 1.0 pts)</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/stats/teams/advanced" target="_blank" rel="noopener">nba.com/stats/teams/advanced</a></td></tr><tr><td>G5</td><td>Total-estimator agreement</td><td>PF/PA total and per-100×pace total must be within 4.0 pts.</td><td>COMPUTED this build (observed max 4.25 pts)</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/stats/teams/traditional" target="_blank" rel="noopener">nba.com/stats/teams/traditional</a></td></tr><tr><td>G6</td><td>Market price present</td><td>A dated, sourced price for the exact line must exist before a pick is staked.</td><td>PROPOSED — policy</td><td><span class="chip info">BLOCKED — no price</span></td><td><a class="src" href="https://www.nba.com/games" target="_blank" rel="noopener">nba.com/games</a></td></tr><tr><td>G7</td><td>Backtest with settlement</td><td>≥ 300 settled bets of the strategy's own signals, settled from official box scores.</td><td>PROPOSED — sample-size policy</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/games?date=2026-11-13" target="_blank" rel="noopener">nba.com/games</a></td></tr><tr><td>G8</td><td>Out-of-sample holdout</td><td>Signals fitted on the first 70% of the backtest window must hold on the last 30%.</td><td>PROPOSED — policy</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/games?date=2026-11-13" target="_blank" rel="noopener">nba.com/games</a></td></tr><tr><td>G9</td><td>Luck screen</td><td>Every team the strategy relies on must be inside the luck noise band (|z| ≤ 1.96).</td><td>COMPUTED this build — 30/30 pass</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td></tr><tr><td>G10</td><td>Correlation honesty</td><td>No parlay priced by multiplying legs unless the leg correlation is measured or bounded.</td><td>PROPOSED — policy</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/schedule?date=2026-11-15" target="_blank" rel="noopener">nba.com/schedule</a></td></tr><tr><td>G11</td><td>Freshness</td><td>Inputs must be dated within 24 h of the slate, and the injury report within its filing window.</td><td>OFFICIAL (NBA filing deadlines)</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">official.nba.com/nba-injury-report-2026-27-season/</a></td></tr><tr><td>G12</td><td>No look-ahead</td><td>No input timestamped after the decision time may enter that decision.</td><td>PROPOSED — policy</td><td><span class="chip info">policy</span></td><td><a class="src" href="https://www.nba.com/games?date=2026-11-13" target="_blank" rel="noopener">nba.com/games</a></td></tr></tbody></table></div>
+
+<h2>Evaluation of the gate set as built</h2>
+<ul class="tight">
+ <li><b>Good:</b> G1–G5 and G9 are computed from official inputs on every build, so they cannot silently
+ pass. G12 (no look-ahead) is audited against the data with zero violations recorded.</li>
+ <li><b>Weak:</b> G7 (≥300 settled bets) and G8 (70/30 holdout) are sample-size policies with no
+ published power calculation, so their numbers cannot be defended if challenged.</li>
+ <li><b>Missing:</b> no gate tests whether a strategy's result survives the number of strategies tried.
+ Selecting the best of nine preregistered strategies and reporting its hit rate without a
+ multiple-comparison correction is the single most common way a leaderboard manufactures skill.</li>
+ <li><b>Self-referential:</b> the site's own freshness gate (<code>CC-FRESH-01</code>) fails in the
+ repository's checker and is excluded from blocking by the publish workflow — so the one check that says
+ "this is stale" is the one check allowed to fail.</li>
+</ul>
+</div></main>
+<footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
+confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>
+page. Model output is derived, never official. Built 2026-11-19T12:20Z.</div></footer>
+</body></html>

@@ -5,11 +5,16 @@ name: Verify published data and the verification desk
 # The first version of this workflow uploaded `audit/923eb342/` with
 # `actions/upload-pages-artifact` + `deploy-pages`. That took over the repository's Pages root and
 # replaced the canonical dashboard with this session's desk (observed: the root URL served the desk
-# while `/site/` held the canonical tree). The repository's Pages source is `build_type: legacy`,
-# `main /`, so **every committed path is already served** — `audit/923eb342/index.html` is live at
-# `/NBA2/audit/923eb342/` the moment it is on `main`, with no deployment at all. Deploying a second
-# artefact is therefore both unnecessary and destructive. Removed; the canonical
-# `.github/workflows/pages.yml` remains the only thing that deploys this site.
+# while `/site/` held the canonical tree). Removed; `.github/workflows/pages.yml` remains the only
+# thing that deploys this site.
+#
+# Where the desk actually lives: the Pages source is `build_type: legacy`, `main /`, and the artefact
+# served at the root is the `site/` tree that pages.yml uploads. A page committed outside `site/` is
+# therefore NOT reachable over HTTP — measured: `/NBA2/audit/923eb342/` returned 404 while
+# `/NBA2/site/index.html` was live. So build.py writes the desk twice: the source of truth under
+# `audit/923eb342/` and a byte-identical copy under `site/audit/923eb342/`, which no builder writes
+# and no nav/gate pass scans (those glob `site/*.html`, top level only). The published URL is
+# `/NBA2/site/audit/923eb342/`.
 #
 # Two jobs, in this order:
 #
@@ -77,10 +82,10 @@ jobs:
 
       - name: The generator must be a fixed point
         run: |
-          git add -A -- audit/923eb342
-          if ! git diff --cached --quiet -- audit/923eb342; then
+          git add -A -- audit/923eb342 site/audit/923eb342
+          if ! git diff --cached --quiet -- audit/923eb342 site/audit/923eb342; then
             echo "::error title=dashboard differs from a rebuild::the committed pages are not a fixed point"
-            git diff --cached --stat -- audit/923eb342
+            git diff --cached --stat -- audit/923eb342 site/audit/923eb342
             exit 1
           fi
           echo "dashboard matches a rebuild of the committed capture"

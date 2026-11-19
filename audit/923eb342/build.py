@@ -1094,7 +1094,11 @@ python3 audit/923eb342/ingest.py             # rewrite verified/*.json (idempote
 python3 audit/923eb342/build.py              # rewrite this site
 </pre>
 <p class="note">All three are deterministic over committed inputs plus the capture in
-<code>audit/923eb342/capture_2026-11-19.json</code>.</p>
+<code>audit/923eb342/capture_2026-11-19.json</code>. The generator writes this desk twice: the source of
+truth under <code>audit/923eb342/</code>, and a byte-identical copy under <code>site/audit/923eb342/</code>,
+because the repository's Pages source is <code>legacy</code> and only the <code>site/</code> tree is served
+over HTTP. Measured, not assumed: <code>/NBA2/audit/923eb342/</code> returned 404 while
+<code>/NBA2/site/index.html</code> was live.</p>
 """
     return page("sources.html", "Sources & method", body)
 
@@ -1120,4 +1124,19 @@ if __name__ == "__main__":
     for name, fn in BUILDERS.items():
         (OUT / name).write_text(fn())
     (OUT / ".nojekyll").write_text("")
-    print(f"built {len(BUILDERS)} pages into {OUT}")
+
+    # A byte-identical copy inside the published tree. The repository's Pages source is
+    # `build_type: legacy`, `main /`, and the artefact served at the root is the `site/` tree
+    # uploaded by pages.yml — so a page outside `site/` is committed but NOT reachable over HTTP
+    # (measured: /NBA2/audit/923eb342/ returned 404 while /NBA2/site/index.html was live).
+    # `site/audit/923eb342/` is a subdirectory that no builder writes and no nav pass scans
+    # (every nav/gate pass globs `site/*.html`, top level only), so this publishes the desk
+    # without touching a single existing page, and without a second deployer competing for the
+    # Pages root.
+    import shutil
+    PUB = ROOT / "site" / "audit" / "923eb342"
+    PUB.mkdir(parents=True, exist_ok=True)
+    for f in sorted(OUT.iterdir()):
+        if f.is_file() and f.suffix in (".html",) or f.name == ".nojekyll":
+            shutil.copyfile(f, PUB / f.name)
+    print(f"built {len(BUILDERS)} pages into {OUT} and {PUB}")

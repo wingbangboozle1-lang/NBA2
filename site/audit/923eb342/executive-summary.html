@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Executive summary — NBA2 verification desk</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a22;--muted:#5b6b7c;--line:#e2e7ee;--accent:#1f6feb;
+--good:#1a7f45;--bad:#b42318;--warn:#8a5a00;--info:#3b5bdb;--chip:#eef2f7}
+@media (prefers-color-scheme: dark){:root{--bg:#0d1117;--card:#151b23;--ink:#e6edf3;--muted:#9aa8b6;
+--line:#253040;--accent:#58a6ff;--good:#3fb950;--bad:#f85149;--warn:#d29922;--info:#7aa2f7;--chip:#1c2531}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{font-weight:700;letter-spacing:-.2px}
+.brand span{color:var(--muted);font-weight:400;font-size:13px;display:block;letter-spacing:0}
+nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px}
+nav a{color:var(--muted);padding:2px 0;border-bottom:2px solid transparent}
+nav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav a:hover{color:var(--ink);text-decoration:none}
+main{padding:26px 0 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+h2{font-size:17px;margin:30px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.lede{color:var(--muted);margin:0 0 18px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h4{margin:0 0 4px;font-size:13px;color:var(--muted);font-weight:600}
+.card .big{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.card p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:10px;overflow:hidden;font-size:13px;margin:8px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:600;
+background:var(--chip);color:var(--muted);white-space:nowrap}
+.pass{background:rgba(26,127,69,.12);color:var(--good)}.fail{background:rgba(180,35,24,.12);color:var(--bad)}
+.warn{background:rgba(138,90,0,.14);color:var(--warn)}.info{background:rgba(59,91,219,.12);color:var(--info)}
+.src{font-size:11.5px;word-break:break-all}
+.note{font-size:12.5px;color:var(--muted)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+border-radius:8px;padding:12px 14px;margin:0 0 18px}
+.banner h3{margin:0 0 4px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.finding h4{margin:0 0 6px;font-size:15px}
+.finding p{margin:0 0 8px;font-size:13.5px}
+.meta{font-size:12px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:18px 0 40px}
+ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
+</style></head><body>
+<header><div class="wrap"><div class="brand">NBA2 verification desk
+<span>Session arena/923eb342-nba2 · official sources read 2026-11-19 · nothing here is betting advice</span>
+</div><nav><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Overview</span> <a class="" href="index.html">Overview</a><a class="on" href="executive-summary.html">Executive summary</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Evidence</span> <a class="" href="verification.html">Verification log</a><a class="" href="official-results.html">Official results</a><a class="" href="standings.html">Standings</a><a class="" href="injuries.html">Injuries</a><a class="" href="performance.html">Measured skill</a><a class="" href="sources.html">Sources &amp; method</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Decisions</span> <a class="" href="gates.html">Validation gates</a><a class="" href="strategies.html">Strategies &amp; preregistration</a><a class="" href="questions.html">Open questions</a><a class="" href="suggestions.html">Suggestions</a><a class="" href="flagged.html">Flagged for review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Executive summary</h1>
+<p class="lede">The system is honestly built and honestly labelled, and it is not currently doing the
+job it is supposed to do. The three sentences below are the whole summary.</p>
+
+<div class="cards">
+ <div class="card"><h4>1 · The pipeline is trustworthy</h4><p>Provenance is enforced by code, not by
+ discipline: an unsourced value raises, an unexplained blank raises, and CI rebuilds every published
+ number from committed snapshots. This is rarer than it sounds and it is the asset.</p></div>
+ <div class="card"><h4>2 · The operation is not running</h4><p>Ten consecutive scheduled refreshes
+ failed. The capture half works; the publish half does not. Result rows stopped at 2026-11-14 and the
+ injury archive at 11/17, while 17 games went final.</p></div>
+ <div class="card"><h4>3 · There is no edge, and one measurement says the model is worse than a coin</h4>
+ <p>No price ⇒ no edge by construction. Independently, out-of-sample log-loss is worse than 0.6931. Until
+ those are reconciled or a price exists, nothing here is a bet.</p></div>
+</div>
+
+<h2>By the numbers</h2>
+<div class="scroll"><table><thead><tr><th>Heading</th><th>Finding</th><th>Evidence</th><th>Source</th></tr></thead><tbody><tr><td>What exists and works</td><td>A provenance-enforced pipeline: every published row carries a source, every blank carries a reason, and a CI gate recomputes the numbers from committed snapshots. The sealed-ledger hash chain verifies.</td><td>2 ledgers, 22 + 27 picks, digests recompute</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/settlement.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/set…</a></td></tr><tr><td>What has been measured</td><td>Walk-forward backtest on 172 official games: out-of-sample against-the-spread accuracy 0.6735 ± 0.0714 on 49 games; MAE 13.234</td><td>in-sample 63.4% vs out-of-sample 67.3%</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>What contradicts it</td><td>Out-of-sample log-loss 0.7058 against a coin flip's 0.6931 on the settled sample. A rating that is 67% ATS but worse than 50/50 on probability is internally inconsistent; one of the two measurements is being computed on a different basis and that has not been reconciled</td><td>model_beats_coin_flip = false</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/market_prior.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/…</a></td></tr><tr><td>What is blocked</td><td>No market price anywhere in the repository ⇒ no edge, no stake, no ROI. No sealed ledger for any game on or after 2026-11-18 ⇒ nothing can be scored from today on.</td><td>G6 fails for every line</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/lines.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>What is operationally broken</td><td>The scheduled refresh (the mechanism that keeps four official surfaces current) has failed 10/10 times. Capture works; publish does not. The result feed is five rows from 2026-11-14 and the injury archive stops at 11/17.</td><td>gh run list --workflow=refresh.yml</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/actions/workflows/refresh.yml" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/actions/workflows/…</a></td></tr><tr><td>What I verified today</td><td>17 official finals (5 + 12), the 2026-11-19 07:00 AM ET injury release, the full 30-club standings table, one complete official box score, and the filing deadlines</td><td>82 checks in this audit</td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a> <a class="src" href="verification.html" target="_blank" rel="noopener">verification.html</a></td></tr><tr><td>What I could not verify</td><td>Runner logs (blob endpoint returned EOF), the three official team-stat pages (stats.nba.com times out from the runner per the repository's own probe; this sandbox cannot reach it at all), any market price, and per-player logs for 11/18</td><td>listed on Flagged for review</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/actions/runs/44381…</a> <a class="src" href="flagged.html" target="_blank" rel="noopener">flagged.html</a></td></tr></tbody></table></div>
+
+<h2>What I recommend, in order</h2>
+<ol class="tight">
+ <li><b>Fix publication before adding anything.</b> A pipeline that cannot publish makes every other
+ improvement unobservable. Start with <a href="suggestions.html">SG-923-01</a> (the gate that freezes one
+ week's numbers) and <a href="questions.html">Q-923-01</a> (read the runner log).</li>
+ <li><b>Reconcile the two skill measurements.</b> 67.3% against the spread and a log-loss worse than a
+ coin cannot both describe the same model without an explanation. That explanation is worth more than
+ any new strategy.</li>
+ <li><b>Stand up the archive layer, not the strategy layer.</b> Player logs at 10.3% coverage and
+ injury reports that stop at 11/17 are data-engineering problems with data-engineering answers
+ (a 15-minute index cron). Strategy work on top of them is guesswork.</li>
+ <li><b>Then</b> resume originating lines, sealed before tip, with the disagreement published as the
+ headline and the blend beneath it.</li>
+</ol>
+
+<h2>What this summary is not</h2>
+<p class="note">It is not a forecast, an evaluation of skill, or a recommendation to bet. No market price
+was read in this session, so no strategy here can be shown to have an edge, and none is presented as
+having one.</p>
+</div></main>
+<footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
+confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>
+page. Model output is derived, never official. Built 2026-11-19T12:20Z.</div></footer>
+</body></html>
