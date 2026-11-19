@@ -5990,3 +5990,21 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
   count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
   era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
   RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+---
+
+## Session `arena/ede2dbd0-nba2` — CLAIM (2026-11-19 UTC)
+
+**Branch:** `arena/ede2dbd0-nba2`, based on `main` at `41cfd812d2794db529090cd026e7056ca3c1b0cd`.
+
+**Role:** independent integration-readiness audit of the requested NBA system against the committed tree and open implementation PRs. This session will not edit another session's model, data, workflow, or published-site scope. In particular, PR #130 (v7 feature layer) and PR #131 (v6 settlement/parity repair) are open and overlapping; they must be treated as unintegrated until their conflicts/checks are resolved.
+
+**Claimed file scope:** append-only `COORDINATION.md`; new `analysis/session-ede2dbd0-readiness.md` only. All code, source data, ledgers, and published pages are read-only. No external NBA values will be introduced; every conclusion will be tied to committed evidence, official source URLs already recorded in the repository, or explicit unverified status.
+
+| ID | Task | Status | File scope | Verification |
+|---|---|---|---|---|
+| ED-1 | Claim + scope record | in progress | `COORDINATION.md` | commit and push before audit work |
+| ED-2 | Run the committed current-tree checks and inspect the public surface against the user's requirements | pending | read-only + new audit report | exact commands/results, paths, and outstanding risks recorded |
+| ED-3 | Assess open implementation PR integration readiness without editing their branches | pending | read-only | GitHub PR/check status recorded; no duplicate claims |
+| ED-4 | Record findings and handoff recommendations | pending | `analysis/session-ede2dbd0-readiness.md`, append-only `COORDINATION.md` | claims linked to repo files, checks, and official source pages; uncertain values marked unverified |
+
