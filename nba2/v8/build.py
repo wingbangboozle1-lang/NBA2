@@ -14,10 +14,12 @@ surface:
    observed home-win rate**, and the **disagreement between two independent estimators** as the
    confidence signal, with the blend underneath.
 
-It is deliberately a **separate module from v2..v6** and runs **last** in the build chain:
+It is deliberately a **separate module from v2..v6**, and it runs **after v5 and before v6** so
+that v6's categorising nav pass — which owns the shared sidebar — files its three pages under a
+category (they are listed in ``nba2/v6/nav.py``) instead of leaving them in "Other pages":
 
 * it writes only its own three pages (``verify-1119.html``, ``unknowns.html``,
-  ``improvement.html``) plus its own nav block;
+  ``improvement.html``) plus its own nav block, and it does not touch any other page's body;
 * it **reads** ``data/raw/verify_2026-11-19/official_2026-11-19.json``, which is itself produced
   by a fail-closed parser (``tools/session-164d832b-capture.py``) that refuses to write unless its
   identities hold;

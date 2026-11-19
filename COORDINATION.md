@@ -6103,3 +6103,26 @@ by PRs #130/#131. Re-cutting the model inputs to the 2026-11-19 capture is the d
 and is listed as U-09/U-10 on the published unknowns page.
 
 
+
+### Completion addendum — session `arena/164d832b-nba2` (2026-11-19 UTC)
+
+Two adjustments made after the first build of the v8 pages, both required for a clean chain:
+
+1. **Build order.** v8 now runs **after v5 and before v6**, not last. v6 owns the categorising nav
+   pass and its `test_every_published_page_is_in_some_category` correctly failed when v8 appended
+   pages after v6 had grouped the sidebar. The three v8 pages are now registered in
+   `nba2/v6/nav.py` CATEGORIES under a new group, **"Verified today · 2026-11-19"** — the first
+   *content* change to that shared file, made because the alternative (v8 owning its own nav
+   grouping) would leave two files writing the same sidebar. `pages.yml` and `publish-parity.yml`
+   were reordered to match.
+2. **Nav label escaping.** The categorised nav carries entity-escaped labels, so v8 unescapes once
+   before escaping for its own pages; without that a rebuild turned `Teams &amp; estimators` into
+   `Teams &amp;amp; estimators` and the parity diff never reached a fixed point. The rebuild is now
+   a byte-identical fixed point (`git status` clean after a second full chain).
+
+**Final local verification (this tree, 2026-11-19):**
+`v2` → `v2.check` → `settlement_page` → `v3` → `v3.check` → `v4` → `v4.check` → `v5` → `v8` → `v6`,
+all rc=0; **rebuild produces 0 changed files**; suites: `nba2/tests` 92, `v2` 167, `v3` 67, `v4` 61,
+`v5` 26, `v6` 52, **`v8` 17** — all OK; `nba2.v2.check` **0 structural / 0 semantic**;
+`tools/check_links_all.py` **146 files / 7,814 internal links OK**; capture `--selftest` OK
+(30 clubs, 12 finals, 4 scheduled, 21 injury rows).

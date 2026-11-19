@@ -1,4 +1,9 @@
-"""Build the v8 pages. Runs LAST in the chain: it appends its nav block to pages v2..v6 wrote."""
+"""Build the v8 pages.
+
+Runs after v5 and **before v6**: it renders three pages and appends its own nav block to the pages
+v2..v5 wrote, then v6 groups the whole sidebar into categories — and v8's three pages are listed in
+``nba2/v6/nav.py`` CATEGORIES so they land in a category instead of falling into "Other pages".
+"""
 from __future__ import annotations
 
 import sys

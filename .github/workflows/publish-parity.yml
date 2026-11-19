@@ -60,17 +60,11 @@ jobs:
           # v6 renders six more pages, injects its nav block and then GROUPS the whole sidebar
           # into categories, so it runs after v5 and must be in this rebuild or the diff below
           # reports v6's own contribution as drift. It fetches nothing.
+          # v8 renders the 2026-11-19 verification/unknowns/improvement pages. It runs BEFORE
+          # v6's grouping pass so the category v6 assigns to those three pages applies to them.
+          python -m nba2.v8
           python -m nba2.v6
           python -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
-
-      - name: Build the v8 verification, unknowns and improvement pages
-        # v8 renders three pages from the 2026-11-19 official capture
-        # (data/raw/verify_2026-11-19/official_2026-11-19.json, produced by the fail-closed parser
-        # tools/session-164d832b-capture.py) and appends its own nav block to every page v2..v6
-        # wrote, so it runs last. It fetches nothing and it refuses to render if the capture is
-        # missing: a page full of holes would otherwise look like a page full of answers.
-        run: |
-          python -m nba2.v8
           python -m unittest discover -s nba2/v8 -t . -p 'test_*.py'
 
       - name: The published tree (site/) must equal a rebuild

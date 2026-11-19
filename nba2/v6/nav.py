@@ -61,6 +61,10 @@ CATEGORIES: list[tuple[str, str, list[str]]] = [
      ["verification", "verification-v3", "v4-verify", "v5-verify", "v6-verify",
       "live-verification", "backtest", "skill-attribution", "endpoints",
       "capture-verification"]),
+    ("Verified today · 2026-11-19",
+     "The official pages read on 2026-11-19, what they prove, what is still unknown, and the "
+     "proposals that are waiting on a decision before anything is built.",
+     ["verify-1119", "unknowns", "improvement"]),
     ("Decisions, questions & flags",
      "What needs an owner decision before it is built, what we do not know, and everything "
      "flagged for review.",
