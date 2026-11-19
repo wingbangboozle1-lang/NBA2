@@ -5599,3 +5599,38 @@ remain untouched; conflicting scores still refuse to settle (the existing `Syste
 a quarter row that does not sum to the final is still rejected. This amendment is pushed
 before those files are edited. Concurrent session `arena/53c5afeb-nba2` (docs audit) and
 stale PRs #125/#112 remain unclaimed by this session; no overlap with the files above.
+
+### Completion record — session `arena/af5df7a7-nba2` (2026-11-19, tasks AF-1..AF-6 done)
+
+Full write-up with exact commands and evidence: `analysis/session-af5df7a7-nightly-publish-repair.md`.
+
+| ID | Task | Status | Result |
+|----|------|--------|--------|
+| AF-1 | Board claim + push before work | done | claim `bf6ab60`, scope amendment `a6ea5f8`, both pushed before the work |
+| AF-2 | Rebuild-chain repair | done | `refresh.yml` runs `pipeline.settle` + `v4.settlement` in publish (finals leg only); commit list matches `publish-parity.yml`'s drift surfaces + the settlement outputs; finals-failure path unchanged (guard + fail-visible intact). `nba2.settlement_page` exits 0 on the rebuilt tree; parity rebuild = byte-identical (fixed point) |
+| AF-3 | v6 reader repair | done | G-V6-8 passes on 67/67 rows with committed URLs; regression tests `nba2/v6/test_results_merge.py` pin both directions (committed provenance surfaced; a URL-less row still fails); gate text unchanged |
+| AF-4 | Regenerate + full verification | done | chain 11/11 rc=0; v2/v3/v4 checks + lint green (1436 rows / 50 tables sourced); suites: nba2/tests + v2 (167) + v3 + v4 + v5 + v6 (54) all OK; `seal_predictions --verify` VERIFIED; `check_links_all` 143 files / 7304 links OK; `crosscheck_site` 86/2/9 (the 2 fails are the workflow's documented non-gating exceptions: CC-DOC-01 README counts — owned by concurrent session `arena/53c5afeb-nba2`; CC-FRESH-01 legacy snapshot age — deferred ACF-7/RQ-8892-02 model re-cut) |
+| AF-5 | PR → merge → Pages | done below | PR link + merge + live fetch recorded in the next entry |
+| AF-6 | Stale PR disposition | done | **#125** closed — superseded by PR #123 (main already carries `data/v5/gamebooks_2026-11-16.json` + the 22-game v5 window; disposition comment [posted](https://github.com/wingbangboozle1-lang/NBA2/pull/125#issuecomment-7001702683)); salvage: RQ-AF6-1. **#112** closed — superseded-stale (PRs #113–#123 performed its assembly; 72 regenerated 2026-11-16-era files would revert the current tree; backtest+parity failing at its tip; comment [posted](https://github.com/wingbangboozle1-lang/NBA2/pull/112#issuecomment-7001707150)); salvage: RQ-AF6-2. Both were already closed at 2026-11-19T06:05:01Z by another actor; the disposition comments make the reasons public |
+
+**Defects fixed in files not in the original claim** (each logged before editing — see the
+scope amendment above): `nba2/pipeline/settle.py`, `nba2/v4/settlement.py` (11/17 finals
+gap: five sealed picks ungraded although both official feeds are committed → now 71/83,
+seals re-verified), `nba2/v3/test_v3.py` (A6-1 failure mode: the suite rebuilt the
+published tree and left it dirty, so a post-test commit captured test output and would
+fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
+
+**Open requests logged by this session:**
+- **RQ-AF6-1** (from PR #125): port the `ast_blank_reason` plumbing in `nba2/v5/transcript.py`
+  and re-evaluate PR #125's `nba2/v3/build.py` diff against current main. Source: branch
+  `arena/934fce54-nba2` (closed PR #125).
+- **RQ-AF6-2** (from PR #112): salvage `nba2/v2/test_refresh_gate_audit.py` (274 lines),
+  the v3 G-F5 dated-snapshot gate redefinition (compare the frozen snapshot only against
+  finals ≤ its as-of cutoff; report newer finals as growth), ~180 lines in
+  `nba2/v3/{build,check,ledger}.py`, `nba2/v5/publish.py` tweaks. Source: branch
+  `arena/a11505e1-nba2` (closed PR #112).
+- **RQ-AF6-3** (measured, out of scope): `CC-DOC-01` — README published counts still drift
+  from the artefacts (the concurrent docs session `arena/53c5afeb-nba2` owns README and has
+  count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
+  era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
+  RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
