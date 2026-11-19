@@ -6149,3 +6149,54 @@ section. The dashboard is published by its own workflow and never writes to `sit
 
 **Board state at completion:** PRs #130, #131, #135 remain open and are other sessions' work — not touched,
 not merged, not closed by this session. The repository-root Pages publication is unchanged by this session.
+
+### Integration record — session `arena/585453f5-nba2` (2026-11-19 UTC)
+
+Full write-up: `analysis/session-585453f5-integration.md`. Branch: `arena/585453f5-nba2`
+(+ `arena/585453f5-nba2-integ`, its work branch off `41cfd81`).
+
+**Starting state, measured before any change:** `nba2/tests` 92 OK, v2…v6 167/67/61/26/52 OK,
+lint 1436 rows / 50 tables, v3/v4/v5 8/8 gates, both sealed ledgers VERIFIED, and the 9-module
+ordered rebuild produced **0 files of drift**. Pages deploy at `41cfd81` succeeded (run
+[44476981781](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44476981781)).
+Nothing was broken on main when this session started.
+
+**Open-PR disposition (both were stale branches, measured with `git merge-base` after
+`git fetch --unshallow`):**
+
+| PR | Branch | Merge base | Disposition |
+|---|---|---|---|
+| #131 | `arena/8c7c8828-nba2` | `7b16b6d` (before #132/#133) | **Not merged — measured regression.** Its own diff deletes the gamebook finals glob, the `{quarters:{away,home}}` fallback, the multi-key `_records_of` reader, and 105 lines of `test_finals_pages.py` / `test_refresh_workflow.py`. All of that is on main via #132. Its green CI ran on a tree predating the code it would replace. Superseded. |
+| #130 | `arena/6023d517-nba2` | `1a9c2f2` (before #129/#132/#133) | **Carried, in part.** 39 new files (`nba2/v7/**`, `data/v7/**`, `tools/v7_fetch.py`, four analysis notes) are a namespace nothing else touches and are now on this branch. Everything else in that branch is already on main in a newer form; `nba2/v6/results_coverage.py` on main is strictly newer (nested capture scanning + unknown-ID test). Closed as superseded once the carry landed. |
+
+**Changes made here** (each one forced by a measured failure, not by preference):
+1. v7 carried onto the current tree — verified independently against the official pages:
+   standings 26/26, advanced 27/27 (GP/W/L/OffRtg/DefRtg/NetRtg/PACE), games 11/19 4/4 and
+   11/20 9/9 (ids, clubs, tips, Cup groups). Rows `V-11…V-13` in `nba2/v7/verification.py`.
+2. v7 wired into `pages.yml`, `publish-parity.yml` and `refresh.yml` — measured gap: `grep -n
+   'nba2.v7' .github/workflows/*.yml` returned nothing, so the next rebuild would have
+   reported five v7 pages + every nav edit as drift and failed the deploy.
+3. v6 category map extended for the five v7 pages — v6's own
+   `test_every_published_page_is_in_some_category` failed on them (the gate worked).
+4. Flag **F-V7-FRESH** published for a measured snapshot drift: the 11/19 re-read shows LAL at
+   GP 16 (13-3) and NOP at 16 GP where the 06:05Z snapshot holds LAL 15 GP (13-2), NOP 15 GP.
+   Inputs were **not** silently re-cut.
+5. The v1 root builder now names the v7 slate (`_root_pointer`), because a hand edit to
+   `index.html` is reverted by the next `build_site` run (measured).
+
+**Not verified / flagged:** injury report 2026-11-19 not read (`F-V7-AVAIL`, G-V7-8 blocks);
+no market price anywhere (`F-V7-MARKET`, G-V7-6 blocks, every stake 0.00); props sample 3
+games vs ~15 needed (`F-V7-PROPS`); `data/raw/v7_fetch/` is **not committed**, so v7's cited
+raw page bytes are absent (F-5854-03 in the analysis note) — the numbers are held by three
+arithmetic identities and by this session's external re-read instead; the live site could not
+be fetched (platform outage page; `curl` has no egress) so the deploy was verified from the
+Actions API; Pages is `build_type: legacy` serving the repo root and the API refuses the
+change (`403`), so the published artefact is the root pointer.
+
+**All ten v7 strategies are BLOCKED** (G-V7-4 sample, G-V7-6 no price, G-V7-8 availability,
+G-V7-9). Nothing on the bet surface is rebalanced: every stake is 0.00 by construction.
+
+**Verification after the integration:** v7 rc 0 (7/7 checks, 6/10 gates PASS, 4 published
+BLOCKED); suites 92 / 167 / 67 / 61 / 26 / 52 / 37 = **502 OK**; v2–v6 checks 0 structural,
+0 semantic; lint 1436 rows / 50 tables; 148 HTML files / 8024 internal links OK; the 10-module
+ordered rebuild is a **fixed point (0 drift)**; both sealed ledgers VERIFIED and unmodified.
