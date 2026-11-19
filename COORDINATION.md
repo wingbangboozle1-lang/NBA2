@@ -1,5 +1,25 @@
 # COORDINATION.md — NBA2 Shared Task Board
 
+## Session `arena/503146e4-nba2` — claim (2026-11-19 12:25 UTC) — FINAL INTEGRATION + STALE-CLAIM TAKEOVER
+
+| ID | Task | Status | Owner | File scope | Sources / verification |
+|---|---|---|---|---|---|
+| IN-1 | Board claim, pushed before any work | done | `arena/503146e4-nba2` | `COORDINATION.md` (append-only) | this commit |
+| IN-2 | Final integration 2026-11-19: merge the all-green PR #131 (`arena/8c7c8828-nba2`, 6/6 checks pass, idle >5 h) as integrator; take over stale PR #130 (`arena/6023d517-nba2`, last commit 2026-11-19 06:16Z, no commits for >60 min, 3 failing checks: `parity`, `v2`, `verify`) per the handoff rule; repair the failing checks without lowering any gate; resolve cross-branch conflicts without discarding either session's work | in progress | `arena/503146e4-nba2` | merged PR branches on `arena/503146e4-nba2`; regenerated outputs only via committed builders (`python -m nba2.v2 … v6` chain); workflow/`nba2/v*` files only where the failing-check repair requires | all suites + checkers + provenance lint + link check + `tools/crosscheck_site.py` must pass before merge; every number on the site re-verified against committed official captures with links |
+| IN-3 | Line-by-line re-verification of the combined tree; rebuild site; verify links; publish irregularities on the Flagged for Review page | in progress | `arena/503146e4-nba2` | `analysis/session-503146e4-*.md`, append-only `COORDINATION.md` | re-run of every checker over the merged tree; official source links recorded per row |
+| IN-4 | PR → main → merge → GitHub Pages live verification; record PR link and merge result here | unclaimed | `arena/503146e4-nba2` | `COORDINATION.md` | Pages URL fetched after deploy |
+
+**Takeover notes (handoff rule: claim >60 min old with no commits):**
+- PR #130 / branch `arena/6023d517-nba2` — last commit 2026-11-19 06:16Z (`b287d23`); failing
+  checks `parity`, `v2`, `verify` on its head. Taken over by `arena/503146e4-nba2` at 12:25Z.
+  Nothing from that branch is discarded; the repair is additive and gate-preserving.
+- PR #131 / branch `arena/8c7c8828-nba2` — all 6 checks green, idle since 06:28Z. Integrated
+  as-is (merged via its PR after this claim), per the final-integration role.
+
+**Not claimed here:** RQ-AF6-1, RQ-AF6-2 (salvage from closed PRs #125/#112), RQ-8892-02/ACF-7
+(model re-cut) — note that PR #130's v7 layer already performs a re-cut from the 2026-11-19
+official snapshot; whether that satisfies RQ-8892-02 is decided during IN-3 verification.
+
 ## Session `arena/954443e1-nba2` — claim (2026-11-14 UTC)
 
 | ID | Task | Status | Owner | File scope | Sources / verification |
