@@ -46,7 +46,7 @@
    "id": "G-V4-7",
    "name": "settlement re-hashes and the seal still verifies",
    "ok": true,
-   "measured": "settlement hash 4a70ce4184a12a64",
+   "measured": "settlement hash 6a624740bcd0fd52",
    "detail": "hash matches and the sealed ledger is unmodified"
   },
   {
@@ -59,8 +59,8 @@
  ],
  "settlement_verify": {
   "ok": true,
-  "stored": "4a70ce4184a12a646da7933ba1c55f28d4e3e0c153238c013c197d4c52fe24c8",
-  "recomputed": "4a70ce4184a12a646da7933ba1c55f28d4e3e0c153238c013c197d4c52fe24c8",
+  "stored": "6a624740bcd0fd52fbf0c9eb4d633e3d96534b79d89a4b8b9db5018685c11240",
+  "recomputed": "6a624740bcd0fd52fbf0c9eb4d633e3d96534b79d89a4b8b9db5018685c11240",
   "seal_still_verified": true,
   "seals_still_verified": {
    "sealed-2026-11-13.json": true,
@@ -68,9 +68,9 @@
    "sealed-2026-11-15.json": true
   },
   "all_seals_ok": true,
-  "n_graded": 61,
+  "n_graded": 71,
   "n_sealed": 83,
-  "settled_at_utc": "2026-11-16T23:59:59Z"
+  "settled_at_utc": "2026-11-17T23:59:59Z"
  },
  "capture_files": [
   "data/raw/refresh_2026-11-16/standings_2026-11-16.json",

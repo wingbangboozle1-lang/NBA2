@@ -1,7 +1,7 @@
 {
  "schema": "nba2.v6.injury-archive.v1",
  "session": "arena/f5ac4e74-nba2",
- "n_releases": 18,
+ "n_releases": 21,
  "releases": [
   {
    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
@@ -11,7 +11,8 @@
    "cited_in": [
     "data/raw/official_game_times_2026-11-13.json",
     "data/site.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [],
    "transcript_rows": null,
@@ -20,11 +21,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-13_01_00PM.pdf",
+   "pdf_bytes": 98515,
+   "pdf_sha256": "d4875b8ce4ea20a82ec1cc42553f1bf903eb55f6c31de3ff0a69a1d23027d1b1",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-13_01_00PM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -36,7 +37,8 @@
    "stamp_et": "04:15 PM ET",
    "cited_in": [
     "data/raw/injury_report_2026-11-13.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [
     "data/raw/injury_report_2026-11-13.json"
@@ -47,11 +49,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-13_04_15PM.pdf",
+   "pdf_bytes": 98738,
+   "pdf_sha256": "3e6786fe6c4a951cae45738fd7e812ff21f264fc31615ef296133875e32df202",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-13_04_15PM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -65,6 +67,7 @@
     "data/injuries.json",
     "data/site.json",
     "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json",
     "data/verified/audit_arena-23927d63.json",
     "data/verified/flagged.json",
     "data/verified/injuries_2026-11-13_0515PM.json"
@@ -76,11 +79,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-13_05_15PM.pdf",
+   "pdf_bytes": 101887,
+   "pdf_sha256": "502024cff353efce6225d48fef7516b58e8e3c2671368b7983ac3b87a4e541f6",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-13_05_15PM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -93,7 +96,8 @@
    "cited_in": [
     "data/site.json",
     "data/v2/content.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [],
    "transcript_rows": null,
@@ -102,11 +106,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-13_07_15PM.pdf",
+   "pdf_bytes": 102349,
+   "pdf_sha256": "20b9c2f9f3aed67b28e3f48557d94cc4db05cc2aef44773d324b9d4540f766b1",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-13_07_15PM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -121,7 +125,8 @@
     "data/raw/injury_report_2026-11-14_daybefore.json",
     "data/raw/official_game_times_2026-11-14.json",
     "data/site.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [
     "data/raw/injury_report_2026-11-13_1930ET.json",
@@ -133,11 +138,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": "PDF fetched and read in two chunks via the session's page-fetch tool; the 2026-11-14 rows were transcribed by hand against that text. The 2026-11-13 rows in the same release were NOT transcribed: those games had already tipped, and the 11/13 slate is covered by injury_report_2026-11-13.json (04:15 PM ET release).",
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-13_07_30PM.pdf",
+   "pdf_bytes": 102227,
+   "pdf_sha256": "f5434cd9c56e7eb6b5f6f92079f33c23538dab508ad953540a7ebf6d7d037ab9",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-13_07_30PM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -150,7 +155,8 @@
    "cited_in": [
     "data/site.json",
     "data/v2/content.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [],
    "transcript_rows": null,
@@ -159,11 +165,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-14_01_30PM.pdf",
+   "pdf_bytes": 92455,
+   "pdf_sha256": "b628131492478451a5cf0c3779d43864833501c6daf30fae20630d5305023d3c",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-14_01_30PM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -178,7 +184,8 @@
     "data/v2/content.json",
     "data/v2/teams.json",
     "data/v2/verification.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [],
    "transcript_rows": null,
@@ -187,11 +194,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-14_04_30AM.pdf",
+   "pdf_bytes": 87960,
+   "pdf_sha256": "fbff5f42ec5c5510f1ecca7359eb8216db2ce56ea137493343e0944796e35054",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-14_04_30AM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -206,7 +213,8 @@
     "data/raw/injury_report_2026-11-14_0500ET.json",
     "data/site.json",
     "data/v2/content.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [
     "data/raw/injury_report_2026-11-14_0500AM.json"
@@ -217,11 +225,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": "platform page-fetch tool (direct curl from the sandbox returns HTTP 000 for all nba.com hosts)",
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-14_05_00AM.pdf",
+   "pdf_bytes": 87929,
+   "pdf_sha256": "78cb966d8115b1f6de63bc8ba0d071cfb689edde1a3c5c6995f4f991446a2cbd",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-14_05_00AM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -232,7 +240,8 @@
    "date": "2026-11-15",
    "stamp_et": "06:00 AM ET",
    "cited_in": [
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [],
    "transcript_rows": null,
@@ -241,11 +250,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-15_06_00AM.pdf",
+   "pdf_bytes": 97577,
+   "pdf_sha256": "e4d21fe109e41cc5e7a7c4bbfee5afb8669e4a3f8e3f753470883df0e49da4c4",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-15_06_00AM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -260,7 +269,8 @@
     "data/raw/capture_2026-11-15/injury_report_2026-11-15_0615AM.json",
     "data/raw/capture_2026-11-15/injury_report_2026-11-15_0615PM.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [
     "data/raw/capture_2026-11-15/injury_report_2026-11-15_0615AM.json"
@@ -271,11 +281,11 @@
    "index_checked_utc": null,
    "revision_time_et": "2026-11-15 06:15 AM ET",
    "method": "platform page-fetch tool (fetch_page) against the official PDF",
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-15_06_15AM.pdf",
+   "pdf_bytes": 97582,
+   "pdf_sha256": "042868ef01ea1530c182e3253da17947dcdfae1e7075ca26e642c0b240d83f00",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-15_06_15AM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -288,7 +298,8 @@
    "cited_in": [
     "data/raw/capture_2026-11-15/injury_delta_0615AM_to_0615PM.json",
     "data/raw/capture_2026-11-15/injury_report_2026-11-15_0615PM.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [
     "data/raw/capture_2026-11-15/injury_report_2026-11-15_0615PM.json"
@@ -299,11 +310,11 @@
    "index_checked_utc": null,
    "revision_time_et": "2026-11-15 06:15 PM ET",
    "method": "platform page-fetch tool (fetch_page) against the official PDF",
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-15_06_15PM.pdf",
+   "pdf_bytes": 108297,
+   "pdf_sha256": "17fbcb8d206fa2602a712977af9cdf854a7c8c898767c1d6ac8cd62ba4da3203",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-15_06_15PM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -320,7 +331,8 @@
     "data/v4/injury/binary_manifest.json",
     "data/v4/injury/releases.json",
     "data/v6/endpoints.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [
     "data/raw/refresh_2026-11-16/injury_transcript_20261116_0100PM.json",
@@ -349,7 +361,8 @@
    "date": "2026-11-16",
    "stamp_et": "02:15 PM ET",
    "cited_in": [
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [],
    "transcript_rows": null,
@@ -375,7 +388,8 @@
    "cited_in": [
     "data/raw/refresh_2026-11-16/capture_index.json",
     "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM_superseded.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [],
    "transcript_rows": null,
@@ -384,11 +398,11 @@
    "index_checked_utc": null,
    "revision_time_et": null,
    "method": null,
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-16_09_15AM.pdf",
+   "pdf_bytes": 93402,
+   "pdf_sha256": "2ae3cc90586e2ad45d174d4c599bcb87185f7b6c3ecf68821d3a9efc7105075b",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-16_09_15AM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null
@@ -402,7 +416,8 @@
     "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM_superseded.json",
     "data/v4/injury/binary_manifest.json",
     "data/v4/injury/releases.json",
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [
     "data/raw/refresh_2026-11-16/injury_transcript_20261116_0930AM_superseded.json",
@@ -426,12 +441,39 @@
    "text_sha256_matches_extracted": null
   },
   {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_02_30PM.pdf",
+   "filename": "Injury-Report_2026-11-17_02_30PM.pdf",
+   "date": "2026-11-17",
+   "stamp_et": "02:30 PM ET",
+   "cited_in": [
+    "data/raw/capture_2026-11-17/injury_release_2026-11-17.json",
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
+   ],
+   "transcripts": [],
+   "transcript_rows": null,
+   "text_sha256": null,
+   "retrieved_at_utc": null,
+   "index_checked_utc": null,
+   "revision_time_et": null,
+   "method": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-17_02_30PM.pdf",
+   "pdf_bytes": 92769,
+   "pdf_sha256": "2f190154e150378a0103699577608f986816db08ef84dc4e54e8e407ff1d6612",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-17_02_30PM.txt",
+   "manifest_outcome": null,
+   "manifest_detail": null,
+   "text_sha256_matches_extracted": null
+  },
+  {
    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_09_45AM.pdf",
    "filename": "Injury-Report_2026-11-17_09_45AM.pdf",
    "date": "2026-11-17",
    "stamp_et": "09:45 AM ET",
    "cited_in": [
-    "data/v6/injury_archive.json"
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [],
    "transcript_rows": null,
@@ -456,6 +498,71 @@
    "stamp_et": "10:30 AM ET",
    "cited_in": [
     "data/raw/refresh_2026-11-17/capture_index.json",
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json"
+   ],
+   "transcripts": [],
+   "transcript_rows": null,
+   "text_sha256": null,
+   "retrieved_at_utc": null,
+   "index_checked_utc": null,
+   "revision_time_et": null,
+   "method": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-17_10_30AM.pdf",
+   "pdf_bytes": 90116,
+   "pdf_sha256": "53a42da5d122e375f5ef8b3eb513ca55024436b925fb971425b9a6e1a6822ffd",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-17_10_30AM.txt",
+   "manifest_outcome": null,
+   "manifest_detail": null,
+   "text_sha256_matches_extracted": null
+  },
+  {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_00AM.pdf",
+   "filename": "Injury-Report_2026-11-17_11_00AM.pdf",
+   "date": "2026-11-17",
+   "stamp_et": "11:00 AM ET",
+   "cited_in": [
+    "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
+    "data/raw/refresh_2026-11-17/injury_transcript_20261117_1100AM.json",
+    "data/v3/verification.json",
+    "data/v4/injury/binary_manifest.json",
+    "data/v4/injury/releases.json",
+    "data/v4/model.json",
+    "data/v5/injury_join.json",
+    "data/v6/injury_archive.json",
+    "data/v6/injury_binary_manifest.json",
+    "data/v6/player_coverage.json"
+   ],
+   "transcripts": [
+    "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
+    "data/raw/refresh_2026-11-17/injury_transcript_20261117_1100AM.json",
+    "data/v4/injury/releases.json"
+   ],
+   "transcript_rows": 57,
+   "text_sha256": "25d666bfbfca8ea3a0ef092e390a66e83449a36bbd72d17f9250e641e805932d",
+   "retrieved_at_utc": "2026-11-17T16:41:00Z",
+   "index_checked_utc": "2026-11-17T16:39:00Z",
+   "revision_time_et": "11/17/26 11:00 AM",
+   "method": "platform page-fetch tool (fetch_page); returned as a single chunk",
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-17_11_00AM.pdf",
+   "pdf_bytes": 89954,
+   "pdf_sha256": "a5ce82b8bf3b18262a4f66861ae031e2a0a5d4b838df2d8edefe3b2bf9cdaae0",
+   "text_extracted_path": null,
+   "manifest_outcome": "stored",
+   "manifest_detail": "ok",
+   "manifest_sha256": "a5ce82b8bf3b18262a4f66861ae031e2a0a5d4b838df2d8edefe3b2bf9cdaae0",
+   "sha256_matches_manifest": true,
+   "text_sha256_matches_extracted": null
+  },
+  {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-18_02_15PM.pdf",
+   "filename": "Injury-Report_2026-11-18_02_15PM.pdf",
+   "date": "2026-11-18",
+   "stamp_et": "02:15 PM ET",
+   "cited_in": [
+    "data/raw/capture_2026-11-18/injury_release_2026-11-18.json",
     "data/v6/injury_archive.json"
    ],
    "transcripts": [],
@@ -475,36 +582,26 @@
    "text_sha256_matches_extracted": null
   },
   {
-   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_00AM.pdf",
-   "filename": "Injury-Report_2026-11-17_11_00AM.pdf",
-   "date": "2026-11-17",
-   "stamp_et": "11:00 AM ET",
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-18_09_45AM.pdf",
+   "filename": "Injury-Report_2026-11-18_09_45AM.pdf",
+   "date": "2026-11-18",
+   "stamp_et": "09:45 AM ET",
    "cited_in": [
-    "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
-    "data/raw/refresh_2026-11-17/injury_transcript_20261117_1100AM.json",
-    "data/v3/verification.json",
-    "data/v4/injury/releases.json",
-    "data/v4/model.json",
-    "data/v5/injury_join.json",
     "data/v6/injury_archive.json",
-    "data/v6/player_coverage.json"
+    "data/v6/injury_binary_manifest.json"
    ],
-   "transcripts": [
-    "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
-    "data/raw/refresh_2026-11-17/injury_transcript_20261117_1100AM.json",
-    "data/v4/injury/releases.json"
-   ],
-   "transcript_rows": 57,
-   "text_sha256": "25d666bfbfca8ea3a0ef092e390a66e83449a36bbd72d17f9250e641e805932d",
-   "retrieved_at_utc": "2026-11-17T16:41:00Z",
-   "index_checked_utc": "2026-11-17T16:39:00Z",
-   "revision_time_et": "11/17/26 11:00 AM",
-   "method": "platform page-fetch tool (fetch_page); returned as a single chunk",
-   "bytes_stored": false,
-   "pdf_path": null,
-   "pdf_bytes": null,
-   "pdf_sha256": null,
-   "text_extracted_path": null,
+   "transcripts": [],
+   "transcript_rows": null,
+   "text_sha256": null,
+   "retrieved_at_utc": null,
+   "index_checked_utc": null,
+   "revision_time_et": null,
+   "method": null,
+   "bytes_stored": true,
+   "pdf_path": "data/raw/pdf/Injury-Report_2026-11-18_09_45AM.pdf",
+   "pdf_bytes": 100919,
+   "pdf_sha256": "3a6c66ac5276cbefb53097febde1be43d2527bd454fd2e5fbd725316b10a2842",
+   "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-18_09_45AM.txt",
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null

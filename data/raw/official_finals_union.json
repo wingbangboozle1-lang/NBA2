@@ -3,8 +3,13 @@
   "rule": "one record per game_id that at least one committed official source gives a final for; game excluded if sources conflict on score or clubs; source ignored if its quarter row does not sum to the final",
   "sources_read": [
     "data/raw/finals_2026-11-13.json",
+    "data/raw/finals_2026-11-14.json",
+    "data/raw/finals_2026-11-15.json",
+    "data/raw/finals_2026-11-16.json",
+    "data/raw/finals_2026-11-17.json",
     "data/raw/finals_all.json",
     "data/raw/capture_2026-11-15/results_2026-11-14.json",
+    "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
     "data/raw/results/results_2026-11-15.json",
     "data/raw/results/results_2026-11-15_recheck_2026-11-17.json",
     "data/raw/results/results_2026-11-16.json",
@@ -13,28 +18,40 @@
   "records": [
     {
       "game_id": "0022600034",
-      "away": null,
-      "home": null,
+      "away": "NYK",
+      "home": "IND",
       "away_pts": 104,
       "home_pts": 106,
       "source": "https://www.nba.com/game/nyk-vs-ind-0022600034",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": null,
-      "home_quarters": null,
+      "away_quarters": [
+        27,
+        22,
+        35,
+        20
+      ],
+      "home_quarters": [
+        26,
+        32,
+        27,
+        21
+      ],
       "ot_periods": null,
       "ot_quarters": null
     },
     {
       "game_id": "0022600035",
-      "away": null,
-      "home": null,
+      "away": "MIL",
+      "home": "ORL",
       "away_pts": 99,
       "home_pts": 107,
       "source": "https://www.nba.com/game/mil-vs-orl-0022600035",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
@@ -45,114 +62,193 @@
     },
     {
       "game_id": "0022600036",
-      "away": null,
-      "home": null,
+      "away": "CLE",
+      "home": "MIA",
       "away_pts": 121,
       "home_pts": 133,
       "source": "https://www.nba.com/game/cle-vs-mia-0022600036",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": null,
-      "home_quarters": null,
-      "ot_periods": null,
+      "away_quarters": [
+        27,
+        30,
+        34,
+        30
+      ],
+      "home_quarters": [
+        29,
+        25,
+        38,
+        41
+      ],
+      "ot_periods": 0,
       "ot_quarters": null
     },
     {
       "game_id": "0022600037",
-      "away": null,
-      "home": null,
+      "away": "ATL",
+      "home": "CHI",
       "away_pts": 117,
       "home_pts": 125,
       "source": "https://www.nba.com/game/atl-vs-chi-0022600037",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": null,
-      "home_quarters": null,
-      "ot_periods": null,
+      "away_quarters": [
+        24,
+        29,
+        30,
+        27,
+        7
+      ],
+      "home_quarters": [
+        33,
+        27,
+        24,
+        26,
+        15
+      ],
+      "ot_periods": 1,
       "ot_quarters": null
     },
     {
       "game_id": "0022600038",
-      "away": null,
-      "home": null,
+      "away": "MEM",
+      "home": "NOP",
       "away_pts": 142,
       "home_pts": 111,
       "source": "https://www.nba.com/game/mem-vs-nop-0022600038",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": null,
-      "home_quarters": null,
-      "ot_periods": null,
+      "away_quarters": [
+        35,
+        35,
+        35,
+        37
+      ],
+      "home_quarters": [
+        28,
+        30,
+        28,
+        25
+      ],
+      "ot_periods": 0,
       "ot_quarters": null
     },
     {
       "game_id": "0022600039",
-      "away": null,
-      "home": null,
+      "away": "UTA",
+      "home": "HOU",
       "away_pts": 118,
       "home_pts": 125,
       "source": "https://www.nba.com/game/uta-vs-hou-0022600039",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": null,
-      "home_quarters": null,
-      "ot_periods": null,
+      "away_quarters": [
+        27,
+        26,
+        36,
+        29
+      ],
+      "home_quarters": [
+        27,
+        36,
+        29,
+        33
+      ],
+      "ot_periods": 0,
       "ot_quarters": null
     },
     {
       "game_id": "0022600040",
-      "away": null,
-      "home": null,
+      "away": "GSW",
+      "home": "SAS",
       "away_pts": 85,
       "home_pts": 123,
       "source": "https://www.nba.com/game/gsw-vs-sas-0022600040",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": null,
-      "home_quarters": null,
-      "ot_periods": null,
+      "away_quarters": [
+        14,
+        19,
+        27,
+        25
+      ],
+      "home_quarters": [
+        38,
+        25,
+        34,
+        26
+      ],
+      "ot_periods": 0,
       "ot_quarters": null
     },
     {
       "game_id": "0022600041",
-      "away": null,
-      "home": null,
+      "away": "POR",
+      "home": "SAC",
       "away_pts": 120,
       "home_pts": 107,
       "source": "https://www.nba.com/game/por-vs-sac-0022600041",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": null,
-      "home_quarters": null,
-      "ot_periods": null,
+      "away_quarters": [
+        34,
+        30,
+        29,
+        27
+      ],
+      "home_quarters": [
+        25,
+        28,
+        25,
+        29
+      ],
+      "ot_periods": 0,
       "ot_quarters": null
     },
     {
       "game_id": "0022600042",
-      "away": null,
-      "home": null,
+      "away": "OKC",
+      "home": "LAC",
       "away_pts": 112,
       "home_pts": 113,
       "source": "https://www.nba.com/game/okc-vs-lac-0022600042",
       "sources": [
+        "data/raw/capture_2026-11-15/gamebooks_2026-11-13.json",
         "data/raw/finals_2026-11-13.json",
         "data/raw/finals_all.json"
       ],
-      "away_quarters": null,
-      "home_quarters": null,
-      "ot_periods": null,
+      "away_quarters": [
+        27,
+        17,
+        40,
+        28
+      ],
+      "home_quarters": [
+        33,
+        24,
+        25,
+        31
+      ],
+      "ot_periods": 0,
       "ot_quarters": null
     },
     {
@@ -164,6 +260,8 @@
       "source": "https://www.nba.com/game/den-vs-nop-0022600231",
       "sources": [
         "data/raw/capture_2026-11-15/results_2026-11-14.json",
+        "data/raw/finals_2026-11-14.json",
+        "data/raw/finals_all.json",
         "data/v2/results.json"
       ],
       "away_quarters": [
@@ -190,6 +288,8 @@
       "source": "https://www.nba.com/game/dal-vs-cle-0022600232",
       "sources": [
         "data/raw/capture_2026-11-15/results_2026-11-14.json",
+        "data/raw/finals_2026-11-14.json",
+        "data/raw/finals_all.json",
         "data/v2/results.json"
       ],
       "away_quarters": [
@@ -216,6 +316,8 @@
       "source": "https://www.nba.com/game/det-vs-mia-0022600233",
       "sources": [
         "data/raw/capture_2026-11-15/results_2026-11-14.json",
+        "data/raw/finals_2026-11-14.json",
+        "data/raw/finals_all.json",
         "data/v2/results.json"
       ],
       "away_quarters": [
@@ -242,6 +344,8 @@
       "source": "https://www.nba.com/game/bkn-vs-mem-0022600234",
       "sources": [
         "data/raw/capture_2026-11-15/results_2026-11-14.json",
+        "data/raw/finals_2026-11-14.json",
+        "data/raw/finals_all.json",
         "data/v2/results.json"
       ],
       "away_quarters": [
@@ -268,6 +372,8 @@
       "source": "https://www.nba.com/game/chi-vs-min-0022600235",
       "sources": [
         "data/raw/capture_2026-11-15/results_2026-11-14.json",
+        "data/raw/finals_2026-11-14.json",
+        "data/raw/finals_all.json",
         "data/v2/results.json"
       ],
       "away_quarters": [
@@ -293,6 +399,8 @@
       "home_pts": 131,
       "source": "https://www.nba.com/game/ind-vs-phi-0022600236",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15.json"
       ],
       "away_quarters": [
@@ -318,6 +426,8 @@
       "home_pts": 123,
       "source": "https://www.nba.com/game/lal-vs-phx-0022600237",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15.json"
       ],
       "away_quarters": [
@@ -343,6 +453,8 @@
       "home_pts": 113,
       "source": "https://www.nba.com/game/cha-vs-lac-0022600238",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15.json"
       ],
       "away_quarters": [
@@ -368,6 +480,8 @@
       "home_pts": 102,
       "source": "https://www.nba.com/game/sas-vs-uta-0022600239",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15.json"
       ],
       "away_quarters": [
@@ -393,9 +507,16 @@
       "home_pts": 131,
       "source": "https://www.nba.com/game/dal-vs-bos-0022600240",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15.json"
       ],
-      "away_quarters": null,
+      "away_quarters": [
+        9,
+        28,
+        34,
+        23
+      ],
       "home_quarters": [
         42,
         25,
@@ -413,29 +534,26 @@
       "home_pts": 108,
       "source": "https://www.nba.com/game/nyk-vs-tor-0022600241",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15.json"
       ],
       "away_quarters": [
         23,
         24,
         20,
-        28
+        28,
+        17
       ],
       "home_quarters": [
         17,
         26,
         31,
-        21
+        21,
+        13
       ],
       "ot_periods": 1,
-      "ot_quarters": {
-        "away": [
-          17
-        ],
-        "home": [
-          13
-        ]
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600242",
@@ -445,6 +563,8 @@
       "home_pts": 119,
       "source": "https://www.nba.com/game/hou-vs-was-0022600242",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
       ],
       "away_quarters": [
@@ -460,10 +580,7 @@
         31
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600243",
@@ -473,6 +590,8 @@
       "home_pts": 106,
       "source": "https://www.nba.com/game/atl-vs-mil-0022600243",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
       ],
       "away_quarters": [
@@ -488,10 +607,7 @@
         26
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600244",
@@ -501,6 +617,8 @@
       "home_pts": 103,
       "source": "https://www.nba.com/game/okc-vs-sac-0022600244",
       "sources": [
+        "data/raw/finals_2026-11-15.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-15_recheck_2026-11-17.json"
       ],
       "away_quarters": [
@@ -516,10 +634,7 @@
         23
       ],
       "ot_periods": 0,
-      "ot_quarters": {
-        "away": [],
-        "home": []
-      }
+      "ot_quarters": null
     },
     {
       "game_id": "0022600245",
@@ -529,6 +644,8 @@
       "home_pts": 105,
       "source": "https://www.nba.com/game/orl-vs-bos-0022600245",
       "sources": [
+        "data/raw/finals_2026-11-16.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-16.json"
       ],
       "away_quarters": [
@@ -554,6 +671,8 @@
       "home_pts": 126,
       "source": "https://www.nba.com/game/chi-vs-cle-0022600246",
       "sources": [
+        "data/raw/finals_2026-11-16.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-16.json"
       ],
       "away_quarters": [
@@ -579,6 +698,8 @@
       "home_pts": 120,
       "source": "https://www.nba.com/game/mem-vs-was-0022600247",
       "sources": [
+        "data/raw/finals_2026-11-16.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-16.json"
       ],
       "away_quarters": [
@@ -604,6 +725,8 @@
       "home_pts": 123,
       "source": "https://www.nba.com/game/phi-vs-bkn-0022600248",
       "sources": [
+        "data/raw/finals_2026-11-16.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-16.json"
       ],
       "away_quarters": [
@@ -629,6 +752,8 @@
       "home_pts": 128,
       "source": "https://www.nba.com/game/hou-vs-mia-0022600249",
       "sources": [
+        "data/raw/finals_2026-11-16.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-16.json"
       ],
       "away_quarters": [
@@ -654,6 +779,8 @@
       "home_pts": 106,
       "source": "https://www.nba.com/game/por-vs-min-0022600250",
       "sources": [
+        "data/raw/finals_2026-11-16.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-16.json"
       ],
       "away_quarters": [
@@ -679,6 +806,8 @@
       "home_pts": 115,
       "source": "https://www.nba.com/game/gsw-vs-nop-0022600251",
       "sources": [
+        "data/raw/finals_2026-11-16.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-16.json"
       ],
       "away_quarters": [
@@ -704,6 +833,8 @@
       "home_pts": 105,
       "source": "https://www.nba.com/game/phx-vs-den-0022600252",
       "sources": [
+        "data/raw/finals_2026-11-16.json",
+        "data/raw/finals_all.json",
         "data/raw/results/results_2026-11-16.json"
       ],
       "away_quarters": [
@@ -717,6 +848,138 @@
         29,
         29,
         23
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null
+    },
+    {
+      "game_id": "0022600253",
+      "away": "NYK",
+      "home": "TOR",
+      "away_pts": 111,
+      "home_pts": 102,
+      "source": "https://www.nba.com/game/nyk-vs-tor-0022600253",
+      "sources": [
+        "data/raw/finals_2026-11-17.json",
+        "data/raw/finals_all.json"
+      ],
+      "away_quarters": [
+        23,
+        31,
+        26,
+        31
+      ],
+      "home_quarters": [
+        29,
+        21,
+        33,
+        19
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null
+    },
+    {
+      "game_id": "0022600254",
+      "away": "POR",
+      "home": "MIN",
+      "away_pts": 105,
+      "home_pts": 106,
+      "source": "https://www.nba.com/game/por-vs-min-0022600254",
+      "sources": [
+        "data/raw/finals_2026-11-17.json",
+        "data/raw/finals_all.json"
+      ],
+      "away_quarters": [
+        17,
+        31,
+        31,
+        26
+      ],
+      "home_quarters": [
+        29,
+        20,
+        30,
+        27
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null
+    },
+    {
+      "game_id": "0022600255",
+      "away": "DET",
+      "home": "SAS",
+      "away_pts": 105,
+      "home_pts": 93,
+      "source": "https://www.nba.com/game/det-vs-sas-0022600255",
+      "sources": [
+        "data/raw/finals_2026-11-17.json",
+        "data/raw/finals_all.json"
+      ],
+      "away_quarters": [
+        26,
+        29,
+        23,
+        27
+      ],
+      "home_quarters": [
+        33,
+        21,
+        18,
+        21
+      ],
+      "ot_periods": 0,
+      "ot_quarters": null
+    },
+    {
+      "game_id": "0022600256",
+      "away": "CHA",
+      "home": "LAL",
+      "away_pts": 114,
+      "home_pts": 118,
+      "source": "https://www.nba.com/game/cha-vs-lal-0022600256",
+      "sources": [
+        "data/raw/finals_2026-11-17.json",
+        "data/raw/finals_all.json"
+      ],
+      "away_quarters": [
+        34,
+        32,
+        28,
+        17,
+        3
+      ],
+      "home_quarters": [
+        30,
+        29,
+        22,
+        30,
+        7
+      ],
+      "ot_periods": 1,
+      "ot_quarters": null
+    },
+    {
+      "game_id": "0022600257",
+      "away": "UTA",
+      "home": "LAC",
+      "away_pts": 132,
+      "home_pts": 107,
+      "source": "https://www.nba.com/game/uta-vs-lac-0022600257",
+      "sources": [
+        "data/raw/finals_2026-11-17.json",
+        "data/raw/finals_all.json"
+      ],
+      "away_quarters": [
+        35,
+        23,
+        30,
+        44
+      ],
+      "home_quarters": [
+        29,
+        33,
+        24,
+        21
       ],
       "ot_periods": 0,
       "ot_quarters": null
