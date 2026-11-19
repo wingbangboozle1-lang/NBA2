@@ -104,6 +104,23 @@ def scheduled() -> dict[str, dict]:
 
 
 # -------------------------------------------------------------- finals on disk
+def _official_url(row: dict, *keys: str) -> str | None:
+    """The first explicit official nba.com URL among ``keys``, else None.
+
+    ``source`` is not a convenience alias: ``nba2.pipeline.settle`` writes the official game
+    page into that key in ``official_finals_union.json``, the only file carrying the
+    11/14-11/16 finals, so leaving it out is what made those rows URL-less. The check stays
+    strict - a value that is not an https URL on an nba.com host is treated as absent - so a
+    malformed field can never be published as a source link. The caller renders None as a
+    blank with a reason; no URL is ever synthesised.
+    """
+    for k in keys:
+        v = row.get(k)
+        if isinstance(v, str) and v.startswith("https://") and ".nba.com" in v:
+            return v
+    return None
+
+
 def _records_of(doc: dict) -> list[dict]:
     """Every game-shaped row in the document, merged by game id.
 
@@ -128,10 +145,17 @@ def _records_of(doc: dict) -> list[dict]:
             if gid not in merged:
                 merged[gid] = {}
                 order.append(gid)
+            # A non-null value always wins over a null one, whichever document order the
+            # keys arrive in. The old form let the LAST row's explicit null overwrite a
+            # non-null from an earlier row in the same file, which is how the committed union
+            # (`data/raw/official_finals_union.json`, written by nba2.pipeline.settle) lost the
+            # official URL of its 11/14-11/16 rows. Measured 2026-11-19 at `a5380e1`: the
+            # scheduled rebuild failed G-V6-8 on ten rows that DO carry the official URL.
             for k, val in r.items():
-                if val is not None or k not in merged[gid]:
-                    if val is not None or merged[gid].get(k) is None:
-                        merged[gid][k] = val
+                if val is not None:
+                    merged[gid][k] = val
+                elif k not in merged[gid]:
+                    merged[gid][k] = None
     return [merged[g] for g in order]
 
 
@@ -181,9 +205,8 @@ def finals_committed() -> dict[str, dict]:
                 "period_schema": schema,
                 # Each committed feed names its URL field differently. Accept the feed's
                 # own HTTPS URL only; a prose source label is never promoted into a link.
-                "source_url": (r.get("source_url") or r.get("final_source_url")
-                               or r.get("official_source")
-                               or (r.get("source") if str(r.get("source") or "").startswith("https://") else None)),
+                "source_url": _official_url(r, "source_url", "final_source_url",
+                                            "official_source", "source"),
                 "gamebook_url": r.get("gamebook_url") or r.get("gamebook_source"),
                 "files": [rel],
             }
