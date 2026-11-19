@@ -6016,3 +6016,15 @@ files in `nba2/v2/model.py` and `nba2/v2/travel.py`); `python3 -m nba2.v2.check`
 0 semantic**; `tools/check_links_all.py` **143 HTML / 7,472 internal links OK**; `git diff --check`
 passed. External links were inventoried by the checker, not fetched. No NBA values or source
 captures changed. **Status: done.**
+
+**Integration / deployment result:** PR [#134](https://github.com/wingbangboozle1-lang/NBA2/pull/134)
+merged on 2026-11-19T12:24:47Z as `35a41112542e2d48ff19285709575f15b68d6b79`.
+All PR checks passed (backtest, capture, parity, refresh dry-run, v2, verify). GitHub Pages run
+[44523644442](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44523644442) completed
+successfully, including the reproducible build check and deploy. The Pages API reports `built`
+at the merge commit, and the live landing page was fetched at
+https://wingbangboozle1-lang.github.io/NBA2/?build=35a4111 and contained the corrected
+capture-versus-publish disclosure. The first fetch immediately after deploy returned a
+transient GitHub outage/404 response; a cache-busted follow-up returned the deployed dashboard.
+Full details and verification limitations are recorded in
+`analysis/session-3a5c7c75-refresh-disclosure.md`.
