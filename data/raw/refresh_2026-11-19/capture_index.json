@@ -1,0 +1,67 @@
+{
+ "schema": "nba2.capture-index.v1",
+ "retrieved_utc": "2026-11-19T12:32:00Z",
+ "session": "arena/6b9f3bbe-nba2",
+ "method": "platform page-fetch tool (fetch_page); bash egress to nba.com/stats.nba.com/cdn.nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method and its URL",
+ "source_pages": {
+  "standings": {
+   "name": "NBA.com Standings (official)",
+   "url": "https://www.nba.com/standings",
+   "read": "30 clubs: W, L, CONF, DIV, HOME, ROAD, NEUTRAL, OT, LAST10, STREAK"
+  },
+  "team_trad": {
+   "name": "NBA.com Stats - Teams Traditional (official)",
+   "url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: GP, PTS, +/- (plus FG/rebound/assist splits)"
+  },
+  "team_opp": {
+   "name": "NBA.com Stats - Teams Opponent (official)",
+   "url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: Opp PTS (points allowed per game) plus opponent shooting splits"
+  },
+  "team_adv": {
+   "name": "NBA.com Stats - Teams Advanced (official)",
+   "url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "read": "30 rows: OffRtg, DefRtg, NetRtg, PACE, PIE, POSS"
+  },
+  "window_slate": {
+   "name": "NBA.com Games & Scores day strips (official)",
+   "url": "https://www.nba.com/games?date=2026-11-19",
+   "read": "26 window games (11/19: 4, 11/20: 9 Cup, 11/21: 6, 11/22: 7) with game ids and ET tips"
+  },
+  "finals_1118": {
+   "name": "NBA.com Games & Scores 11/18 day strip + official gamebooks",
+   "url": "https://www.nba.com/games?date=2026-11-18",
+   "read": "12 finals cross-checked against 12 gamebook line scores"
+  },
+  "injury_index": {
+   "name": "NBA Official - Injury Report index (official)",
+   "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+   "read": "the filing rules verbatim and the newest 11/19 release (07:15 AM ET)"
+  }
+ },
+ "unread": {
+  "game_day_injury_reports_11am_1pm": {
+   "what": "The 11/19 game-day reports (11 a.m.-1 p.m. local window had not elapsed)",
+   "why": "Retrieval happened ~07:20 ET, before the game-day filing window; the 07:15 AM release is the newest that existed. The next scheduled refresh re-reads it.",
+   "attempted_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf"
+  },
+  "slate_arenas": {
+   "what": "Arena/city per window game",
+   "why": "www.nba.com/games?date= day strips do not print the arena; blank by policy.",
+   "attempted_url": "https://www.nba.com/games?date=2026-11-19"
+  }
+ },
+ "selftest": {
+  "problems": [],
+  "clean": true
+ },
+ "files": [
+  "capture_index.json",
+  "injury_release_2026-11-19.json",
+  "slate_2026-11-19.json",
+  "standings_2026-11-19.json",
+  "team_stats_2026-11-19.json",
+  "../finals_2026-11-18.json"
+ ]
+}

@@ -1,0 +1,621 @@
+{
+ "schema": "nba2.team-stats-3page.v1",
+ "as_of": "2026-11-19",
+ "session": "arena/6b9f3bbe-nba2",
+ "retrieved_at_utc": "2026-11-19T12:32:00Z",
+ "retrieval_method": "platform page-fetch tool (fetch_page); bash egress to nba.com/stats.nba.com/cdn.nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method and its URL",
+ "source_class": "official",
+ "pages": {
+  "traditional": {
+   "url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "columns": [
+    "gp",
+    "pts",
+    "plus_minus"
+   ]
+  },
+  "opponent": {
+   "url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "columns": [
+    "opp_pts"
+   ]
+  },
+  "advanced": {
+   "url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+   "columns": [
+    "off_rtg",
+    "def_rtg",
+    "net_rtg",
+    "pace",
+    "pie"
+   ]
+  }
+ },
+ "records": [
+  {
+   "team": "ATL",
+   "gp": 15,
+   "pts": 117.7,
+   "plus_minus": 1.9,
+   "opp_pts": 115.8,
+   "off_rtg": 112.8,
+   "def_rtg": 110.8,
+   "net_rtg": 1.9,
+   "pace": 103.71,
+   "pie": 49.0,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "BKN",
+   "gp": 14,
+   "pts": 110.9,
+   "plus_minus": -8.4,
+   "opp_pts": 119.2,
+   "off_rtg": 110.5,
+   "def_rtg": 119.0,
+   "net_rtg": -8.4,
+   "pace": 99.51,
+   "pie": 45.2,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "BOS",
+   "gp": 15,
+   "pts": 113.9,
+   "plus_minus": 10.5,
+   "opp_pts": 103.4,
+   "off_rtg": 117.0,
+   "def_rtg": 106.0,
+   "net_rtg": 11.0,
+   "pace": 96.76,
+   "pie": 54.7,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "CHA",
+   "gp": 14,
+   "pts": 100.1,
+   "plus_minus": -10.3,
+   "opp_pts": 110.4,
+   "off_rtg": 103.1,
+   "def_rtg": 113.7,
+   "net_rtg": -10.6,
+   "pace": 96.43,
+   "pie": 43.5,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "CHI",
+   "gp": 14,
+   "pts": 116.2,
+   "plus_minus": -8.4,
+   "opp_pts": 124.6,
+   "off_rtg": 111.1,
+   "def_rtg": 119.1,
+   "net_rtg": -8.0,
+   "pace": 103.8,
+   "pie": 46.2,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "CLE",
+   "gp": 16,
+   "pts": 118.3,
+   "plus_minus": 1.9,
+   "opp_pts": 116.3,
+   "off_rtg": 117.5,
+   "def_rtg": 115.5,
+   "net_rtg": 2.0,
+   "pace": 100.01,
+   "pie": 51.0,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "DAL",
+   "gp": 15,
+   "pts": 112.3,
+   "plus_minus": -0.9,
+   "opp_pts": 113.2,
+   "off_rtg": 112.3,
+   "def_rtg": 113.4,
+   "net_rtg": -1.1,
+   "pace": 99.97,
+   "pie": 49.4,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "DEN",
+   "gp": 13,
+   "pts": 113.2,
+   "plus_minus": 0.9,
+   "opp_pts": 112.2,
+   "off_rtg": 114.3,
+   "def_rtg": 113.8,
+   "net_rtg": 0.5,
+   "pace": 98.02,
+   "pie": 52.5,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "DET",
+   "gp": 14,
+   "pts": 115.4,
+   "plus_minus": 6.4,
+   "opp_pts": 108.9,
+   "off_rtg": 114.9,
+   "def_rtg": 108.9,
+   "net_rtg": 6.0,
+   "pace": 98.78,
+   "pie": 54.2,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "GSW",
+   "gp": 15,
+   "pts": 113.7,
+   "plus_minus": 0.9,
+   "opp_pts": 112.8,
+   "off_rtg": 113.4,
+   "def_rtg": 112.8,
+   "net_rtg": 0.6,
+   "pace": 99.41,
+   "pie": 50.3,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "HOU",
+   "gp": 16,
+   "pts": 117.9,
+   "plus_minus": 8.7,
+   "opp_pts": 109.2,
+   "off_rtg": 121.1,
+   "def_rtg": 112.1,
+   "net_rtg": 9.0,
+   "pace": 97.41,
+   "pie": 55.3,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "IND",
+   "gp": 15,
+   "pts": 111.5,
+   "plus_minus": -3.3,
+   "opp_pts": 114.8,
+   "off_rtg": 110.7,
+   "def_rtg": 113.6,
+   "net_rtg": -2.9,
+   "pace": 100.9,
+   "pie": 49.4,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "LAC",
+   "gp": 13,
+   "pts": 111.9,
+   "plus_minus": -5.8,
+   "opp_pts": 117.7,
+   "off_rtg": 111.4,
+   "def_rtg": 117.0,
+   "net_rtg": -5.6,
+   "pace": 99.74,
+   "pie": 47.4,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "LAL",
+   "gp": 16,
+   "pts": 120.9,
+   "plus_minus": 6.4,
+   "opp_pts": 114.4,
+   "off_rtg": 119.8,
+   "def_rtg": 113.2,
+   "net_rtg": 6.7,
+   "pace": 100.35,
+   "pie": 53.0,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "MEM",
+   "gp": 15,
+   "pts": 121.9,
+   "plus_minus": 9.0,
+   "opp_pts": 112.9,
+   "off_rtg": 120.6,
+   "def_rtg": 111.9,
+   "net_rtg": 8.7,
+   "pace": 100.27,
+   "pie": 54.3,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "MIA",
+   "gp": 15,
+   "pts": 120.5,
+   "plus_minus": 0.7,
+   "opp_pts": 119.9,
+   "off_rtg": 116.9,
+   "def_rtg": 116.7,
+   "net_rtg": 0.3,
+   "pace": 102.19,
+   "pie": 50.8,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "MIL",
+   "gp": 15,
+   "pts": 107.7,
+   "plus_minus": -13.1,
+   "opp_pts": 120.9,
+   "off_rtg": 106.7,
+   "def_rtg": 119.7,
+   "net_rtg": -13.0,
+   "pace": 101.0,
+   "pie": 42.4,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "MIN",
+   "gp": 15,
+   "pts": 116.7,
+   "plus_minus": 10.6,
+   "opp_pts": 106.1,
+   "off_rtg": 114.5,
+   "def_rtg": 104.0,
+   "net_rtg": 10.5,
+   "pace": 101.23,
+   "pie": 55.0,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "NOP",
+   "gp": 16,
+   "pts": 115.4,
+   "plus_minus": -7.4,
+   "opp_pts": 122.8,
+   "off_rtg": 111.7,
+   "def_rtg": 118.9,
+   "net_rtg": -7.1,
+   "pace": 101.3,
+   "pie": 46.4,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "NYK",
+   "gp": 14,
+   "pts": 110.0,
+   "plus_minus": 6.1,
+   "opp_pts": 103.9,
+   "off_rtg": 114.8,
+   "def_rtg": 109.0,
+   "net_rtg": 5.8,
+   "pace": 94.87,
+   "pie": 53.6,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "OKC",
+   "gp": 15,
+   "pts": 112.1,
+   "plus_minus": 4.4,
+   "opp_pts": 107.7,
+   "off_rtg": 113.0,
+   "def_rtg": 108.7,
+   "net_rtg": 4.4,
+   "pace": 99.17,
+   "pie": 53.5,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "ORL",
+   "gp": 14,
+   "pts": 109.4,
+   "plus_minus": -3.4,
+   "opp_pts": 112.8,
+   "off_rtg": 111.3,
+   "def_rtg": 114.0,
+   "net_rtg": -2.7,
+   "pace": 97.84,
+   "pie": 48.5,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "PHI",
+   "gp": 16,
+   "pts": 114.5,
+   "plus_minus": 2.9,
+   "opp_pts": 111.6,
+   "off_rtg": 114.5,
+   "def_rtg": 111.8,
+   "net_rtg": 2.7,
+   "pace": 99.88,
+   "pie": 51.4,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "PHX",
+   "gp": 14,
+   "pts": 114.1,
+   "plus_minus": -1.6,
+   "opp_pts": 115.7,
+   "off_rtg": 115.6,
+   "def_rtg": 116.8,
+   "net_rtg": -1.2,
+   "pace": 98.89,
+   "pie": 49.4,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "POR",
+   "gp": 14,
+   "pts": 117.0,
+   "plus_minus": 6.0,
+   "opp_pts": 111.0,
+   "off_rtg": 116.2,
+   "def_rtg": 110.2,
+   "net_rtg": 6.0,
+   "pace": 100.71,
+   "pie": 52.5,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "SAC",
+   "gp": 14,
+   "pts": 107.7,
+   "plus_minus": -14.0,
+   "opp_pts": 121.7,
+   "off_rtg": 106.9,
+   "def_rtg": 120.4,
+   "net_rtg": -13.5,
+   "pace": 100.93,
+   "pie": 42.5,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "SAS",
+   "gp": 15,
+   "pts": 117.1,
+   "plus_minus": 11.2,
+   "opp_pts": 105.9,
+   "off_rtg": 118.1,
+   "def_rtg": 107.0,
+   "net_rtg": 11.1,
+   "pace": 98.35,
+   "pie": 56.0,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "TOR",
+   "gp": 15,
+   "pts": 112.0,
+   "plus_minus": 0.0,
+   "opp_pts": 112.0,
+   "off_rtg": 113.7,
+   "def_rtg": 113.1,
+   "net_rtg": 0.5,
+   "pace": 98.09,
+   "pie": 48.4,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "UTA",
+   "gp": 16,
+   "pts": 108.8,
+   "plus_minus": -7.3,
+   "opp_pts": 116.0,
+   "off_rtg": 107.0,
+   "def_rtg": 114.5,
+   "net_rtg": -7.5,
+   "pace": 100.16,
+   "pie": 47.2,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  },
+  {
+   "team": "WAS",
+   "gp": 16,
+   "pts": 110.8,
+   "plus_minus": -7.2,
+   "opp_pts": 117.9,
+   "off_rtg": 109.9,
+   "def_rtg": 117.1,
+   "net_rtg": -7.1,
+   "pace": 99.46,
+   "pie": 46.3,
+   "source_urls": {
+    "pts_plus_minus": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "opp_pts": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame",
+    "ratings_pace_pie": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season&PerMode=PerGame"
+   },
+   "source_class": "official"
+  }
+ ],
+ "crosschecks": {
+  "n_clubs": 30,
+  "team_games": 444,
+  "league_games": 222.0,
+  "pts_for_weighted": 50499.6,
+  "pts_against_weighted": 50495.7,
+  "pts_diff": 3.9,
+  "rounding_bound": 44.4,
+  "pts_balance_within_bound": true,
+  "gp_matches_standings_wl": true,
+  "margin_vs_netrtg_residuals": {
+   "ATL": -0.07,
+   "BKN": 0.06,
+   "BOS": -0.14,
+   "CHA": -0.08,
+   "CHI": -0.1,
+   "CLE": -0.0,
+   "DAL": 0.2,
+   "DEN": 0.51,
+   "DET": 0.57,
+   "GSW": 0.3,
+   "HOU": -0.07,
+   "IND": -0.37,
+   "LAC": -0.21,
+   "LAL": -0.22,
+   "MEM": 0.28,
+   "MIA": 0.29,
+   "MIL": -0.07,
+   "MIN": -0.03,
+   "NOP": -0.21,
+   "NYK": 0.6,
+   "OKC": 0.04,
+   "ORL": -0.76,
+   "PHI": 0.2,
+   "PHX": -0.41,
+   "POR": -0.04,
+   "SAC": -0.37,
+   "SAS": 0.28,
+   "TOR": -0.49,
+   "UTA": 0.31,
+   "WAS": -0.04
+  },
+  "margin_vs_netrtg_note": "(PTS - OppPTS) minus (NetRtg x PACE / 100), per club. Zero would mean the traditional, opponent and advanced pages are exactly consistent. Small non-zero values are expected from independent rounding of per-game and per-100-possession rates; the largest residual is flagged.",
+  "margin_vs_netrtg_max_abs": 0.76
+ }
+}
