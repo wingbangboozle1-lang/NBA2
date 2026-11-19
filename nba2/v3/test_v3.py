@@ -61,9 +61,10 @@ class TestSnapshot(unittest.TestCase):
         self.assertEqual(O.selftest(), [])
 
     def test_records_match_the_finals(self):
-        # 183 historical finals + 5 (11/14) + 9 (11/15) + 8 (11/16) = 205
-        self.assertEqual(sum(t["w"] for t in O.TEAMS.values()), 205)
-        self.assertEqual(sum(t["l"] for t in O.TEAMS.values()), 205)
+        # 183 historical finals + the committed finals feeds through 2026-11-18
+        # (5 of 11/14 + 9 of 11/15 + 8 of 11/16 + 5 of 11/17 + 12 of 11/18) = 222
+        self.assertEqual(sum(t["w"] for t in O.TEAMS.values()), 222)
+        self.assertEqual(sum(t["l"] for t in O.TEAMS.values()), 222)
 
     def test_every_game_carries_a_source_url(self):
         for g in O.SLATE:
@@ -72,11 +73,13 @@ class TestSnapshot(unittest.TestCase):
     def test_injury_rows_have_a_team_and_a_date(self):
         for r in O.INJURIES:
             self.assertIsNotNone(r["team_abbr"], r)
-            self.assertIn(r["game_date"], ("2026-11-17", "2026-11-18"), r)
+            self.assertIn(r["game_date"], ("2026-11-19", "2026-11-20"), r)
 
     def test_arenas_have_no_fabricated_coordinates(self):
+        # 11/21-11/22 rows carry a blank arena/city/state by policy (FLAG-V3-ARENA-BLANK):
+        # the day strips do not print the arena and nothing is invented for them.
         for a, c, s in O.ARENAS:
-            self.assertTrue(a and c and s)
+            self.assertTrue(a and c and s, (a, c, s))
         for g in O.SLATE:
             self.assertIsNone(g["lat"])
             self.assertIsNone(g["lon"])
@@ -85,9 +88,10 @@ class TestSnapshot(unittest.TestCase):
 class TestHomeCourt(unittest.TestCase):
     def test_hca_is_the_pinned_identity(self):
         hc = M.home_court(M.load_played_games()["games"])
-        self.assertEqual(hc["n_games"] + hc["neutral_excluded"], 205)
+        self.assertEqual(hc["n_games"] + hc["neutral_excluded"], 222)
         want = hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])
-        self.assertLess(abs(hc["hca_points"] - want), 5e-4)
+        # tolerance absorbs the published roundings (rate 4 dp, hca 3 dp); see check.semantic
+        self.assertLess(abs(hc["hca_points"] - want), 2.5e-3)
         self.assertAlmostEqual(M.phi(hc["hca_points"] / hc["margin_sd"]),
                                hc["home_win_rate"], places=3)
 

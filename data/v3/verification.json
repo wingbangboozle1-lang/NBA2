@@ -1,14 +1,14 @@
 {
-  "as_of_utc": "2026-11-17T17:05:00Z",
+  "as_of_utc": "2026-11-19T12:32:00Z",
   "gates": {
-    "ran_at_utc": "2026-11-17T17:05:00Z",
+    "ran_at_utc": "2026-11-19T12:32:00Z",
     "measured_against": "the snapshot capture time (deterministic; see _now)",
     "gates": [
       {
         "id": "G-F1",
         "name": "snapshot covers the window it prices",
         "pass": true,
-        "detail": "snapshot 2026-11-17 is 0 day(s) before the first window date 2026-11-17 (allowed 0 or 1)",
+        "detail": "snapshot 2026-11-19 is 0 day(s) before the first window date 2026-11-19 (allowed 0 or 1)",
         "value": {
           "gap_days": 0,
           "measured_age_hours_at_build": 0.0
@@ -21,10 +21,10 @@
         "detail": "all 4 dates carry at least one official game",
         "value": {
           "dates": [
-            "2026-11-17",
-            "2026-11-18",
             "2026-11-19",
-            "2026-11-20"
+            "2026-11-20",
+            "2026-11-21",
+            "2026-11-22"
           ],
           "missing": []
         }
@@ -33,28 +33,28 @@
         "id": "G-F3",
         "name": "injury release is the newest indexed",
         "pass": true,
-        "detail": "using 11/17/26 11:00 AM ET; newest indexed at retrieval was 11/17/26 11:00 AM ET",
+        "detail": "using 11/19/26 07:15 AM ET; newest indexed at retrieval was 11/19/26 07:15 AM ET",
         "value": {
-          "used": "11/17/26 11:00 AM ET",
-          "newest_indexed": "11/17/26 11:00 AM ET"
+          "used": "11/19/26 07:15 AM ET",
+          "newest_indexed": "11/19/26 07:15 AM ET"
         }
       },
       {
         "id": "G-F4",
         "name": "no sealed row within the tip cutoff",
         "pass": true,
-        "detail": "first tip 2026-11-17 10:30 PM ET is 10.4 h away (cutoff 6 h)",
-        "value": 10.42
+        "detail": "first tip 2026-11-19 8:00 PM ET is 12.5 h away (cutoff 6 h)",
+        "value": 12.47
       },
       {
         "id": "G-F5",
         "name": "record arithmetic",
         "pass": true,
-        "detail": "205 wins / 205 losses vs 205 official finals",
+        "detail": "222 wins / 222 losses vs 222 official finals",
         "value": {
-          "wins": 205,
-          "losses": 205,
-          "finals": 205
+          "wins": 222,
+          "losses": 222,
+          "finals": 222
         }
       },
       {
@@ -88,35 +88,35 @@
     "note": "Both columns are official. The advanced page implies a points-allowed figure from DefRtg x POSS; the opponent page prints Opp PTS directly. They disagree by up to the amount shown because the two pages estimate team possessions differently (offensive and defensive possession counts are not identical). Nothing is averaged: the model uses the advanced-page pair for internal consistency and prints the opponent-page figure beside it.",
     "pts_against_vs_opponent_page": {
       "n": 30,
-      "max_abs_diff": 0.85,
+      "max_abs_diff": 0.84,
       "worst": [
         {
           "team": "ORL",
-          "derived": 111.35,
-          "official": 112.2
+          "derived": 111.96,
+          "official": 112.8
         },
         {
           "team": "NYK",
-          "derived": 104.62,
-          "official": 104.0
+          "derived": 104.48,
+          "official": 103.9
         },
         {
-          "team": "DEN",
-          "derived": 113.66,
-          "official": 113.2
+          "team": "TOR",
+          "derived": 111.44,
+          "official": 112.0
         },
         {
           "team": "DET",
-          "derived": 110.75,
-          "official": 110.3
+          "derived": 109.37,
+          "official": 108.9
         },
         {
-          "team": "PHX",
-          "derived": 115.96,
-          "official": 116.4
+          "team": "DEN",
+          "derived": 112.66,
+          "official": 112.2
         }
       ],
-      "mean_abs_diff": 0.249
+      "mean_abs_diff": 0.245
     },
     "pts_for_vs_traditional_page": {
       "n": 30,
@@ -124,31 +124,31 @@
       "worst": [
         {
           "team": "ORL",
-          "derived": 108.89,
-          "official": 108.8
-        },
-        {
-          "team": "MIA",
-          "derived": 119.31,
-          "official": 119.4
-        },
-        {
-          "team": "CHA",
-          "derived": 99.03,
-          "official": 99.1
+          "derived": 109.31,
+          "official": 109.4
         },
         {
           "team": "BKN",
-          "derived": 111.14,
-          "official": 111.2
+          "derived": 110.82,
+          "official": 110.9
         },
         {
-          "team": "MIL",
-          "derived": 106.15,
-          "official": 106.1
+          "team": "WAS",
+          "derived": 110.72,
+          "official": 110.8
+        },
+        {
+          "team": "NOP",
+          "derived": 115.33,
+          "official": 115.4
+        },
+        {
+          "team": "GSW",
+          "derived": 113.63,
+          "official": 113.7
         }
       ],
-      "mean_abs_diff": 0.029
+      "mean_abs_diff": 0.04
     }
   },
   "flags": [
@@ -231,14 +231,14 @@
       "PTS per game, read for ALL 30 clubs this session (see PTS_READ), FGA, 3PA, FTA, REB, AST, TOV."
     ],
     "schedule": [
-      "NBA.com Schedule (official)",
-      "https://www.nba.com/schedule",
-      "Game IDs, ET tip times, arena, city and state for 11/17-11/20, and the official final scores of the completed 11/16 games."
+      "NBA.com Games & Scores day strips + committed schedule capture (official)",
+      "https://www.nba.com/games?date=2026-11-19",
+      "Game IDs and ET tip times for 11/19-11/22 read from the day strips on 2026-11-19; arena/city/state for 11/19-11/20 carried from this module's committed 11/17 schedule read (every shared tip re-verified and agreeing); 11/21-11/22 arenas blank - the strips do not print them."
     ],
     "injury_pdf": [
-      "NBA Official Injury Report 11/17/26 11:00 AM ET (official PDF)",
-      "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_00AM.pdf",
-      "Per-player status (Out / Doubtful / Available) with the stated reason, plus explicit NOT YET SUBMITTED team rows."
+      "NBA Official Injury Report 11/19/26 07:15 AM ET (official PDF)",
+      "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf",
+      "Per-player status (Out / Doubtful / Questionable / Available) with the stated reason, plus explicit NOT YET SUBMITTED team rows. Two Questionable rows (Kuminga, Pullin) lose the team cell at the PDF page break; the PDF's own block-continuation convention carries the previous team block (Minnesota)."
     ],
     "injury_index": [
       "NBA Official - injury report policy and release archive (official)",
@@ -259,6 +259,16 @@
       "NBA.com Schedule 2026-11-15 + committed results feed (official gamebook PDFs)",
       "https://www.nba.com/schedule?date=2026-11-15",
       "The nine 11/15 finals with quarter rows, mirrored into RESULTS below from the committed feed data/raw/refresh_2026-11-15/results_2026-11-15.json (official gamebook PDFs, verified by the v4 settlement digest check)."
+    ],
+    "results_1117": [
+      "Committed official finals feed for 2026-11-17",
+      "https://www.nba.com/games?date=2026-11-17",
+      "The five 11/17 finals with quarter rows, mirrored into RESULTS below verbatim from data/raw/finals_2026-11-17.json (retrieved_at 2026-11-18T19:29:18Z; the club cells that feed leaves blank were filled from the history duplicate rows with agreeing scores)."
+    ],
+    "results_1118": [
+      "Committed official finals feed for 2026-11-18 (day strip + official gamebooks)",
+      "https://www.nba.com/games?date=2026-11-18",
+      "The twelve 11/18 finals with quarter rows, mirrored into RESULTS below verbatim from data/raw/finals_2026-11-18.json (captured 2026-11-19 by arena/6b9f3bbe-nba2; each final read twice - day strip and gamebook line score - and every quarter row sums to its printed final)."
     ]
   },
   "blocked": {
@@ -294,9 +304,9 @@
     ]
   },
   "seal": {
-    "file": "data/v3/ledger/sealed-2026-11-17.json",
-    "digest": "f4a702159c3f26fdf305704496119f47fabce0036f7eba34d4fdf6a9aab4971b",
-    "n": 30,
+    "file": "data/v3/ledger/sealed-2026-11-19.json",
+    "digest": "10358d28cf58e85c1e86e054e99c2890a0554abbbdb44842dfe7478a72cd1360",
+    "n": 26,
     "settled": false
   },
   "settlement": null,
@@ -305,63 +315,63 @@
       "id": "S1",
       "name": "Estimator-agreement moneyline",
       "file": "data/v3/prereg/S1-estimator-agreement-moneyline.json",
-      "sha256": "ecae65a43b1fbcd2e680adbdb88d31319df540ab870b54c3d51c8c1ba289701d",
+      "sha256": "b05e83903249897333767fcdecd8fa1825ee4643eab2fb0662812fe23c3350e6",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S2",
       "name": "Disagreement-fade spread",
       "file": "data/v3/prereg/S2-disagreement-fade-spread.json",
-      "sha256": "4c9037a706549536883923afc68a4b4bfc5701e96d82578377c850a3e394f8e9",
+      "sha256": "f00b9699f129e9915e70a6131fd52c86d4007849ac764fc809db7bec8c37cb6c",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S3",
       "name": "Possession-model total",
       "file": "data/v3/prereg/S3-possession-model-total.json",
-      "sha256": "5e62df5046c72052ee5f799a1b388719801655f38db7cbe36a657d0a8685c20c",
+      "sha256": "29905c8bf9b5da5b30f8f7bd5c64ef16a1cc84e084a328f1b8fdaf2d9e9bf203",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S4",
       "name": "Rotation-availability fade",
       "file": "data/v3/prereg/S4-rotation-availability-fade.json",
-      "sha256": "587ecb231845e4b50e777f2940aed82946d4e9478a50d0a10ec40a98f45bf095",
+      "sha256": "37a669d89e41178aee45a8b750964c35f8fe5750a273b5348317c36f7a72742e",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S5",
       "name": "Same-game parlay: spread + total",
       "file": "data/v3/prereg/S5-same-game-parlay:-spread-+-total.json",
-      "sha256": "a3e7655c15b9366aafbdbe7a557a22b20d78270c0416254b6cfcfb49c0c46e1e",
+      "sha256": "7f0cf49995df283de296717da041e7a365fa0c81916c0436ce83173e3beb4971",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S6",
       "name": "Availability-blind guardrail fade (ABGF)",
       "file": "data/v3/prereg/S6-availability-blind-guardrail-fade-(abgf).json",
-      "sha256": "f67a90403f5224704ad68b6677e39bfad3dc2f4e0724e49a7de69e140ad24866",
+      "sha256": "c48be0863c2b9c79cff8874181a22aa64b64c5d79d4eab659670faf669a7cfbe",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S7",
       "name": "Schedule-spot fade (SSF)",
       "file": "data/v3/prereg/S7-schedule-spot-fade-(ssf).json",
-      "sha256": "1f1f1ec51f7ce908938ffbbb6f5584c28945d8a18f56a0e0436a6cfe93bf8c09",
+      "sha256": "69fd913bfdba0d20372b3da9c8687f257c79c881a897f0e5c64f4f13a2658d18",
       "status": "pre-registered, 0 bets placed"
     },
     {
       "id": "S8",
       "name": "Player-prop minutes model (PPMM)",
       "file": "data/v3/prereg/S8-player-prop-minutes-model-(ppmm).json",
-      "sha256": "d9d56242d0bf144cb71ec296958c4e6eee3b4fa42296dd80d23b13f5175f42f9",
+      "sha256": "3b4c4d245c275543e5aa5aebf80f670556af600988d5b4bcbaf2f8d1f5f32cb6",
       "status": "pre-registered, 0 bets placed, inputs BLOCKED (no prop line / no official minutes feed)"
     },
     {
       "id": "S9",
       "name": "Ledger-only champion (LOC)",
       "file": "data/v3/prereg/S9-ledger-only-champion-(loc).json",
-      "sha256": "523b64031ff2d43424feb4aa4c6101c7e2e97dada04f39c2bf213d2174c159b2",
+      "sha256": "5b4d8c0e3cc1b4a0c52d5cdab4f60fd16d39bd0e29afc0d26955b325b673ed1e",
       "status": "pre-registered, 0 bets placed, evaluation rule frozen"
     }
   ]

@@ -82,7 +82,10 @@ def semantic() -> list[str]:
         problems.append(f"history has {len(played)} finals, expected {expected}")
     if sum(1 for g in played if not g["neutral"] and g["home_margin"] > 0) != hc["home_wins"]:
         problems.append("home-win count disagrees with a fresh recomputation")
-    if abs(hc["hca_points"] - hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])) > 5e-4:
+    # hca_points is pinned from the UNROUNDED home-win rate and published rounded to 3 dp,
+    # while home_win_rate is published rounded to 4 dp; recomputing Phi^-1 from the rounded
+    # rate can differ by up to ~2e-3. The tolerance absorbs exactly that rounding.
+    if abs(hc["hca_points"] - hc["margin_sd"] * M.phi_inv(hc["home_win_rate"])) > 2.5e-3:
         problems.append("pinned HCA is not sd x Phi^-1(home win rate)")
     for ln in res["lines"]:
         if abs(ln["e1_margin"] - M.estimator_efficiency(

@@ -9,11 +9,11 @@
   "universe": "games in the T+0..T+3 window where both clubs are inside the luck noise band",
   "settlement_rule": "Official NBA final score against the originated spread. A margin within 0.5 of the spread is a PUSH and is excluded from the hit rate, never counted as a win.",
   "status": "pre-registered, 0 bets placed",
-  "registered_at_utc": "2026-11-17T17:05:00Z",
-  "registered_by": "arena/1eeb6a21-nba2",
+  "registered_at_utc": "2026-11-19T12:32:00Z",
+  "registered_by": "arena/6b9f3bbe-nba2",
   "window": {
-    "start": "2026-11-17",
-    "end": "2026-11-20"
+    "start": "2026-11-19",
+    "end": "2026-11-22"
   },
-  "sha256": "4c9037a706549536883923afc68a4b4bfc5701e96d82578377c850a3e394f8e9"
+  "sha256": "f00b9699f129e9915e70a6131fd52c86d4007849ac764fc809db7bec8c37cb6c"
 }

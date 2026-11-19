@@ -1,4 +1,4 @@
-"""Official NBA snapshot captured by session `arena/1eeb6a21-nba2` on 2026-11-17.
+"""Official NBA snapshot re-cut to the 2026-11-19 capture by session `arena/6b9f3bbe-nba2`.
 
 This file supersedes the 2026-11-15 snapshot by `arena/e675ac3d-nba2` (same schema, same
 public names, new capture). The 2026-11-15 module had gone stale: its pick window ended
@@ -22,13 +22,13 @@ Retrieved 2026-11-17, 15:20-17:10 UTC (10:20-12:10 ET).
   OffRtg, DefRtg, NetRtg, TOV%, OREB%, DREB%, PACE, POSS, eFG%.
 * ``www.nba.com/stats/teams/opponent?...`` (chunks 0-1) ..... 30 rows: Opp PTS per game.
 * ``www.nba.com/stats/teams/traditional?...`` (chunks 0-4) .. 30 rows: PTS per game —
-  ALL 30 clubs were inside the fetched chunks this time, so the derived-points
-  cross-check of the previous snapshot (which had read only 16 of 30) now covers the
-  full league.
-* ``ak-static.cms.nba.com/.../Injury-Report_2026-11-17_11_00AM.pdf`` (single chunk) ...
-  today's game-day release: 33 player rows for the five 11/17 games filed so far plus
-  26 explicit NOT YET SUBMITTED team rows (POR@MIN at 11:00 AM, and all 16 clubs for
-  11/18 whose day-before deadline had not yet passed).
+  ALL 30 clubs inside the fetched chunks, so the derived-points cross-check covers the
+  full league. Full provenance for this re-cut: data/raw/refresh_2026-11-19/ and
+  audit/session-6b9f3bbe-nba2/ (session arena/6b9f3bbe-nba2, 2026-11-19).
+* ``ak-static.cms.nba.com/.../Injury-Report_2026-11-19_07_15AM.pdf`` (single chunk) ...
+  the newest release listed on the official index at retrieval time: 23 player rows for
+  the four 11/19 games filed so far plus 21 explicit NOT YET SUBMITTED team rows (three
+  11/19 clubs and all 18 clubs for 11/20 whose day-before deadline had not yet passed).
 * Gamebook PDFs ``statsdmz.nba.com/pdfs/20261116/20261116_*_book.pdf`` (8 documents) ..
   the eight 11/16 finals with quarter rows and per-club totals. These are transcribed in
   ``data/raw/results/results_2026-11-16.json`` and ``data/v5/gamebooks_2026-11-16.json``
@@ -40,8 +40,9 @@ Retrieved 2026-11-17, 15:20-17:10 UTC (10:20-12:10 ET).
   so the rolling model's rest/back-to-back calculations see every game since 11/14.
 
 Two mechanical cross-checks this snapshot passes (asserted in ``selftest``):
-1. the 30 W/L records sum to 205 wins and 205 losses — exactly the 183 historical finals
-   plus the 5 finals of 11/14, the 9 finals of 11/15 and the 8 finals of 11/16;
+1. the 30 W/L records sum to 222 wins and 222 losses — exactly the 183 historical finals
+   plus the committed finals feeds through 2026-11-18 (5 of 11/14, 9 of 11/15, 8 of 11/16,
+   5 of 11/17 and 12 of 11/18);
 2. for every club, ``pts_for - pts_against`` agrees with ``net_rtg x poss / 100`` to
    within 0.2 points per game, and the traditional-page PTS read agrees with the derived
    points-scored figure to within 2.5 points per game (possessions estimated
@@ -50,10 +51,10 @@ Two mechanical cross-checks this snapshot passes (asserted in ``selftest``):
 
 from __future__ import annotations
 
-AS_OF_UTC = "2026-11-17T17:05:00Z"
-AS_OF_ET = "2026-11-17 12:05 ET"
-SESSION = "arena/1eeb6a21-nba2"
-WINDOW = ("2026-11-17", "2026-11-20")  # T+0 .. T+3 inclusive
+AS_OF_UTC = "2026-11-19T12:32:00Z"
+AS_OF_ET = "2026-11-19 07:32 ET"
+SESSION = "arena/6b9f3bbe-nba2"  # re-cut (RQ-8892-02) to the 2026-11-19 capture; prior snapshot by arena/1eeb6a21-nba2 (2026-11-17)
+WINDOW = ("2026-11-19", "2026-11-22")  # T+0 .. T+3 inclusive
 
 SOURCES = {
     "standings": (
@@ -79,16 +80,20 @@ SOURCES = {
         "REB, AST, TOV.",
     ),
     "schedule": (
-        "NBA.com Schedule (official)",
-        "https://www.nba.com/schedule",
-        "Game IDs, ET tip times, arena, city and state for 11/17-11/20, and the official "
-        "final scores of the completed 11/16 games.",
+        "NBA.com Games & Scores day strips + committed schedule capture (official)",
+        "https://www.nba.com/games?date=2026-11-19",
+        "Game IDs and ET tip times for 11/19-11/22 read from the day strips on 2026-11-19; "
+        "arena/city/state for 11/19-11/20 carried from this module's committed 11/17 schedule "
+        "read (every shared tip re-verified and agreeing); 11/21-11/22 arenas blank - the "
+        "strips do not print them.",
     ),
     "injury_pdf": (
-        "NBA Official Injury Report 11/17/26 11:00 AM ET (official PDF)",
-        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_00AM.pdf",
-        "Per-player status (Out / Doubtful / Available) with the stated reason, plus "
-        "explicit NOT YET SUBMITTED team rows.",
+        "NBA Official Injury Report 11/19/26 07:15 AM ET (official PDF)",
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf",
+        "Per-player status (Out / Doubtful / Questionable / Available) with the stated "
+        "reason, plus explicit NOT YET SUBMITTED team rows. Two Questionable rows "
+        "(Kuminga, Pullin) lose the team cell at the PDF page break; the PDF's own "
+        "block-continuation convention carries the previous team block (Minnesota).",
     ),
     "injury_index": (
         "NBA Official - injury report policy and release archive (official)",
@@ -114,6 +119,21 @@ SOURCES = {
         "The nine 11/15 finals with quarter rows, mirrored into RESULTS below from the "
         "committed feed data/raw/refresh_2026-11-15/results_2026-11-15.json (official "
         "gamebook PDFs, verified by the v4 settlement digest check).",
+    ),
+    "results_1117": (
+        "Committed official finals feed for 2026-11-17",
+        "https://www.nba.com/games?date=2026-11-17",
+        "The five 11/17 finals with quarter rows, mirrored into RESULTS below verbatim from "
+        "data/raw/finals_2026-11-17.json (retrieved_at 2026-11-18T19:29:18Z; the club cells "
+        "that feed leaves blank were filled from the history duplicate rows with agreeing scores).",
+    ),
+    "results_1118": (
+        "Committed official finals feed for 2026-11-18 (day strip + official gamebooks)",
+        "https://www.nba.com/games?date=2026-11-18",
+        "The twelve 11/18 finals with quarter rows, mirrored into RESULTS below verbatim from "
+        "data/raw/finals_2026-11-18.json (captured 2026-11-19 by arena/6b9f3bbe-nba2; each "
+        "final read twice - day strip and gamebook line score - and every quarter row sums "
+        "to its printed final).",
     ),
 }
 
@@ -169,37 +189,41 @@ BLOCKED = {
 # --------------------------------------------------------------------------- teams
 # abbr, name, W, L, homeW, homeL, roadW, roadL, GP, MIN, OffRtg, DefRtg, NetRtg,
 # PACE, POSS, eFG%, TOV%, OREB%, DREB%, OppPTS, PTS_read
+# Neutral-site games on the official 2026-11-19 standings card: inside W/L, outside the
+# home/road split (DEN 1-0, IND 0-1), exactly as the card prints them.
+NEUTRAL_GAMES = {"DEN": (1, 0), "IND": (0, 1)}
+
 _T = """
-LAL|Los Angeles Lakers|12|2|7|0|5|2|14|672.0|122.1|114.0|8.0|100.64|1408|58.8|16.7|33.3|64.1|114.9|122.8
-SAS|San Antonio Spurs|12|2|6|1|6|1|14|677.0|119.2|106.6|12.6|98.77|1395|53.5|12.3|33.3|71.8|105.9|118.8
-PHI|Philadelphia 76ers|12|3|6|2|6|1|15|720.0|113.7|111.1|2.6|100.23|1505|53.0|12.6|28.4|71.6|111.3|114.1
-BOS|Boston Celtics|11|3|7|1|4|2|14|677.0|118.2|106.1|12.1|96.53|1360|55.3|14.8|32.7|68.0|103.3|114.8
-HOU|Houston Rockets|11|4|4|3|7|1|15|720.0|120.9|112.3|8.6|97.50|1462|55.3|14.8|36.7|68.1|109.5|117.8
-MEM|Memphis Grizzlies|10|4|5|3|5|1|14|677.0|120.0|110.9|9.1|100.61|1420|56.4|15.8|34.7|70.7|112.3|121.7
-MIN|Minnesota Timberwolves|10|4|5|2|5|2|14|677.0|115.2|104.1|11.1|101.21|1427|54.7|15.4|35.2|69.8|106.1|117.4
-POR|Portland Trail Blazers|9|4|5|1|4|3|13|624.0|117.2|110.6|6.6|100.65|1308|55.4|16.1|32.6|69.8|111.4|117.9
-OKC|Oklahoma City Thunder|9|5|4|3|5|2|14|672.0|113.4|108.4|5.1|98.82|1384|51.9|13.5|32.1|68.7|107.1|112.1
-ATL|Atlanta Hawks|8|6|4|3|4|3|14|677.0|112.8|111.1|1.7|103.69|1462|52.7|14.7|33.0|69.2|116.1|117.8
-CLE|Cleveland Cavaliers|8|7|4|4|4|3|15|725.0|116.9|114.7|2.2|100.30|1515|55.9|13.9|30.0|68.4|115.8|118.1
-DET|Detroit Pistons|8|4|5|1|3|3|12|586.0|114.1|109.2|4.9|99.48|1217|53.9|14.1|29.8|66.6|110.3|115.7
-GSW|Golden State Warriors|8|6|3|4|5|2|14|677.0|114.6|112.3|2.2|99.58|1406|54.3|15.9|32.4|68.2|112.6|115.1
-MIA|Miami Heat|8|6|6|1|2|5|14|677.0|116.0|116.2|-0.1|101.96|1440|54.9|13.6|30.4|68.8|119.1|119.4
-DAL|Dallas Mavericks|7|7|2|5|5|2|14|672.0|111.8|114.5|-2.7|100.18|1404|53.2|16.0|32.9|66.0|114.6|112.1
-DEN|Denver Nuggets|7|5|4|1|3|4|12|581.0|115.1|114.9|0.2|97.86|1187|54.9|13.9|29.9|66.9|113.2|113.8
-NYK|New York Knicks|7|6|3|4|4|2|13|629.0|113.7|108.2|5.5|95.66|1257|51.9|15.2|36.7|71.8|104.0|109.9
-ORL|Orlando Magic|6|7|3|3|3|4|13|629.0|110.5|113.0|-2.6|98.10|1281|53.2|16.8|31.4|70.6|112.2|108.8
-PHX|Phoenix Suns|6|7|3|3|3|4|13|624.0|114.5|117.5|-3.0|98.88|1283|54.6|14.6|30.9|62.5|116.4|113.0
-IND|Indiana Pacers|5|9|4|4|1|5|14|672.0|110.9|112.9|-2.0|101.25|1415|53.8|14.3|24.6|68.5|114.5|112.1
-NOP|New Orleans Pelicans|5|10|0|8|5|2|15|735.0|111.7|118.4|-6.7|101.62|1555|51.8|15.2|30.1|68.2|122.9|115.8
-TOR|Toronto Raptors|5|8|2|5|3|3|13|629.0|113.6|112.2|1.4|99.55|1302|51.7|14.4|35.8|67.2|112.8|113.8
-CHA|Charlotte Hornets|4|9|2|5|2|4|13|624.0|102.5|113.6|-11.1|96.65|1256|48.0|20.0|36.5|74.2|109.8|99.1
-LAC|LA Clippers|4|8|3|3|1|5|12|581.0|111.4|115.3|-3.9|100.05|1210|55.1|17.6|29.6|66.0|116.5|112.3
-WAS|Washington Wizards|4|11|1|7|3|4|15|730.0|109.9|117.6|-7.8|99.91|1519|51.7|14.5|28.8|65.1|119.2|111.3
-BKN|Brooklyn Nets|3|10|1|6|2|4|13|629.0|110.8|117.4|-6.6|99.55|1304|53.2|17.1|31.6|69.1|117.8|111.2
-CHI|Chicago Bulls|3|10|2|5|1|5|13|629.0|109.1|120.0|-10.9|104.17|1366|51.8|16.5|30.6|64.6|125.9|114.6
-MIL|Milwaukee Bucks|1|13|1|6|0|7|14|672.0|105.4|118.9|-13.6|100.68|1410|50.9|16.7|30.5|64.6|119.7|106.1
-SAC|Sacramento Kings|1|12|1|6|0|6|13|624.0|106.8|119.8|-13.0|101.08|1312|52.7|17.3|28.4|68.8|121.2|107.8
-UTA|Utah Jazz|1|13|1|7|0|6|14|682.0|105.1|116.2|-11.1|100.22|1426|50.8|16.3|29.0|69.3|118.0|107.1
+ATL|Atlanta Hawks|9|6|3|3|6|3|15|725.0|112.8|110.8|1.9|103.71|1566|52.8|14.6|32.8|69.6|115.8|117.7
+BKN|Brooklyn Nets|3|11|1|5|2|6|14|677.0|110.5|119.0|-8.4|99.51|1404|53.5|17.5|31.9|68.0|119.2|110.9
+BOS|Boston Celtics|11|4|6|1|5|3|15|725.0|117.0|106.0|11.0|96.76|1460|54.6|14.9|32.9|67.7|103.4|113.9
+CHA|Charlotte Hornets|4|10|3|4|1|6|14|677.0|103.1|113.7|-10.6|96.43|1360|48.6|19.9|36.2|72.8|110.4|100.1
+CHI|Chicago Bulls|4|10|1|4|3|6|14|677.0|111.1|119.1|-8.0|103.8|1464|52.7|16.5|31.6|64.6|124.6|116.2
+CLE|Cleveland Cavaliers|8|8|6|3|2|5|16|773.0|117.5|115.5|2.0|100.01|1610|55.8|13.7|30.9|68.7|116.3|118.3
+DAL|Dallas Mavericks|8|7|6|2|2|5|15|720.0|112.3|113.4|-1.1|99.97|1501|53.6|16.3|33.1|65.9|113.2|112.3
+DEN|Denver Nuggets|8|5|3|3|4|2|13|629.0|114.3|113.8|0.5|98.02|1287|54.3|14.2|30.4|66.8|112.2|113.2
+DET|Detroit Pistons|10|4|3|2|7|2|14|682.0|114.9|108.9|6.0|98.78|1406|54.5|14.2|30.0|66.6|108.9|115.4
+GSW|Golden State Warriors|8|7|6|1|2|6|15|725.0|113.4|112.8|0.6|99.41|1503|53.9|16.2|32.7|67.9|112.8|113.7
+HOU|Houston Rockets|12|4|7|1|5|3|16|768.0|121.1|112.1|9.0|97.41|1558|55.6|15.0|36.7|68.7|109.2|117.9
+IND|Indiana Pacers|5|10|2|5|3|4|15|720.0|110.7|113.6|-2.9|100.9|1511|53.9|14.3|24.4|68.1|114.8|111.5
+LAC|LA Clippers|4|9|4|4|0|5|13|629.0|111.4|117.0|-5.6|99.74|1306|54.9|17.2|29.2|65.9|117.7|111.9
+LAL|Los Angeles Lakers|13|3|6|2|7|1|16|773.0|119.8|113.2|6.7|100.35|1614|57.2|16.5|33.6|65.0|114.4|120.9
+MEM|Memphis Grizzlies|11|4|3|4|8|0|15|725.0|120.6|111.9|8.7|100.27|1516|56.9|15.7|34.2|69.8|112.9|121.9
+MIA|Miami Heat|9|6|5|3|4|3|15|725.0|116.9|116.7|0.3|102.19|1546|55.4|14.0|30.8|68.3|119.9|120.5
+MIL|Milwaukee Bucks|1|14|1|7|0|7|15|720.0|106.7|119.7|-13.0|101.0|1515|51.4|16.8|31.1|64.5|120.9|107.7
+MIN|Minnesota Timberwolves|11|4|7|2|4|2|15|725.0|114.5|104.0|10.5|101.23|1528|54.8|15.8|34.7|69.3|106.1|116.7
+NOP|New Orleans Pelicans|5|11|4|7|1|4|16|783.0|111.7|118.9|-7.1|101.3|1652|51.8|15.3|30.1|68.5|122.8|115.4
+NYK|New York Knicks|8|6|4|3|4|3|14|677.0|114.8|109.0|5.8|94.87|1342|52.4|15.2|37.1|72.2|103.9|110.0
+OKC|Oklahoma City Thunder|9|6|5|1|4|5|15|720.0|113.0|108.7|4.4|99.17|1488|52.2|13.5|31.6|68.9|107.7|112.1
+ORL|Orlando Magic|6|8|1|5|5|3|14|677.0|111.3|114.0|-2.7|97.84|1375|53.9|16.4|30.7|70.6|112.8|109.4
+PHI|Philadelphia 76ers|13|3|6|2|7|1|16|768.0|114.5|111.8|2.7|99.88|1600|53.4|12.6|28.4|72.0|111.6|114.5
+PHX|Phoenix Suns|7|7|5|4|2|3|14|672.0|115.6|116.8|-1.2|98.89|1382|55.4|14.4|30.5|63.1|115.7|114.1
+POR|Portland Trail Blazers|9|5|3|2|6|3|14|672.0|116.2|110.2|6.0|100.71|1410|54.8|16.1|33.0|70.1|111.0|117.0
+SAC|Sacramento Kings|1|13|0|9|1|4|14|672.0|106.9|120.4|-13.5|100.93|1411|52.8|17.2|28.4|69.3|121.7|107.7
+SAS|San Antonio Spurs|12|3|5|3|7|0|15|725.0|118.1|107.0|11.1|98.35|1487|53.0|12.6|33.5|71.3|105.9|117.1
+TOR|Toronto Raptors|5|10|2|6|3|4|15|725.0|113.7|113.1|0.5|98.09|1478|52.0|13.7|34.3|66.4|112.0|112.0
+UTA|Utah Jazz|3|13|1|7|2|6|16|778.0|107.0|114.5|-7.5|100.16|1626|52.4|16.7|29.0|69.7|116.0|108.8
+WAS|Washington Wizards|5|11|2|5|3|6|16|778.0|109.9|117.1|-7.1|99.46|1612|51.7|14.6|29.2|65.6|117.9|110.8
 """
 
 CONF = {t: ("East" if t in {
@@ -248,36 +272,32 @@ PTS_READ = {a: t["pts_read"] for a, t in TEAMS.items() if t["pts_read"] is not N
 # --------------------------------------------------------------------------- slate
 # game_id, date, away, home, time_et, arena, city, state
 _S = """
-0022600253|2026-11-17|NYK|TOR|7:30 PM|Scotiabank Arena|Toronto|ON
-0022600254|2026-11-17|POR|MIN|8:00 PM|Target Center|Minneapolis|MN
-0022600255|2026-11-17|DET|SAS|8:00 PM|Frost Bank Center|San Antonio|TX
-0022600256|2026-11-17|CHA|LAL|11:00 PM|Crypto.com Arena|Los Angeles|CA
-0022600257|2026-11-17|UTA|LAC|10:30 PM|Intuit Dome|Inglewood|CA
-0022600258|2026-11-18|MEM|CLE|7:00 PM|Rocket Arena|Cleveland|OH
-0022600259|2026-11-18|HOU|IND|7:00 PM|Gainbridge Fieldhouse|Indianapolis|IN
-0022600260|2026-11-18|MIL|MIA|7:00 PM|Kaseya Center|Miami|FL
-0022600261|2026-11-18|PHI|ORL|7:00 PM|Kia Center|Orlando|FL
-0022600262|2026-11-18|CHI|BKN|7:30 PM|Barclays Center|Brooklyn|NY
-0022600263|2026-11-18|WAS|TOR|7:30 PM|Scotiabank Arena|Toronto|ON
-0022600264|2026-11-18|DET|NOP|8:00 PM|Smoothie King Center|New Orleans|LA
-0022600265|2026-11-18|ATL|OKC|8:00 PM|Paycom Center|Oklahoma City|OK
-0022600266|2026-11-18|BOS|DEN|9:30 PM|Ball Arena|Denver|CO
-0022600267|2026-11-18|GSW|DAL|8:00 PM|American Airlines Center|Dallas|TX
-0022600268|2026-11-18|UTA|LAL|10:00 PM|Crypto.com Arena|Los Angeles|CA
-0022600269|2026-11-18|PHX|SAC|10:00 PM|Golden 1 Center|Sacramento|CA
-0022600270|2026-11-19|GSW|MEM|8:00 PM|FedExForum|Memphis|TN
-0022600271|2026-11-19|POR|MIL|8:00 PM|Fiserv Forum|Milwaukee|WI
-0022600272|2026-11-19|NYK|MIN|8:00 PM|Target Center|Minneapolis|MN
 0022600273|2026-11-19|LAC|SAS|8:00 PM|Frost Bank Center|San Antonio|TX
+0022600270|2026-11-19|GSW|MEM|8:00 PM|FedExForum|Memphis|TN
+0022600272|2026-11-19|NYK|MIN|8:00 PM|Target Center|Minneapolis|MN
+0022600271|2026-11-19|POR|MIL|8:00 PM|Fiserv Forum|Milwaukee|WI
 0022600043|2026-11-20|CHA|ATL|7:00 PM|State Farm Arena|Atlanta|GA
-0022600044|2026-11-20|ORL|BKN|7:30 PM|Barclays Center|Brooklyn|NY
-0022600045|2026-11-20|IND|CLE|7:30 PM|Rocket Arena|Cleveland|OH
 0022600046|2026-11-20|TOR|DET|7:30 PM|Little Caesars Arena|Detroit|MI
-0022600047|2026-11-20|WAS|CHI|8:00 PM|United Center|Chicago|IL
+0022600045|2026-11-20|IND|CLE|7:30 PM|Rocket Arena|Cleveland|OH
+0022600044|2026-11-20|ORL|BKN|7:30 PM|Barclays Center|Brooklyn|NY
 0022600048|2026-11-20|NOP|OKC|8:00 PM|Paycom Center|Oklahoma City|OK
+0022600047|2026-11-20|WAS|CHI|8:00 PM|United Center|Chicago|IL
 0022600049|2026-11-20|PHX|UTA|9:30 PM|Delta Center|Salt Lake City|UT
 0022600050|2026-11-20|HOU|DEN|10:00 PM|Ball Arena|Denver|CO
 0022600051|2026-11-20|SAC|LAL|10:00 PM|Crypto.com Arena|Los Angeles|CA
+0022600274|2026-11-21|MIL|PHI|13:00|||
+0022600275|2026-11-21|POR|NYK|19:30|||
+0022600278|2026-11-21|NOP|SAS|20:00|||
+0022600277|2026-11-21|MEM|MIN|20:00|||
+0022600276|2026-11-21|LAC|DAL|20:00|||
+0022600279|2026-11-21|BOS|SAC|22:00|||
+0022600280|2026-11-22|DET|ATL|15:30|||
+0022600281|2026-11-22|OKC|MIA|18:00|||
+0022600284|2026-11-22|DAL|UTA|19:00|||
+0022600282|2026-11-22|ORL|WAS|19:00|||
+0022600283|2026-11-22|DEN|CHI|19:00|||
+0022600285|2026-11-22|IND|NYK|20:00|||
+0022600286|2026-11-22|BOS|GSW|20:30|||
 """
 
 SLUG = {
@@ -310,7 +330,9 @@ SLATE = _slate()
 
 # Arena table, published with the arena/city/state read from the official schedule.
 # Coordinates are deliberately absent - see BLOCKED["arena_coords"].
-ARENAS = sorted({(g["arena"], g["city"], g["state"]) for g in SLATE})
+# Only rows with an official arena read enter the arena table; the 11/21-11/22 rows whose
+# arena the day strips do not print stay blank on the slate itself (FLAG-V3-ARENA-BLANK).
+ARENAS = sorted({(g["arena"], g["city"], g["state"]) for g in SLATE if g["arena"]})
 
 # --------------------------------------------------------------------------- results
 # game_id, date, away, home, away_pts, home_pts, periods, away_q, home_q
@@ -343,6 +365,23 @@ _R = """
 0022600250|2026-11-16|POR|MIN|98|106|4|26,25,22,25|26,33,28,19
 0022600251|2026-11-16|GSW|NOP|94|115|4|11,25,29,29|35,26,32,22
 0022600252|2026-11-16|PHX|DEN|117|105|4|20,36,34,27|24,29,29,23
+0022600253|2026-11-17|NYK|TOR|111|102|4|23,31,26,31|29,21,33,19
+0022600254|2026-11-17|POR|MIN|105|106|4|17,31,31,26|29,20,30,27
+0022600255|2026-11-17|DET|SAS|105|93|4|26,29,23,27|33,21,18,21
+0022600256|2026-11-17|CHA|LAL|114|118|5|34,32,28,17,3|30,29,22,30,7
+0022600257|2026-11-17|UTA|LAC|132|107|4|35,23,30,44|29,33,24,21
+0022600258|2026-11-18|MEM|CLE|124|121|4|30,41,29,24|37,35,27,22
+0022600259|2026-11-18|HOU|IND|119|104|4|39,23,31,26|28,18,30,28
+0022600260|2026-11-18|MIL|MIA|130|137|4|23,25,38,44|34,40,38,25
+0022600261|2026-11-18|PHI|ORL|121|116|4|27,37,28,29|40,29,28,19
+0022600262|2026-11-18|CHI|BKN|137|107|4|37,39,35,26|21,30,26,30
+0022600263|2026-11-18|WAS|TOR|103|99|4|29,20,29,25|23,24,32,20
+0022600264|2026-11-18|DET|NOP|122|109|4|31,36,25,30|31,29,26,23
+0022600265|2026-11-18|ATL|OKC|117|112|4|31,33,19,34|29,22,32,29
+0022600266|2026-11-18|BOS|DEN|101|105|4|30,31,19,21|24,25,31,25
+0022600267|2026-11-18|GSW|DAL|94|116|4|25,24,23,22|35,27,30,24
+0022600268|2026-11-18|UTA|LAL|109|97|4|29,27,22,31|34,20,22,21
+0022600269|2026-11-18|PHX|SAC|128|107|4|36,29,34,29|31,29,24,23
 """
 
 # src key per results row group: which SOURCES entry carries its provenance
@@ -350,6 +389,8 @@ RESULTS_SRC = {
     "2026-11-14": "schedule",
     "2026-11-15": "results_1115",
     "2026-11-16": "gamebooks",
+    "2026-11-17": "results_1117",
+    "2026-11-18": "results_1118",
 }
 
 
@@ -375,16 +416,16 @@ RESULTS = _results()
 
 # --------------------------------------------------------------------------- injuries
 INJURY_META = {
-    "release": "11/17/26 11:00 AM ET",
-    "revision_time_et": "2026-11-17 11:00 ET",
-    "retrieved_at_utc": "2026-11-17T16:41:00Z",
-    "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_00AM.pdf",
+    "release": "11/19/26 07:15 AM ET",
+    "revision_time_et": "2026-11-19 07:15 AM ET",
+    "retrieved_at_utc": "2026-11-19T12:32:00Z",
+    "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf",
     "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
-    "newest_indexed_release_at_retrieval": "11/17/26 11:00 AM ET",
+    "newest_indexed_release_at_retrieval": "11/19/26 07:15 AM ET",
     "previous_release_used_for_diff": (
-        "11/16/26 01:00 PM ET",
-        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
-        "data/raw/refresh_2026-11-16/injury_transcript_20261116_0100PM.json",
+        "11/18/26 02:15 PM ET",
+        "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-18_02_15PM.pdf",
+        "data/raw/capture_2026-11-18/injury_release_2026-11-18.json",
     ),
     "filing_policy": (
         "By 5 p.m. local the day before a game (1 p.m. local for the second night of a "
@@ -395,65 +436,50 @@ INJURY_META = {
 
 # date, time_et, matchup, team, player, status, reason   (player "" => NOT YET SUBMITTED)
 _I = """
-11/17/2026|07:30|NYK@TOR|Toronto Raptors|Bittle, Nate|Out|Injury/Illness - Right Foot Avulsion Fracture
-11/17/2026|07:30|NYK@TOR|Toronto Raptors|Leonard, Kawhi|Out|Injury/Illness - Left Knee Injury Management
-11/17/2026|07:30|NYK@TOR|Toronto Raptors|McCullar Jr., Kevin|Out|G League - Two-Way
-11/17/2026|07:30|NYK@TOR|Toronto Raptors|Smith, Malachi|Out|G League - Two-Way
-11/17/2026|08:00|DET@SAS|Detroit Pistons|Duren, Jalen|Out|Injury/Illness - Right Hamstring Strain
-11/17/2026|08:00|DET@SAS|Detroit Pistons|Holland II, Ronald|Out|Injury/Illness - Left Knee Contusion / Bone Bruise
-11/17/2026|08:00|DET@SAS|Detroit Pistons|Joe, Isaiah|Doubtful|Injury/Illness - Right Hip Contusion
-11/17/2026|08:00|DET@SAS|Detroit Pistons|Okorie, Ebuka|Out|G League - On Assignment
-11/17/2026|08:00|DET@SAS|Detroit Pistons|Onyenso, Ugonna|Out|G League - Two-Way
-11/17/2026|08:00|DET@SAS|Detroit Pistons|Prince, Taurean|Out|Injury/Illness - Right Knee Soreness
-11/17/2026|08:00|DET@SAS|Detroit Pistons|Robinson, Duncan|Out|Injury/Illness - Left Quadriceps Strain
-11/17/2026|08:00|DET@SAS|San Antonio Spurs|Brown, Maliq|Out|G League - Two-Way
-11/17/2026|08:00|DET@SAS|San Antonio Spurs|Gillespie, Ja'Kobi|Out|G League - Two-Way
-11/17/2026|08:00|DET@SAS|San Antonio Spurs|Harris, Tobias|Out|Injury/Illness - Left Calf Strain
-11/17/2026|08:00|DET@SAS|San Antonio Spurs|Quaintance, Jayden|Out|Injury/Illness - Right Knee Surgery
-11/17/2026|08:00|POR@MIN|Portland Trail Blazers|||NOT YET SUBMITTED
-11/17/2026|08:00|POR@MIN|Minnesota Timberwolves|||NOT YET SUBMITTED
-11/17/2026|10:30|UTA@LAC|Utah Jazz|Bufkin, Kobe|Out|G League - Two-Way
-11/17/2026|10:30|UTA@LAC|Utah Jazz|Hayes, Jaxson|Out|Injury/Illness - Left Knee Strain
-11/17/2026|10:30|UTA@LAC|Utah Jazz|Ingram, Harrison|Out|G League - Two-Way
-11/17/2026|10:30|UTA@LAC|Utah Jazz|Jackson Jr., Jaren|Out|Injury/Illness - Right MCL Tear
-11/17/2026|10:30|UTA@LAC|Utah Jazz|Markkanen, Lauri|Out|Injury/Illness - Right Hand Fracture
-11/17/2026|10:30|UTA@LAC|Utah Jazz|Nurkic, Jusuf|Out|Injury/Illness - Right Right Foot; 2nd Plantar Plate Tear
-11/17/2026|10:30|UTA@LAC|LA Clippers|Beal, Bradley|Out|Injury/Illness - Right Knee Injury Management
-11/17/2026|10:30|UTA@LAC|LA Clippers|Ingram, Brandon|Out|Injury/Illness - Right Heel Surgery
-11/17/2026|10:30|UTA@LAC|LA Clippers|Miller, Jordan|Out|Injury/Illness - Left Rotator Cuff Surgery
-11/17/2026|10:30|UTA@LAC|LA Clippers|Niederhauser, Yanic Konan|Out|Injury/Illness - Right Lisfranc Surgery
-11/17/2026|11:00|CHA@LAL|Charlotte Hornets|Ajayi, Michael|Out|G League - Two-Way
-11/17/2026|11:00|CHA@LAL|Charlotte Hornets|Boswell, Kylan|Out|G League - Two-Way
-11/17/2026|11:00|CHA@LAL|Charlotte Hornets|Knueppel, Kon|Out|Injury/Illness - Left Hamstring Strain
-11/17/2026|11:00|CHA@LAL|Charlotte Hornets|Schroder, Dennis|Out|Injury/Illness - Left Hamstring Strain
-11/17/2026|11:00|CHA@LAL|Charlotte Hornets|Steinbach, Hannes|Out|G League - On Assignment
-11/17/2026|11:00|CHA@LAL|Los Angeles Lakers|Grimes, Quentin|Available|Injury/Illness - Right Finger Splint
-11/17/2026|11:00|CHA@LAL|Los Angeles Lakers|Kessler, Walker|Out|Injury/Illness - Right Lower Leg
-11/17/2026|11:00|CHA@LAL|Los Angeles Lakers|Reaves, Austin|Out|Injury/Illness - Left Heel Contusion / Bone Bruise
-11/18/2026|07:00|HOU@IND|Houston Rockets|||NOT YET SUBMITTED
-11/18/2026|07:00|HOU@IND|Indiana Pacers|||NOT YET SUBMITTED
-11/18/2026|07:00|MEM@CLE|Memphis Grizzlies|||NOT YET SUBMITTED
-11/18/2026|07:00|MEM@CLE|Cleveland Cavaliers|||NOT YET SUBMITTED
-11/18/2026|07:00|MIL@MIA|Milwaukee Bucks|||NOT YET SUBMITTED
-11/18/2026|07:00|MIL@MIA|Miami Heat|||NOT YET SUBMITTED
-11/18/2026|07:00|PHI@ORL|Philadelphia 76ers|||NOT YET SUBMITTED
-11/18/2026|07:00|PHI@ORL|Orlando Magic|||NOT YET SUBMITTED
-11/18/2026|07:30|CHI@BKN|Chicago Bulls|||NOT YET SUBMITTED
-11/18/2026|07:30|CHI@BKN|Brooklyn Nets|||NOT YET SUBMITTED
-11/18/2026|07:30|WAS@TOR|Washington Wizards|||NOT YET SUBMITTED
-11/18/2026|07:30|WAS@TOR|Toronto Raptors|||NOT YET SUBMITTED
-11/18/2026|08:00|ATL@OKC|Atlanta Hawks|||NOT YET SUBMITTED
-11/18/2026|08:00|ATL@OKC|Oklahoma City Thunder|||NOT YET SUBMITTED
-11/18/2026|08:00|DET@NOP|Detroit Pistons|||NOT YET SUBMITTED
-11/18/2026|08:00|DET@NOP|New Orleans Pelicans|||NOT YET SUBMITTED
-11/18/2026|08:00|GSW@DAL|Golden State Warriors|||NOT YET SUBMITTED
-11/18/2026|08:00|GSW@DAL|Dallas Mavericks|||NOT YET SUBMITTED
-11/18/2026|09:30|BOS@DEN|Boston Celtics|||NOT YET SUBMITTED
-11/18/2026|09:30|BOS@DEN|Denver Nuggets|||NOT YET SUBMITTED
-11/18/2026|10:00|PHX@SAC|Phoenix Suns|||NOT YET SUBMITTED
-11/18/2026|10:00|PHX@SAC|Sacramento Kings|||NOT YET SUBMITTED
-11/18/2026|10:00|UTA@LAL|Utah Jazz|||NOT YET SUBMITTED
-11/18/2026|10:00|UTA@LAL|Los Angeles Lakers|||NOT YET SUBMITTED
+11/19/2026|08:00|GSW@MEM|Golden State Warriors|||NOT YET SUBMITTED
+11/19/2026|08:00|GSW@MEM|Memphis Grizzlies|||NOT YET SUBMITTED
+11/19/2026|08:00|LAC@SAS|LA Clippers|Beal, Bradley|Out|Injury/Illness - Right Knee Injury Management
+11/19/2026|08:00|LAC@SAS|LA Clippers|Ingram, Brandon|Out|Injury/Illness - Right Heel Surgery
+11/19/2026|08:00|LAC@SAS|LA Clippers|Martinelli, Nick|Out|G League - Two-Way
+11/19/2026|08:00|LAC@SAS|LA Clippers|Miller, Jordan|Out|Injury/Illness - Left Rotator Cuff Surgery
+11/19/2026|08:00|LAC@SAS|San Antonio Spurs|Brown, Maliq|Out|G League - Two-Way
+11/19/2026|08:00|LAC@SAS|San Antonio Spurs|Gillespie, Ja'Kobi|Out|G League - Two-Way
+11/19/2026|08:00|LAC@SAS|San Antonio Spurs|Harper, Dylan|Out|Injury/Illness - Left Hip Soreness
+11/19/2026|08:00|LAC@SAS|San Antonio Spurs|Harris, Tobias|Out|Injury/Illness - Left Calf Strain
+11/19/2026|08:00|LAC@SAS|San Antonio Spurs|Quaintance, Jayden|Out|Injury/Illness - Right Knee Surgery
+11/19/2026|08:00|NYK@MIN|Minnesota Timberwolves|Beringer, Joan|Available|Injury/Illness - Face Mask
+11/19/2026|08:00|NYK@MIN|Minnesota Timberwolves|Clark, Jaylen|Out|Injury/Illness - Right Hamstring Strain
+11/19/2026|08:00|NYK@MIN|Minnesota Timberwolves|DiVincenzo, Donte|Out|Injury/Illness - Right Achilles Tendon Repair / Surgery
+11/19/2026|08:00|NYK@MIN|Minnesota Timberwolves|Edwards, Anthony|Out|Injury/Illness - Right Knee Arthroscopy
+11/19/2026|08:00|NYK@MIN|Minnesota Timberwolves|Kuminga, Jonathan|Questionable|Injury/Illness - Right Shoulder Contusion
+11/19/2026|08:00|NYK@MIN|Minnesota Timberwolves|Pullin, Zyon|Questionable|Injury/Illness - Right Quadriceps Contusion
+11/19/2026|08:00|POR@MIL|Portland Trail Blazers|Avdija, Deni|Questionable|Injury/Illness - Left Foot Inflammation / Soreness
+11/19/2026|08:00|POR@MIL|Portland Trail Blazers|Camara, Toumani|Questionable|Injury/Illness - Abdominal Soreness
+11/19/2026|08:00|POR@MIL|Portland Trail Blazers|Carlson, Branden|Available|Injury/Illness - Face Mask
+11/19/2026|08:00|POR@MIL|Portland Trail Blazers|Krejci, Vit|Out|Injury/Illness - Left Ankle Fracture
+11/19/2026|08:00|POR@MIL|Portland Trail Blazers|Morant, Ja|Out|Injury/Illness - Left Hamstring Strain
+11/19/2026|08:00|POR@MIL|Portland Trail Blazers|Sharpe, Shaedon|Out|Injury/Illness - Right Meniscus Surgery
+11/19/2026|08:00|POR@MIL|Portland Trail Blazers|Williams III, Robert|Out|Rest
+11/19/2026|08:00|POR@MIL|Portland Trail Blazers|Youngblood, Chris|Out|Injury/Illness - Right Heel Contusion / Bone Bruise
+11/19/2026|08:00|POR@MIL|Milwaukee Bucks|||NOT YET SUBMITTED
+11/20/2026|07:00|CHA@ATL|Charlotte Hornets|||NOT YET SUBMITTED
+11/20/2026|07:00|CHA@ATL|Atlanta Hawks|||NOT YET SUBMITTED
+11/20/2026|07:30|IND@CLE|Indiana Pacers|||NOT YET SUBMITTED
+11/20/2026|07:30|IND@CLE|Cleveland Cavaliers|||NOT YET SUBMITTED
+11/20/2026|07:30|ORL@BKN|Orlando Magic|||NOT YET SUBMITTED
+11/20/2026|07:30|ORL@BKN|Brooklyn Nets|||NOT YET SUBMITTED
+11/20/2026|07:30|TOR@DET|Toronto Raptors|||NOT YET SUBMITTED
+11/20/2026|07:30|TOR@DET|Detroit Pistons|||NOT YET SUBMITTED
+11/20/2026|08:00|NOP@OKC|New Orleans Pelicans|||NOT YET SUBMITTED
+11/20/2026|08:00|NOP@OKC|Oklahoma City Thunder|||NOT YET SUBMITTED
+11/20/2026|08:00|WAS@CHI|Washington Wizards|||NOT YET SUBMITTED
+11/20/2026|08:00|WAS@CHI|Chicago Bulls|||NOT YET SUBMITTED
+11/20/2026|09:30|PHX@UTA|Phoenix Suns|||NOT YET SUBMITTED
+11/20/2026|09:30|PHX@UTA|Utah Jazz|||NOT YET SUBMITTED
+11/20/2026|10:00|HOU@DEN|Houston Rockets|||NOT YET SUBMITTED
+11/20/2026|10:00|HOU@DEN|Denver Nuggets|||NOT YET SUBMITTED
+11/20/2026|10:00|SAC@LAL|Sacramento Kings|||NOT YET SUBMITTED
+11/20/2026|10:00|SAC@LAL|Los Angeles Lakers|||NOT YET SUBMITTED
 """
 
 TEAM_OF = {
@@ -547,17 +573,20 @@ def selftest() -> list[str]:
     p: list[str] = []
     if len(TEAMS) != 30:
         p.append(f"TEAMS has {len(TEAMS)} clubs")
-    if sum(t["w"] for t in TEAMS.values()) != 205:
-        p.append(f"wins sum to {sum(t['w'] for t in TEAMS.values())}, expected 205")
-    if sum(t["l"] for t in TEAMS.values()) != 205:
-        p.append(f"losses sum to {sum(t['l'] for t in TEAMS.values())}, expected 205")
+    if sum(t["w"] for t in TEAMS.values()) != 222:
+        p.append(f"wins sum to {sum(t['w'] for t in TEAMS.values())}, expected 222")
+    if sum(t["l"] for t in TEAMS.values()) != 222:
+        p.append(f"losses sum to {sum(t['l'] for t in TEAMS.values())}, expected 222")
     for a, t in TEAMS.items():
         if t["w"] + t["l"] != t["gp"]:
             p.append(f"{a}: standings {t['w']}-{t['l']} != advanced GP {t['gp']}")
         if t["home_w"] + t["road_w"] > t["w"]:
             p.append(f"{a}: home+road wins exceed total wins")
-        if t["home_w"] + t["home_l"] + t["road_w"] + t["road_l"] != t["gp"]:
-            p.append(f"{a}: home+road games != GP")
+        # neutral-site games sit inside W/L but outside the home/road split, exactly as the
+        # official standings card prints them (2026-11-19 card: DEN 1-0, IND 0-1 neutral)
+        nw, nl = NEUTRAL_GAMES.get(a, (0, 0))
+        if t["home_w"] + t["home_l"] + t["road_w"] + t["road_l"] + nw + nl != t["gp"]:
+            p.append(f"{a}: home+road+neutral games != GP")
         # The official NetRtg column is rounded independently of OffRtg and DefRtg, so it
         # can sit 0.1 away from their difference. Tolerated, disclosed, never "fixed".
         if abs((t["off_rtg"] - t["def_rtg"]) - t["net_rtg"]) > 0.15:
@@ -572,25 +601,26 @@ def selftest() -> list[str]:
         if t["pts_read"] is not None and abs(t["pts_read"] - t["pts_for"]) > 2.5:
             p.append(f"{a}: traditional PTS {t['pts_read']} vs derived {t['pts_for']} differs "
                      "by more than the 2.5 ppg band")
-    if len(SLATE) != 30:
-        p.append(f"SLATE has {len(SLATE)} games, expected 30")
+    if len(SLATE) != 26:
+        p.append(f"SLATE has {len(SLATE)} games, expected 26")
     ids = [g["game_id"] for g in SLATE]
     if len(set(ids)) != len(ids):
         p.append("duplicate game id in SLATE")
     for g in SLATE:
         if g["away"] not in TEAMS or g["home"] not in TEAMS:
             p.append(f"{g['game_id']}: unknown team")
-    if len(RESULTS) != 22:
-        p.append(f"RESULTS has {len(RESULTS)} rows, expected 22")
+    if len(RESULTS) != 39:
+        p.append(f"RESULTS has {len(RESULTS)} rows, expected 39 (11/14-11/16 snapshots + the "
+                 "five 11/17 finals + the twelve 11/18 finals)")
     for r in RESULTS:
         if r["away_q"] and sum(r["away_q"]) != r["away_pts"]:
             p.append(f"{r['game_id']}: away quarters do not sum to the final")
         if r["home_q"] and sum(r["home_q"]) != r["home_pts"]:
             p.append(f"{r['game_id']}: home quarters do not sum to the final")
-    if len(INJURIES) != 59:
-        p.append(f"INJURIES has {len(INJURIES)} rows, expected 59 (33 player + 26 not-submitted)")
-    if sum(1 for r in INJURIES if r["not_submitted"]) != 26:
-        p.append("not-submitted row count is not 26")
+    if len(INJURIES) != 44:
+        p.append(f"INJURIES has {len(INJURIES)} rows, expected 44 (23 player + 21 not-submitted)")
+    if sum(1 for r in INJURIES if r["not_submitted"]) != 21:
+        p.append("not-submitted row count is not 21")
     return p
 
 

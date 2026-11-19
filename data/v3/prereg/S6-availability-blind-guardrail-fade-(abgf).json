@@ -9,11 +9,11 @@
   "universe": "games in the T+0..T+3 window whose report window falls inside the blind window; a club that has not filed is excluded, never assumed healthy",
   "settlement_rule": "Official NBA final score against the originated line. A game with no official final is UNGRADED and never counted as a loss.",
   "status": "pre-registered, 0 bets placed",
-  "registered_at_utc": "2026-11-17T17:05:00Z",
-  "registered_by": "arena/1eeb6a21-nba2",
+  "registered_at_utc": "2026-11-19T12:32:00Z",
+  "registered_by": "arena/6b9f3bbe-nba2",
   "window": {
-    "start": "2026-11-17",
-    "end": "2026-11-20"
+    "start": "2026-11-19",
+    "end": "2026-11-22"
   },
-  "sha256": "f67a90403f5224704ad68b6677e39bfad3dc2f4e0724e49a7de69e140ad24866"
+  "sha256": "c48be0863c2b9c79cff8874181a22aa64b64c5d79d4eab659670faf669a7cfbe"
 }
