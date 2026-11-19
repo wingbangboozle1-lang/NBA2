@@ -47,3 +47,40 @@ Three README lines were deliberately **not** rewritten by the sync script (histo
 - Settlement owner: fix R-1 (merge quarter fields across sources, with a regression test), R-2 (fill clubs from the schedule feed or leave blank + flag), then regenerate the union, settlement and v4/v5 outputs via `python -m nba2.pipeline.settle`, and re-verify both seals before and after.
 - v6 owner: R-4 and R-6.
 - Refresh owner: R-7 transport repair with a runner-side proof.
+
+## Update — scope extension 0B9-7..10 (same session, same day)
+
+The parity job on PR #127 failed at `Rebuild every generated tree` because of R-3. The root cause was measured and repaired (see the board, 0B9-7..10):
+
+| Finding | Status now | Evidence (run locally) |
+|---|---|---|
+| R-1 quarter scores dropped | **fixed** | `build_union`: 0022600240 now has away `[9,28,34,23]` (from `finals_2026-11-15.json` and `finals_all.json`, both checked: sums to 94) and home `[42,25,37,27]` (sums to 131). |
+| R-2 11/17 clubs and quarters dropped | **fixed** | Cause: `normalise_source` read only `away`/`home`/`away_quarters`, but `data/raw/finals_2026-11-17.json` uses `away_team`/`home_team`/`away_q`/`home_q`. 0022600253: NYK 111 @ TOR 102, quarters `[23,31,26,31]` / `[29,21,33,19]` (each sums to its final). Source URL `https://www.nba.com/game/nyk-vs-tor-0022600253`. |
+| R-3 union stale, parity chain stopped | **fixed** | `python3 -m nba2.pipeline.settle` run; union 31 → 36 records; 0 conflicts; 0 rejected quarter rows. `settlement_page` now builds. |
+| R-4 v6 hard gate G-V6-8 and two v6 tests | **fixed** | `results_coverage.py` reads the feed's own URL key (`final_source_url`, or `source` when it is an https URL). The one remaining v6 test encoded the old as-of 11/17 and was updated: as-of is now the finals capture time 2026-11-18T19:29:18Z. |
+
+**Settlement effect (measured, not assumed).** `data/settlement.json`: sealed-2026-11-14 went from 22 settled (5 without an official final) to **27 of 27 settled**. Sealed-2026-11-13: 22 of 22 (unchanged). Ledger SHA-256 values for `data/raw/ledger/**` and `data/v3/ledger/**` are identical before and after (`LEDGERS_UNCHANGED`). Metrics on the 27 settled games: spread MAE 12.833, total MAE 15.296, Brier 0.2380, log-loss 0.7058 (previously 22 games: 12.432 / 15.432 / 0.2362 / 0.7141). These are the model's measured errors on the games now in the union; the model's gates remain BLOCKED (G-01 sample size, G-02 no closing lines, and others), as published.
+
+**Test status after the repairs (run locally, 2026-11-19):**
+
+| Suite | Result |
+|---|---|
+| `nba2/tests` | Ran 92, OK (4 new in `nba2/tests/test_settle_aliases.py`) |
+| `nba2/v2` | Ran 167, OK |
+| `nba2/v3` | Ran 67, OK |
+| `nba2/v5` | Ran 26, OK |
+| `nba2/v6` | Ran 47, OK |
+| `backtest/tests` | Ran 49, OK |
+| `tools.test_crosscheck_site` | OK |
+
+**Checkers after the full chain (CI order):** `build_site_data` → `build_site` → `backtest.engine.build` → `nba2.v2` → `settlement_page` → `nba2.v3` → `nba2.v4` → `nba2.v5` → `nba2.v6` exits 0. `nba2.v2.check` OK (0 structural, 0 semantic); `nba2.v3.check` OK; `nba2.v4.check` 8/8 gates; `nba2.pipeline.lint` LINT OK, 1436 rows across 50 tables; `tools/check_links_all.py` ALL INTERNAL LINKS OK (7238 internal links, 8886 external links not fetched by the sandbox); `v6` gates 13/13; `tools/crosscheck_site.py` 97 checks: 87 pass, 1 fail (CC-FRESH-01), 9 info.
+
+**New or still-open irregularities (flagged, not fixed here):**
+
+- **R-2b — nine blank club pairs (11/13 slate).** Games `0022600034`–`0022600042` come from `data/raw/finals_2026-11-13.json`, whose `records` carry scores and a source URL only. The clubs are present in the same file's `games` list (e.g. `0022600034`: NYK away, IND home, `https://www.nba.com/game/nyk-vs-ind-0022600034`), but that list has no `status` field, so the union does not read it. Left blank and flagged rather than inferred. Fix: a reviewed rule to read the `games` list with the file's own `note` status ("Final scores read from the official NBA.com schedule grid").
+- **R-9 — misnamed capture with unused finals.** `data/raw/capture_2026-11-18/finals_2026-11-18.json` holds a 50-record `games?date=` payload covering 11/16 and 11/17, not 11/18. Its records have no `status` field, so the union skips them. The games are already covered by other committed feeds. Naming and status to be reviewed by the owner.
+- **R-10 — two settlement surfaces disagree.** `data/settlement.json` (v1 path, regenerated here) grades 27 games through 11/17. `data/v4/settlement/settled-all.json` (v4 path, which the published v4 pages read) grades 22 distinct games and stops at 11/16 (`settled_at_utc 2026-11-16T23:59:59Z`). Re-running `python3 -m nba2.v4.settlement` reproduces the same 11/16 output: it reads a fixed list of finals files, not the union. Not changed here, because switching its inputs changes the v4 surface's definition. This is the stated rule of nba2/v4/settlement.py ("one surface, one number") and is still open.
+- **R-6 — README test counts for v3 and v6 still stale.** `README.md` line 413 says `nba2/v3 … 64 tests` (measured 67) and line 482 says `nba2/v6 … 40 tests` (measured 47). The sync script refuses lines that name no suite.
+- **R-7 — scheduled ingest failing on main (not repaired here).** Latest scheduled run `44381003145` failed (2026-11-18T19:29:04Z). Transport repair remains with stale claim `arena/acf5db08-nba2` (ACF-2..5).
+- **R-8 — staleness (CC-FRESH-01).** The snapshot is 5 days old at 2026-11-19. Disclosed; not repairable from this sandbox (no NBA host reachable).
+- **R-11 — uncommitted-by-design test side effects.** Running `nba2/tests` (`test_rebuild_produces_identical_rows`) and the v2 suite rewrites tracked files. The chain was therefore run last so the committed tree equals a rebuild; the rebuild is the committed state.

@@ -1,8 +1,12 @@
 {
-  "settled_at_utc": "2026-11-17T16:50:58+00:00",
+  "settled_at_utc": "2026-11-19T05:49:58+00:00",
   "finals_snapshot": "official_finals_union.json",
   "finals_sources_read": [
     "data/raw/finals_2026-11-13.json",
+    "data/raw/finals_2026-11-14.json",
+    "data/raw/finals_2026-11-15.json",
+    "data/raw/finals_2026-11-16.json",
+    "data/raw/finals_2026-11-17.json",
     "data/raw/finals_all.json",
     "data/raw/capture_2026-11-15/results_2026-11-14.json",
     "data/raw/results/results_2026-11-15.json",
@@ -343,17 +347,17 @@
         "sha256": "c841e8f396dae6ca02660eeb024f30ab5de5b1e7003fb579328ec31be6db82d7",
         "n_predictions": 27
       },
-      "status": "PARTIAL \u2014 5 game(s) have no official final score",
-      "games_settled": 22,
+      "status": "SETTLED",
+      "games_settled": 27,
       "games_expected": 27,
       "metrics": {
-        "n_settled": 22,
-        "missing_games": 5,
-        "spread_mae": 12.432,
-        "total_mae": 15.432,
+        "n_settled": 27,
+        "missing_games": 0,
+        "spread_mae": 12.833,
+        "total_mae": 15.296,
         "total_pushes": 1,
-        "brier": 0.2362,
-        "log_loss": 0.7141,
+        "brier": 0.238,
+        "log_loss": 0.7058,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -577,14 +581,64 @@
           "our_total": 228.0,
           "total_err": 6.0,
           "source": "https://www.nba.com/game/phx-vs-den-0022600252"
+        },
+        {
+          "game_id": "0022600253",
+          "matchup": "NYK @ TOR",
+          "final": "111-102",
+          "our_spread_home": 1.5,
+          "spread_err": 7.5,
+          "our_total": 220.5,
+          "total_err": 7.5,
+          "source": "https://www.nba.com/game/nyk-vs-tor-0022600253"
+        },
+        {
+          "game_id": "0022600254",
+          "matchup": "POR @ MIN",
+          "final": "105-106",
+          "our_spread_home": -5.0,
+          "spread_err": 4.0,
+          "our_total": 228.5,
+          "total_err": 17.5,
+          "source": "https://www.nba.com/game/por-vs-min-0022600254"
+        },
+        {
+          "game_id": "0022600255",
+          "matchup": "DET @ SAS",
+          "final": "105-93",
+          "our_spread_home": -6.0,
+          "spread_err": 18.0,
+          "our_total": 225.5,
+          "total_err": 27.5,
+          "source": "https://www.nba.com/game/det-vs-sas-0022600255"
+        },
+        {
+          "game_id": "0022600257",
+          "matchup": "UTA @ LAC",
+          "final": "132-107",
+          "our_spread_home": -5.5,
+          "spread_err": 30.5,
+          "our_total": 227.5,
+          "total_err": 11.5,
+          "source": "https://www.nba.com/game/uta-vs-lac-0022600257"
+        },
+        {
+          "game_id": "0022600256",
+          "matchup": "CHA @ LAL",
+          "final": "114-118",
+          "our_spread_home": -17.0,
+          "spread_err": 13.0,
+          "our_total": 222.5,
+          "total_err": 9.5,
+          "source": "https://www.nba.com/game/cha-vs-lal-0022600256"
         }
       ],
       "games_in_conflict": [],
       "gate_measurements": {
-        "settled_bets": 22,
-        "line_mae": 12.432,
+        "settled_bets": 27,
+        "line_mae": 12.833,
         "baseline_mae": null,
-        "brier": 0.2362,
+        "brier": 0.238,
         "calibration_slope": null,
         "calibration_intercept": null
       },
@@ -593,7 +647,7 @@
           "gate_id": "G-01",
           "name": "Sample size",
           "result": "BLOCKED",
-          "measured": "22 settled bets (need 300)",
+          "measured": "27 settled bets (need 300)",
           "reason": "Ledger opens with the 2026-11-13 slate; nothing has settled yet."
         },
         {

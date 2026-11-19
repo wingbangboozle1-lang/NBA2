@@ -51,12 +51,14 @@ BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book
 
 # Frozen clock. The result-feed page must answer "has this game day ended?" the same way on
 # every rebuild, because pages.yml fails the deploy if a rebuild differs from what is
-# committed. AS_OF is the timestamp of the most recent official capture in this repository
-# (the 2026-11-17T15:52:00Z capture by session arena/8892d20c-nba2), converted to Eastern with the November UTC-5
-# offset. It is stated on the page, so a reader can age it.
-AS_OF_UTC = "2026-11-17T15:52:00Z"
-AS_OF_ET = "2026-11-17 10:52 ET"
-AS_OF_DATE = "2026-11-17"
+# committed. AS_OF is the retrieval time of the most recent official finals capture committed in
+# this repository (data/raw/finals_2026-11-17.json, retrieved_at_utc 2026-11-18T19:29:18+00:00),
+# converted to Eastern with the November UTC-5 offset. It is stated on the page, so a reader can age it.
+# 0B9-10 (2026-11-19): moved from the 2026-11-17T15:52Z capture, which reported 11/17 as "not ended"
+# while its official finals were already committed (a self-contradiction).
+AS_OF_UTC = "2026-11-18T19:29:18Z"
+AS_OF_ET = "2026-11-18 14:29 ET"
+AS_OF_DATE = "2026-11-18"
 
 
 def _glob(paths) -> list[Path]:
@@ -175,7 +177,11 @@ def finals_committed() -> dict[str, dict]:
                 "away_quarters": aq, "home_quarters": hq,
                 "ot_periods": r.get("ot_periods"),
                 "period_schema": schema,
-                "source_url": r.get("source_url") or r.get("official_source"),
+                # Each committed feed names its URL field differently; read the feed's own key.
+                # `source` is used only when it is itself an https URL (never an inferred one).
+                "source_url": (r.get("source_url") or r.get("final_source_url")
+                               or r.get("official_source")
+                               or (r.get("source") if str(r.get("source") or "").startswith("https://") else None)),
                 "gamebook_url": r.get("gamebook_url") or r.get("gamebook_source"),
                 "files": [rel],
             }

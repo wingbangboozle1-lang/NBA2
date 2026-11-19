@@ -1,6 +1,6 @@
 {
  "schema": "nba2.v6.endpoints.v1",
- "probed_at_utc": "2026-11-17T14:28:28Z",
+ "probed_at_utc": "2026-11-18T14:25:00Z",
  "runner": "GitHub-hosted ubuntu-latest",
  "source_file": "data/raw/egress_probe.json",
  "source_url": "https://github.com/wingbangboozle1-lang/NBA2/blob/main/.github/workflows/probe-egress.yml",
@@ -9,8 +9,8 @@
    "name": "injury_index",
    "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
    "http_status": 200,
-   "bytes": 41174,
-   "elapsed_ms": 193,
+   "bytes": 122610,
+   "elapsed_ms": 217,
    "ok": true,
    "error": null,
    "is_pdf": false
@@ -20,7 +20,7 @@
    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
    "http_status": 200,
    "bytes": 95928,
-   "elapsed_ms": 143,
+   "elapsed_ms": 194,
    "ok": true,
    "error": null,
    "is_pdf": true
@@ -30,7 +30,7 @@
    "url": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
    "http_status": 403,
    "bytes": null,
-   "elapsed_ms": 90,
+   "elapsed_ms": 132,
    "ok": false,
    "error": "HTTP 403",
    "is_pdf": null
@@ -40,7 +40,7 @@
    "url": "https://stats.nba.com/stats/scoreboardv2?LeagueID=00&GameDate=11/16/2026&DayOffset=0",
    "http_status": null,
    "bytes": null,
-   "elapsed_ms": 25204,
+   "elapsed_ms": 25118,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
    "is_pdf": null
@@ -49,8 +49,8 @@
    "name": "schedule",
    "url": "https://www.nba.com/schedule?date=2026-11-16",
    "http_status": 200,
-   "bytes": 232453,
-   "elapsed_ms": 480,
+   "bytes": 203423,
+   "elapsed_ms": 533,
    "ok": true,
    "error": null,
    "is_pdf": false
@@ -59,8 +59,8 @@
    "name": "standings",
    "url": "https://www.nba.com/standings",
    "http_status": 200,
-   "bytes": 254549,
-   "elapsed_ms": 285,
+   "bytes": 225403,
+   "elapsed_ms": 119,
    "ok": true,
    "error": null,
    "is_pdf": false
@@ -70,7 +70,7 @@
    "url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
    "http_status": 200,
    "bytes": 146951,
-   "elapsed_ms": 707,
+   "elapsed_ms": 295,
    "ok": true,
    "error": null,
    "is_pdf": true
