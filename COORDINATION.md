@@ -5990,3 +5990,15 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
   count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
   era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
   RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+---
+
+## Session `arena/3a5c7c75-nba2` — CLAIM (2026-11-19 UTC)
+
+**Task:** correct the canonical dashboard's refresh-status wording. The page currently says the latest scheduled ingest "failed before rebuilding," while the committed run verdict says all four capture surfaces succeeded and the workflow run records the later publish/rebuild job failure. Preserve the fail-closed stale-data disclosure, but distinguish successful capture from failed publication so readers are not misled.
+
+**File scope:** `nba2/v2/build.py` (landing-page wording), regenerated `site/index.html`, a focused regression test under `nba2/v2/`, this append-only coordination entry, and its audit note `analysis/session-3a5c7c75-refresh-disclosure.md`. No raw captures, model inputs, ledger, shared navigation, or unrelated generated pages are in scope.
+
+**Evidence available at claim time:** `data/raw/refresh_verdict.json` records run `44381003145`, event `schedule`, and `success` for injuries, finals, rolling, and v4; `gh run list --workflow refresh.yml` reports that run concluded `failure`; official-source freshness is not re-verified by this task. The official run record is https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145.
+
+**Claim verification:** checkout is clean on the platform-assigned branch `arena/3a5c7c75-nba2` at base commit `41cfd812d2794db529090cd026e7056ca3c1b0cd`. This scope does not overlap a source-capture or model-input task.
