@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Improvement proposals · NBA2 Lines Lab</title>
+<meta name="description" content="NBA2 — verification record for the official pages read on 2026-11-19, plus the unknowns and improvement proposals that gate any further change.">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+.muted{color:var(--muted,#93a3b8)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside>
+  <div class="brand">NBA2 <span>Lines Lab</span></div>
+  <p class="tag">verified 2026-11-19 · every row sourced</p>
+  <nav>
+<div class="navgroup"><span title="What this desk is, what it has measured, and where the numbers come from.">Start here</span>
+<a href="index.html" title="Dashboard">Dashboard</a>
+<a href="executive-summary.html" title="Executive summary">Executive summary</a>
+<a href="sources.html" title="Sources">Sources</a>
+<a href="methodology.html" title="Methodology">Methodology</a>
+</div>
+<div class="navgroup"><span title="Our originated numbers. Nothing here is priced or actionable: what we think, and how much the two estimators disagree.">Projection — safe to publish</span>
+<a href="lines.html" title="Originated lines">Originated lines</a>
+<a href="teams.html" title="Teams &amp; estimators">Teams &amp; estimators</a>
+<a href="correlations.html" title="Correlations &amp; parlays">Correlations &amp; parlays</a>
+<a href="props.html" title="Player props">Player props</a>
+<a href="gameflow.html" title="Game flow">Game flow</a>
+<a href="slate.html" title="Slate &amp; disagreement">Slate &amp; disagreement</a>
+<a href="projections.html" title="Projection surface">Projection surface</a>
+<a href="rotation.html" title="Rotation &amp; minutes">Rotation &amp; minutes</a>
+<a href="travel.html" title="Rest &amp; travel">Rest &amp; travel</a>
+<a href="minutes.html" title="Measured minutes">Measured minutes</a>
+<a href="lategame.html" title="Late-game &amp; garbage time">Late-game &amp; garbage time</a>
+<a href="projection.html" title="— v4 gated refresh —">— v4 gated refresh —</a>
+<a href="rotation-replacement.html" title="Minutes &amp; replacement">Minutes &amp; replacement</a>
+<a href="market-prior.html" title="Market-anchored prior">Market-anchored prior</a>
+</div>
+<div class="navgroup"><span title="Gated: no row here is actionable until its gates pass. The trigger level is the only number that would make acting rational.">Bet surface — gated</span>
+<a href="picks.html" title="Picks &amp; slate">Picks &amp; slate</a>
+<a href="strategies.html" title="Strategies &amp; leaderboard">Strategies &amp; leaderboard</a>
+<a href="strategy-lab.html" title="Strategy lab">Strategy lab</a>
+<a href="trials.html" title="Trial registry">Trial registry</a>
+<a href="bet.html" title="Bet surface (gated)">Bet surface (gated)</a>
+</div>
+<div class="navgroup"><span title="What the league published, what the sealed ledger predicted, and what has been settled against an official final.">Official record &amp; settlement</span>
+<a href="official-results.html" title="Official results">Official results</a>
+<a href="results.html" title="Result feed">Result feed</a>
+<a href="ledger.html" title="Sealed ledger">Sealed ledger</a>
+<a href="settlement.html" title="Settlement stamp">Settlement stamp</a>
+<a href="settle.html" title="Result feed &amp; settlement">Result feed &amp; settlement</a>
+<a href="result-feed-v5.html" title="— v5 player logs —">— v5 player logs —</a>
+<a href="results-coverage.html" title="Result-feed coverage">Result-feed coverage</a>
+</div>
+<div class="navgroup"><span title="Every official release this repository holds, the diff between consecutive reports, and the player logs behind the rotation model.">Injuries, rotation &amp; players</span>
+<a href="injuries.html" title="Injuries &amp; rotation">Injuries &amp; rotation</a>
+<a href="player-logs.html" title="Player game logs">Player game logs</a>
+<a href="injury-diff.html" title="Injury release diff">Injury release diff</a>
+<a href="v4-injuries.html" title="Injury releases">Injury releases</a>
+<a href="playerlogs-full.html" title="Player logs (full)">Player logs (full)</a>
+<a href="injury-archive.html" title="Injury PDF archive">Injury PDF archive</a>
+<a href="player-coverage.html" title="Player-log coverage">Player-log coverage</a>
+</div>
+<div class="navgroup"><span title="Gates, backtests, luck attribution and the live checks — the part that says whether any of the above is better than a coin flip.">Verification &amp; measured skill</span>
+<a href="backtest.html" title="Backtest &amp; skill">Backtest &amp; skill</a>
+<a href="skill-attribution.html" title="Skill vs luck">Skill vs luck</a>
+<a href="verification.html" title="Verification log">Verification log</a>
+<a href="live-verification.html" title="Live verification">Live verification</a>
+<a href="capture-verification.html" title="Capture verification">Capture verification</a>
+<a href="verification-v3.html" title="v3 verification">v3 verification</a>
+<a href="v4-verify.html" title="v4 verification">v4 verification</a>
+<a href="v5-verify.html" title="v5 verification">v5 verification</a>
+<a href="endpoints.html" title="Official endpoints">Official endpoints</a>
+<a href="v6-verify.html" title="v6 verification">v6 verification</a>
+</div>
+<div class="navgroup"><span title="The official pages read on 2026-11-19, what they prove, what is still unknown, and the proposals that are waiting on a decision before anything is built.">Verified today · 2026-11-19</span>
+<a href="verify-1119.html" title="Verification record — 2026-11-19">Verification record — 2026-11-19</a>
+<a href="unknowns.html" title="Unknowns &amp; open questions">Unknowns &amp; open questions</a>
+<a href="improvement.html" title="Improvement proposals" class="on">Improvement proposals</a>
+</div>
+<div class="navgroup"><span title="What needs an owner decision before it is built, what we do not know, and everything flagged for review.">Decisions, questions &amp; flags</span>
+<a href="repo-review.html" title="Repo review">Repo review</a>
+<a href="questions.html" title="Open questions">Open questions</a>
+<a href="suggestions.html" title="Suggestions queue">Suggestions queue</a>
+<a href="decision-queue.html" title="Decision queue">Decision queue</a>
+<a href="decisions-needed.html" title="Decisions needed">Decisions needed</a>
+<a href="flagged.html" title="Flagged for review">Flagged for review</a>
+</div>
+<!-- v7-link-block --><a href="v7-slate.html">Originated slate (v7)</a><a href="v7-strategies.html">Strategy lab &amp; parlays (v7)</a><a href="v7-skill.html">Measured skill &amp; luck (v7)</a><a href="v7-methodology.html">v7 methodology</a><a href="v7-verify.html">v7 verification</a><!-- v7-link-block --></nav>
+</aside>
+<main>
+
+<h1>Improvement proposals</h1>
+<p class="lede">A review queue, not a changelog. <b>Nothing in this table has been implemented.</b> Each
+proposal states the change, what it costs, what it buys, and whether this session recommends it — so the
+next decision is a choice between named paths rather than an argument about an unnamed one. The
+recommendation column is an opinion and is labelled as one; the state column is a fact about the
+repository.</p>
+
+<div class="note warn"><b>Choose, then build.</b> The proposals are ordered so that the ones with no
+dependency come first. Three of them (S8-01, S8-05, and anything touching the market prior) are gated on
+an answer from <a href="unknowns.html">Unknowns &amp; open questions</a>; implementing them early would
+mean hard-coding a threshold that nobody has agreed to.</div>
+
+<div class="scroll"><table>
+<caption>Eight proposals, each with its dependency stated. None is implemented.</caption><thead><tr>
+<th>id</th>
+<th>proposal</th>
+<th>effort / risk</th>
+<th>what it buys</th>
+<th>state</th>
+<th>this session&#x27;s view</th>
+<th>source</th>
+</tr></thead><tbody>
+<tr>
+<td>S8-01</td>
+<td><b>Publish the two-estimator disagreement next to every line, and the blend underneath</b><br>The brief asks for the disagreement to be the headline confidence signal. Implement it as a column on the lines page rather than a new page: a reader choosing a game sees the spread between the two ratings before the consensus number.</td>
+<td>Medium — one column plus a gate that suppresses a line when the disagreement exceeds the pre-registered threshold (U-01).</td>
+<td>Adds a decision surface without adding a claim. Requires U-01 first, or the threshold is arbitrary.</td>
+<td><span class="badge b-bad">Ready after U-01</span></td>
+<td><span class="badge b-ok">recommended</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">the measurement that motivates it</a></td>
+</tr>
+<tr>
+<td>S8-02</td>
+<td><b>Make the injury release diff a first-class page with a stability gate</b><br>The diff works and it immediately exposed a rendering artefact. Promote it: one row per (release, player), a column for status change, and a gate that refuses to publish a status-derived pick when the two releases it used have a rejected-row count above zero.</td>
+<td>Low — the parsing and diffing already exist; this is presentation plus one gate.</td>
+<td>Turns a working mechanism into a trust signal. The gate is the part that matters: it stops a silently lossy extraction from moving a pick.</td>
+<td><span class="badge b-bad">Ready</span></td>
+<td><span class="badge b-ok">recommended</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">the measurement that motivates it</a></td>
+</tr>
+<tr>
+<td>S8-03</td>
+<td><b>Read the twelve box scores and fill the quarter-score column from them</b><br>The games page has no quarters. The box-score URL is printed on every card. Reading twelve box scores closes the last provenance gap in the one-row-per-game result feed.</td>
+<td>Low — twelve page reads plus a parser; the shape of the box score is not yet observed, so budget one page to learn it.</td>
+<td>The result feed is the basis of settlement. A settlement stamped against a capture nobody re-read is weaker than it looks.</td>
+<td><span class="badge b-warn">Ready</span></td>
+<td><span class="badge b-ok">recommended</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">the measurement that motivates it</a></td>
+</tr>
+<tr>
+<td>S8-04</td>
+<td><b>Retire the duplicate pins: one place where a measured constant is defined</b><br>Two HCA pins and several σ values exist across trees. Each is individually honest, but a reader cannot tell which one produced a given line. Introduce one constants file with a provenance field per constant and have every tree read it.</td>
+<td>Medium — touches v2..v6 build inputs; the risk is a rebuild diff on every page.</td>
+<td>Removes the class of defect where two pages quote different constants (U-09). Do it with a parity check, not by hand.</td>
+<td><span class="badge b-warn">Needs design</span></td>
+<td><span class="badge b-off">for review</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">the measurement that motivates it</a></td>
+</tr>
+<tr>
+<td>S8-05</td>
+<td><b>Put rotation availability on the picks page as its own column</b><br>The brief asks for it explicitly. The data exists (official status per club per game), but the replacement-minutes half needs U-05.</td>
+<td>Low for the status column, blocked for the minutes impact.</td>
+<td>Publishing half of it is still useful and honest if the column is labelled &#x27;designation, minutes impact not yet modelled&#x27;.</td>
+<td><span class="badge b-warn">Ready (status half)</span></td>
+<td><span class="badge b-ok">recommended</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">the measurement that motivates it</a></td>
+</tr>
+<tr>
+<td>S8-06</td>
+<td><b>Print the naive parlay product next to the priced one</b><br>The correlations page withholds a price when the legs are correlated. The brief asks for the price <b>and</b> the naive product side by side, so the cost of stacking is visible.</td>
+<td>Low — both numbers are already computed; one is printed, the other is suppressed.</td>
+<td>A withheld number looks like a mistake; two numbers show the arithmetic. Keep the rho band and the CI beside them.</td>
+<td><span class="badge b-warn">Ready</span></td>
+<td><span class="badge b-ok">recommended</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">the measurement that motivates it</a></td>
+</tr>
+<tr>
+<td>S8-07</td>
+<td><b>A power calculation page for the leaderboard</b><br>Before a minimum sample is set, show what the sample can detect. 'Detect a 3-point edge at 80% power' has a number attached; '300 games' does not.</td>
+<td>Low — a standard formula and a chart.</td>
+<td>Makes U-08 a decision instead of an argument.</td>
+<td><span class="badge b-warn">Ready</span></td>
+<td><span class="badge b-off">for review</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">the measurement that motivates it</a></td>
+</tr>
+<tr>
+<td>S8-08</td>
+<td><b>Do <em>not</em> merge the market prior until a closing line exists</b><br>Recorded as a proposal of a negative: the highest-risk change available today is to blend toward a 'market' that is not in the repository. Add an explicit build gate that fails if a market-anchored page renders without a committed closing-line source.</td>
+<td>Low — one assertion in the v4/v6 gate chain.</td>
+<td>Prevents the most plausible future fabrication in this project.</td>
+<td><span class="badge b-bad">Ready</span></td>
+<td><span class="badge b-ok">recommended</span></td>
+<td><a href="https://raw.githubusercontent.com/wingbangboozle1-lang/NBA2/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">the measurement that motivates it</a></td>
+</tr>
+</tbody></table></div>
+
+<h2>The two I would do first, and why</h2>
+<p><b>S8-02</b> (make the injury diff a gated surface) because it is the only proposal here that
+<em>already</em> caught a real defect during this session: the 06:45 AM release's extraction loses
+alternating club markers, and a build that trusted it would have moved picks for clubs that had not
+changed. Turning that into a gate is cheap and it prevents a class of error rather than one instance.</p>
+<p><b>S8-03</b> (read the twelve box scores) because settlement is the one output in this system that
+someone will actually rely on. Every quarter row currently traces to a committed capture nobody re-read;
+twelve bounded page reads closes that, and the URL is already printed on every game card.</p>
+
+<h2>What I would <em>not</em> do yet</h2>
+<p>Land a market-anchored prior (S8-08 is the negative of this) and re-cut the model inputs to today's
+capture in one step. Both are large, both are plausible-looking, and both would make the published tree
+disagree with itself on dates — the exact defect the README already documents. Sequence them after the
+constants are unified (S8-04).</p>
+
+<footer>
+  <p>Official capture: <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/official_2026-11-19.json" rel="noopener" target="_blank">data/raw/verify_2026-11-19/official_2026-11-19.json</a> · raw page text:
+     <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/raw/verify_2026-11-19/raw/" rel="noopener" target="_blank">data/raw/verify_2026-11-19/raw/</a> ·
+     parser: <a href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/tools/session-164d832b-capture.py" rel="noopener" target="_blank">tools/session-164d832b-capture.py</a></p>
+  <p><a href="flagged.html">Flagged for review</a> · <a href="sources.html">Every source used</a> ·
+     <a href="https://github.com/wingbangboozle1-lang/NBA2">Repository</a></p>
+</footer>
+</main>
+</div>
+</body>
+</html>
