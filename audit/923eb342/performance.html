@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Measured skill — NBA2 verification desk</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a22;--muted:#5b6b7c;--line:#e2e7ee;--accent:#1f6feb;
+--good:#1a7f45;--bad:#b42318;--warn:#8a5a00;--info:#3b5bdb;--chip:#eef2f7}
+@media (prefers-color-scheme: dark){:root{--bg:#0d1117;--card:#151b23;--ink:#e6edf3;--muted:#9aa8b6;
+--line:#253040;--accent:#58a6ff;--good:#3fb950;--bad:#f85149;--warn:#d29922;--info:#7aa2f7;--chip:#1c2531}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{font-weight:700;letter-spacing:-.2px}
+.brand span{color:var(--muted);font-weight:400;font-size:13px;display:block;letter-spacing:0}
+nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px}
+nav a{color:var(--muted);padding:2px 0;border-bottom:2px solid transparent}
+nav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav a:hover{color:var(--ink);text-decoration:none}
+main{padding:26px 0 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+h2{font-size:17px;margin:30px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.lede{color:var(--muted);margin:0 0 18px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h4{margin:0 0 4px;font-size:13px;color:var(--muted);font-weight:600}
+.card .big{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.card p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:10px;overflow:hidden;font-size:13px;margin:8px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:600;
+background:var(--chip);color:var(--muted);white-space:nowrap}
+.pass{background:rgba(26,127,69,.12);color:var(--good)}.fail{background:rgba(180,35,24,.12);color:var(--bad)}
+.warn{background:rgba(138,90,0,.14);color:var(--warn)}.info{background:rgba(59,91,219,.12);color:var(--info)}
+.src{font-size:11.5px;word-break:break-all}
+.note{font-size:12.5px;color:var(--muted)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+border-radius:8px;padding:12px 14px;margin:0 0 18px}
+.banner h3{margin:0 0 4px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.finding h4{margin:0 0 6px;font-size:15px}
+.finding p{margin:0 0 8px;font-size:13.5px}
+.meta{font-size:12px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:18px 0 40px}
+ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
+</style></head><body>
+<header><div class="wrap"><div class="brand">NBA2 verification desk
+<span>Session arena/923eb342-nba2 · official sources read 2026-11-19 · nothing here is betting advice</span>
+</div><nav><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Overview</span> <a class="" href="index.html">Overview</a><a class="" href="executive-summary.html">Executive summary</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Evidence</span> <a class="" href="verification.html">Verification log</a><a class="" href="official-results.html">Official results</a><a class="" href="standings.html">Standings</a><a class="" href="injuries.html">Injuries</a><a class="on" href="performance.html">Measured skill</a><a class="" href="sources.html">Sources &amp; method</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Decisions</span> <a class="" href="gates.html">Validation gates</a><a class="" href="strategies.html">Strategies &amp; preregistration</a><a class="" href="questions.html">Open questions</a><a class="" href="suggestions.html">Suggestions</a><a class="" href="flagged.html">Flagged for review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Measured skill</h1>
+<p class="lede">Every number here was produced by running the repository's own code over committed
+official snapshots — except the standings inputs, which were re-read from nba.com today. Nothing on this
+page is a projection of future performance.</p>
+
+<div class="banner"><h3>The one contradiction worth resolving first</h3>
+The walk-forward backtest reports <b>0.6735</b> against-the-spread
+accuracy out of sample on 49 games, while the settled-ledger log-loss is
+<b>0.7058</b> against a coin flip's <b>0.6931</b>. A model can
+be right about the side and badly calibrated about the probability — but the two surfaces use different
+samples, different settlement rules and different baselines, and no published page reconciles them. Until
+one does, neither number should be quoted alone.</div>
+
+<div class="scroll"><table><thead><tr><th>Measurement</th><th>Value</th><th>What it is measured on</th><th>Status</th><th>Source</th></tr></thead><tbody><tr><td>Walk-forward, out of sample</td><td>0.6735 ± 0.0714</td><td>49 games, 2026-11-08 -> 2026-11-14</td><td><span class="chip info">measured</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>Walk-forward, in sample</td><td>0.6341</td><td>123 games, 2026-10-23 -> 2026-11-07</td><td><span class="chip info">measured</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>Spread MAE (out of sample)</td><td>13.234 pts</td><td>in-sample 12.217; our own settled ledger shows 12.43 on 22 games</td><td><span class="chip info">measured</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/settlement.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/set…</a></td></tr><tr><td>Log-loss vs a coin flip</td><td>0.7058 vs 0.6931</td><td>the model's out-of-sample log-loss on the settled sample is WORSE than a coin flip — the rule below therefore gives the market the whole weight as soon as the market demonstrates any skill at all, which is the honest answer, not a defect in the rule</td><td><span class="chip info">measured</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/market_prior.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/…</a></td></tr><tr><td>Leakage audit</td><td>0 violations</td><td>no look-ahead detected</td><td><span class="chip info">audited</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>Teams outside the luck noise band (|z| > 1.96)</td><td>0</td><td>a strategy may not lean on a team outside the band; the published screen reports its own count</td><td><span class="chip info">measured</span></td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td></tr><tr><td>Injury-report players with a player log</td><td>12 / 116</td><td>coverage 0.1034</td><td><span class="chip info">measured</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/player_coverage.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/…</a></td></tr></tbody></table></div>
+
+<h2>Settled sealed ledgers</h2>
+<div class="scroll"><table><thead><tr><th>Ledger</th><th>Settled</th><th>Spread MAE</th><th>Total MAE</th><th>Brier</th><th>Log-loss</th><th>Source</th></tr></thead><tbody><tr><td>sealed-2026-11-13.json</td><td>22</td><td>12.432</td><td>15.432</td><td>0.2362</td><td>0.7141</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/settlement.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/set…</a></td></tr><tr><td>sealed-2026-11-14.json</td><td>27</td><td>12.833</td><td>15.296</td><td>0.238</td><td>0.7058</td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/settlement.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/set…</a></td></tr></tbody></table></div><p class="note">Settlement consumes official final scores only. A game without an official result stays PENDING, never estimated.</p>
+
+<h2>Sealed ledger integrity</h2>
+<div class="scroll"><table><thead><tr><th>Ledger</th><th>Picks</th><th>SHA-256 (first 16)</th><th>Settled / expected</th><th>Status</th><th>Source</th></tr></thead><tbody><tr><td>sealed-2026-11-13.json</td><td>22</td><td><code>cf7dedc689597cb8…</code></td><td>22 / 22</td><td><span class="chip pass">verified</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/data/raw/ledger" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/tree/main/data/raw…</a></td></tr><tr><td>sealed-2026-11-14.json</td><td>27</td><td><code>c841e8f396dae6ca…</code></td><td>27 / 27</td><td><span class="chip pass">verified</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/data/raw/ledger" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/tree/main/data/raw…</a></td></tr></tbody></table></div><p class="note">Both digests recompute from the committed prediction arrays, so neither can have been edited after sealing. Verified this session by the CI-equivalent command in ci.yml.</p>
+
+<h2>Correlations used in parlay pricing</h2>
+<div class="scroll"><table><thead><tr><th>Quantity</th><th>Pearson r</th><th>n</th><th>95% CI</th><th>Status</th><th>Source</th></tr></thead><tbody><tr><td>actual margin vs actual total<br><span class="note">not significant at this sample size</span></td><td>0.0044</td><td>172</td><td>-0.1454 … 0.1539</td><td><span class="chip info">MEASURED</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>residual margin vs residual total<br><span class="note">not significant at this sample size</span></td><td>0.0165</td><td>172</td><td>-0.1335 … 0.1657</td><td><span class="chip info">MEASURED</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>phi: home-beats-our-number AND game-goes-over-our-number<br><span class="note">not significant at this sample size</span></td><td>0.0679</td><td>172</td><td>-0.0826 … 0.2153</td><td><span class="chip info">MEASURED</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>residual margin, game A vs game B on the same date<br><span class="note">not significant at this sample size</span></td><td>-0.0117</td><td>713</td><td>-0.0851 … 0.0617</td><td><span class="chip info">MEASURED</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>player points vs rebounds (same player, same game)<br><span class="note">nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</span></td><td>— <span class="note">unmeasured: BLOCKED</span></td><td>0</td><td>—</td><td><span class="chip info">BLOCKED</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>player points vs assists (same player, same game)<br><span class="note">nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</span></td><td>— <span class="note">unmeasured: BLOCKED</span></td><td>0</td><td>—</td><td><span class="chip info">BLOCKED</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr><tr><td>teammate A points vs teammate B points (same game)<br><span class="note">nba.com/stats player pages render season aggregates only for this client. Required for: minutes distributions, prop bet probabilities, injury replacement modelling.</span></td><td>— <span class="note">unmeasured: BLOCKED</span></td><td>0</td><td>—</td><td><span class="chip info">BLOCKED</span></td><td><a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/strategy_lab.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v2/…</a></td></tr></tbody></table></div><p class="note">The parlay price is the measured joint probability printed beside the naive product, not instead of it. Where a correlation is unmeasured the cell says so rather than being assumed zero — a parlay priced on an assumed zero correlation is the exact error the register exists to prevent.</p>
+</div></main>
+<footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
+confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>
+page. Model output is derived, never official. Built 2026-11-19T12:20Z.</div></footer>
+</body></html>

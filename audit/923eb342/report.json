@@ -1,0 +1,818 @@
+{
+ "schema": "nba2.authcheck.report.v1",
+ "session": "arena/923eb342-nba2",
+ "capture": "capture_2026-11-19.json",
+ "checked_at_utc": "2026-11-19T12:20Z",
+ "checks": [
+  {
+   "id": "R-WINDOW",
+   "surface": "official results feed",
+   "claim": "date span of the published official result feed (data/v2/results.json rows)",
+   "published": "2026-11-14..2026-11-14 (5 rows)",
+   "official": "17 more games are final on the official site (5 on 11/17, 12 on 11/18)",
+   "verdict": "STALE",
+   "source_url": "https://www.nba.com/games?date=2026-11-18",
+   "note": "the feed is a 2026-11-14 slice, not a current per-game feed"
+  },
+  {
+   "id": "R-0022600253",
+   "surface": "official results feed",
+   "claim": "NYK @ TOR (2026-11-17) is in the official feed",
+   "published": "absent",
+   "official": "NYK 111 \u2013 TOR 102",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600253",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600255",
+   "surface": "official results feed",
+   "claim": "DET @ SAS (2026-11-17) is in the official feed",
+   "published": "absent",
+   "official": "DET 105 \u2013 SAS 93",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/det-vs-sas-0022600255",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600254",
+   "surface": "official results feed",
+   "claim": "POR @ MIN (2026-11-17) is in the official feed",
+   "published": "absent",
+   "official": "POR 105 \u2013 MIN 106",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/por-vs-min-0022600254",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600257",
+   "surface": "official results feed",
+   "claim": "UTA @ LAC (2026-11-17) is in the official feed",
+   "published": "absent",
+   "official": "UTA 132 \u2013 LAC 107",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/uta-vs-lac-0022600257",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600256",
+   "surface": "official results feed",
+   "claim": "CHA @ LAL (2026-11-17) is in the official feed",
+   "published": "absent",
+   "official": "CHA 114 \u2013 LAL 118",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/cha-vs-lal-0022600256",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600259",
+   "surface": "official results feed",
+   "claim": "HOU @ IND (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "HOU 119 \u2013 IND 104",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600259",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600261",
+   "surface": "official results feed",
+   "claim": "PHI @ ORL (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "PHI 121 \u2013 ORL 116",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600261",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600260",
+   "surface": "official results feed",
+   "claim": "MIL @ MIA (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "MIL 130 \u2013 MIA 137",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600260",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600258",
+   "surface": "official results feed",
+   "claim": "MEM @ CLE (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "MEM 124 \u2013 CLE 121",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600258",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600262",
+   "surface": "official results feed",
+   "claim": "CHI @ BKN (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "CHI 137 \u2013 BKN 107",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600262",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600263",
+   "surface": "official results feed",
+   "claim": "WAS @ TOR (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "WAS 103 \u2013 TOR 99",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600263",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600267",
+   "surface": "official results feed",
+   "claim": "GSW @ DAL (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "GSW 94 \u2013 DAL 116",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600267",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600265",
+   "surface": "official results feed",
+   "claim": "ATL @ OKC (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "ATL 117 \u2013 OKC 112",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600265",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600264",
+   "surface": "official results feed",
+   "claim": "DET @ NOP (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "DET 122 \u2013 NOP 109",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600264",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600266",
+   "surface": "official results feed",
+   "claim": "BOS @ DEN (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "BOS 101 \u2013 DEN 105",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600266",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600269",
+   "surface": "official results feed",
+   "claim": "PHX @ SAC (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "PHX 128 \u2013 SAC 107",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600269",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "R-0022600268",
+   "surface": "official results feed",
+   "claim": "UTA @ LAL (2026-11-18) is in the official feed",
+   "published": "absent",
+   "official": "UTA 109 \u2013 LAL 97",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/{slug}-0022600268",
+   "note": "the game is final on the official site and is not a row in the published feed"
+  },
+  {
+   "id": "S-SNAP-ATL",
+   "surface": "committed standings snapshot",
+   "claim": "ATL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "8-6",
+   "official": "9-6",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-BKN",
+   "surface": "committed standings snapshot",
+   "claim": "BKN W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "3-10",
+   "official": "3-11",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-BOS",
+   "surface": "committed standings snapshot",
+   "claim": "BOS W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "11-3",
+   "official": "11-4",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-CHA",
+   "surface": "committed standings snapshot",
+   "claim": "CHA W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "4-10",
+   "official": "4-10",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-SNAP-CHI",
+   "surface": "committed standings snapshot",
+   "claim": "CHI W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "3-10",
+   "official": "4-10",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-CLE",
+   "surface": "committed standings snapshot",
+   "claim": "CLE W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "8-7",
+   "official": "8-8",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-DAL",
+   "surface": "committed standings snapshot",
+   "claim": "DAL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "7-7",
+   "official": "8-7",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-DEN",
+   "surface": "committed standings snapshot",
+   "claim": "DEN W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "7-5",
+   "official": "8-5",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-DET",
+   "surface": "committed standings snapshot",
+   "claim": "DET W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "9-4",
+   "official": "10-4",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-GSW",
+   "surface": "committed standings snapshot",
+   "claim": "GSW W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "8-6",
+   "official": "8-7",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-HOU",
+   "surface": "committed standings snapshot",
+   "claim": "HOU W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "11-4",
+   "official": "12-4",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-IND",
+   "surface": "committed standings snapshot",
+   "claim": "IND W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "5-9",
+   "official": "5-10",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-LAC",
+   "surface": "committed standings snapshot",
+   "claim": "LAC W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "4-9",
+   "official": "4-9",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-SNAP-LAL",
+   "surface": "committed standings snapshot",
+   "claim": "LAL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "13-2",
+   "official": "13-3",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-MEM",
+   "surface": "committed standings snapshot",
+   "claim": "MEM W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "10-4",
+   "official": "11-4",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-MIA",
+   "surface": "committed standings snapshot",
+   "claim": "MIA W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "8-6",
+   "official": "9-6",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-MIL",
+   "surface": "committed standings snapshot",
+   "claim": "MIL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "1-13",
+   "official": "1-14",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-MIN",
+   "surface": "committed standings snapshot",
+   "claim": "MIN W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "11-4",
+   "official": "11-4",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-SNAP-NOP",
+   "surface": "committed standings snapshot",
+   "claim": "NOP W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "5-10",
+   "official": "5-11",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-NYK",
+   "surface": "committed standings snapshot",
+   "claim": "NYK W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "8-6",
+   "official": "8-6",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-SNAP-OKC",
+   "surface": "committed standings snapshot",
+   "claim": "OKC W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "9-5",
+   "official": "9-6",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-ORL",
+   "surface": "committed standings snapshot",
+   "claim": "ORL W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "6-7",
+   "official": "6-8",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-PHI",
+   "surface": "committed standings snapshot",
+   "claim": "PHI W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "12-3",
+   "official": "13-3",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-PHX",
+   "surface": "committed standings snapshot",
+   "claim": "PHX W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "6-7",
+   "official": "7-7",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-POR",
+   "surface": "committed standings snapshot",
+   "claim": "POR W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "9-5",
+   "official": "9-5",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-SNAP-SAC",
+   "surface": "committed standings snapshot",
+   "claim": "SAC W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "1-12",
+   "official": "1-13",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-SAS",
+   "surface": "committed standings snapshot",
+   "claim": "SAS W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "12-3",
+   "official": "12-3",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-SNAP-TOR",
+   "surface": "committed standings snapshot",
+   "claim": "TOR W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "5-9",
+   "official": "5-10",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-UTA",
+   "surface": "committed standings snapshot",
+   "claim": "UTA W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "2-13",
+   "official": "3-13",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-SNAP-WAS",
+   "surface": "committed standings snapshot",
+   "claim": "WAS W-L in data/raw/capture_2026-11-18/standings_2026-11-18.json",
+   "published": "4-11",
+   "official": "5-11",
+   "verdict": "SUPERSEDED (+1 games since retrieval)",
+   "source_url": "https://www.nba.com/standings",
+   "note": "snapshot retrieved 2026-11-18T19:30:05Z, before the 12 games played that night; the difference is the games since, not a transcription error"
+  },
+  {
+   "id": "S-MODEL-PHI",
+   "surface": "published model input",
+   "claim": "PHI W-L used by the published model",
+   "published": "absent",
+   "official": "[13, 3]",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-MODEL-BOS",
+   "surface": "published model input",
+   "claim": "BOS W-L used by the published model",
+   "published": "absent",
+   "official": "[11, 4]",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-MODEL-MIL",
+   "surface": "published model input",
+   "claim": "MIL W-L used by the published model",
+   "published": "absent",
+   "official": "[1, 14]",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-MODEL-LAL",
+   "surface": "published model input",
+   "claim": "LAL W-L used by the published model",
+   "published": "absent",
+   "official": "[13, 3]",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-HOME-PHI",
+   "surface": "home/road split",
+   "claim": "PHI home record in the committed official snapshot",
+   "published": "6-2",
+   "official": "6-2",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-HOME-BOS",
+   "surface": "home/road split",
+   "claim": "BOS home record in the committed official snapshot",
+   "published": "6-1",
+   "official": "6-1",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "S-HOME-MIA",
+   "surface": "home/road split",
+   "claim": "MIA home record in the committed official snapshot",
+   "published": "4-3",
+   "official": "5-3",
+   "verdict": "STALE",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "I-LATEST",
+   "surface": "injury archive",
+   "claim": "the newest official injury release the repository holds",
+   "published": "11/17/26 11:00 AM (v4 index retrieved 2026-11-17T16:41:00Z)",
+   "official": "11/19/26 07:00 AM released 11/19/26, retrieved 2026-11-19T12:20Z",
+   "verdict": "STALE",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+   "note": "the 11/19 07:00 ET release exists on the official index and is not archived here"
+  },
+  {
+   "id": "I-Beal-Bradley",
+   "surface": "injury archive",
+   "claim": "Beal, Bradley status on the 11/19/26 07:00 AM ET report",
+   "published": "no archived row",
+   "official": "Out \u2014 Injury/Illness - Right Knee Injury Management",
+   "verdict": "MISSING",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+   "note": "the player appears on today's official release but has no archived row here"
+  },
+  {
+   "id": "I-Harper-Dylan",
+   "surface": "injury archive",
+   "claim": "Harper, Dylan status on the 11/19/26 07:00 AM ET report",
+   "published": "no archived row",
+   "official": "Out \u2014 Injury/Illness - Left Hip Soreness",
+   "verdict": "MISSING",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+   "note": "the player appears on today's official release but has no archived row here"
+  },
+  {
+   "id": "I-Edwards-Anthony",
+   "surface": "injury archive",
+   "claim": "Edwards, Anthony status on the 11/19/26 07:00 AM ET report",
+   "published": "no archived row",
+   "official": "Out \u2014 Injury/Illness - Right Knee Arthroscopy",
+   "verdict": "MISSING",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+   "note": "the player appears on today's official release but has no archived row here"
+  },
+  {
+   "id": "I-Beringer-Joan",
+   "surface": "injury archive",
+   "claim": "Beringer, Joan status on the 11/19/26 07:00 AM ET report",
+   "published": "no archived row",
+   "official": "Available \u2014 Injury/Illness - Face Mask",
+   "verdict": "MISSING",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+   "note": "the player appears on today's official release but has no archived row here"
+  },
+  {
+   "id": "I-Avdija-Deni",
+   "surface": "injury archive",
+   "claim": "Avdija, Deni status on the 11/19/26 07:00 AM ET report",
+   "published": "no archived row",
+   "official": "Questionable \u2014 Injury/Illness - Left Foot Inflammation / Soreness",
+   "verdict": "MISSING",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+   "note": "the player appears on today's official release but has no archived row here"
+  },
+  {
+   "id": "I-Morant-Ja",
+   "surface": "injury archive",
+   "claim": "Morant, Ja status on the 11/19/26 07:00 AM ET report",
+   "published": "no archived row",
+   "official": "Out \u2014 Injury/Illness - Left Hamstring Strain",
+   "verdict": "MISSING",
+   "source_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+   "note": "the player appears on today's official release but has no archived row here"
+  },
+  {
+   "id": "B-COVERAGE",
+   "surface": "player game logs",
+   "claim": "per-player log rows published for game 0022600259 (HOU@IND, 2026-11-18)",
+   "published": "0 row(s)",
+   "official": "18 Houston + 17 Indiana player rows on the official box score",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259/box-score",
+   "note": ""
+  },
+  {
+   "id": "B-ReedSheppard",
+   "surface": "player game logs",
+   "claim": "Reed Sheppard line, 2026-11-18 HOU@IND",
+   "published": "no row",
+   "official": "24:52 min, 20 pts, 4 reb, 2 ast",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259/box-score",
+   "note": ""
+  },
+  {
+   "id": "B-StevenAdams",
+   "surface": "player game logs",
+   "claim": "Steven Adams line, 2026-11-18 HOU@IND",
+   "published": "no row",
+   "official": "16:22 min, 2 pts, 5 reb, 2 ast",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259/box-score",
+   "note": ""
+  },
+  {
+   "id": "B-MarcusSmart",
+   "surface": "player game logs",
+   "claim": "Marcus Smart line, 2026-11-18 HOU@IND",
+   "published": "no row",
+   "official": "18:16 min, 4 pts, 4 reb, 2 ast",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259/box-score",
+   "note": ""
+  },
+  {
+   "id": "B-TariEason",
+   "surface": "player game logs",
+   "claim": "Tari Eason line, 2026-11-18 HOU@IND",
+   "published": "no row",
+   "official": "24:52 min, 4 pts, 11 reb, 3 ast",
+   "verdict": "MISSING",
+   "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259/box-score",
+   "note": ""
+  },
+  {
+   "id": "SET-0022600253",
+   "surface": "sealed-ledger settlement",
+   "claim": "settled final recorded for game 0022600253",
+   "published": "111-102",
+   "official": "111-102",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/game/nyk-vs-tor-0022600253",
+   "note": ""
+  },
+  {
+   "id": "SET-0022600255",
+   "surface": "sealed-ledger settlement",
+   "claim": "settled final recorded for game 0022600255",
+   "published": "105-93",
+   "official": "105-93",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/game/det-vs-sas-0022600255",
+   "note": ""
+  },
+  {
+   "id": "SET-0022600254",
+   "surface": "sealed-ledger settlement",
+   "claim": "settled final recorded for game 0022600254",
+   "published": "105-106",
+   "official": "105-106",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/game/por-vs-min-0022600254",
+   "note": ""
+  },
+  {
+   "id": "SET-0022600257",
+   "surface": "sealed-ledger settlement",
+   "claim": "settled final recorded for game 0022600257",
+   "published": "132-107",
+   "official": "132-107",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/game/uta-vs-lac-0022600257",
+   "note": ""
+  },
+  {
+   "id": "SET-0022600256",
+   "surface": "sealed-ledger settlement",
+   "claim": "settled final recorded for game 0022600256",
+   "published": "114-118",
+   "official": "114-118",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/game/cha-vs-lal-0022600256",
+   "note": ""
+  },
+  {
+   "id": "P-HORIZON",
+   "surface": "picks horizon",
+   "claim": "dates covered by the published originated lines",
+   "published": "2026-11-15..2026-11-18 (34 lines)",
+   "official": "2026-11-19 and 2026-11-20 are upcoming official slates",
+   "verdict": "STALE",
+   "source_url": "https://www.nba.com/games?date=2026-11-19",
+   "note": "the brief asks for up to 3 days ahead; the published window has already elapsed"
+  },
+  {
+   "id": "P-SLATE-1119",
+   "surface": "picks horizon",
+   "claim": "the four 2026-11-19 games appear in the published lines",
+   "published": "0/4 present",
+   "official": "GSW@MEM, POR@MIL, NYK@MIN, LAC@SAS",
+   "verdict": "FAIL",
+   "source_url": "https://www.nba.com/games?date=2026-11-19",
+   "note": ""
+  },
+  {
+   "id": "J-REFRESH",
+   "surface": "scheduled job",
+   "claim": "outcome of the last ten scheduled refresh runs (gh run list --workflow=refresh.yml)",
+   "published": "10/10 concluded failure (2026-11-14T14:37Z \u2026 2026-11-18T19:29Z)",
+   "official": "a gate-passing scheduled refresh is what the brief requires",
+   "verdict": "FAIL",
+   "source_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/workflows/refresh.yml",
+   "note": "run 44381003145: capture job succeeded on every surface; publish job failed at 'Rebuild every tree from the committed capture'"
+  },
+  {
+   "id": "J-CAPTURE",
+   "surface": "scheduled job",
+   "claim": "did the capture leg of the last scheduled run succeed",
+   "published": "capture: success (all four surfaces + v4), publish: failure",
+   "official": "committed data/raw/capture_2026-11-18/* confirms the capture",
+   "verdict": "PASS",
+   "source_url": "https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145",
+   "note": ""
+  },
+  {
+   "id": "M-HCA-IDENTITY",
+   "surface": "model parameter (derived)",
+   "claim": "hca equals sigma x (2p-1) for the published home-win rate",
+   "published": "hca=0.7679 vs sigma*(2p-1)=0.7679",
+   "official": "p=0.5294 from 99-88 home games",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": "confirmed identical to 2 dp; the constant is pinned, not free"
+  },
+  {
+   "id": "M-HCA-SAMPLE",
+   "surface": "model parameter (derived)",
+   "claim": "the home-win rate is measured over a stated sample",
+   "published": "187 home games = 2 x 188.0 club-games / 2",
+   "official": "home 99-88 = 0.5294",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "M-HCA-PHI",
+   "surface": "model parameter input",
+   "claim": "PHI home split published in the model integrity block",
+   "published": "6-2",
+   "official": "6-2",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "M-HCA-BOS",
+   "surface": "model parameter input",
+   "claim": "BOS home split published in the model integrity block",
+   "published": "6-1",
+   "official": "6-1",
+   "verdict": "PASS",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  },
+  {
+   "id": "M-HCA-MIA",
+   "surface": "model parameter input",
+   "claim": "MIA home split published in the model integrity block",
+   "published": "4-3",
+   "official": "5-3",
+   "verdict": "STALE",
+   "source_url": "https://www.nba.com/standings",
+   "note": ""
+  }
+ ]
+}

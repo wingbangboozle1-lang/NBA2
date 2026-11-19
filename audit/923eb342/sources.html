@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sources &amp; method — NBA2 verification desk</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a22;--muted:#5b6b7c;--line:#e2e7ee;--accent:#1f6feb;
+--good:#1a7f45;--bad:#b42318;--warn:#8a5a00;--info:#3b5bdb;--chip:#eef2f7}
+@media (prefers-color-scheme: dark){:root{--bg:#0d1117;--card:#151b23;--ink:#e6edf3;--muted:#9aa8b6;
+--line:#253040;--accent:#58a6ff;--good:#3fb950;--bad:#f85149;--warn:#d29922;--info:#7aa2f7;--chip:#1c2531}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{font-weight:700;letter-spacing:-.2px}
+.brand span{color:var(--muted);font-weight:400;font-size:13px;display:block;letter-spacing:0}
+nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px}
+nav a{color:var(--muted);padding:2px 0;border-bottom:2px solid transparent}
+nav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav a:hover{color:var(--ink);text-decoration:none}
+main{padding:26px 0 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+h2{font-size:17px;margin:30px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.lede{color:var(--muted);margin:0 0 18px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h4{margin:0 0 4px;font-size:13px;color:var(--muted);font-weight:600}
+.card .big{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.card p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:10px;overflow:hidden;font-size:13px;margin:8px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:600;
+background:var(--chip);color:var(--muted);white-space:nowrap}
+.pass{background:rgba(26,127,69,.12);color:var(--good)}.fail{background:rgba(180,35,24,.12);color:var(--bad)}
+.warn{background:rgba(138,90,0,.14);color:var(--warn)}.info{background:rgba(59,91,219,.12);color:var(--info)}
+.src{font-size:11.5px;word-break:break-all}
+.note{font-size:12.5px;color:var(--muted)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+border-radius:8px;padding:12px 14px;margin:0 0 18px}
+.banner h3{margin:0 0 4px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.finding h4{margin:0 0 6px;font-size:15px}
+.finding p{margin:0 0 8px;font-size:13.5px}
+.meta{font-size:12px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:18px 0 40px}
+ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
+</style></head><body>
+<header><div class="wrap"><div class="brand">NBA2 verification desk
+<span>Session arena/923eb342-nba2 · official sources read 2026-11-19 · nothing here is betting advice</span>
+</div><nav><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Overview</span> <a class="" href="index.html">Overview</a><a class="" href="executive-summary.html">Executive summary</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Evidence</span> <a class="" href="verification.html">Verification log</a><a class="" href="official-results.html">Official results</a><a class="" href="standings.html">Standings</a><a class="" href="injuries.html">Injuries</a><a class="" href="performance.html">Measured skill</a><a class="on" href="sources.html">Sources &amp; method</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Decisions</span> <a class="" href="gates.html">Validation gates</a><a class="" href="strategies.html">Strategies &amp; preregistration</a><a class="" href="questions.html">Open questions</a><a class="" href="suggestions.html">Suggestions</a><a class="" href="flagged.html">Flagged for review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Sources &amp; method</h1>
+<p class="lede">What was read, when, with what transport, and what could not be read at all. The method is
+part of the evidence: a number read with a fragile transport at an unrecorded time is worth less than one
+read with a timestamp.</p>
+
+<div class="banner"><h3>Transport, stated plainly</h3>
+Direct TLS from the execution sandbox to <code>www.nba.com</code>, <code>official.nba.com</code>,
+<code>ak-static.cms.nba.com</code> and <code>stats.nba.com</code> fails with
+<code>SSL_ERROR_SYSCALL</code> (HTTP 000). Every official read in this session therefore used the platform's
+page-fetch transport, which returns the page as text. Each fetch is timestamped
+(2026-11-19T12:20Z) and recorded below. This is a real read of the real page; it is not a
+scrape of a cached copy.</div>
+
+<div class="scroll"><table><thead><tr><th>Source</th><th>What it was used to verify</th><th>URL</th></tr></thead><tbody><tr><td>standings-2026-11-19</td><td>2026-27 regular-season W/L, home/road, division, last-10, streak per club</td><td><a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></td></tr><tr><td>games-2026-11-17</td><td>five 2026-11-17 finals + records printed beside each game</td><td><a class="src" href="https://www.nba.com/games?date=2026-11-17" target="_blank" rel="noopener">nba.com/games</a></td></tr><tr><td>games-2026-11-18</td><td>twelve 2026-11-18 finals; 2026-11-19 slate of four games with tip ET</td><td><a class="src" href="https://www.nba.com/games?date=2026-11-18" target="_blank" rel="noopener">nba.com/games</a></td></tr><tr><td>game-0022600259</td><td>per-game result page for HOU 119 – IND 104</td><td><a class="src" href="https://www.nba.com/game/hou-vs-ind-0022600259" target="_blank" rel="noopener">nba.com/game/hou-vs-ind-0022600259</a></td></tr><tr><td>boxscore-0022600259</td><td>official per-player box score: MIN, PTS, REB, AST per player</td><td><a class="src" href="https://www.nba.com/game/hou-vs-ind-0022600259/box-score" target="_blank" rel="noopener">nba.com/game/hou-vs-ind-0022600259/box-score</a></td></tr><tr><td>injury-policy</td><td>filing deadlines + release index</td><td><a class="src" href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">official.nba.com/nba-injury-report-2026-27-season/</a></td></tr><tr><td>injury-2026-11-19-0700</td><td>11/19/26 07:00 AM ET official injury report (retrieved 2026-11-19)</td><td><a class="src" href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf" target="_blank" rel="noopener">ak-static.cms.nba.com/referee/injury/Injury-Report_2026…</a></td></tr></tbody></table></div><p class="note">7 sources.</p>
+
+<h2>What could not be read</h2>
+<ul class="tight">
+ <li><code>stats.nba.com</code> — all endpoints, from this sandbox (TLS failure) and per the repository's
+ own probe also from a GitHub runner (timeout).</li>
+ <li><code>cdn.nba.com</code> — 403 from the runner per the same probe.</li>
+ <li>GitHub Actions job logs — the blob endpoint returned <code>EOF</code> for both attempts.</li>
+ <li>Any licensed odds provider — none is configured in the repository.</li>
+</ul>
+
+<h2>Reproduce this site</h2>
+<pre style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto">
+python3 audit/923eb342/verify_published.py   # rebuild report.json + run_log.txt
+python3 audit/923eb342/ingest.py             # rewrite verified/*.json (idempotent)
+python3 audit/923eb342/build.py              # rewrite this site
+</pre>
+<p class="note">All three are deterministic over committed inputs plus the capture in
+<code>audit/923eb342/capture_2026-11-19.json</code>.</p>
+</div></main>
+<footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
+confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>
+page. Model output is derived, never official. Built 2026-11-19T12:20Z.</div></footer>
+</body></html>

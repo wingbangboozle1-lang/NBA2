@@ -1,0 +1,78 @@
+{
+ "schema": "nba2.verified.injury-release.v1",
+ "session": "arena/923eb342-nba2",
+ "report_stamp_et": "11/19/26 07:00 AM",
+ "revision_time_et": "11/19/26 07:00 AM",
+ "retrieval_time_utc": "2026-11-19T12:20Z",
+ "pdf_url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_00AM.pdf",
+ "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+ "n_rows": 8,
+ "rows": [
+  {
+   "date": "11/19/2026",
+   "matchup": "GSW@MEM",
+   "team": "Golden State Warriors",
+   "player": "",
+   "status": "",
+   "reason": "NOT YET SUBMITTED"
+  },
+  {
+   "date": "11/19/2026",
+   "matchup": "LAC@SAS",
+   "team": "LA Clippers",
+   "player": "Beal, Bradley",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Injury Management"
+  },
+  {
+   "date": "11/19/2026",
+   "matchup": "LAC@SAS",
+   "team": "San Antonio Spurs",
+   "player": "Harper, Dylan",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Hip Soreness"
+  },
+  {
+   "date": "11/19/2026",
+   "matchup": "NYK@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Edwards, Anthony",
+   "status": "Out",
+   "reason": "Injury/Illness - Right Knee Arthroscopy"
+  },
+  {
+   "date": "11/19/2026",
+   "matchup": "NYK@MIN",
+   "team": "Minnesota Timberwolves",
+   "player": "Beringer, Joan",
+   "status": "Available",
+   "reason": "Injury/Illness - Face Mask"
+  },
+  {
+   "date": "11/19/2026",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Avdija, Deni",
+   "status": "Questionable",
+   "reason": "Injury/Illness - Left Foot Inflammation / Soreness"
+  },
+  {
+   "date": "11/19/2026",
+   "matchup": "POR@MIL",
+   "team": "Portland Trail Blazers",
+   "player": "Morant, Ja",
+   "status": "Out",
+   "reason": "Injury/Illness - Left Hamstring Strain"
+  },
+  {
+   "date": "11/19/2026",
+   "matchup": "POR@MIL",
+   "team": "Milwaukee Bucks",
+   "player": "",
+   "status": "",
+   "reason": "NOT YET SUBMITTED"
+  }
+ ],
+ "filing_rule_source": "https://official.nba.com/nba-injury-report-2026-27-season/",
+ "note": "Rows are exactly what the PDF prints for the games transcribed; the release also covers 11/20 games whose teams had not yet submitted at 07:00 AM ET (the PDF says NOT YET SUBMITTED for those)."
+}

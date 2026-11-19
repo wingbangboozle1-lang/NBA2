@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flagged for review — NBA2 verification desk</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#141a22;--muted:#5b6b7c;--line:#e2e7ee;--accent:#1f6feb;
+--good:#1a7f45;--bad:#b42318;--warn:#8a5a00;--info:#3b5bdb;--chip:#eef2f7}
+@media (prefers-color-scheme: dark){:root{--bg:#0d1117;--card:#151b23;--ink:#e6edf3;--muted:#9aa8b6;
+--line:#253040;--accent:#58a6ff;--good:#3fb950;--bad:#f85149;--warn:#d29922;--info:#7aa2f7;--chip:#1c2531}}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;z-index:5}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.brand{font-weight:700;letter-spacing:-.2px}
+.brand span{color:var(--muted);font-weight:400;font-size:13px;display:block;letter-spacing:0}
+nav{margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px}
+nav a{color:var(--muted);padding:2px 0;border-bottom:2px solid transparent}
+nav a.on{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+nav a:hover{color:var(--ink);text-decoration:none}
+main{padding:26px 0 60px}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.3px}
+h2{font-size:17px;margin:30px 0 10px}
+h3{font-size:14px;margin:18px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px}
+.lede{color:var(--muted);margin:0 0 18px;max-width:80ch}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:16px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.card h4{margin:0 0 4px;font-size:13px;color:var(--muted);font-weight:600}
+.card .big{font-size:24px;font-weight:700;letter-spacing:-.5px}
+.card p{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+border-radius:10px;overflow:hidden;font-size:13px;margin:8px 0 4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--chip);font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.chip{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;font-weight:600;
+background:var(--chip);color:var(--muted);white-space:nowrap}
+.pass{background:rgba(26,127,69,.12);color:var(--good)}.fail{background:rgba(180,35,24,.12);color:var(--bad)}
+.warn{background:rgba(138,90,0,.14);color:var(--warn)}.info{background:rgba(59,91,219,.12);color:var(--info)}
+.src{font-size:11.5px;word-break:break-all}
+.note{font-size:12.5px;color:var(--muted)}
+.banner{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+border-radius:8px;padding:12px 14px;margin:0 0 18px}
+.banner h3{margin:0 0 4px;color:var(--ink);text-transform:none;letter-spacing:0;font-size:14px}
+.finding{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin:10px 0}
+.finding h4{margin:0 0 6px;font-size:15px}
+.finding p{margin:0 0 8px;font-size:13.5px}
+.meta{font-size:12px;color:var(--muted);margin-top:6px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;padding:18px 0 40px}
+ul.tight{margin:6px 0 0;padding-left:20px}ul.tight li{margin:3px 0}
+</style></head><body>
+<header><div class="wrap"><div class="brand">NBA2 verification desk
+<span>Session arena/923eb342-nba2 · official sources read 2026-11-19 · nothing here is betting advice</span>
+</div><nav><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Overview</span> <a class="" href="index.html">Overview</a><a class="" href="executive-summary.html">Executive summary</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Evidence</span> <a class="" href="verification.html">Verification log</a><a class="" href="official-results.html">Official results</a><a class="" href="standings.html">Standings</a><a class="" href="injuries.html">Injuries</a><a class="" href="performance.html">Measured skill</a><a class="" href="sources.html">Sources &amp; method</a><span style='width:10px'></span><span class="note" style="align-self:center;font-size:11px;text-transform:uppercase;letter-spacing:.6px">Decisions</span> <a class="" href="gates.html">Validation gates</a><a class="" href="strategies.html">Strategies &amp; preregistration</a><a class="" href="questions.html">Open questions</a><a class="" href="suggestions.html">Suggestions</a><a class="on" href="flagged.html">Flagged for review</a></nav></div></header>
+<main><div class="wrap">
+<h1>Flagged for review</h1>
+<p class="lede">Every irregularity this session found, with the official URL that confirms it. Nothing on
+this page blocks publication of the site: it is the list to read after the site is live, so a change can
+be requested with the evidence already in hand.</p>
+
+<div class="banner"><h3>Nothing here was silently repaired</h3>
+All fixes for these items live in files owned by other live sessions (open PRs #130/#131 and two claim-only
+branches). Editing them from this session would collide. Each finding therefore names the file to change
+and the mechanism to change it with, and is logged on the shared board as a request.</div>
+
+<div class="finding" id="F-923-01">
+<h4>F-923-01 <span class="chip fail">blocker</span> Scheduled refresh has failed 10/10 times</h4>
+<p>The nightly ingest is the mechanism the brief names for keeping four official surfaces current. Every scheduled run from 2026-11-14T14:37Z to 2026-11-18T19:29Z concluded `failure`. In the most recent run the capture job succeeded on all four surfaces plus v4, and the failure is in the publish job&#x27;s `Rebuild every tree from the committed capture` step.</p>
+<div class="meta"><b>Evidence:</b> gh run list --workflow=refresh.yml --limit 12 → 10 rows, all `failure`; gh run view 44381003145 → capture: success, publish: failure at step 5, steps 6-11 skipped<br><b>Confirm at:</b> <a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/actions/runs/44381…</a></div></div><div class="finding" id="F-923-02">
+<h4>F-923-02 <span class="chip warn">high</span> The published result feed is a 2026-11-14 slice, not a feed</h4>
+<p>`data/v2/results.json` holds 5 rows, all dated 2026-11-14. Seventeen further games have since gone final on the official site (5 on 11/17, 12 on 11/18) and none of them is a row in the published feed. The brief asks for one row per game: date, teams, final score, quarter scores.</p>
+<div class="meta"><b>Evidence:</b> report.json R-WINDOW (5 rows, 2026-11-14..2026-11-14) + 17 MISSING rows R-0022600xxx<br><b>Confirm at:</b> <a class="src" href="https://www.nba.com/games?date=2026-11-18" target="_blank" rel="noopener">nba.com/games</a></div></div><div class="finding" id="F-923-03">
+<h4>F-923-03 <span class="chip warn">high</span> Published lines have elapsed; the 11/19 slate has no lines</h4>
+<p>The originated line set covers 2026-11-15..2026-11-18 (34 lines). Today&#x27;s official slate is four games on 2026-11-19 (GSW@MEM, POR@MIL, NYK@MIN, LAC@SAS) and **0 of 4** appear. The brief asks for picks up to three days ahead.</p>
+<div class="meta"><b>Evidence:</b> report.json P-HORIZON, P-SLATE-1119<br><b>Confirm at:</b> <a class="src" href="https://www.nba.com/games?date=2026-11-19" target="_blank" rel="noopener">nba.com/games</a></div></div><div class="finding" id="F-923-04">
+<h4>F-923-04 <span class="chip warn">high</span> Injury archive stops at 11/17; today&#x27;s official releases are absent</h4>
+<p>`data/v4/injury/releases.json` lists three stored releases, newest `11/17/26 11:00 AM`, index retrieved 2026-11-17T16:41Z. The official index this session read lists 2026-11-19 releases from 12:00 AM ET through at least 07:00 AM ET. Not one of them is archived, so no consecutive-report diff exists for 11/18 or 11/19.</p>
+<div class="meta"><b>Evidence:</b> report.json I-LATEST + data/v4/injury/releases.json vs the official index<br><b>Confirm at:</b> <a class="src" href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">official.nba.com/nba-injury-report-2026-27-season/</a></div></div><div class="finding" id="F-923-05">
+<h4>F-923-05 <span class="chip warn">high</span> The model&#x27;s out-of-sample log-loss is worse than a coin flip</h4>
+<p>`data/v6/market_prior.json` records model_log_loss 0.7058 against baseline L0 0.6931 (coin flip = ln 2) on the settled sample, with model_beats_coin_flip = false. The market-anchored prior rule therefore hands the entire weight to the market the moment a market price has any skill. Any strategy published as skill-based is contradicted by this measurement.</p>
+<div class="meta"><b>Evidence:</b> data/v6/market_prior.json (primary_measurement_id SETTLED-27)<br><b>Confirm at:</b> <a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/market_prior.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/…</a></div></div><div class="finding" id="F-923-06">
+<h4>F-923-06 <span class="chip warn">high</span> Player-log coverage of injury-report players is 10.3%</h4>
+<p>`data/v6/player_coverage.json`: 116 report rows, 12 matched to a player log, coverage 0.1034. The brief asks for per-player game logs for at least the players who appear on an injury report; 104 of 116 have none. Minutes redistribution and prop combos are unbuildable on that base.</p>
+<div class="meta"><b>Evidence:</b> data/v6/player_coverage.json<br><b>Confirm at:</b> <a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/player_coverage.json" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/data/v6/…</a></div></div><div class="finding" id="F-923-07">
+<h4>F-923-07 <span class="chip warn">medium</span> Publish-chain failure is not reproducible on this tree</h4>
+<p>I extracted the commit to a scratch directory and ran the eleven publish-chain modules in order: all eleven exited 0. The rebuild afterwards differed from HEAD in exactly four files, and each difference is a timestamp or a digest of one (`data/settlement.json` settled_at_utc, `data/site.json` input_digest + two prose copies of settled_at_utc). So the failing step is not obviously a numeric defect; it is either a runner difference or a non-deterministic input. The runner logs could not be downloaded (the blob endpoint returned EOF), so this stays open.</p>
+<div class="meta"><b>Evidence:</b> python3 -m &lt;11 publish modules&gt; → rc=0 each; git --work-tree=/tmp/repro diff --stat → 4 files<br><b>Confirm at:</b> <a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44381003145" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/actions/runs/44381…</a></div></div><div class="finding" id="F-923-08">
+<h4>F-923-08 <span class="chip warn">medium</span> The published model is built from a snapshot that predates settled games</h4>
+<p>`data/v2/teams.json` carries as_of 2026-11-15 and its calibration is fitted on 188 club-games (home 99-88). The committed standings capture of 2026-11-18T19:30Z, taken before that night&#x27;s twelve finals, already differs for 24 of 30 clubs against the 2026-11-19 official table. The difference is the games played since, not a transcription error — but it means every published line is priced off a stale rating.</p>
+<div class="meta"><b>Evidence:</b> report.json 24 SUPERSEDED rows + teams.json calibration.home_win_rate<br><b>Confirm at:</b> <a class="src" href="https://www.nba.com/standings" target="_blank" rel="noopener">nba.com/standings</a></div></div><div class="finding" id="F-923-09">
+<h4>F-923-09 <span class="chip warn">medium</span> Two independent estimators exist, but the headline is still the blend</h4>
+<p>`lines.json` publishes a single `margin`; the two estimator spreads are in `est_a`/`est_b` and the `agreement` column. The brief asks for the disagreement to be the headline with the blend underneath. This is a presentation defect, not a data defect: the inputs are there.</p>
+<div class="meta"><b>Evidence:</b> data/v2/lines.json → lines[].est_a, est_b, agreement, margin<br><b>Confirm at:</b> <a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/site/teams.html" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/site/tea…</a></div></div><div class="finding" id="F-923-10">
+<h4>F-923-10 <span class="chip warn">medium</span> `stats.nba.com` and `cdn.nba.com` are unreachable from the runner</h4>
+<p>`nba2/v2/refresh.py` documents it: stats.nba.com times out with every header set tried and cdn.nba.com returns 403, so the three official team-stat pages (traditional, opponent, advanced) are not re-cut from their own endpoints. The season table is derived from per-game finals instead. That is disclosed, but it means &#x27;re-read the three official team-stat pages&#x27; is not satisfied.</p>
+<div class="meta"><b>Evidence:</b> nba2/v2/refresh.py module docstring (transport probe 2026-11-17)<br><b>Confirm at:</b> <a class="src" href="https://www.nba.com/stats/teams/traditional" target="_blank" rel="noopener">nba.com/stats/teams/traditional</a></div></div><div class="finding" id="F-923-11">
+<h4>F-923-11 <span class="chip info">info</span> `nba2/v2/check.py` hard-codes what it is checking</h4>
+<p>The semantic check asserts `n_slate = 34` and &#x27;wins must sum to 188&#x27;. Those are properties of the 2026-11-15 snapshot. A fresh capture therefore fails the check by design, which is a plausible second cause of the publish failure and a certain cause of it after any successful refresh.</p>
+<div class="meta"><b>Evidence:</b> nba2/v2/check.py semantic(): n_slate = 34, sum(...) != 188<br><b>Confirm at:</b> <a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/check.py" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v2/…</a></div></div><div class="finding" id="F-923-12">
+<h4>F-923-12 <span class="chip info">info</span> Sealed ledgers cannot be extended to new game days</h4>
+<p>Both sealed ledgers cover 2026-11-14..11-17 only. Once those are settled there is nothing sealed for 11/18 onward, so the tamper-evident pick stream stops while the site keeps publishing. The seal mechanism itself verifies (both digests recompute), so this is a coverage gap, not a break.</p>
+<div class="meta"><b>Evidence:</b> data/raw/ledger/sealed-2026-11-13.json, sealed-2026-11-14.json → prediction dates<br><b>Confirm at:</b> <a class="src" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/data/raw/ledger" target="_blank" rel="noopener">github.com/wingbangboozle1-lang/NBA2/tree/main/data/raw…</a></div></div>
+
+<h2>Unverified items, listed separately</h2>
+<p class="note">These are not defects. They are things a reader might assume were checked and were not.
+Each is blank on this site rather than filled.</p>
+<ul class="tight">
+ <li>Quarter scores for the twelve 2026-11-18 finals — the breakdown is not in a committed capture.</li>
+ <li>The three official team-stat pages (traditional, opponent, advanced) — unreachable from this sandbox
+ and from the GitHub runner per the repository's transport probe.</li>
+ <li>Per-player box scores for 2026-11-18 beyond game 0022600259, and the Pacers block within it.</li>
+ <li>Game id for WAS@CHI on 2026-11-20 — outside the captured chunk; left empty, not inferred.</li>
+ <li>Any market price for any game.</li>
+ <li>The runner log for the ten failed scheduled refreshes.</li>
+</ul>
+</div></main>
+<footer><div class="wrap">Every row carries the official URL it came from. A value that could not be
+confirmed from an official source is blank and listed on the <a href="flagged.html">Flagged for review</a>
+page. Model output is derived, never official. Built 2026-11-19T12:20Z.</div></footer>
+</body></html>
