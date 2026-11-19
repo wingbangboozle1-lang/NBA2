@@ -5990,3 +5990,17 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
   count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
   era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
   RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+## Session `arena/6b9f3bbe-nba2` — CLAIM (2026-11-19 UTC, branch `arena/6b9f3bbe-nba2`, base `41cfd81` = `main` @ PR #133 merge)
+
+Claimed before any edit. Preconditions verified at claim time: PR #115 merged (2026-11-17T16:35:45Z, `efb0547`), so the ACF-7 condition on RQ-8892-02 is satisfied; RQ-8892-02 is not claimed by any other session (board state: 8892-4 "deliberately not repointed"; af5df7a7 defers it; 0b91edfc and 53c5afeb never claimed it). The 11/18 bot capture (`data/raw/capture_2026-11-18/team_stats_2026-11-18.json`) has all three team-stat pages `status: unavailable` (runner transport), so the re-cut anchors on a **fresh 2026-11-19 capture made through the platform page-fetch tool** — the same method session 8892d20c used and the same method `nba2/v2/official.py` documents.
+
+| ID | Task | File scope | Verification rule |
+|----|------|-----------|-------------------|
+| 6B9-1 | Claim + push before any edit | `COORDINATION.md` (this section, append-only) | pushed before further work |
+| 6B9-2 | Fresh official capture 2026-11-19: standings, the three team-stat pages (traditional/opponent/advanced), 3-day slate window, injury index/PDF; writer + arithmetic selftest | `audit/session-6b9f3bbe-nba2/**` (new), `data/raw/refresh_2026-11-19/**` (new) | `selftest()` CLEAN (30 clubs; home+road+neutral = W-L; wins = losses; home wins = road losses; GP = W+L per club; PF/PA within the rounding bound; margin-vs-NetRtg residual < 1.5) |
+| 6B9-3 | RQ-8892-02 model re-cut per the 7-step spec (`analysis/session-8892d20c-capture.md` §4): replace `nba2/v2/official.py::TEAMS` field by field; bump `AS_OF`/`RETRIEVED_AT_UTC`/`RETRIEVED_BY`/`WINDOW_*`; disclose PF/PA re-basing; update `nba2/v2/report.py` reconstruction assertion; repoint `nba2/v3/official.py`, `nba2/v4/capture.py`, v5 window in the same change | `nba2/v2/official.py`, `nba2/v2/report.py`, `nba2/v3/official.py`, `nba2/v4/capture.py`, v5 window reader(s) (amended scope logged before each edit) | every suite green (nba2/tests, v2, v3, v4, v5, v6); `CC-FRESH-01` turns PASS; PF/PA re-basing disclosed on the page |
+| 6B9-4 | Regenerate downstream surfaces in CI order; run the full checker chain | generated artefacts only (`data/site.json`, `pages/**`, root `*.html` as generated, `site/**`, `data/v*/**` generated outputs, settlement outputs) | rebuild is a byte-identical fixed point; lint + link checks + crosscheck recorded |
+| 6B9-5 | Record + PR → merge → Pages verify → completion record | `analysis/session-6b9f3bbe-nba2-recut.md` (new), `COORDINATION.md` (completion, append-only) | `gh pr merge` with all checks green; live fetch of the deployed site |
+
+**Explicitly NOT edited:** sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `.github/workflows/**`, `nba2/v2/refresh.py` transport (RQ-8892-01 stays open, unclaimed), `nba2/v6/**` logic, other sessions' claimed files, `docs/**`, `backtest/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`, `tools/**`, `README.md` (except proven count drift, counts only).
