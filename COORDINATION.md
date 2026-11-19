@@ -6311,3 +6311,18 @@ Q-923-10 and needs an owner decision, not a code change.
 
 **Status: done.** Verified rows, harness, dashboard, findings, questions, suggestions and the requests
 RQ-923-1…4 are all published; every finding is on the Flagged for review page with its official URL.
+### PR & merge result — session `arena/f4a5531f-nba2` (2026-11-19 UTC, F4A-6 done)
+
+| Item | Result |
+|---|---|
+| PR | [#140](https://github.com/wingbangboozle1-lang/NBA2/pull/140) — independent audit + fresh official capture 2026-11-19 |
+| Checks | verify / v2 / parity / backtest / capture / refresh-dry-run all **pass** (runs 44527487151, 44527488258, 44527487216, 44527477306) |
+| Merge | **MERGED** at 2026-11-19T12:53:42Z, merge commit `a76d9736fcb09ba768f4afda5cde73902b9572ec` (two mid-flight rebase conflicts on the append-only board were resolved keeping both sessions' entries; a v7 nav drift after PR #139 landed was repaired by running the now-committed `python -m nba2.v7` build step — rebuild returned to a byte-identical fixed point before the push) |
+| Pages deploy | run [44528139448](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44528139448) **success** (1m19s); a concurrent deploy (#143) was cancelled by the `pages` concurrency group — the successful build serves the later merge state |
+| Live verification | fetched https://wingbangboozle1-lang.github.io/NBA2/results-coverage.html post-deploy: page renders with the frozen as-of `2026-11-18T19:30:20Z`, 56/87 finals committed, 27 graded — the 12 finals captured by this session are deliberately NOT wired into the coverage counts (see RQ-F4A-1: the v6 frozen clock and globs are owned by the active v6/v7 claimants) |
+| Board hygiene | claims pushed before work (7956729); every flagged item (F4A-F1..F9) carries a file, command, or official URL in `analysis/session-f4a5531f-audit.md`; nothing outside this session's claimed namespaces was edited |
+
+**Deliverables now on main:** `analysis/session-f4a5531f-audit.md` · `audit/session-f4a5531f/**`
+(baseline logs + capture evidence) · `data/raw/capture_2026-11-19_f4a5531f/**` (standings 30/30,
+12 finals for 11/18 with one full quarter-row set, slate 11/19→22, injury release 11/19 07:00 AM ET
+transcript, three team-stat page samples with identity checks).
