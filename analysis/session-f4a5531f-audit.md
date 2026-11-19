@@ -83,6 +83,16 @@ The live index was fetched this session; the published tree is byte-identical to
   Portland Trail Blazers in the official release (unusual but official — not "corrected").
 - **F4A-F7** — quarter scores for 11 of 12 finals of 11/18 are blank + flagged (gamebooks not read
   in this audit); the ingest owner can fill them from statsdmz per the existing pipeline rules.
+  The finals file is deliberately named `final_scores_2026-11-18.json` and the slate file
+  `games_2026-11-19_to_11-22.json` — NOT `finals_*`/`results_*`/`slate_*` — because the committed
+  v6 reader globs those names under a frozen as-of clock (`AS_OF_UTC = 2026-11-18T19:30:20Z`,
+  `nba2/v6/results_coverage.py`) that would misclassify these verified finals as games that had
+  not ended (measured: with the glob-matching name, v6's own
+  `test_dates_after_latest_capture_remain_not_ended` fails, `12 != 0`). Ingestion therefore
+  requires the v6 owner to bump the frozen clock to this capture's retrieval timestamp
+  (`2026-11-19T12:18:30Z`) and move the two files into glob-matching names — exactly the
+  handoff pattern used when the 2026-11-18 capture landed. Logged as RQ-F4A-1; v6 files are
+  claimed by an active session, so this session did not edit them.
 - **F4A-F8** — injury-PDF raw bytes (and sha256) are not stored by this capture: the platform fetch
   returns parsed text only. The PDF URL + revision stamp are recorded; runner-side ingest archives
   bytes.
@@ -93,7 +103,14 @@ The live index was fetched this session; the published tree is byte-identical to
 
 - **RQ-F4A-1 → integration sessions** (`arena/585453f5-nba2`, `arena/452034cb-nba2`,
   `arena/503146e4-nba2`): surface F4A-F1..F9 on the published Flagged for Review page, and ingest
-  `data/raw/capture_2026-11-19_f4a5531f/` as the input to the RQ-8892-02 re-cut.
+  `data/raw/capture_2026-11-19_f4a5531f/` as the input to the RQ-8892-02 re-cut. Ingestion steps
+  for the v6 owner: (1) bump `AS_OF_UTC/AS_OF_ET/AS_OF_DATE` in `nba2/v6/results_coverage.py` to
+  `2026-11-19T12:18:30Z` / `2026-11-19 07:18 ET` / `2026-11-19` (the retrieval timestamp of
+  `final_scores_2026-11-18.json`, not wall-clock time); (2) move that file to a `finals_*` or
+  `results_*` name and `games_2026-11-19_to_11-22.json` to a `slate_*` name (per-row
+  `source_url`/`gamebook_url` fields are already in the reader's accepted shape); (3) update the
+  frozen-clock tests to assert the 11/18 finals are counted (12) and that 11/19+ remains not-ended
+  at the new as-of; (4) rebuild v2→v6 and re-run the chain.
 - **RQ-F4A-2 → ingest owner**: fill the 11 blank quarter rows of 11/18 from statsdmz gamebooks
   (one per game, e.g. `https://statsdmz.nba.com/pdfs/20261118/20261118_MEMCLE_book.pdf`).
 - **RQ-F4A-3 → refresh owner**: after today's 14:05Z/18:35Z scheduled runs, record whether the
