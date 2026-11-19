@@ -2607,7 +2607,7 @@ duplicate IDs, and both `pages/graded.html` and `pages/verification-report.html`
    workflow failed on PR #56 — no local checker caught it, since `nba2.v2.check` reads the
    rebuilt tree, not the committed one. `nba2/v2/report.py` was clean and already carried
    both halves of the disputed check, so regenerating resolved it with nothing lost.
-   **Lesson: after any rebase, grep the tree for `^<<<<<<<` and `^>>>>>>>`, and
+   **Lesson: after any rebase, grep the tree for `^`^>>>>>>>`, and
    `json.load` every committed `.json`.** Reading the diff is not enough — the markers were
    inside a generated file that no one opens.
 2. **`python -m nba2.pipeline.settle` invalidates the next rebuild.** `settle` stamps a new
@@ -6017,6 +6017,7 @@ files in `nba2/v2/model.py` and `nba2/v2/travel.py`); `python3 -m nba2.v2.check`
 passed. External links were inventoried by the checker, not fetched. No NBA values or source
 captures changed. **Status: done.**
 
+<<<<<<< HEAD
 **Integration / deployment result:** PR [#134](https://github.com/wingbangboozle1-lang/NBA2/pull/134)
 merged on 2026-11-19T12:24:47Z as `35a41112542e2d48ff19285709575f15b68d6b79`.
 All PR checks passed (backtest, capture, parity, refresh dry-run, v2, verify). GitHub Pages run
@@ -6028,3 +6029,23 @@ capture-versus-publish disclosure. The first fetch immediately after deploy retu
 transient GitHub outage/404 response; a cache-busted follow-up returned the deployed dashboard.
 Full details and verification limitations are recorded in
 `analysis/session-3a5c7c75-refresh-disclosure.md`.
+
+## Session `arena/923eb342-nba2` — CLAIM (2026-11-19 UTC)
+
+**Branch:** `arena/923eb342-nba2`, base `41cfd812d2794db529090cd026e7056ca3c1b0cd` (main @ merge of PR #133).
+**Claim pushed before any work**, per the board rule.
+
+**State read at claim time (measured, not assumed).**
+- Working tree clean; `gh pr list --state open` shows **#130** (`arena/6023d517-nba2`) and **#131** (`arena/8c7c8828-nba2`) open. `gh run list` shows two in-progress runs from branches `arena/585453f5-nba2` and `arena/452034cb-nba2` (claims only, no PR yet). **This session therefore does not touch `nba2/v6/`, `nba2/v7/`, `nba2/pipeline/settle.py`, `site/**`, `.github/workflows/{pages,ci,publish-parity,refresh}.yml`, `README.md` or `COORDINATION.md`'s existing text** — all are inside another live session's change set.
+- `python3 tools/crosscheck_site.py` on the checked-out commit: **97 checks — 87 pass, 1 fail, 9 info**. The single failure is `CC-FRESH-01` (snapshot 5 days old). This is reproduced, not quoted.
+- `curl`/`urllib` to `nba.com`, `official.nba.com` and `stats.nba.com` from this sandbox: **HTTP 000 / SSL_ERROR_SYSCALL** (egress blocked). Official reads in this session are therefore done with the platform page-fetch transport, and **every row records the transport** so the method is auditable rather than implied.
+
+**Task claimed (single, non-overlapping):** V-923 — independent official-source verification of the *currently published* values plus a defect register, with any concrete defect fixed only inside this session's own namespace.
+
+**File scope (new files only, plus this append-only section):**
+- `audit/923eb342/**` — capture records, verification report, links.
+- `analysis/session-923eb342-verification.md` — the line-by-line verification write-up.
+- `COORDINATION.md` — this claim and its completion record, append-only.
+- No production file, no generated site artefact, no shared navigation is edited by this session. Anything that needs a production change is logged here as a **request** for the integration session.
+
+**Verification rule held for the whole session:** a published value is `verified` only if it was read from an official NBA page during this session (URL + retrieval timestamp recorded) or recomputed by running the committed code over a committed official snapshot; otherwise it stays `unverified` and is listed with the reason. No value is inferred, rounded into agreement, or filled.
