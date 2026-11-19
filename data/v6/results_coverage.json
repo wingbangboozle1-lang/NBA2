@@ -198,7 +198,7 @@
     "0022600257"
    ],
    "missing_final_ids": [],
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/schedule?date=2026-11-17"
   },
   {
    "date": "2026-11-18",
@@ -237,7 +237,7 @@
     "0022600268",
     "0022600269"
    ],
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/schedule?date=2026-11-18"
   },
   {
    "date": "2026-11-19",
@@ -260,7 +260,7 @@
     "0022600272",
     "0022600273"
    ],
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/schedule?date=2026-11-19"
   },
   {
    "date": "2026-11-20",
@@ -327,7 +327,7 @@
   {
    "game_id": "0022600034",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "NYK @ IND",
    "away": "NYK",
    "home": "IND",
    "away_pts": 104,
@@ -363,7 +363,7 @@
   {
    "game_id": "0022600035",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "MIL @ ORL",
    "away": "MIL",
    "home": "ORL",
    "away_pts": 99,
@@ -399,7 +399,7 @@
   {
    "game_id": "0022600036",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "CLE @ MIA",
    "away": "CLE",
    "home": "MIA",
    "away_pts": 121,
@@ -435,7 +435,7 @@
   {
    "game_id": "0022600037",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "ATL @ CHI",
    "away": "ATL",
    "home": "CHI",
    "away_pts": 117,
@@ -473,7 +473,7 @@
   {
    "game_id": "0022600038",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "MEM @ NOP",
    "away": "MEM",
    "home": "NOP",
    "away_pts": 142,
@@ -509,7 +509,7 @@
   {
    "game_id": "0022600039",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "UTA @ HOU",
    "away": "UTA",
    "home": "HOU",
    "away_pts": 118,
@@ -545,7 +545,7 @@
   {
    "game_id": "0022600040",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "GSW @ SAS",
    "away": "GSW",
    "home": "SAS",
    "away_pts": 85,
@@ -581,7 +581,7 @@
   {
    "game_id": "0022600041",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "POR @ SAC",
    "away": "POR",
    "home": "SAC",
    "away_pts": 120,
@@ -617,7 +617,7 @@
   {
    "game_id": "0022600042",
    "date": "2026-11-13",
-   "matchup": "None @ None",
+   "matchup": "OKC @ LAC",
    "away": "OKC",
    "home": "LAC",
    "away_pts": 112,
@@ -869,7 +869,7 @@
   {
    "game_id": "0022600211",
    "date": "2026-11-10",
-   "matchup": "None @ None",
+   "matchup": "MIL @ NYK",
    "away": "MIL",
    "home": "NYK",
    "away_pts": 85,
@@ -902,7 +902,7 @@
   {
    "game_id": "0022600212",
    "date": "2026-11-10",
-   "matchup": "None @ None",
+   "matchup": "BOS @ PHI",
    "away": "BOS",
    "home": "PHI",
    "away_pts": 123,
@@ -935,7 +935,7 @@
   {
    "game_id": "0022600213",
    "date": "2026-11-10",
-   "matchup": "None @ None",
+   "matchup": "LAC @ PHX",
    "away": "LAC",
    "home": "PHX",
    "away_pts": 110,
@@ -968,7 +968,7 @@
   {
    "game_id": "0022600214",
    "date": "2026-11-10",
-   "matchup": "None @ None",
+   "matchup": "MIA @ UTA",
    "away": "MIA",
    "home": "UTA",
    "away_pts": 115,
@@ -1001,7 +1001,7 @@
   {
    "game_id": "0022600215",
    "date": "2026-11-10",
-   "matchup": "None @ None",
+   "matchup": "ORL @ SAC",
    "away": "ORL",
    "home": "SAC",
    "away_pts": 107,
@@ -1034,7 +1034,7 @@
   {
    "game_id": "0022600216",
    "date": "2026-11-10",
-   "matchup": "None @ None",
+   "matchup": "OKC @ POR",
    "away": "OKC",
    "home": "POR",
    "away_pts": 103,
@@ -1067,7 +1067,7 @@
   {
    "game_id": "0022600217",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "WAS @ IND",
    "away": "WAS",
    "home": "IND",
    "away_pts": 101,
@@ -1101,7 +1101,7 @@
   {
    "game_id": "0022600218",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "CLE @ NYK",
    "away": "CLE",
    "home": "NYK",
    "away_pts": 115,
@@ -1135,7 +1135,7 @@
   {
    "game_id": "0022600219",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "BOS @ TOR",
    "away": "BOS",
    "home": "TOR",
    "away_pts": 98,
@@ -1169,7 +1169,7 @@
   {
    "game_id": "0022600220",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "SAS @ CHI",
    "away": "SAS",
    "home": "CHI",
    "away_pts": 124,
@@ -1203,7 +1203,7 @@
   {
    "game_id": "0022600221",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "DEN @ MEM",
    "away": "DEN",
    "home": "MEM",
    "away_pts": 123,
@@ -1237,7 +1237,7 @@
   {
    "game_id": "0022600222",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "LAL @ MIL",
    "away": "LAL",
    "home": "MIL",
    "away_pts": 123,
@@ -1271,7 +1271,7 @@
   {
    "game_id": "0022600223",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "BKN @ NOP",
    "away": "BKN",
    "home": "NOP",
    "away_pts": 145,
@@ -1305,7 +1305,7 @@
   {
    "game_id": "0022600224",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "ORL @ UTA",
    "away": "ORL",
    "home": "UTA",
    "away_pts": 123,
@@ -1339,7 +1339,7 @@
   {
    "game_id": "0022600225",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "GSW @ HOU",
    "away": "GSW",
    "home": "HOU",
    "away_pts": 108,
@@ -1373,7 +1373,7 @@
   {
    "game_id": "0022600226",
    "date": "2026-11-11",
-   "matchup": "None @ None",
+   "matchup": "OKC @ POR",
    "away": "OKC",
    "home": "POR",
    "away_pts": 108,
@@ -1407,7 +1407,7 @@
   {
    "game_id": "0022600227",
    "date": "2026-11-12",
-   "matchup": "None @ None",
+   "matchup": "TOR @ PHI",
    "away": "TOR",
    "home": "PHI",
    "away_pts": 112,
@@ -1441,7 +1441,7 @@
   {
    "game_id": "0022600228",
    "date": "2026-11-12",
-   "matchup": "None @ None",
+   "matchup": "DET @ WAS",
    "away": "DET",
    "home": "WAS",
    "away_pts": 144,
@@ -1479,7 +1479,7 @@
   {
    "game_id": "0022600229",
    "date": "2026-11-12",
-   "matchup": "None @ None",
+   "matchup": "DAL @ MIN",
    "away": "DAL",
    "home": "MIN",
    "away_pts": 94,
@@ -1513,7 +1513,7 @@
   {
    "game_id": "0022600230",
    "date": "2026-11-12",
-   "matchup": "None @ None",
+   "matchup": "CHA @ PHX",
    "away": "CHA",
    "home": "PHX",
    "away_pts": 96,
@@ -1547,7 +1547,7 @@
   {
    "game_id": "0022600231",
    "date": "2026-11-14",
-   "matchup": "None @ None",
+   "matchup": "DEN @ NOP",
    "away": "DEN",
    "home": "NOP",
    "away_pts": 116,
@@ -1586,7 +1586,7 @@
   {
    "game_id": "0022600232",
    "date": "2026-11-14",
-   "matchup": "None @ None",
+   "matchup": "DAL @ CLE",
    "away": "DAL",
    "home": "CLE",
    "away_pts": 117,
@@ -1625,7 +1625,7 @@
   {
    "game_id": "0022600233",
    "date": "2026-11-14",
-   "matchup": "None @ None",
+   "matchup": "DET @ MIA",
    "away": "DET",
    "home": "MIA",
    "away_pts": 117,
@@ -1664,7 +1664,7 @@
   {
    "game_id": "0022600234",
    "date": "2026-11-14",
-   "matchup": "None @ None",
+   "matchup": "BKN @ MEM",
    "away": "BKN",
    "home": "MEM",
    "away_pts": 110,
@@ -1703,7 +1703,7 @@
   {
    "game_id": "0022600235",
    "date": "2026-11-14",
-   "matchup": "None @ None",
+   "matchup": "CHI @ MIN",
    "away": "CHI",
    "home": "MIN",
    "away_pts": 117,
