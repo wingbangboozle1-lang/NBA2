@@ -5509,3 +5509,24 @@ fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 
 | INJ-4 | Publish irregularities + completion record; mark done | pending | `COORDINATION.md` (append-only) | every flag names the file |
 
 **Not claimed (explicitly out of scope):** site/navigation, `nba2/v2/*`, `nba2/v4/*` (edited by no one here; only read), `data/settlement.json`, sealed ledgers `data/raw/ledger/**`, `data/v3/ledger/**`, pages, root `*.html`, `README.md`, `suggestions/**`, `requirements/**`.
+
+### Completion record — session `arena/95053469-nba2` (2026-11-19 UTC, INJ-1…INJ-4)
+
+| ID | Status | Output | Verification |
+|----|--------|--------|--------------|
+| INJ-1 | done | `analysis/session-95053469-injury-archive.md` §INJ-1 | sha256 + bytes recomputed from the 20 committed PDFs in `data/raw/pdf/` |
+| INJ-2 | done | 17 `data/raw/pdf/*.txt` files regenerated/created by the committed `nba2/pipeline/refresh.py::pdf_text` on committed bytes (14 were 0 bytes, 3 missing); 3 non-empty files kept | all 20 PDFs now yield non-empty text; 11-17 09:45 AM differs only by `\r`/`\n` line endings (content unchanged) |
+| INJ-3 | done | `analysis/session-95053469-injury-diff.py` + `analysis/session-95053469-injury-diff.json`: 19 consecutive pairs, 16 comparable (shared game date), 3 not comparable | cross-check vs `data/raw/capture_2026-11-15/injury_delta_0615AM_to_0615PM.json`: 19/20 status changes agree; the 20th is a reason-only change; row counts reconcile exactly (101 and 155) |
+| INJ-4 | done | this record + irregularities below | — |
+
+**Sources (official):** official index `https://official.nba.com/nba-injury-report-2026-27-season/` (fetched 2026-11-19T05:46Z); PDFs `https://ak-static.cms.nba.com/referee/injury/<filename>` (bytes archived by the runner per `data/v6/injury_binary_manifest.json`; the sandbox cannot reach `ak-static`).
+
+**Irregularities flagged (not edited, for owner review):**
+1. `nba2/pipeline/refresh.py::PLAYER_STATUS_RE` absorbs reason/team text into player names (e.g. `Illness - Left Foot Fracture Landale, Jock`). Owner of that file to review; this session used a narrower pattern.
+2. `data/raw/capture_2026-11-15/injury_report_2026-11-15_0615AM.json` misspells `Embid, Joel` (PDF: `Embiid, Joel`) and `Champagne, Justin` (PDF: `Champagnie, Justin`).
+3. `data/raw/capture_2026-11-15/injury_delta_0615AM_to_0615PM.json` counts Dieng, Ousmane (Out → Out, reason changed) as a status change.
+4. The 11-15 06:15 AM → PM capture reports added 67 / removed 13 (keyed on matchup); this session's diff (keyed on date) reports 0 removed on the 11/15 date. Keys differ; zero removals across the 16 comparable pairs is measured, not confirmed against an official source.
+5. **Archive gap:** official index lists `Injury-Report_2026-11-19_12_00AM/12_15AM/12_30AM.pdf` (current day only). None is archived; latest archived release is 11-18 09:45 AM. Whether 11-18 afternoon releases exist is **unverified** (the index shows only the current day).
+6. Test status: `nba2/v6` has 3 failing tests (`test_all_gates_pass`, `test_a_date_that_has_not_ended_is_not_reported_as_a_gap`, `test_every_game_row_has_an_official_url`) on a clean export of `origin/main` as well — pre-existing, not caused by this session. `nba2/tests/test_pipeline.py::test_rebuild_produces_identical_rows` fails on the clean `main` export but passes on this branch; cause not investigated.
+
+**Not done (out of scope for this claim):** the Injuries page banner, rotation/minutes model, lines/strategy work, parlays, closing-line blend, and the site are untouched. Those remain open on the board (RQ-8892-01/02/03) and were not claimed by this session.
