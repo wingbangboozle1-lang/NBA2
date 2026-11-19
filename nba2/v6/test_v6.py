@@ -94,6 +94,34 @@ class TestResultsCoverage(unittest.TestCase):
             self.assertEqual(r["n_missing_final"] + r["n_finals_committed"],
                              r["n_scheduled"])
 
+    def test_every_date_row_links_to_its_own_official_schedule_date(self):
+        for row in self.doc["rows"]:
+            self.assertEqual(RC._schedule_url_for_date(row["list_url"], row["date"]),
+                             row["list_url"], msg=row["date"])
+
+    def test_stale_schedule_url_cannot_override_the_matching_snapshot(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = root / "data" / "raw"
+            raw.mkdir(parents=True)
+            (raw / "slate_older.json").write_text(json.dumps({
+                "source": {"name": "NBA.com Schedule (official)",
+                           "url": "https://www.nba.com/schedule?date=2026-11-16"},
+                "games": [{"date": "2026-11-17", "game_id": "0022609997",
+                           "away": "AAA", "home": "BBB",
+                           "list_url": "https://www.nba.com/schedule?date=2026-11-16"}],
+            }))
+            (raw / "slate_current.json").write_text(json.dumps({
+                "source_url": "https://www.nba.com/schedule?date=2026-11-17",
+                "games": [{"date": "2026-11-17", "game_id": "0022609997",
+                           "away": "AAA", "home": "BBB"}],
+            }))
+            with mock.patch.object(RC, "ROOT", root), \
+                 mock.patch.object(RC, "SLATE_GLOBS", [raw / "slate_*.json"]):
+                row = RC.scheduled()["0022609997"]
+
+        self.assertEqual(row["list_url"], "https://www.nba.com/schedule?date=2026-11-17")
+
     def test_every_game_row_has_an_official_url(self):
         for g in self.doc["games"]:
             urls = [u for u in (g.get("source_url"), g.get("gamebook_url")) if u]
@@ -201,7 +229,8 @@ class TestResultsCoverage(unittest.TestCase):
     def test_the_latest_official_finals_capture_advances_the_as_of_cutoff(self):
         row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-17")
         self.assertEqual(row["n_finals_committed"], 5)
-        self.assertNotEqual(row["status"], "not ended")
+        self.assertEqual(row["n_graded"], 5)
+        self.assertEqual(row["status"], "complete")
         self.assertEqual(self.doc["today"], RC.AS_OF_DATE)
         self.assertEqual(self.doc["as_of_utc"], RC.AS_OF_UTC)
 

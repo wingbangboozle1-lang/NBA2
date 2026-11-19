@@ -25,6 +25,7 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 from zoneinfo import ZoneInfo
 
 from .common import DATA, RAW, ROOT, maybe_load
@@ -122,6 +123,17 @@ def _glob(paths) -> list[Path]:
     return out
 
 
+def _schedule_url_for_date(url: object, date: object) -> str | None:
+    """Accept only an official NBA schedule URL whose query names this exact date."""
+    if not isinstance(url, str) or not isinstance(date, str):
+        return None
+    parsed = urlparse(url)
+    if (parsed.scheme != "https" or parsed.netloc.lower() not in {"nba.com", "www.nba.com"}
+            or parsed.path not in {"/schedule", "/games"}):
+        return None
+    return url if parse_qs(parsed.query).get("date") == [date] else None
+
+
 # ------------------------------------------------------------------- scheduled
 def scheduled() -> dict[str, dict]:
     """Official game id -> the game, from every committed slate snapshot."""
@@ -134,7 +146,12 @@ def scheduled() -> dict[str, dict]:
         games = doc.get("games") or []
         if not isinstance(games, list):
             continue
-        list_url = doc.get("source") if isinstance(doc.get("source"), str) else None
+        source = doc.get("source")
+        list_urls = [doc.get("source_url")]
+        if isinstance(source, str):
+            list_urls.append(source)
+        elif isinstance(source, dict):
+            list_urls.append(source.get("url"))
         for g in games:
             gid = g.get("game_id")
             if not gid:
@@ -149,11 +166,15 @@ def scheduled() -> dict[str, dict]:
             rel = str(p.relative_to(ROOT))
             if rel not in row["snapshots"]:
                 row["snapshots"].append(rel)
-            for key in ("source_url", "list_url"):
-                if not row.get(key) and g.get(key):
-                    row[key] = g[key]
-            if not row.get("list_url") and list_url:
-                row["list_url"] = list_url
+            if not row.get("source_url") and g.get("source_url"):
+                row["source_url"] = g["source_url"]
+            game_date = g.get("date") or row.get("date")
+            for candidate in (g.get("list_url"), *list_urls):
+                date_url = _schedule_url_for_date(candidate, game_date)
+                if date_url:
+                    if not row.get("list_url"):
+                        row["list_url"] = date_url
+                    break
     return out
 
 
@@ -402,7 +423,8 @@ def build(today: str = AS_OF_DATE) -> dict:
             "reason": reason,
             "game_ids": gids,
             "missing_final_ids": missing_final,
-            "list_url": next((g.get("list_url") for g in gs if g.get("list_url")), None)
+            "list_url": next((_schedule_url_for_date(g.get("list_url"), d)
+                               for g in gs if _schedule_url_for_date(g.get("list_url"), d)), None)
                         or f"https://www.nba.com/schedule?date={d}",
         })
 

@@ -333,6 +333,22 @@ jobs:
           python3 -m unittest discover -s nba2/v6 -t . -p 'test_*.py'
           python3 -m nba2.pipeline.seal_predictions --verify
 
+      - name: Restore the combined site after generator tests
+        # The v3 page test calls B.build(), which rewrites v3-owned pages/data after the
+        # initial v6 grouping pass. Rebuild the affected suffix so the generated trees and
+        # grouped nav match the inputs that are committed below.
+        run: |
+          set -euo pipefail
+          python3 -m nba2.v3
+          python3 -m nba2.v4
+          python3 -m nba2.v5
+          python3 -m nba2.v6
+          python3 -m nba2.v2.check
+          python3 -m nba2.v3.check
+          python3 -m nba2.v4.check
+          python3 -m nba2.v6 --check-only
+          python3 -m nba2.pipeline.lint
+
       - name: Guard prior settlement when the finals leg failed
         if: ${{ always() && needs.capture.outputs.finals == 'failure' }}
         run: |
