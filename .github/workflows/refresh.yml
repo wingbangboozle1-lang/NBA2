@@ -292,8 +292,18 @@ jobs:
           PY
 
       - name: Rebuild every tree from the committed capture
+        env:
+          CAPTURE_FINALS: ${{ needs.capture.outputs.finals }}
         run: |
           set -euo pipefail
+          # Re-settle only when this run captured a usable official finals surface. If the
+          # finals endpoint failed, the existing settlement and its visible stamp must stay
+          # unchanged while the rolling surfaces are independently gated.
+          if [ "${CAPTURE_FINALS:-}" = "success" ]; then
+            python3 -m nba2.pipeline.settle
+          else
+            echo "Official finals unavailable; preserve the committed settlement inputs."
+          fi
           python3 -m nba2.pipeline.build_site_data
           python3 -m nba2.pipeline.build_site
           python3 -m backtest.engine.build
@@ -351,7 +361,7 @@ jobs:
           set -uo pipefail
           git config user.name "nba2-ingest-bot"
           git config user.email "nba2-ingest-bot@users.noreply.github.com"
-          git add site data/v2 data/v3 data/v4 data/v6 data/site.json index.html pages 2>/dev/null || true
+          git add site data/v2 data/v3 data/v4 data/v6 data/site.json data/settlement.json data/raw/official_finals_union.json index.html pages 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "The rebuild matches what is committed — nothing to publish."
             exit 0

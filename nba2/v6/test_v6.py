@@ -8,8 +8,10 @@ from __future__ import annotations
 
 import json
 import re
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from nba2.v6 import check as CH
 from nba2.v6 import flags as FL
@@ -97,6 +99,64 @@ class TestResultsCoverage(unittest.TestCase):
             self.assertTrue(urls, msg=g["game_id"])
             self.assertTrue(any("nba.com" in u for u in urls), msg=g["game_id"])
 
+    def test_same_score_duplicate_enriches_only_missing_provenance(self):
+        """Synthetic sparse-then-rich feed; no network and no score is copied or inferred."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = root / "data" / "raw"
+            results = raw / "results"
+            results.mkdir(parents=True)
+            (raw / "finals_2026-11-14.json").write_text(json.dumps({
+                "records": [{"game_id": "0022609999", "away_pts": 90, "home_pts": 100}],
+            }))
+            (results / "results_2026-11-14.json").write_text(json.dumps({
+                "records": [{
+                    "game_id": "0022609999", "date": "2026-11-14", "away": "AAA",
+                    "home": "BBB", "away_pts": 90, "home_pts": 100,
+                    "away_quarters": [20, 20, 25, 25],
+                    "home_quarters": [25, 25, 25, 25],
+                    "source_url": "https://www.nba.com/game/aaa-vs-bbb-0022609999",
+                    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_AAABBB_book.pdf",
+                }],
+            }))
+            patterns = [raw / "finals_*.json", results / "*.json"]
+            with mock.patch.object(RC, "ROOT", root), \
+                 mock.patch.object(RC, "RESULT_GLOBS", patterns):
+                row = RC.finals_committed()["0022609999"]
+
+        self.assertEqual((row["away_pts"], row["home_pts"]), (90, 100))
+        self.assertEqual(row["source_url"], "https://www.nba.com/game/aaa-vs-bbb-0022609999")
+        self.assertEqual(row["gamebook_url"],
+                         "https://statsdmz.nba.com/pdfs/20261114/20261114_AAABBB_book.pdf")
+        self.assertEqual(row["away_quarters"], [20, 20, 25, 25])
+        self.assertEqual(len(row["files"]), 2)
+        self.assertNotIn("conflicts", row)
+
+    def test_conflicting_score_row_does_not_enrich_selected_metadata(self):
+        """A score disagreement remains a conflict; its URL cannot make the row look settled."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = root / "data" / "raw"
+            results = raw / "results"
+            results.mkdir(parents=True)
+            (raw / "finals_2026-11-14.json").write_text(json.dumps({
+                "records": [{"game_id": "0022609998", "away_pts": 90, "home_pts": 100}],
+            }))
+            (results / "results_2026-11-14.json").write_text(json.dumps({
+                "records": [{"game_id": "0022609998", "away_pts": 91, "home_pts": 100,
+                             "source_url": "https://www.nba.com/game/aaa-vs-bbb-0022609998"}],
+            }))
+            patterns = [raw / "finals_*.json", results / "*.json"]
+            with mock.patch.object(RC, "ROOT", root), \
+                 mock.patch.object(RC, "RESULT_GLOBS", patterns):
+                row = RC.finals_committed()["0022609998"]
+
+        self.assertIsNone(row["source_url"])
+        self.assertEqual(row["conflicts"], [
+            {"file": "data/raw/results/results_2026-11-14.json",
+             "away_pts": 91, "home_pts": 100},
+        ])
+
     def test_gamebook_urls_are_well_formed(self):
         for g in self.doc["games"]:
             if g.get("gamebook_url"):
@@ -128,10 +188,7 @@ class TestResultsCoverage(unittest.TestCase):
         self.assertEqual(row["status"], "complete")
 
     def test_a_date_that_has_not_ended_is_not_reported_as_a_gap(self):
-        # As of 2026-11-18T19:29:18Z (the finals capture): 11/18 and 11/19 have not ended and
-        # claim no final. 11/17 HAS ended and its finals are committed, so it must not read as
-        # "not ended" (0B9-10: the old as-of 11/17 contradicted the committed finals).
-        for d in ("2026-11-18", "2026-11-19"):
+        for d in ("2026-11-18", "2026-11-19", "2026-11-20"):
             row = next(r for r in self.doc["rows"] if r["date"] == d)
             self.assertEqual(row["status"], "not ended", msg=d)
             self.assertEqual(row["n_finals_committed"], 0)
@@ -139,6 +196,67 @@ class TestResultsCoverage(unittest.TestCase):
         r17 = next(r for r in self.doc["rows"] if r["date"] == "2026-11-17")
         self.assertNotEqual(r17["status"], "not ended")
         self.assertEqual(r17["n_finals_committed"], r17["n_scheduled"])
+
+    def test_the_latest_official_finals_capture_advances_the_as_of_cutoff(self):
+        row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-17")
+        self.assertEqual(row["n_finals_committed"], 5)
+        self.assertNotEqual(row["status"], "not ended")
+        self.assertEqual(self.doc["today"], RC.AS_OF_DATE)
+        self.assertEqual(self.doc["as_of_utc"], RC.AS_OF_UTC)
+
+    def test_graded_ids_include_the_nightly_settlement_feed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            v4 = root / "settled-all.json"
+            nightly = root / "settlement.json"
+            v4.write_text(json.dumps({
+                "ledgers": [{"ledger": "v4-ledger", "graded": [{"game_id": "game-v4"}],
+                            "ungraded": []}],
+                "finals_used": [{"game_id": "game-v4-unioned"}],
+                "settlement": {"settled_at_utc": "2026-11-16T23:59:59Z",
+                               "latest_graded_game_date": "2026-11-16"},
+            }))
+            nightly.write_text(json.dumps({
+                "settled_at_utc": "2026-11-18T19:30:52Z",
+                "ledgers": [{"ledger": "sealed-2026-11-14.json", "games_settled": 1,
+                             "games_expected": 1,
+                             "settled_rows": [{"game_id": "game-nightly"}]}],
+            }))
+            with mock.patch.object(RC, "SETTLED_ALL", v4), \
+                 mock.patch.object(RC, "PIPELINE_SETTLEMENT", nightly):
+                ids, info = RC.graded_ids()
+
+        self.assertEqual(ids, {"game-v4", "game-v4-unioned", "game-nightly"})
+        self.assertEqual(info["pipeline_settled_at_utc"], "2026-11-18T19:30:52Z")
+        self.assertEqual(info["settled_at_utc"], "2026-11-18T19:30:52Z")
+        self.assertEqual(info["pipeline_ledgers"][0]["n_graded"], 1)
+
+    def test_as_of_uses_a_successful_committed_finals_verdict(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raw = Path(tmp) / "raw"
+            raw.mkdir(parents=True)
+            (raw / "refresh_verdict.json").write_text(json.dumps({
+                "attempted_at_utc": "2026-11-19T01:30:00Z",
+                "surfaces": {"finals": "success"},
+            }))
+            with mock.patch.object(RC, "DATA", Path(tmp)):
+                self.assertEqual(RC._as_of(),
+                                 ("2026-11-19T01:30:00Z", "2026-11-18 20:30 ET", "2026-11-18"))
+
+    def test_as_of_does_not_advance_on_failed_finals(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raw = Path(tmp) / "raw"
+            raw.mkdir(parents=True)
+            (raw / "refresh_verdict.json").write_text(json.dumps({
+                "attempted_at_utc": "2026-11-20T01:30:00Z",
+                "surfaces": {"finals": "failure"},
+            }))
+            (raw / "finals_2026-11-17.json").write_text(json.dumps({
+                "retrieved_at_utc": "2026-11-18T19:29:18+00:00", "records": [],
+            }))
+            with mock.patch.object(RC, "DATA", Path(tmp)):
+                self.assertEqual(RC._as_of(),
+                                 ("2026-11-18T19:29:18Z", "2026-11-18 14:29 ET", "2026-11-18"))
 
     def test_the_prequest_1113_games_are_reported_as_unsettleable_not_missing(self):
         row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-13")

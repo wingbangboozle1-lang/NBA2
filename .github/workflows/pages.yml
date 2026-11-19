@@ -24,6 +24,12 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Re-settle from committed official final-score sources
+        # The settlement page validates that official_finals_union.json matches every
+        # committed result feed. Rebuild that derived union first; conflicts remain excluded
+        # and the v2/v3/v4/v5/v6 gates below still decide whether any page is deployable.
+        run: python -m nba2.pipeline.settle
+
       - name: Rebuild the v2 site from the committed official snapshot
         run: |
           python -m nba2.v2

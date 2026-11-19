@@ -12,7 +12,8 @@ Three sets are built from committed files only:
   corroboration, not a second row);
 * **finals committed** — the union of every committed official result file, plus the v4
   settlement's own ``finals_used`` list. A game counts only when a final score is present;
-* **graded** — the distinct game ids the v4 settlement actually scored.
+* **graded** — the distinct game ids scored by either the v4 settlement or the nightly
+  sealed-ledger settlement in ``data/settlement.json``.
 
 The difference between those three numbers is the settlement backlog, and each row says
 which of the three is missing and why.
@@ -22,7 +23,9 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from .common import DATA, RAW, ROOT, maybe_load
 
@@ -43,22 +46,73 @@ RESULT_GLOBS = [
 ]
 
 SETTLED_ALL = DATA / "v4" / "settlement" / "settled-all.json"
+PIPELINE_SETTLEMENT = DATA / "settlement.json"
 SEALED_GLOBS = [DATA / "raw" / "ledger" / "sealed-*.json",
                 DATA / "v3" / "ledger" / "sealed-*.json"]
 
 _DATE_IN_NAME = re.compile(r"(\d{4}-\d{2}-\d{2})")
 BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book\.pdf$")
 
-# Frozen clock. The result-feed page must answer "has this game day ended?" the same way on
-# every rebuild, because pages.yml fails the deploy if a rebuild differs from what is
-# committed. AS_OF is the retrieval time of the most recent official finals capture committed in
-# this repository (data/raw/finals_2026-11-17.json, retrieved_at_utc 2026-11-18T19:29:18+00:00),
-# converted to Eastern with the November UTC-5 offset. It is stated on the page, so a reader can age it.
-# 0B9-10 (2026-11-19): moved from the 2026-11-17T15:52Z capture, which reported 11/17 as "not ended"
-# while its official finals were already committed (a self-contradiction).
-AS_OF_UTC = "2026-11-18T19:29:18Z"
-AS_OF_ET = "2026-11-18 14:29 ET"
-AS_OF_DATE = "2026-11-18"
+# The result-feed page's "has this game day ended?" cutoff comes from committed capture
+# metadata, so rebuilds are deterministic and the displayed as-of stamp advances with the
+# scheduled ingest. A failed finals attempt never advances the clock; we fall back to the
+# newest committed official finals/result capture. The final fallback is the last explicitly
+# recorded capture in the original result-coverage snapshot.
+_FALLBACK_AS_OF_UTC = "2026-11-17T15:52:00Z"
+_EASTERN = ZoneInfo("America/New_York")
+
+
+def _parse_utc(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        stamp = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if stamp.tzinfo is None:
+        return None
+    return stamp.astimezone(timezone.utc).replace(microsecond=0)
+
+
+def _as_of() -> tuple[str, str, str]:
+    """Latest successful official results capture as UTC stamp, ET stamp, ET date."""
+    raw = DATA / "raw"
+    candidates: list[datetime] = []
+
+    verdict_path = raw / "refresh_verdict.json"
+    try:
+        verdict = json.loads(verdict_path.read_text())
+    except (OSError, json.JSONDecodeError):
+        verdict = {}
+    if (verdict.get("surfaces") or {}).get("finals") == "success":
+        stamp = _parse_utc(verdict.get("attempted_at_utc"))
+        if stamp is not None:
+            candidates.append(stamp)
+
+    capture_paths = set(raw.glob("finals_*.json"))
+    for pattern in ("results/*.json", "refresh_*/results_*.json",
+                    "capture_*/results_*.json"):
+        capture_paths.update(raw.glob(pattern))
+    capture_paths.update(raw.glob("refresh_*/capture_index.json"))
+    capture_paths.update(raw.glob("capture_*/capture_index.json"))
+    for path in sorted(capture_paths):
+        try:
+            doc = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        for key in ("retrieved_at_utc", "retrieved_utc"):
+            stamp = _parse_utc(doc.get(key))
+            if stamp is not None:
+                candidates.append(stamp)
+
+    latest = max(candidates) if candidates else _parse_utc(_FALLBACK_AS_OF_UTC)
+    assert latest is not None  # the committed fallback above is a valid UTC timestamp
+    et = latest.astimezone(_EASTERN)
+    return (latest.isoformat(timespec="seconds").replace("+00:00", "Z"),
+            et.strftime("%Y-%m-%d %H:%M ET"), et.date().isoformat())
+
+
+AS_OF_UTC, AS_OF_ET, AS_OF_DATE = _as_of()
 
 
 def _glob(paths) -> list[Path]:
@@ -191,10 +245,24 @@ def finals_committed() -> dict[str, dict]:
             else:
                 if rel not in prev["files"]:
                     prev["files"].append(rel)
-                # two committed finals that disagree is a finding, not something to average
+                # Two committed finals that disagree is a finding, not something to average.
+                # Do not use metadata from a conflicting score row to complete the selected
+                # record: the game is conflicted and its detail must remain reviewable.
                 if (prev["away_pts"], prev["home_pts"]) != (ap, hp):
                     prev.setdefault("conflicts", []).append(
                         {"file": rel, "away_pts": ap, "home_pts": hp})
+                    continue
+
+                # Sparse official score feeds are often followed by richer gamebook captures.
+                # Keep the first consistent final, but fill only absent metadata from another
+                # committed row for that same game id. In particular, preserve official
+                # source/gamebook URLs instead of losing them because the score-only file was
+                # enumerated first. No score, team, or non-blank field is overwritten here.
+                for field in ("date", "away", "home", "away_quarters", "home_quarters",
+                              "ot_periods", "period_schema", "source_url", "gamebook_url"):
+                    existing, candidate = prev.get(field), rec.get(field)
+                    if existing in (None, "", []) and candidate not in (None, "", []):
+                        prev[field] = candidate
     return out
 
 
@@ -215,22 +283,46 @@ def sealed_ids() -> dict[str, set]:
 
 
 def graded_ids() -> tuple[set, dict]:
+    """Union distinct game ids explicitly settled by the v4 and nightly ledgers."""
     doc = maybe_load(SETTLED_ALL) or {}
+    pipeline = maybe_load(PIPELINE_SETTLEMENT) or {}
     graded: set = set()
     per_ledger = []
-    for L in doc.get("ledgers", []) or []:
-        rows = L.get("graded") or []
+    for ledger in doc.get("ledgers", []) or []:
+        rows = ledger.get("graded") or []
         ids = {r.get("game_id") for r in rows if isinstance(r, dict) and r.get("game_id")}
         graded |= ids
-        per_ledger.append({"ledger": L.get("ledger"), "n_graded": len(rows),
-                           "n_ungraded": len(L.get("ungraded") or []),
-                           "latest_graded_game_date": L.get("latest_graded_game_date")})
-    for r in doc.get("finals_used", []) or []:
-        gid = r.get("game_id")
+        per_ledger.append({"ledger": ledger.get("ledger"), "n_graded": len(rows),
+                           "n_ungraded": len(ledger.get("ungraded") or []),
+                           "latest_graded_game_date": ledger.get("latest_graded_game_date"),
+                           "settlement_source": "data/v4/settlement/settled-all.json"})
+    for row in doc.get("finals_used", []) or []:
+        gid = row.get("game_id")
         if gid:
             graded.add(gid)
+
+    pipeline_ledgers = []
+    for ledger in pipeline.get("ledgers", []) or []:
+        rows = ledger.get("settled_rows") or []
+        ids = {r.get("game_id") for r in rows if isinstance(r, dict) and r.get("game_id")}
+        graded |= ids
+        pipeline_ledgers.append({"ledger": ledger.get("ledger"),
+                                 "n_graded": len(ids),
+                                 "games_settled": ledger.get("games_settled"),
+                                 "games_expected": ledger.get("games_expected"),
+                                 "status": ledger.get("status"),
+                                 "settlement_source": "data/settlement.json"})
+
+    v4_settled = (doc.get("settlement") or {}).get("settled_at_utc")
+    pipeline_settled = pipeline.get("settled_at_utc")
+    stamps = [stamp for stamp in (v4_settled, pipeline_settled)
+              if _parse_utc(stamp) is not None]
+    latest_stamp = max(stamps, key=lambda stamp: _parse_utc(stamp)) if stamps else None
     return graded, {"per_ledger": per_ledger,
-                    "settled_at_utc": (doc.get("settlement") or {}).get("settled_at_utc"),
+                    "pipeline_ledgers": pipeline_ledgers,
+                    "settled_at_utc": latest_stamp,
+                    "v4_settled_at_utc": v4_settled,
+                    "pipeline_settled_at_utc": pipeline_settled,
                     "latest_graded_game_date": (doc.get("settlement") or {}).get("latest_graded_game_date")}
 
 
@@ -256,6 +348,11 @@ def build(today: str = AS_OF_DATE) -> dict:
     sched = scheduled()
     fin = finals_committed()
     graded, settle_info = graded_ids()
+    graded_dates = [fin[gid].get("date") for gid in graded
+                    if gid in fin and fin[gid].get("date")]
+    known_graded_dates = [d for d in [settle_info.get("latest_graded_game_date"),
+                                      *graded_dates] if d]
+    settle_info["latest_graded_game_date"] = max(known_graded_dates) if known_graded_dates else None
     sealed = sealed_ids()
 
     dates = sorted({g["date"] for g in sched.values() if g.get("date")}
@@ -274,7 +371,7 @@ def build(today: str = AS_OF_DATE) -> dict:
         if d >= today:
             # The published tree must not depend on the wall clock: pages.yml rebuilds the
             # site and fails if it differs from what is committed, so "has this date ended"
-            # is answered from the frozen AS_OF constant, not from datetime.now().
+            # is answered from the latest committed successful results capture, not now().
             reason = (f"this date has not ended yet (as-of {AS_OF_UTC} = "
                       f"{AS_OF_ET}) — no official final is claimed for a game that "
                       "has not finished")
@@ -343,7 +440,7 @@ def build(today: str = AS_OF_DATE) -> dict:
     return {
         "schema": "nba2.v6.results-coverage.v1",
         "session": "arena/f5ac4e74-nba2",
-        "as_of_utc": "2026-11-17T00:00:00Z",
+        "as_of_utc": AS_OF_UTC,
         "today": today,
         "n_dates": len(rows),
         "n_games_known": len(games),
