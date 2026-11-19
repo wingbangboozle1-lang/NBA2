@@ -5990,3 +5990,17 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
   count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
   era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
   RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+## Session `arena/22fcf97f-nba2` — CLAIM (2026-11-19T12:16Z, branch `arena/22fcf97f-nba2`, base `41cfd81` = `main` @ PR #133)
+
+**Task (narrow, non-overlapping):** official-source freshness probe for the current rolling slate. Read, with a timestamp, the official NBA injury-report index and the latest published injury-report PDF(s) for 2026-11-19 via direct official-page reads; record what the official sources state (revision times, slate dates) in a new analysis record with links. No model input, sealed ledger, settlement file, generated site data, or site navigation is changed.
+
+**File scope:** `analysis/session-22fcf97f-official-freshness.md` (new) and this append-only entry.
+
+**Coordination:** open PRs #130 (`arena/6023d517-nba2`, v6 repair + v7 cut) and #131 (`arena/8c7c8828-nba2`, settlement refresh parity) own v6/v7 snapshot work; this session does not touch them. Task rows:
+
+| ID | Task | Status | Owner | File scope |
+|---|---|---|---|---|
+| 22F-1 | Claim + push before work | done | `arena/22fcf97f-nba2` | `COORDINATION.md` |
+| 22F-2 | Official injury-index + latest 2026-11-19 PDF read; record revision and retrieval times | in progress | `arena/22fcf97f-nba2` | `analysis/session-22fcf97f-official-freshness.md` |
+| 22F-3 | Commit record, log verification, mark done | in progress | `arena/22fcf97f-nba2` | same + `COORDINATION.md` |
