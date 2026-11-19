@@ -5621,3 +5621,14 @@ PR #127 (parity job) fails at `Rebuild every generated tree` because the committ
 **Flagged for review (not fixed; logged in `analysis/session-0b91edfc-repo-check.md`):** R-2b (nine 11/13 games have blank clubs; the clubs sit in an unread `games` list), R-6 (README v3/v6 test counts), R-7 (scheduled refresh failing), R-8 (snapshot 5 days old), R-9 (misnamed capture `finals_2026-11-18.json` with unused, status-less records), R-10 (v4 settlement surface stops at 11/16 while v1 grades through 11/17; re-run reproduces the 11/16 result, reads a fixed file list), R-11 (test runs rewrite tracked files).
 
 **Sandbox limit (unchanged):** no official NBA host was reachable (HTTP 000), so no new official value was read. Every value in this change was reproduced from committed official captures by committed code.
+
+### PR & merge result — session `arena/0b91edfc-nba2`
+
+- **PR #127:** https://github.com/wingbangboozle1-lang/NBA2/pull/127 — merged into `main` with `gh pr merge 127 --merge`, merge commit **`4b0c6c9`** (2026-11-19T06:04:21Z). Checks at merge: backtest, capture, parity, refresh-dry-run, v2, verify — all **pass**.
+- **Concurrent merge (not by this session):** PR #78 (`arena/56b96bf0-nba2`, a stale record PR) was merged into `main` at `0ebcef6` (2026-11-19T06:04:52Z) by another actor 30 s after #127. Its post-merge checks pass (verify, parity, Pages). Logged here for the record; this session did not perform or request it.
+- **Pages:** the Pages run for `4b0c6c9` was superseded (`cancelled`) by the `0ebcef6` push; the Pages run for `0ebcef6` **succeeded** (run 44469562819), and that tree contains this session's changes.
+- **Live fetch (https://wingbangboozle1-lang.github.io/NBA2/site/…, fetched 2026-11-19):**
+  - `site/settlement.html`: seals VERIFIED for sealed-2026-11-13 (22 of 22) and sealed-2026-11-14 (27 of 27); union sha256 `e45328d6…58e63`; conflicts 0; rejected quarter rows 0.
+  - `site/v6-verify.html`: **13 / 13** gates; G-V6-8 **67/67**; 36 / 67 games with a final.
+- **Open presentation defect (new, R-12):** the settlement stamp's line "latest settled game date 2026-11-16" is not updated for the 11/17 games now graded in the v1 settlement (27 games). It is a label derived from the v4 settlement surface (R-10), which still stops at 11/16.
+- **Follow-up PR:** this record is delivered in a coordination-only PR so it reaches `main` (the session branch cannot push to `main`).
