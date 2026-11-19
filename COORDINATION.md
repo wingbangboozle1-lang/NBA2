@@ -5632,3 +5632,31 @@ PR #127 (parity job) fails at `Rebuild every generated tree` because the committ
   - `site/v6-verify.html`: **13 / 13** gates; G-V6-8 **67/67**; 36 / 67 games with a final.
 - **Open presentation defect (new, R-12):** the settlement stamp's line "latest settled game date 2026-11-16" is not updated for the 11/17 games now graded in the v1 settlement (27 games). It is a label derived from the v4 settlement surface (R-10), which still stops at 11/16.
 - **Follow-up PR:** this record is delivered in a coordination-only PR so it reaches `main` (the session branch cannot push to `main`).
+## Session `arena/6023d517-nba2` — CLAIM (2026-11-19 UTC, branch `arena/6023d517-nba2`, base `a5380e1` = `main` @ ingest-bot capture 2026-11-18T19:30:52Z)
+
+**State read at claim time (verified by running the committed code, not assumed).**
+- Working tree clean at `a5380e1`. `git status` empty, `main` == `origin/main` == `a5380e1`.
+- Builders on the committed base: `python -m nba2.v2` **0**, `nba2.v3` **0**, `nba2.v4` **0**, `nba2.v5` **0**, `python -m nba2.v6` **exit 1 — HARD GATE FAILURE (G-V6-8)**. Because `nba2.v6` exits non-zero, the v6 step in `pages.yml` fails and the published tree cannot be reproduced from the committed inputs. Reproduced twice.
+- Measured cause of G-V6-8 (not guessed): 14 of 67 game rows in `data/v6/results_coverage.json` have `source_url=None`. Those are exactly the 2026-11-14 (5) and 2026-11-15 (9) finals. Their committed snapshots `data/raw/finals_2026-11-1{4,5}.json` **do** carry the official URL — under the key `final_source_url` — and carry the team names under `away_team`/`home_team`. `nba2/v6/results_coverage.py` reads `source_url`/`official_source` and `away`/`home`, so the value is present in the committed artefact and dropped by the reader. That is a **reader defect, not missing data**: fixing it invents nothing.
+- Nightly job: 10 consecutive scheduled runs, latest `44381003145` **failure**; its committed verdict `data/raw/refresh_verdict.json` records `injuries=success, finals=success, rolling=success, v4=success` while the run itself failed — i.e. the verdict file and the run conclusion disagree. Flagged as an irregularity for review, cause to be measured.
+- Parallel sessions detected live on `origin` while claiming: `arena/8c7c8828-nba2`, `arena/95053469-nba2` (INJ-1..4 injury-PDF archive audit), `arena/0b91edfc-nba2` (baseline repair 0B9-1..6), `arena/53c5afeb-nba2` (docs test count). None claims `nba2/v6/` or `data/v6/`, so the scope below does not collide. Their claims are respected: I edit nothing in `analysis/` files they own and nothing under `data/raw/pdf/`.
+
+**File scope claimed by this session (nothing outside this list is edited).**
+- `COORDINATION.md` — this claim + completion record, **append-only**.
+- `nba2/v6/results_coverage.py`, `nba2/v6/check.py` — reader repair only (read the keys the committed official artefacts actually use). No gate is weakened; no threshold is moved; no value is invented.
+- `nba2/v6/__init__.py`, `nba2/v6/test_v6.py` — regression test for the repaired reader.
+- `data/v6/*.json` and `site/*.html` — regenerated **only** as direct build output.
+- `analysis/session-6023d517-*.md` — new files only.
+
+**Explicitly NOT edited:** sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `data/v4/settlement/**`, `nba2/v2/**`, `nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**`, `data/raw/pdf/**` (session 95053469), the other sessions' `analysis/` files, the eight workflow files.
+
+**Rules:** a value is published only if it was fetched from an official source this session, or reproduced from a committed snapshot by running the committed code. Unconfirmed ⇒ blank + flagged, never inferred. Gates stay fail-closed. The site is never merged broken.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| 6023-1 | Board claim + push before work | done | `COORDINATION.md` | pushed immediately |
+| 6023-2 | Repair the v6 result-feed reader so every committed official URL and team name reaches the row it belongs to | pending | `nba2/v6/results_coverage.py` | G-V6-8 goes from 53/67 to 67/67 **only** because the URL was already in the committed file; every gate stays green |
+| 6023-3 | Regression test for the repaired reader (both committed key spellings) | pending | `nba2/v6/test_v6.py` | test fails on the pre-repair reader, passes after |
+| 6023-4 | Full-tree rebuild + every checker + every test suite green; committed tree == rebuild | pending | `site/**`, `data/v6/**` | `git diff --stat` empty after rebuild |
+| 6023-5 | Independent line-by-line verification against live official nba.com pages; findings + source links on the Flagged page | pending | `analysis/session-6023d517-verification.md` | every claim carries a URL; blank where unconfirmed |
+| 6023-6 | PR → `main`, merge without approval, confirm the Pages deploy, record it here | pending | `COORDINATION.md` | `gh pr merge`, `gh run list`, live fetch |
