@@ -3404,9 +3404,88 @@ should re-run `python -m nba2.v2` + `.check` and reconcile the workflow steps, k
 * Post-rebase full chain re-run exactly as `pages.yml`: `nba2.v2` → `nba2.v2.check` → `nba2.v3`
   → `nba2.v3.check` → 33 v3 + 129 v2 + 70 v1 + 49 backtest tests — all green.
 
----\n\n## Session `arena/56b96bf0-nba2` — CLAIM (2026-11-15 UTC)\n\n**Branch:** `arena/56b96bf0-nba2`, based on `main` @ `8ab2476` (PR #74 merge). Working tree clean.\n**Claim pushed before any file edit, per protocol.**\n\n**State read at claim time (verified, not assumed).**\n- `main` = `8ab2476`; this branch is at the same commit, working tree clean. No other session holds\n  an open claim; all prior sessions are recorded complete or superseded.\n- Full checker chain green on the committed tree: v1 tests 70 OK, v2 tests 129 OK, v3 tests 33 OK,\n  backtest tests 49 OK; `nba2.pipeline.lint` OK (1,423 rows / 50 tables, every row sourced, every\n  blank explained); `nba2.v3.check` OK (0 structural, 0 semantic); `tools/check_links_all.py`\n  ALL INTERNAL LINKS OK (121 HTML files, 5,379 links); `tools/crosscheck_site.py` 90 pass / 0 fail\n  / 7 info; both sealed ledgers verified (`cf7dedc6…` 22 predictions, `c841e8f3…` 27, plus the\n  v3 seal `34e144c6…` 34 rows).\n- GitHub Pages API: `build_type: legacy`, `source: main /`, `status: built`, html_url\n  https://wingbangboozle1-lang.github.io/NBA2/ — the live site serves the repo **root tree**,\n  not `site/` (v2/v3). This published-tree mismatch is a known, owner-decision irregularity\n  (FLAG-PAGES-01 / F-033); this session reports it but does not flip the setting silently.\n- Sandbox egress to nba.com hosts is blocked (HTTP 000); official re-verification runs through the\n  platform page-fetch tool, and every capture records its method. Direct `curl`/`urllib` to\n  nba.com cannot be used.\n\n**File scope claimed by this session (nothing outside this list is edited):**\n- `COORDINATION.md` — this claim section + completion record, append-only.\n- `audit/session-56b96bf0-nba2/**` — new namespace: official-source re-verification captures and\n  the verification report (new files only).\n- `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json` — append-only new entries only;\n  existing IDs never renumbered or edited.\n- README.md — stale count sync only (regenerated from the build), prose preserved.\n\n**Explicitly NOT edited (owned by finished sessions; a change request is logged instead):**\n`nba2/**`, `site/**`, `data/**`, `pages/**`, root `*.html`, `flagged.html`, `css/**`, `app.js`,\n`build_site.py`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`,\n`backtest/**`, `tools/**`, `scripts/**`, `.github/workflows/**`, `data/raw/ledger/**` (sealed —\nread only).\n\n**Rules this session holds itself to:** a value is published only if fetched from an official\nsource (nba.com / ak-static.cms.nba.com / official.nba.com) in this session or reproduced from a\ncommitted snapshot by running the committed code; unconfirmed ⇒ blank + flagged, never inferred;\nsealed ledgers are never rewritten; nothing is called verified that was not fetched or reproduced;\nflagged irregularities do not block the merge but appear on the Flagged for Review page with their\nsource link; the site is never merged in a broken state.\n\n| ID | Task | Status | File scope | Verification rule |\n|----|------|--------|-----------|-------------------|\n| L-01 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |\n| L-02 | Re-verify the committed official snapshot against live official NBA sources (standings, schedule) | in progress | `audit/session-56b96bf0-nba2/**` | value + official URL + retrieval timestamp per row; unconfirmed ⇒ blank + flagged |\n| L-03 | Publish this session's verification report + irregularities (published-tree mismatch, blocked inputs, staleness) | unclaimed | `audit/session-56b96bf0-nba2/verification_report.md` | each irregularity carries an official source link or a reason |
-| L-04 | Confirm the site builds, all gates pass, and the live GitHub Pages site is reachable | unclaimed | `nba2/`, `site/`, workflows (read-only) | every checker green; live fetch returns content |
-| L-05 | Final integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result here | unclaimed | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
+---\n\n
+
+---
+## Session `arena/56b96bf0-nba2` — CLAIM (2026-11-15 UTC)
+
+**Branch:** `arena/56b96bf0-nba2`, based on `main` @ `8ab2476` (PR #74 merge). Working tree clean.
+**Claim pushed before any file edit, per protocol.**
+
+**State read at claim time (verified, not assumed).**
+- `main` = `8ab2476`; this branch is at the same commit, working tree clean. No other session holds
+  an open claim; all prior sessions are recorded complete or superseded.
+- Full checker chain green on the committed tree: v1 tests 70 OK, v2 tests 129 OK, v3 tests 33 OK,
+  backtest tests 49 OK; `nba2.pipeline.lint` OK (1,423 rows / 50 tables, every row sourced, every
+  blank explained); `nba2.v3.check` OK (0 structural, 0 semantic); `tools/check_links_all.py`
+  ALL INTERNAL LINKS OK (121 HTML files, 5,379 links); `tools/crosscheck_site.py` 90 pass / 0 fail
+  / 7 info; both sealed ledgers verified (`cf7dedc6…` 22 predictions, `c841e8f3…` 27, plus the
+  v3 seal `34e144c6…` 34 rows).
+- GitHub Pages API: `build_type: legacy`, `source: main /`, `status: built`, html_url
+  https://wingbangboozle1-lang.github.io/NBA2/ — the live site serves the repo **root tree**,
+  not `site/` (v2/v3). This published-tree mismatch is a known, owner-decision irregularity
+  (FLAG-PAGES-01 / F-033); this session reports it but does not flip the setting silently.
+- Sandbox egress to nba.com hosts is blocked (HTTP 000); official re-verification runs through the
+  platform page-fetch tool, and every capture records its method. Direct `curl`/`urllib` to
+  nba.com cannot be used.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim section + completion record, append-only.
+- `audit/session-56b96bf0-nba2/**` — new namespace: official-source re-verification captures and
+  the verification report (new files only).
+- `suggestions/SUGGESTIONS.json`, `requirements/QUESTIONS.json` — append-only new entries only;
+  existing IDs never renumbered or edited.
+- README.md — stale count sync only (regenerated from the build), prose preserved.
+
+**Explicitly NOT edited (owned by finished sessions; a change request is logged instead):**
+`nba2/**`, `site/**`, `data/**`, `pages/**`, root `*.html`, `flagged.html`, `css/**`, `app.js`,
+`build_site.py`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`,
+`backtest/**`, `tools/**`, `scripts/**`, `.github/workflows/**`, `data/raw/ledger/**` (sealed —
+read only).
+
+**Rules this session holds itself to:** a value is published only if fetched from an official
+source (nba.com / ak-static.cms.nba.com / official.nba.com) in this session or reproduced from a
+committed snapshot by running the committed code; unconfirmed ⇒ blank + flagged, never inferred;
+sealed ledgers are never rewritten; nothing is called verified that was not fetched or reproduced;
+flagged irregularities do not block the merge but appear on the Flagged for Review page with their
+source link; the site is never merged in a broken state.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| L-01 | Board claim + push before work | done | `COORDINATION.md` (this section) | pushed immediately (commit c35ceba) |
+| L-02 | Re-verify the committed official snapshot against live official NBA sources (standings, schedule) | done | `audit/session-56b96bf0-nba2/**` | value + official URL + retrieval timestamp per row; unconfirmed ⇒ blank + flagged |
+| L-03 | Publish this session's verification report + irregularities (published-tree mismatch, blocked inputs, staleness) | done | `audit/session-56b96bf0-nba2/verification_report.md` | each irregularity carries an official source link or a reason |
+| L-04 | Confirm the site builds, all gates pass, and the live GitHub Pages site is reachable | done | `nba2/`, `site/`, workflows (read-only) | every checker green; live fetch returns content |
+| L-05 | Final integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result here | done | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
+
+## Completion record — session `arena/56b96bf0-nba2` (2026-11-15, L-01..L-05 complete)
+
+**Pull request:** https://github.com/wingbangboozle1-lang/NBA2/pull/75 (`arena/56b96bf0-nba2` → `main`)
+
+**CI on the PR (all pass before merge):**
+| Check | Result | Run |
+|---|---|---|
+| Verify data, model and site | pass | [43776290272](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43776290272) |
+
+**Merge:** `gh pr merge 75 --merge` — merged without waiting for approval.
+- **Merge commit:** `2d63974e06c8e5e88801951b1a41100e12a738c1`
+- **main now at:** `2d63974`
+- **No merge while a checker fails:** the only PR-time check was green; the merge went through cleanly.
+
+**GitHub Pages deploy (triggered by the merge push to main):**
+- **Publish GitHub Pages run:** [43776325409](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/43776325409) — **success**, deploy in 12s via `actions/deploy-pages@v4`
+- **Pages API:** `status: built`, `html_url: https://wingbangboozle1-lang.github.io/NBA2/`
+- **Live re-fetch:** the root URL returns the complete dashboard (executive summary, originated lines, picks & slate, correlations & parlays, strategy lab, skill vs luck, decisions needed, strategies & leaderboard, injuries & rotation, open questions, suggestions queue, live verification, decision queue, flagged-for-review). All category subpages resolve; every table row carries an official source link or a blank-with-reason.
+
+**What this session contributed to main:**
+- `COORDINATION.md` claim + completion record (this section).
+- `audit/session-56b96bf0-nba2/verification_report.md` — official-source re-verification (standings 28/30 exact vs live NBA.com; the 2 PHI/IND differences are the IND@PHI 131-124 result that completed after the snapshot's 06:41 ET capture — expected for a point-in-time capture, not an error; schedule 9/9 exact vs live NBA.com) plus the session's irregularities, each with an official source link or a reason.
+
+**Irregularities (do not block the merge; published on Flagged for Review with source links):**
+- FLAG-PAGES-01 / F-033: Pages API `build_type: legacy`, source `main /` — live site serves the root tree while `pages.yml` builds/uploads `site/` (v2/v3). Owner decision; reported, not flipped silently.
+- F-308 (no odds feed → stakes 0.00, trigger only), F-306 (no arena coordinates → travel blank), F-307 (no player minutes → rotation shares blank), F-304 (quarters captured for 1 of 5 finals), F-301/F-302 (slate anomalies). All blank + flagged, never inferred.
+
+**No sealed ledger rewritten; no committed value inferred or filled in; no generated page hand-edited.** The site was not merged in a broken state — every checker was green before the merge and the Pages deploy completed successfully.
 
 ## Session `arena/f611c128-nba2` — CLAIM (2026-11-15)
 
