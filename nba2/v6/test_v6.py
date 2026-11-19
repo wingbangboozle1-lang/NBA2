@@ -127,18 +127,23 @@ class TestResultsCoverage(unittest.TestCase):
         self.assertEqual(row["n_graded"], 8)
         self.assertEqual(row["status"], "complete")
 
-    def test_a_date_that_has_not_ended_is_not_reported_as_a_gap(self):
-        # As of 2026-11-18T19:29:18Z (the finals capture): 11/18 and 11/19 have not ended and
-        # claim no final. 11/17 HAS ended and its finals are committed, so it must not read as
-        # "not ended" (0B9-10: the old as-of 11/17 contradicted the committed finals).
-        for d in ("2026-11-18", "2026-11-19"):
+    def test_latest_captured_game_day_is_not_misreported_as_future(self):
+        # The 2026-11-18 official capture includes the finals of the 11/17 game day.
+        # The exact scores and source links are consumed by finals_committed(); this test
+        # checks coverage state without assuming those games were already graded by v4.
+        row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-17")
+        self.assertEqual(row["n_scheduled"], 5)
+        self.assertEqual(row["n_finals_committed"], 5)
+        self.assertIn(row["status"], ("incomplete", "complete"))
+        if row["status"] == "incomplete":
+            self.assertIn("not scored against a sealed ledger", row["reason"])
+
+    def test_dates_after_latest_capture_remain_not_ended(self):
+        for d in ("2026-11-18", "2026-11-19", "2026-11-20", "2026-11-21"):
             row = next(r for r in self.doc["rows"] if r["date"] == d)
             self.assertEqual(row["status"], "not ended", msg=d)
             self.assertEqual(row["n_finals_committed"], 0)
             self.assertIn("has not ended", row["reason"])
-        r17 = next(r for r in self.doc["rows"] if r["date"] == "2026-11-17")
-        self.assertNotEqual(r17["status"], "not ended")
-        self.assertEqual(r17["n_finals_committed"], r17["n_scheduled"])
 
     def test_the_prequest_1113_games_are_reported_as_unsettleable_not_missing(self):
         row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-13")
