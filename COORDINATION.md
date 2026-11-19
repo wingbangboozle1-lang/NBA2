@@ -5990,3 +5990,78 @@ fail publish-parity; now wrapped in the same `_preserved()` context A6-1 uses).
   count corrections in flight). `CC-FRESH-01` — the v2 legacy snapshot is 2026-11-14/15
   era; re-cutting the model inputs to the newest capture is the deferred 7-step ACF-7 /
   RQ-8892-02 task (`analysis/session-8892d20c-capture.md` §4).
+
+---
+
+## Session `arena/d5a9f631-nba2` — CLAIM (2026-11-19 ~12:20 UTC, branch `arena/d5a9f631-nba2`, base `41cfd81` = `main` @ PR #133 merge)
+
+**Role:** final integration session for the branch `arena/d5a9f631-nba2`. Two PRs are open and
+stale (>60 min with no commits): **#130** (`arena/6023d517-nba2`, "Repair the v6 build, then cut a
+v7 layer from the 2026-11-19 official snapshot", last commit 06:16Z, CI **red**, conflicting) and
+**#131** (`arena/8c7c8828-nba2`, "Finalize settlement refresh parity and date-scoped v6 coverage",
+last commit 06:28Z, CI green-at-the-time, conflicting). Both are past the handoff threshold, so
+this session takes them over, resolves them against the current `main`, and completes the brief's
+closing steps: line-by-line re-verification of the combined published data, a clean category-
+organised front door, a green build, a merged PR and a confirmed GitHub Pages deploy.
+
+**State read at claim time (measured, not assumed).**
+- `main` = `41cfd81` (PR #133 merged 2026-11-19T07:01Z). Working tree clean at claim.
+- **Sandbox egress:** `www.nba.com`, `stats.nba.com`, `ak-static.cms.nba.com` all return HTTP
+  000 from `bash` in this workspace (allowlist = github/npm/pypi). The **agent page-fetch tool
+  does reach `www.nba.com`** (verified this session: `https://www.nba.com/games?date=2026-11-19`
+  returned the live slate with game ids 0022600270/71/72/73). So new official values are obtainable
+  **by transcription through the fetch tool**, not by `curl`. Every value published by this session
+  is either transcribed from an official page read this session or re-derived by committed code
+  from committed official captures.
+- **Baseline on `main` (run before any edit):** `python3 -m unittest discover -s nba2/tests -t .`
+  → **92 tests OK**; `python3 -m nba2.v2` → 25 pages, `nba2.v2.check` → **0 structural / 0
+  semantic**; `python3 -m nba2.v3` → 12 pages, **8/8 gates, publishable**, seal
+  `data/v3/ledger/sealed-2026-11-17.json` (30 rows, `f4a702159c3f26fd`).
+- **Open PR #130** introduces the **v7 layer** (`nba2/v7/**`, `site/v7-*.html`) cut from the
+  2026-11-19 official snapshot — the layer that carries the brief's headline requirements
+  (two-estimator **disagreement** as the headline with the blend underneath, total as
+  possessions × PPP, frozen per-strategy pre-registration, same-game parlays priced with the
+  **measured ρ printed beside the naive product**, an availability column that is blank with its
+  reason, and 0.00 stake on every row because no edge is demonstrated). Its CI is red because the
+  branch was cut before PRs #131–#133 landed.
+- **Open PR #131** carries the settlement-parity/idempotence repair, the date-scoped v6 coverage
+  and workflow changes. It overlaps `nba2/v6/results_coverage.py` with #130, so the two must be
+  reconciled deliberately rather than merged blindly.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim + completion record, **append-only**.
+- `nba2/v7/**` — taken over from #130 for defect repair only; no model parameter is changed.
+- `nba2/v6/results_coverage.py`, `nba2/v6/test_v6.py`, `nba2/v6/test_results_coverage_sources.py`
+  — reader/provenance repair + reconciliation of the #130/#131 overlap.
+- `nba2/pipeline/settle.py`, `nba2/tests/**` — idempotence repair from #131 + regression tests.
+- `.github/workflows/{pages,publish-parity,refresh}.yml` — rebuild-chain wiring only; **no gate
+  is weakened**.
+- `analysis/session-d5a9f631-*.md` (new), `audit/session-d5a9f631/**` (new) — this session's
+  verification record and official captures.
+- Regenerated artefacts **only as direct output of the committed builders**: `site/**`, `pages/**`,
+  root `*.html`, `data/site.json`, `data/site-built.json`, `data/settlement.json`,
+  `data/raw/official_finals_union.json`, `data/v2/**`, `data/v3/**`, `data/v4/**`, `data/v5/**`,
+  `data/v6/**`, `data/v7/**`, `backtest/**`.
+
+**Explicitly NOT edited:** `data/raw/ledger/**` and `data/v3/ledger/**` (**sealed — never
+rewritten**), committed official raw captures under `data/raw/**` (read-only), `nba2/models/**`,
+`nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**` (unless a defect is reproduced *and* the fix is confined
+to a capture/render path), `tools/**`, `scripts/**`, `docs/**`, `dashboard/**`, `originated/**`,
+`verified/**`, `archive/**`, `backtest/engine/**`, `requirements/**`, `suggestions/**`.
+
+**Rules this session holds itself to:** a value is published only if it was fetched from an
+official source in this session or re-derived from a committed official capture by committed code;
+unconfirmed ⇒ blank + flagged, never inferred; sealed ledgers are never rewritten; every gate
+stays fail-closed; small frequent commits; `git pull --rebase` before every push; the site is
+never merged in a broken state; flagged irregularities do not block the merge but appear on the
+Flagged for Review page with their source link.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| D5-1 | Board claim + push before work | in progress | `COORDINATION.md` | pushed before further work |
+| D5-2 | Take over PR #130 (v7 layer): rebase onto `main`, repair the red CI, verify, merge | pending | `nba2/v7/**`, `nba2/v6/**`, workflow wiring | every checker green; full rebuild byte-identical (fixed point) |
+| D5-3 | Take over PR #131 (settlement parity + date-scoped v6): reconcile the overlap with #130, verify, merge or close with a logged reason | pending | `nba2/pipeline/settle.py`, `nba2/v6/**`, `.github/workflows/refresh.yml` | idempotent rebuild; seals verified before and after |
+| D5-4 | Line-by-line re-verification of the combined published data against official sources read this session; every published row carries an official link | pending | `audit/session-d5a9f631/**`, `analysis/session-d5a9f631-*.md` | value + official URL + retrieval stamp per row; unconfirmed ⇒ blank + flagged |
+| D5-5 | Front door: one landing page, category-grouped subpages, readable with JS off; no surface mixes "projection" and "bet" | pending | `site/index.html` + nav (builders only) | link checker green; nav asserted by a test |
+| D5-6 | Full checker chain green (all suites, v2–v7 checks, lint, links, cross-check, parity) | pending | report only | exact commands + results recorded |
+| D5-7 | PR → `main`, merge without approval, confirm GitHub Pages deploy by live fetch, record PR link + merge result here | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of the deployed pages |
