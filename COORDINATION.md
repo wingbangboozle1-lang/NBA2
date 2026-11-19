@@ -5632,3 +5632,55 @@ PR #127 (parity job) fails at `Rebuild every generated tree` because the committ
   - `site/v6-verify.html`: **13 / 13** gates; G-V6-8 **67/67**; 36 / 67 games with a final.
 - **Open presentation defect (new, R-12):** the settlement stamp's line "latest settled game date 2026-11-16" is not updated for the 11/17 games now graded in the v1 settlement (27 games). It is a label derived from the v4 settlement surface (R-10), which still stops at 11/16.
 - **Follow-up PR:** this record is delivered in a coordination-only PR so it reaches `main` (the session branch cannot push to `main`).
+
+## Session `arena/be1ea6bf-nba2` — CLAIM (2026-11-19 UTC, branch `arena/be1ea6bf-nba2`, base `a5380e1` = `main` @ bot-ingest squash)
+
+**State read at claim time (verified, not assumed).**
+- `main` = `a5380e1` ("ingest(bot): official capture — 2026-11-18T19:30:52Z"); this branch is at
+  the same commit, working tree clean. `data/raw/refresh_verdict.json` (run 44381003145,
+  2026-11-18T19:30:52Z): `injuries=success, finals=success, rolling=success, v4=success` — all
+  surfaces green on the latest scheduled ingest.
+- Open PRs at claim time: **#125** (`arena/934fce54-nba2`, 2026-11-16 gamebooks — **CONFLICTING**,
+  no checks; its data/code content is **already present** in the squashed main tree:
+  `data/v5/gamebooks_2026-11-16.json`, `data/v5/results_union.json`, `data/v5/player_logs_union.json`,
+  `data/v5/rotation.json`, `data/v5/injury_join.json`, `data/v3/ledger/sealed-2026-11-15.json`,
+  `data/v4/settlement/settled-2026-11-15.json` all exist; only `audit/session-934fce54/**` and the
+  board record are absent), **#112** (CONFLICTING, 2/5 checks), **#98** (CONFLICTING), **#82**
+  (CONFLICTING), **#80** (CONFLICTING), **#78** (`arena/56b96bf0-nba2`, **MERGEABLE**, checks
+  passing, documentation-only — carries the unique completion record for session 56b96bf0:
+  PR #75 link, merge commit 2d63974, deploy run 43776325409, which the current board does not
+  contain), **#72** (CONFLICTING), **#70** (CONFLICTING).
+- **Handoff note:** session `arena/acf5db08-nba2` claimed ACF-2..ACF-7 on 2026-11-17 and pushed
+  PR #121 (merged, `build_site.py`-era work is in the tree: `capture-fixtures.yml`,
+  `data/raw/page_fixtures/**`), but **no completion record** exists on this board. Per the 60-minute
+  handoff rule this final-integration session takes over ACF-6 (PR disposition, integration,
+  deploy, record) and closes the board loop; nothing of the merged work is discarded.
+
+**File scope claimed by this session (nothing outside this list is edited):**
+- `COORDINATION.md` — this claim + completion record, **append-only**.
+- `analysis/session-be1ea6bf-*.md` — new verification notes, new files only.
+- `audit/session-934fce54/**` — **new namespace only**: the audit notes carried over from stale
+  PR #125 (flags F-93-01..F-93-09), so the flags survive without merging the conflicting PR.
+- Regenerated artefacts **only as direct build output** of the committed builders (never hand-edited).
+
+**Explicitly NOT edited:** `nba2/**`, `site/**`, `data/**` (incl. sealed ledgers), `pages/**`,
+root `*.html`, `docs/**`, `dashboard/**`, `originated/**`, `verified/**`, `archive/**`,
+`backtest/**`, `tools/**`, `scripts/**`, `.github/workflows/**`, `suggestions/**`, `requirements/**`,
+`README.md` (unless a count drift is proven and then counts only).
+
+**Rules this session holds itself to:** a value is published only if fetched from an official
+source in this session or reproduced from a committed snapshot by running the committed code;
+unconfirmed ⇒ blank + flagged, never inferred; sealed ledgers are never rewritten; nothing is
+called verified that was not fetched or reproduced; flagged irregularities do not block the
+merge but appear on the Flagged for Review page with their source link; the site is never merged
+in a broken state; small frequent commits; `git pull --rebase origin main` before every push.
+
+| ID | Task | Status | File scope | Verification rule |
+|----|------|--------|-----------|-------------------|
+| BE-1 | Board claim + push before work | in progress | `COORDINATION.md` (this section) | pushed immediately |
+| BE-2 | Repo verification: run the committed checker chain (tests, lint, structural checks) | pending | read-only run | every checker green on the committed tree |
+| BE-3 | Live GitHub Pages verification (API + reachability) | pending | read-only | Pages API status + live fetch |
+| BE-4 | Stale-PR disposition: #125/#112/#98/#82/#80/#78/#72/#70 (merge-if-valuable or close-as-superseded, never silent) | pending | `COORDINATION.md` (disposition log) | each disposition logged with reason + evidence |
+| BE-5 | Preserve PR #125 audit notes (F-93-01..09) under `audit/session-934fce54/**` | pending | `audit/session-934fce54/**` (new files) | notes fetched from the PR, source links intact |
+| BE-6 | Final integration build: regenerate site via committed builders, verify no broken links | pending | regenerated artefacts only (via builders) | link check green; build succeeds |
+| BE-7 | PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
