@@ -5920,3 +5920,22 @@ v2–v6 builders. This is not permission to hand-edit or overwrite any source ca
 | ID | Task | Status | Acceptance / verification |
 |---|---|---|---|
 | 8C-11 | Regenerate the official settlement, summaries, and published site from committed inputs | in progress | source builds only; sealed-ledger hashes identical before/after; all source/gate checks green |
+
+### Session `arena/8c7c8828-nba2` — scope amendment 4 (2026-11-19 UTC)
+
+The full rebuild exposed a second parity defect: `nba2.pipeline.settle` stamps
+`data/settlement.json` with the wall clock on every invocation, even when every settled row and
+metric is unchanged. `build_site_data.input_digest()` includes that JSON, so repeated settlement
+rebuilds change the v1 input digest and the settlement text rendered into `data/site.json` and
+`pages/**`. This makes an unchanged settlement non-reproducible; it is separate from the score
+union and source-alias fixes already merged on main.
+
+**Scope amendment 4:** add `nba2/pipeline/settle.py` plus a regression in
+`nba2/tests/test_finals_pages.py`. Preserve the existing `settled_at_utc` only when the newly
+computed settlement document is byte-equivalent after removing that timestamp; stamp a new
+UTC time when any settlement content changes. Do not change score/source selection, gate
+semantics, or sealed ledgers. Regenerate dependent data/pages only with the committed builders.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-12 | Make unchanged settlement rebuilds a fixed point for publish parity | in progress | repeated build preserves the first stamp and produces byte-identical derived trees; changed settlement content advances the stamp; all seals remain unchanged |
