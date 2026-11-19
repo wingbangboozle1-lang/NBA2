@@ -6111,3 +6111,15 @@ passed. External links were inventoried by the checker, not fetched. No NBA valu
 captures changed. **Status: done.**
 
 **Integration update (2026-11-19 UTC):** While PR #137 was open, `main` advanced through PR #134 (`35a4111`). The attempted `git pull --rebase=merges origin main` hit an append-only `COORDINATION.md` conflict. Per the conflict rule, the rebase was aborted without dropping work; `origin/main` was merged into this integration branch and both appended records were retained. The ordered builders were rerun on the combined tree; v1/v2/v3/v4/v5/v6/v7 suites and checks pass, lint and link scan pass, seal verification passes, and only the disclosed CC-FRESH-01 remains red. The PR branch must be pushed again and its updated checks re-read before merge.
+
+**Integration / deployment result:** PR [#134](https://github.com/wingbangboozle1-lang/NBA2/pull/134)
+merged on 2026-11-19T12:24:47Z as `35a41112542e2d48ff19285709575f15b68d6b79`.
+All PR checks passed (backtest, capture, parity, refresh dry-run, v2, verify). GitHub Pages run
+[44523644442](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44523644442) completed
+successfully, including the reproducible build check and deploy. The Pages API reports `built`
+at the merge commit, and the live landing page was fetched at
+https://wingbangboozle1-lang.github.io/NBA2/?build=35a4111 and contained the corrected
+capture-versus-publish disclosure. The first fetch immediately after deploy returned a
+transient GitHub outage/404 response; a cache-busted follow-up returned the deployed dashboard.
+Full details and verification limitations are recorded in
+`analysis/session-3a5c7c75-refresh-disclosure.md`.
