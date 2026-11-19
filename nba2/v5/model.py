@@ -17,7 +17,8 @@ from . import transcript as T
 INJURY_DIR = T.DATA / "raw" / "refresh_2026-11-16"
 # 1eeb6a21: the 2026-11-17 capture directory is read alongside 11/16 so the newest report
 # stamp (11/17 11:00 AM ET) wins the join; the superseded-file skip is preserved.
-INJURY_DIRS = [INJURY_DIR, T.DATA / "raw" / "refresh_2026-11-17"]
+INJURY_DIRS = [INJURY_DIR, T.DATA / "raw" / "refresh_2026-11-17",
+               T.DATA / "raw" / "refresh_2026-11-19"]  # RQ-8892-02 re-cut: the 11/19 07:15 AM release
 INJURY_TRANSCRIPTS = sorted(
     p for d in INJURY_DIRS for p in d.glob("injury_transcript_*.json")
     if "superseded" not in p.name)

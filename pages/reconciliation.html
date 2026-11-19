@@ -20,7 +20,7 @@
   </aside>
   <main class="main">
     <section class="hero"><h2>Reconciliation</h2><p>Same official documents, two sessions, two answers. Every disagreement is listed rather than averaged.</p></section>
-    <div class="policy"><span>as-of <strong>2026-11-14</strong></span><span>built <strong>2026-11-18 19:29 UTC</strong></span><span>window <strong>2026-11-13 → 2026-11-17 (pick window 2026-11-14 → 2026-11-17, today + 3 days)</strong></span><span>sealed ledger: 27 predictions, sha256 <code>c841e8f396dae6ca…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
+    <div class="policy"><span>as-of <strong>2026-11-19</strong></span><span>built <strong>2026-11-19 12:32 UTC</strong></span><span>window <strong>2026-11-18 → 2026-11-22 (pick window 2026-11-19 → 2026-11-22, today + 3 days)</strong></span><span>sealed ledger: 26 predictions, sha256 <code>7e5406959a8aea3f…</code></span></div><div class="notice notice-warning"><strong>Read this first:</strong> no market price is available to this build, so nothing here is a &ldquo;value bet&rdquo; — lines are projections and picks are triggers. Team point rates come from a third-party table (win-loss is cross-checked against NBA.com). Blank means <em>no source</em>, never zero. <a href="flagged-review.html">See every open flag</a>.</div>
     <section class="card table-card" id="surfaces" data-rows="8">
 <h2>Everything published in this repository, and who made it</h2>
 <p class="blurb">Six independent site layers now exist in one repo because six sessions worked in parallel, three of them merged while this page was being written. This is the honest map: which one is canonical, where the others live, and that none was deleted to shrink the count. The durable fix is structural — own a directory and a data namespace, as `originated/**` did — not a stricter merge rule.</p>
@@ -480,10 +480,10 @@
 </tr>
 </tbody></table></div>
 <p class="tablenote">theirs: nba2/data/records.json · ours: data/raw/team_ratings_2026-11-13.json</p>
-</section><section class="card table-card" id="x3way" data-rows="32">
-<h2>Three originated lines for the same games — and how much of the gap is convention</h2>
-<p class="blurb">Mean |gap| across 31 games: 2.9 pts as published, 2.7 pts once session 3&#x27;s own injury adjustment is stripped out using the fields it published. The reduction is the point: two teams reading the same official data and disagreeing by 6 points are usually disagreeing about a *parameter*, and a parameter nobody ratified is not evidence.</p>
-<div class="table-wrap"><table class="data"><caption class="sr-only">Three originated lines for the same games — and how much of the gap is convention</caption><thead><tr>
+</section><section class="card table-card" id="x3way" data-rows="0">
+<h2>Three-way reconciliation: 0 rows — this model prices the 2026-11-19..22 window (RQ-8892-02 re-cut) while the committed session-2/3 artefacts cover 2026-11-13..17, so the two vintages share no game. The comparison returns when a session again prices an overlapping window; nothing is matched by force.</h2>
+<p class="blurb">Mean |gap| across 0 games: nan pts as published, nan pts once session 3&#x27;s own injury adjustment is stripped out using the fields it published. The reduction is the point: two teams reading the same official data and disagreeing by 6 points are usually disagreeing about a *parameter*, and a parameter nobody ratified is not evidence.</p>
+<div class="table-wrap"><table class="data"><caption class="sr-only">Three-way reconciliation: 0 rows — this model prices the 2026-11-19..22 window (RQ-8892-02 re-cut) while the committed session-2/3 artefacts cover 2026-11-13..17, so the two vintages share no game. The comparison returns when a session again prices an overlapping window; nothing is matched by force.</caption><thead><tr>
 <th scope="col">Date</th>
 <th scope="col">Matchup</th>
 <th scope="col">Ours</th>
@@ -494,427 +494,11 @@
 <th scope="col">Gap after stripping</th>
 <th scope="col">Why they differ</th>
 <th scope="col">Source</th><th scope="col">Flags</th></tr></thead><tbody>
-<tr id="0022600034">
-<td>2026-11-13</td>
-<td>NYK @ IND</td>
-<td>+5.0</td>
-<td>+2.5</td>
-<td>+11.0 (inj +4.1/+0.0)</td>
-<td>+6.9</td>
-<td>+6.0 pts</td>
-<td>+1.9 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600035">
-<td>2026-11-13</td>
-<td>MIL @ ORL</td>
-<td>-8.0</td>
-<td>-2.0</td>
-<td>-4.0 (inj +6.4/+0.0)</td>
-<td>-10.4</td>
-<td>+4.0 pts</td>
-<td>-2.4 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600036">
-<td>2026-11-13</td>
-<td>CLE @ MIA</td>
-<td>+3.0</td>
-<td>-6.5</td>
-<td>+0.5 (inj +0.8/+3.6)</td>
-<td>+3.3</td>
-<td>-2.5 pts</td>
-<td>+0.3 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600037">
-<td>2026-11-13</td>
-<td>ATL @ CHI</td>
-<td>+10.5</td>
-<td>+1.0</td>
-<td>+12.5 (inj +3.6/+3.6)</td>
-<td>+12.5</td>
-<td>+2.0 pts</td>
-<td>+2.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600038">
-<td>2026-11-13</td>
-<td>MEM @ NOP</td>
-<td>+8.5</td>
-<td>-0.5</td>
-<td>+12.0 (inj +4.4/+3.2)</td>
-<td>+10.8</td>
-<td>+3.5 pts</td>
-<td>+2.3 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600039">
-<td>2026-11-13</td>
-<td>UTA @ HOU</td>
-<td>-17.5</td>
-<td>-13.0</td>
-<td>-23.0 (inj +2.4/+2.4)</td>
-<td>-23.0</td>
-<td>-5.5 pts</td>
-<td>-5.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600040">
-<td>2026-11-13</td>
-<td>GSW @ SAS</td>
-<td>-3.0</td>
-<td>-8.0</td>
-<td>-8.0 (inj +2.4/+7.3)</td>
-<td>-3.1</td>
-<td>-5.0 pts</td>
-<td>-0.1 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600041">
-<td>2026-11-13</td>
-<td>POR @ SAC</td>
-<td>+13.5</td>
-<td>+6.0</td>
-<td>+16.0 (inj +2.4/+4.4)</td>
-<td>+18.0</td>
-<td>+2.5 pts</td>
-<td>+4.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600042">
-<td>2026-11-13</td>
-<td>OKC @ LAC</td>
-<td>+6.5</td>
-<td>+2.5</td>
-<td>+8.0 (inj +3.2/+4.4)</td>
-<td>+9.2</td>
-<td>+1.5 pts</td>
-<td>+2.7 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600231">
-<td>2026-11-14</td>
-<td>DEN @ NOP</td>
-<td>+6.0</td>
-<td>-0.0</td>
-<td>+10.0 (inj +0.0/+0.0)</td>
-<td>+10.0</td>
-<td>+4.0 pts</td>
-<td>+4.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600232">
-<td>2026-11-14</td>
-<td>DAL @ CLE</td>
-<td>-1.0</td>
-<td>-2.5</td>
-<td>-2.0 (inj +0.0/+2.9)</td>
-<td>+0.9</td>
-<td>-1.0 pts</td>
-<td>+1.9 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600233">
-<td>2026-11-14</td>
-<td>DET @ MIA</td>
-<td>+6.0</td>
-<td>-0.0</td>
-<td>+4.0 (inj +0.0/+1.6)</td>
-<td>+5.6</td>
-<td>-2.0 pts</td>
-<td>-0.4 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600234">
-<td>2026-11-14</td>
-<td>BKN @ MEM</td>
-<td>-10.5</td>
-<td>-8.0</td>
-<td>-14.5 (inj +0.0/+0.5)</td>
-<td>-14.0</td>
-<td>-4.0 pts</td>
-<td>-3.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600235">
-<td>2026-11-14</td>
-<td>CHI @ MIN</td>
-<td>-23.0</td>
-<td>-12.0</td>
-<td>-25.0 (inj +4.8/+0.0)</td>
-<td>-29.8</td>
-<td>-2.0 pts</td>
-<td>-6.8 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600236">
-<td>2026-11-15</td>
-<td>IND @ PHI</td>
-<td>-4.5</td>
-<td>-9.0</td>
-<td>-6.0 (inj +0.0/+0.0)</td>
-<td>-6.0</td>
-<td>-1.5 pts</td>
-<td>-1.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600237">
-<td>2026-11-15</td>
-<td>LAL @ PHX</td>
-<td>+6.0</td>
-<td>+1.5</td>
-<td>+6.0 (inj +0.0/+0.0)</td>
-<td>+6.0</td>
-<td>+0.0 pts</td>
-<td>+0.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600238">
-<td>2026-11-15</td>
-<td>CHA @ LAC</td>
-<td>-7.5</td>
-<td>-2.0</td>
-<td>-12.5 (inj +0.0/+0.0)</td>
-<td>-12.5</td>
-<td>-5.0 pts</td>
-<td>-5.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600239">
-<td>2026-11-15</td>
-<td>SAS @ UTA</td>
-<td>+14.5</td>
-<td>+6.0</td>
-<td>+17.5 (inj +0.0/+0.0)</td>
-<td>+17.5</td>
-<td>+3.0 pts</td>
-<td>+3.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600240">
-<td>2026-11-15</td>
-<td>DAL @ BOS</td>
-<td>-6.5</td>
-<td>-7.0</td>
-<td>-5.5 (inj +0.0/+0.0)</td>
-<td>-5.5</td>
-<td>+1.0 pts</td>
-<td>+1.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600241">
-<td>2026-11-15</td>
-<td>NYK @ TOR</td>
-<td>+1.5</td>
-<td>-2.0</td>
-<td>+2.0 (inj +0.0/+0.0)</td>
-<td>+2.0</td>
-<td>+0.5 pts</td>
-<td>+0.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600242">
-<td>2026-11-15</td>
-<td>HOU @ WAS</td>
-<td>+13.0</td>
-<td>+2.0</td>
-<td>+21.0 (inj +0.0/+0.0)</td>
-<td>+21.0</td>
-<td>+8.0 pts</td>
-<td>+8.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600243">
-<td>2026-11-15</td>
-<td>ATL @ MIL</td>
-<td>+10.0</td>
-<td>+3.0</td>
-<td>+11.5 (inj +0.0/+0.0)</td>
-<td>+11.5</td>
-<td>+1.5 pts</td>
-<td>+1.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600244">
-<td>2026-11-15</td>
-<td>OKC @ SAC</td>
-<td>+11.5</td>
-<td>+4.0</td>
-<td>+15.0 (inj +0.0/+0.0)</td>
-<td>+15.0</td>
-<td>+3.5 pts</td>
-<td>+3.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600245">
-<td>2026-11-16</td>
-<td>ORL @ BOS</td>
-<td>-12.0</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>-13.0 (inj +0.0/+0.0)</td>
-<td>-13.0</td>
-<td>-1.0 pts</td>
-<td>-1.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600246">
-<td>2026-11-16</td>
-<td>CHI @ CLE</td>
-<td>-14.0</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>-18.0 (inj +0.0/+0.0)</td>
-<td>-18.0</td>
-<td>-4.0 pts</td>
-<td>-4.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600247">
-<td>2026-11-16</td>
-<td>MEM @ WAS</td>
-<td>+8.5</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>+11.0 (inj +0.0/+0.0)</td>
-<td>+11.0</td>
-<td>+2.5 pts</td>
-<td>+2.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600248">
-<td>2026-11-16</td>
-<td>PHI @ BKN</td>
-<td>+3.5</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>+4.0 (inj +0.0/+0.0)</td>
-<td>+4.0</td>
-<td>+0.5 pts</td>
-<td>+0.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600249">
-<td>2026-11-16</td>
-<td>HOU @ MIA</td>
-<td>+10.0</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>+15.0 (inj +0.0/+0.0)</td>
-<td>+15.0</td>
-<td>+5.0 pts</td>
-<td>+5.0 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600250">
-<td>2026-11-16</td>
-<td>POR @ MIN</td>
-<td>-5.0</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>-4.5 (inj +0.0/+0.0)</td>
-<td>-4.5</td>
-<td>+0.5 pts</td>
-<td>+0.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600251">
-<td>2026-11-16</td>
-<td>GSW @ NOP</td>
-<td>+11.5</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>+18.0 (inj +0.0/+0.0)</td>
-<td>+18.0</td>
-<td>+6.5 pts</td>
-<td>+6.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600252">
-<td>2026-11-16</td>
-<td>PHX @ DEN</td>
-<td>-4.5</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>-5.0 (inj +0.0/+0.0)</td>
-<td>-5.0</td>
-<td>-0.5 pts</td>
-<td>-0.5 pts</td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
-<tr id="0022600253">
-<td>2026-11-17</td>
-<td>NYK @ TOR</td>
-<td>+1.5</td>
-<td>-2.0</td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td><span class="blank" title="blank because: FLAG-XSESS-07">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
-<td>session 3 prices with a documented injury convention (4.0/2.0/0.8 pts per missing player by PPG tier, ×status multiplier, capped at 8.0) and applies rest adjustments; we apply neither, because no official source rates them</td>
-<td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/blob/main/data/our-lines.csv" target="_blank" rel="noopener">Third session&#x27;s originated lines (data/our-lines.csv)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-07">FLAG-XSESS-07</a></td>
-</tr>
 </tbody></table></div>
 <p class="tablenote">ours: data/site.json · session 2: nba2/data/picks.json · session 3: data/our-lines.csv (scripts/model.py)</p>
 </section><section class="card table-card" id="xlines" data-rows="23">
 <h2>Line-for-line: this model vs the model already on main</h2>
-<p class="blurb">2 of 23 matched games agree within 1.5 points; 21 disagree | median |Δ| 6.0 pts, max 11.0 pts across 23 matched games. Both numbers are shown because neither is verified against a market — averaging them would manufacture a false consensus, and deleting one would hide a real uncertainty.</p>
+<p class="blurb">0 of 0 matched games agree within 1.5 points; 0 disagree. Both numbers are shown because neither is verified against a market — averaging them would manufacture a false consensus, and deleting one would hide a real uncertainty.</p>
 <div class="table-wrap"><table class="data"><caption class="sr-only">Line-for-line: this model vs the model already on main</caption><thead><tr>
 <th scope="col">Date</th>
 <th scope="col">Matchup</th>
@@ -931,347 +515,347 @@
 <tr id="0022600034">
 <td>2026-11-13</td>
 <td>NYK @ IND</td>
-<td>IND +5.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>NYK -2.5</td>
-<td>+2.5 pts</td>
-<td>219.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.356</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.425</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/nyk-vs-ind-0022600034" target="_blank" rel="noopener">https://www.nba.com/game/nyk-vs-ind-0022600034</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600035">
 <td>2026-11-13</td>
 <td>MIL @ ORL</td>
-<td>ORL -8.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>MIL +2.0</td>
-<td>-6.0 pts</td>
-<td>225.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.727</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.566</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/mil-vs-orl-0022600035" target="_blank" rel="noopener">https://www.nba.com/game/mil-vs-orl-0022600035</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600036">
 <td>2026-11-13</td>
 <td>CLE @ MIA</td>
-<td>MIA +3.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>CLE +6.5</td>
-<td>+9.5 pts</td>
-<td>233.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.414</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.677</td>
-<td>OPPOSITE SIDES — abstain</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/cle-vs-mia-0022600036" target="_blank" rel="noopener">https://www.nba.com/game/cle-vs-mia-0022600036</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600037">
 <td>2026-11-13</td>
 <td>ATL @ CHI</td>
-<td>CHI +10.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>ATL -1.0</td>
-<td>+9.5 pts</td>
-<td>238.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.219</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.465</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/atl-vs-chi-0022600037" target="_blank" rel="noopener">https://www.nba.com/game/atl-vs-chi-0022600037</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600038">
 <td>2026-11-13</td>
 <td>MEM @ NOP</td>
-<td>NOP +8.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>MEM +0.5</td>
-<td>+9.0 pts</td>
-<td>235.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.270</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.519</td>
-<td>OPPOSITE SIDES — abstain</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/mem-vs-nop-0022600038" target="_blank" rel="noopener">https://www.nba.com/game/mem-vs-nop-0022600038</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600039">
 <td>2026-11-13</td>
 <td>UTA @ HOU</td>
-<td>HOU -17.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>UTA +13.0</td>
-<td>-4.5 pts</td>
-<td>223.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.900</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.825</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/uta-vs-hou-0022600039" target="_blank" rel="noopener">https://www.nba.com/game/uta-vs-hou-0022600039</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600040">
 <td>2026-11-13</td>
 <td>GSW @ SAS</td>
-<td>SAS -3.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>GSW +8.0</td>
-<td>+5.0 pts</td>
-<td>229.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.592</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.721</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/gsw-vs-sas-0022600040" target="_blank" rel="noopener">https://www.nba.com/game/gsw-vs-sas-0022600040</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600041">
 <td>2026-11-13</td>
 <td>POR @ SAC</td>
-<td>SAC +13.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>POR -6.0</td>
-<td>+7.5 pts</td>
-<td>230.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.158</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.329</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/por-vs-sac-0022600041" target="_blank" rel="noopener">https://www.nba.com/game/por-vs-sac-0022600041</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600042">
 <td>2026-11-13</td>
 <td>OKC @ LAC</td>
-<td>LAC +6.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>OKC -2.5</td>
-<td>+4.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>224.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.315</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.434</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/okc-vs-lac-0022600042" target="_blank" rel="noopener">https://www.nba.com/game/okc-vs-lac-0022600042</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600231">
 <td>2026-11-14</td>
 <td>DEN @ NOP</td>
-<td>NOP +6.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>DEN +0.0</td>
-<td>+6.0 pts</td>
-<td>234.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.324</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.501</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/den-vs-nop-0022600231" target="_blank" rel="noopener">https://www.nba.com/game/den-vs-nop-0022600231</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600232">
 <td>2026-11-14</td>
 <td>DAL @ CLE</td>
-<td>CLE -1.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>DAL +2.5</td>
-<td>+1.5 pts</td>
-<td>228.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.531</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.571</td>
-<td>corroborated (within 1.5 pts)</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/dal-vs-cle-0022600232" target="_blank" rel="noopener">https://www.nba.com/game/dal-vs-cle-0022600232</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600233">
 <td>2026-11-14</td>
 <td>DET @ MIA</td>
-<td>MIA +6.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>DET +0.0</td>
-<td>+6.0 pts</td>
-<td>229.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.328</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.499</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/det-vs-mia-0022600233" target="_blank" rel="noopener">https://www.nba.com/game/det-vs-mia-0022600233</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600234">
 <td>2026-11-14</td>
 <td>BKN @ MEM</td>
-<td>MEM -10.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>BKN +8.0</td>
-<td>-2.5 pts</td>
-<td>227.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.777</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.725</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/bkn-vs-mem-0022600234" target="_blank" rel="noopener">https://www.nba.com/game/bkn-vs-mem-0022600234</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600235">
 <td>2026-11-14</td>
 <td>CHI @ MIN</td>
-<td>MIN -23.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>CHI +12.0</td>
-<td>-11.0 pts</td>
-<td>233.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.956</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.803</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/chi-vs-min-0022600235" target="_blank" rel="noopener">https://www.nba.com/game/chi-vs-min-0022600235</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600236">
 <td>2026-11-15</td>
 <td>IND @ PHI</td>
-<td>PHI -4.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>IND +9.0</td>
-<td>+4.5 pts</td>
-<td>223.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.635</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.746</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/ind-vs-phi-0022600236" target="_blank" rel="noopener">https://www.nba.com/game/ind-vs-phi-0022600236</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600237">
 <td>2026-11-15</td>
 <td>LAL @ PHX</td>
-<td>PHX +6.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>LAL -1.5</td>
-<td>+4.5 pts</td>
-<td>232.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.324</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.453</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/lal-vs-phx-0022600237" target="_blank" rel="noopener">https://www.nba.com/game/lal-vs-phx-0022600237</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600238">
 <td>2026-11-15</td>
 <td>CHA @ LAC</td>
-<td>LAC -7.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>CHA +2.0</td>
-<td>-5.5 pts</td>
-<td>219.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.709</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.552</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/cha-vs-lac-0022600238" target="_blank" rel="noopener">https://www.nba.com/game/cha-vs-lac-0022600238</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600239">
 <td>2026-11-15</td>
 <td>SAS @ UTA</td>
-<td>UTA +14.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>SAS -6.0</td>
-<td>+8.5 pts</td>
-<td>226.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.140</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.324</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/sas-vs-uta-0022600239" target="_blank" rel="noopener">https://www.nba.com/game/sas-vs-uta-0022600239</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600240">
 <td>2026-11-15</td>
 <td>DAL @ BOS</td>
-<td>BOS -6.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>DAL +7.0</td>
-<td>+0.5 pts</td>
-<td>221.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.680</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.689</td>
-<td>corroborated (within 1.5 pts)</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/dal-vs-bos-0022600240" target="_blank" rel="noopener">https://www.nba.com/game/dal-vs-bos-0022600240</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600241">
 <td>2026-11-15</td>
 <td>NYK @ TOR</td>
-<td>TOR +1.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>NYK +2.0</td>
-<td>+3.5 pts</td>
-<td>220.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.459</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.553</td>
-<td>OPPOSITE SIDES — abstain</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/nyk-vs-tor-0022600241" target="_blank" rel="noopener">https://www.nba.com/game/nyk-vs-tor-0022600241</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600242">
 <td>2026-11-15</td>
 <td>HOU @ WAS</td>
-<td>WAS +13.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>HOU -2.0</td>
-<td>+11.0 pts</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>224.0</td>
-<td>224.0 (baseline only)</td>
-<td>0.172</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.434</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/hou-vs-was-0022600242" target="_blank" rel="noopener">https://www.nba.com/game/hou-vs-was-0022600242</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600243">
 <td>2026-11-15</td>
 <td>ATL @ MIL</td>
-<td>MIL +10.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>ATL -3.0</td>
-<td>+7.0 pts</td>
-<td>231.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.234</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.413</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/atl-vs-mil-0022600243" target="_blank" rel="noopener">https://www.nba.com/game/atl-vs-mil-0022600243</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 <tr id="0022600244">
 <td>2026-11-15</td>
 <td>OKC @ SAC</td>
-<td>SAC +11.5</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>OKC -4.0</td>
-<td>+7.5 pts</td>
-<td>223.5</td>
-<td>224.0 (baseline only)</td>
-<td>0.195</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
+<td>224.0</td>
+<td><span class="blank" title="blank because: FLAG-XSESS-02">— <a class="flaglink" href="flagged-review.html">flagged</a></span></td>
 <td>0.385</td>
-<td>DISAGREES — investigate before use</td>
+<td>only in the prior session&#x27;s slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)</td>
 <td><a class="cell-link" href="https://www.nba.com/game/okc-vs-sac-0022600244" target="_blank" rel="noopener">https://www.nba.com/game/okc-vs-sac-0022600244</a></td>
 <td class="srccell"><span class="badge badge-derived">derived</span><a class="source-link" href="https://github.com/wingbangboozle1-lang/NBA2/tree/main/nba2/data" target="_blank" rel="noopener">Prior session&#x27;s committed dataset (this repo)</a></td>
-<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-01">FLAG-XSESS-01</a></td>
+<td class='flagcell'><a class="flagchip" href="flagged-review.html#FLAG-XSESS-02">FLAG-XSESS-02</a></td>
 </tr>
 </tbody></table></div>
 <p class="tablenote">ours: data/raw snapshots → nba2/models/lines.py · theirs: nba2/data/picks.json → nba2/picks.py</p>

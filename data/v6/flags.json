@@ -24,7 +24,7 @@
    "id": "F-F5-03",
    "severity": "gap",
    "official_source": "https://official.nba.com/nba-injury-report-2026-27-season/",
-   "what_is_wrong": "<b>1</b> of the <b>21</b> official injury reports this repository knows about (the newest is 11:00 AM ET) are not archived as PDF bytes. 20 are; the rest exist only as a transcript, or as a citation inside another document, or as a URL in a capture.",
+   "what_is_wrong": "<b>2</b> of the <b>22</b> official injury reports this repository knows about (the newest is 11:00 AM ET) are not archived as PDF bytes. 20 are; the rest exist only as a transcript, or as a citation inside another document, or as a URL in a capture.",
    "what_is_published": "The full inventory is published with one row per release, its revision stamp, its retrieval time and whether bytes exist: <a href=\"injury-archive.html\" rel=\"noopener\" target=\"_blank\">the injury PDF archive</a>. The ingester that closes the gap exists (<a href=\"https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/v6/injury_backfill.py\" rel=\"noopener\" target=\"_blank\">nba2/v6/injury_backfill.py</a>) and runs from a GitHub runner where the CDN answers; a release the league has since withdrawn will be recorded as unreachable with its HTTP status, never backfilled with a substitute.",
    "where_to_check": "data/v6/injury_archive.json"
   },
@@ -40,7 +40,7 @@
    "id": "F-F5-05",
    "severity": "gap",
    "official_source": "https://statsdmz.nba.com/pdfs/20261116/20261116_ORLBOS_book.pdf",
-   "what_is_wrong": "Per-player game logs cover 12 of the 116 players named on the newest official injury report (10.3%), and only 12 of those actually played in the captured window (2026-11-13 → 2026-11-15). The gamebooks after that window were never transcribed (<code>F-V4-02</code>), so a newer report joins against an older log set and the fraction falls — the gap is in the logs, not the join.",
+   "what_is_wrong": "Per-player game logs cover 8 of the 42 players named on the newest official injury report (19.1%), and only 8 of those actually played in the captured window (2026-11-13 → 2026-11-15). The gamebooks after that window were never transcribed (<code>F-V4-02</code>), so a newer report joins against an older log set and the fraction falls — the gap is in the logs, not the join.",
    "what_is_published": "Coverage is measured and published, player by player, on <a href=\"player-coverage.html\" rel=\"noopener\" target=\"_blank\">the player-log coverage page</a>: matched players with their minutes, points, rebounds, assists and opponent straight from the official gamebook, and every unmatched player with the reason. The join is literal — near-miss spellings are listed, never merged.",
    "where_to_check": "data/v6/player_coverage.json"
   },

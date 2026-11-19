@@ -470,12 +470,12 @@ DATA_DIR = "data/raw"
 # release at build time (11/13 19:30 ET), and the ratings snapshot was re-checked
 # (30/30 identical) rather than rewritten. The 2026-11-13 snapshots stay committed
 # as the audit trail.
-SNAPSHOT_SLATE = "slate_2026-11-14_to_11-17.json"
+SNAPSHOT_SLATE = "slate_2026-11-19_to_11-22.json"  # RQ-8892-02 re-cut (arena/6b9f3bbe-nba2, 2026-11-19)
 SNAPSHOT_CONTEXT = "slate_context_2026-11-17.json"
 SNAPSHOT_LEADERS = "team_leaders_2026-11-13.json"
 SNAPSHOT_RATINGS = "team_ratings_2026-11-13.json"
 SNAPSHOT_INJURY = "injury_report_2026-11-13_1930ET.json"
-SNAPSHOT_TIMES = "official_game_times_2026-11-14.json"
+SNAPSHOT_TIMES = "official_game_times_2026-11-19.json"  # RQ-8892-02 re-cut (11/19 injury release + day strips)
 SNAPSHOT_TIMES_PRIOR = "official_game_times_2026-11-13.json"
 # Added by session arena/6650be4d-nba2 (2026-11-14 10:25 UTC re-verification round).
 SNAPSHOT_STANDINGS_OFFICIAL = "official_standings_2026-11-14.json"

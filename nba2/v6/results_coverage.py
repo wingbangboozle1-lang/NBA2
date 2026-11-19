@@ -51,13 +51,14 @@ SEALED_GLOBS = [DATA / "raw" / "ledger" / "sealed-*.json",
 _DATE_IN_NAME = re.compile(r"(\d{4}-\d{2}-\d{2})")
 BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book\.pdf$")
 
-# Frozen clock: the capture in `data/raw/capture_2026-11-18/finals_2026-11-18.json`
-# records retrieved_at_utc=2026-11-18T19:30:20+00:00. Using the committed source time
+# Frozen clock: the newest committed official finals capture is
+# `data/raw/finals_2026-11-18.json` (re-cut by arena/6b9f3bbe-nba2, 2026-11-19), which
+# records retrieved_at_utc=2026-11-19T12:32:00+00:00. Using the committed source time
 # keeps the game-day classification reproducible and prevents a later wall-clock rebuild
 # from claiming that unobserved games are final. November is UTC-5 in US Eastern.
-AS_OF_UTC = "2026-11-18T19:30:20Z"
-AS_OF_ET = "2026-11-18 14:30 ET"
-AS_OF_DATE = "2026-11-18"
+AS_OF_UTC = "2026-11-19T12:32:00Z"
+AS_OF_ET = "2026-11-19 07:32 ET"
+AS_OF_DATE = "2026-11-19"
 
 
 def _glob(paths) -> list[Path]:

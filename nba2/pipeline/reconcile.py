@@ -124,7 +124,7 @@ def reconcile_lines(mine_lines: list, their_picks: dict) -> dict:
             their_total=(f"{t.get('originated_total_line'):.1f}" if t.get("originated_total_line") is not None else None),
             our_p_home=None,
             their_p_home=(f"{t.get('home_win_prob'):.3f}" if t.get("home_win_prob") is not None else None),
-            verdict="only in the prior session's slate — outside our 11/13–11/16 window or unmatched",
+            verdict="only in the prior session's slate — the two captures cover disjoint windows (theirs 2026-11-13..17, ours 2026-11-19..22 after the RQ-8892-02 re-cut)",
             their_source=t.get("source") or "",
         ))
     deltas = [abs(float(r.values["spread_delta"].split()[0])) for r in rows
@@ -151,8 +151,8 @@ def reconcile_lines(mine_lines: list, their_picks: dict) -> dict:
          "against, so the disagreement is the best available estimate of model uncertainty.",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/picks.json",
          "Treat the spread delta as an uncertainty band; widen triggers until an odds feed exists.")
-    flag("FLAG-XSESS-02", "low", "cross-session", "Some games exist in only one session's slate because the "
-         "two captures covered different date ranges (11/13–15 vs 11/13–16).",
+    flag("FLAG-XSESS-02", "low", "cross-session", "Every prior-session line is unmatched since the re-cut: the two "
+         "captures cover disjoint date ranges (theirs 2026-11-13..17, ours 2026-11-19..22).",
          "https://github.com/wingbangboozle1-lang/NBA2/blob/main/nba2/data/schedule.json",
          "Use the union of dates when scheduling the next build.")
     return table(rows, [("date", "Date"), ("matchup", "Matchup"), ("our_spread", "OUR spread"),

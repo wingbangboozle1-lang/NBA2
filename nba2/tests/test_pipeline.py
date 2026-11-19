@@ -118,10 +118,10 @@ class TestModel(unittest.TestCase):
                              "fewer games must mean a smaller weight on one's own rating")
 
     def test_every_game_gets_a_line(self):
-        self.assertEqual(len(self.lines), 36,
-                         "36 slate games (11/13 context + 11/14..17 pick window)")
+        self.assertEqual(len(self.lines), 38,
+                         "38 slate games (11/18 context + 11/19..22 pick window)")
         priced = [l for l in self.lines if l.spread_home is not None and l.total_line is not None]
-        self.assertEqual(len(priced), 36, "R-012: the slate must be complete, no silent drops")
+        self.assertEqual(len(priced), 38, "R-012: the slate must be complete, no silent drops")
 
     def test_lines_are_half_point_and_total_is_centred(self):
         for l in self.lines:
@@ -268,16 +268,15 @@ class TestAdjudication(unittest.TestCase):
         priced = LN.price_slate(model, games, {})
         picks = json.loads((ROOT / "nba2" / "data" / "picks.json").read_text())
         tbl = AD.reconcile_three_way(priced, picks)
-        self.assertGreaterEqual(len(tbl["rows"]), 20)
-        withboth = [r for r in tbl["rows"]
-                    if r["values"].get("gap_raw") and r["values"].get("gap_after_stripping")]
-        self.assertGreaterEqual(len(withboth), 10, "the stripping comparison must exist, not be narrated")
-        import statistics
-        raw = [abs(float(r["values"]["gap_raw"].split()[0])) for r in withboth]
-        adj = [abs(float(r["values"]["gap_after_stripping"].split()[0])) for r in withboth]
-        self.assertLess(statistics.median(adj), statistics.median(raw),
-                        "removing the other model's injury convention must shrink the median gap; "
-                        "if it does not, the 'convention not data' claim on the site is false")
+        # Since the re-cut the two vintages price disjoint windows, so the honest row count
+        # is 0 and the caption must say so; the stripping comparison returns with the next
+        # overlapping window (the old assertion, kept as history: >=20 rows / >=10 with both gaps).
+        self.assertEqual(len(tbl["rows"]), 0)
+        self.assertIn("share no game", str(tbl.get("title", "")))
+        # History: with overlapping windows this test also asserted that stripping session 3's
+        # own published injury convention SHRINKS the median gap (raw vs adjusted). That check
+        # returns with the next overlapping window; it cannot run against zero shared games
+        # without becoming a tautology.
 
 
 class TestPublishedSite(unittest.TestCase):
@@ -319,8 +318,8 @@ class TestPublishedSite(unittest.TestCase):
         by_date: dict[str, int] = {}
         for r in rows:
             by_date[r["values"]["date"]] = by_date.get(r["values"]["date"], 0) + 1
-        self.assertEqual(by_date, {"2026-11-13": 9, "2026-11-14": 5, "2026-11-15": 9,
-                                   "2026-11-16": 8, "2026-11-17": 5})
+        self.assertEqual(by_date, {"2026-11-18": 12, "2026-11-19": 4, "2026-11-20": 9,
+                                   "2026-11-21": 6, "2026-11-22": 7})
 
     def test_no_invented_injury_or_correlation_numbers(self):
         """Values this repository fabricated in an earlier session must never come back as data.
@@ -348,8 +347,8 @@ class TestPublishedSite(unittest.TestCase):
         ok, _, _ = LD.verify(path)
         self.assertTrue(ok)
         self.assertEqual(seal["sha256"], json.loads(path.read_text())["header"]["sha256"])
-        self.assertEqual(seal["n_predictions"], 27,
-                         "window = as_of (2026-11-14) .. as_of+3 (2026-11-17); 11/13 context games excluded")
+        self.assertEqual(seal["n_predictions"], 26,
+                         "window = as_of (2026-11-19) .. as_of+3 (2026-11-22); 11/18 context games excluded")
 
 
 
@@ -414,6 +413,11 @@ class TestReproducibility(unittest.TestCase):
 # all-empty column (e.g. a field swallowed by a keyword clash) fails this test instead of
 # shipping an empty column nobody notices.
 EMPTY_OK = {
+    # RQ-8892-02 re-cut: the current model prices 2026-11-19..22 while the committed
+    # session-2/3 artefacts cover 2026-11-13..17 — disjoint windows, so every cross-session
+    # row is theirs-only and the our_* columns are legitimately empty until the windows
+    # overlap again (disclosed in the table's verdict text and the three-way caption).
+    "xlines.our_spread", "xlines.spread_delta", "xlines.our_total", "xlines.our_p_home",
     "luck.close_record", "luck.blowout_record",                       # split extraction unreliable
     "injuries.minutes_impact", "injuries.production_impact",
     "injuries.line_adjustment",                                        # report has no such fields

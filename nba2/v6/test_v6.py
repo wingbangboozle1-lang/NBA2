@@ -139,11 +139,21 @@ class TestResultsCoverage(unittest.TestCase):
             self.assertIn("not scored against a sealed ledger", row["reason"])
 
     def test_dates_after_latest_capture_remain_not_ended(self):
-        for d in ("2026-11-18", "2026-11-19", "2026-11-20", "2026-11-21"):
+        # The re-cut capture (finals_2026-11-18.json, retrieved 2026-11-19T12:32Z) committed
+        # the twelve 11/18 finals; the 11/19 games tip after that as-of, so 11/19 onward
+        # remains not-ended with zero finals claimed.
+        for d in ("2026-11-19", "2026-11-20", "2026-11-21"):
             row = next(r for r in self.doc["rows"] if r["date"] == d)
             self.assertEqual(row["status"], "not ended", msg=d)
             self.assertEqual(row["n_finals_committed"], 0)
             self.assertIn("has not ended", row["reason"])
+
+    def test_the_1118_games_are_complete_from_the_recut_capture(self):
+        """The 2026-11-19 re-cut committed the twelve 11/18 finals (day strip + gamebooks)."""
+        row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-18")
+        self.assertEqual(row["n_scheduled"], 12)
+        self.assertEqual(row["n_finals_committed"], 12)
+        self.assertIn(row["status"], ("incomplete", "complete"))
 
     def test_the_prequest_1113_games_are_reported_as_unsettleable_not_missing(self):
         row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-13")

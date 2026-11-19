@@ -183,9 +183,10 @@ class TestModel(unittest.TestCase):
 
     def test_injury_join_reports_its_own_coverage(self):
         inj = self.res["injury"]
-        # The count is whatever the newest committed release holds, not a hardcoded 70:
-        # another session superseded the 09:30 AM filing with the 01:00 PM one (83 rows).
-        self.assertGreaterEqual(inj["n_report_rows"], 70)
+        # The count is whatever the newest committed release holds, not a hardcoded number:
+        # the 09:30 AM filing was superseded by the 01:00 PM one (83 rows), and the
+        # RQ-8892-02 re-cut added the 2026-11-19 07:15 AM release (42 rows) as the newest.
+        self.assertGreaterEqual(inj["n_report_rows"], 42)
         self.assertEqual(inj["stamp"], max(
             m["report_stamp_et"] for m in M.injury_rows()))
         self.assertEqual(inj["n_matched"] + inj["n_unmatched"], inj["n_report_rows"])

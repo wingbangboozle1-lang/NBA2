@@ -1,7 +1,7 @@
 {
  "schema": "nba2.v6.injury-archive.v1",
  "session": "arena/f5ac4e74-nba2",
- "n_releases": 21,
+ "n_releases": 22,
  "releases": [
   {
    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-13_01_00PM.pdf",
@@ -181,9 +181,6 @@
    "stamp_et": "04:30 AM ET",
    "cited_in": [
     "data/raw/history/injury_report_2026-11-14_0430AM.json",
-    "data/v2/content.json",
-    "data/v2/teams.json",
-    "data/v2/verification.json",
     "data/v6/injury_archive.json",
     "data/v6/injury_binary_manifest.json"
    ],
@@ -528,11 +525,8 @@
     "data/v3/verification.json",
     "data/v4/injury/binary_manifest.json",
     "data/v4/injury/releases.json",
-    "data/v4/model.json",
-    "data/v5/injury_join.json",
     "data/v6/injury_archive.json",
-    "data/v6/injury_binary_manifest.json",
-    "data/v6/player_coverage.json"
+    "data/v6/injury_binary_manifest.json"
    ],
    "transcripts": [
     "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
@@ -602,6 +596,46 @@
    "pdf_bytes": 100919,
    "pdf_sha256": "3a6c66ac5276cbefb53097febde1be43d2527bd454fd2e5fbd725316b10a2842",
    "text_extracted_path": "data/raw/pdf/Injury-Report_2026-11-18_09_45AM.txt",
+   "manifest_outcome": null,
+   "manifest_detail": null,
+   "text_sha256_matches_extracted": null
+  },
+  {
+   "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf",
+   "filename": "Injury-Report_2026-11-19_07_15AM.pdf",
+   "date": "2026-11-19",
+   "stamp_et": "07:15 AM ET",
+   "cited_in": [
+    "data/raw/injury_report_2026-11-19_daybefore.json",
+    "data/raw/refresh_2026-11-16/injury_transcript_20261119_0715AM.json",
+    "data/raw/refresh_2026-11-19/capture_index.json",
+    "data/raw/refresh_2026-11-19/injury_release_2026-11-19.json",
+    "data/v2/content.json",
+    "data/v2/teams.json",
+    "data/v2/verification.json",
+    "data/v3/verification.json",
+    "data/v4/injury/releases.json",
+    "data/v4/model.json",
+    "data/v5/injury_join.json",
+    "data/v6/injury_archive.json",
+    "data/v6/player_coverage.json"
+   ],
+   "transcripts": [
+    "data/raw/injury_report_2026-11-19_daybefore.json",
+    "data/raw/refresh_2026-11-16/injury_transcript_20261119_0715AM.json",
+    "data/v4/injury/releases.json"
+   ],
+   "transcript_rows": 42,
+   "text_sha256": "9afd054b120fe899d1f0f6c7763364bb4e3c3b346ef5492f2e062e85513faca7",
+   "retrieved_at_utc": "2026-11-19T12:32:00Z",
+   "index_checked_utc": "2026-11-19T12:20:00Z",
+   "revision_time_et": "11/19/26 07:15 AM",
+   "method": "platform page-fetch tool (fetch_page); returned as a single chunk",
+   "bytes_stored": false,
+   "pdf_path": null,
+   "pdf_bytes": null,
+   "pdf_sha256": null,
+   "text_extracted_path": null,
    "manifest_outcome": null,
    "manifest_detail": null,
    "text_sha256_matches_extracted": null

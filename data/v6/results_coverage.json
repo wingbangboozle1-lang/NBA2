@@ -1,11 +1,11 @@
 {
  "schema": "nba2.v6.results-coverage.v1",
  "session": "arena/f5ac4e74-nba2",
- "as_of_utc": "2026-11-18T19:30:20Z",
- "today": "2026-11-18",
- "n_dates": 12,
- "n_games_known": 87,
- "n_games_with_final": 56,
+ "as_of_utc": "2026-11-19T12:32:00Z",
+ "today": "2026-11-19",
+ "n_dates": 13,
+ "n_games_known": 94,
+ "n_games_with_final": 68,
  "n_games_graded": 27,
  "settlement": {
   "per_ledger": [
@@ -203,12 +203,12 @@
   {
    "date": "2026-11-18",
    "n_scheduled": 12,
-   "n_finals_committed": 0,
+   "n_finals_committed": 12,
    "n_graded": 0,
-   "n_missing_final": 12,
-   "n_missing_grade": 0,
-   "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "n_missing_final": 0,
+   "n_missing_grade": 12,
+   "status": "incomplete",
+   "reason": "finals are committed for all 12 games but 12 are not scored against a sealed ledger — a game that was never pre-registered cannot be settled, so nothing is inferred for it",
    "game_ids": [
     "0022600258",
     "0022600259",
@@ -223,20 +223,7 @@
     "0022600268",
     "0022600269"
    ],
-   "missing_final_ids": [
-    "0022600258",
-    "0022600259",
-    "0022600260",
-    "0022600261",
-    "0022600262",
-    "0022600263",
-    "0022600264",
-    "0022600265",
-    "0022600266",
-    "0022600267",
-    "0022600268",
-    "0022600269"
-   ],
+   "missing_final_ids": [],
    "list_url": "https://www.nba.com/schedule?date=2026-11-18"
   },
   {
@@ -247,7 +234,7 @@
    "n_missing_final": 4,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:32:00Z = 2026-11-19 07:32 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600270",
     "0022600271",
@@ -260,7 +247,7 @@
     "0022600272",
     "0022600273"
    ],
-   "list_url": "https://www.nba.com/schedule?date=2026-11-19"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "date": "2026-11-20",
@@ -270,7 +257,7 @@
    "n_missing_final": 9,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:32:00Z = 2026-11-19 07:32 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600043",
     "0022600044",
@@ -303,7 +290,7 @@
    "n_missing_final": 6,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:32:00Z = 2026-11-19 07:32 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600274",
     "0022600275",
@@ -321,6 +308,35 @@
     "0022600279"
    ],
    "list_url": "https://www.nba.com/schedule?date=2026-11-21"
+  },
+  {
+   "date": "2026-11-22",
+   "n_scheduled": 7,
+   "n_finals_committed": 0,
+   "n_graded": 0,
+   "n_missing_final": 7,
+   "n_missing_grade": 0,
+   "status": "not ended",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:32:00Z = 2026-11-19 07:32 ET) — no official final is claimed for a game that has not finished",
+   "game_ids": [
+    "0022600280",
+    "0022600281",
+    "0022600282",
+    "0022600283",
+    "0022600284",
+    "0022600285",
+    "0022600286"
+   ],
+   "missing_final_ids": [
+    "0022600280",
+    "0022600281",
+    "0022600282",
+    "0022600283",
+    "0022600284",
+    "0022600285",
+    "0022600286"
+   ],
+   "list_url": "https://www.nba.com/schedule?date=2026-11-22"
   }
  ],
  "games": [
@@ -665,10 +681,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/cha-vs-atl-0022600043",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -689,10 +707,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/orl-vs-bkn-0022600044",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -713,10 +733,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/ind-vs-cle-0022600045",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -737,10 +759,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/tor-vs-det-0022600046",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -761,10 +785,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/was-vs-chi-0022600047",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -785,10 +811,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/nop-vs-okc-0022600048",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -809,10 +837,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/phx-vs-uta-0022600049",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -833,10 +863,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/hou-vs-den-0022600050",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -857,10 +889,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-20",
+   "source_url": "https://www.nba.com/game/sac-vs-lal-0022600051",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -2146,7 +2180,6 @@
     "data/v5/results_union.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json"
    ],
    "conflicts": null
@@ -2187,7 +2220,6 @@
     "data/v5/results_union.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json"
    ],
    "conflicts": null
@@ -2228,7 +2260,6 @@
     "data/v5/results_union.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json"
    ],
    "conflicts": null
@@ -2269,7 +2300,6 @@
     "data/v5/results_union.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json"
    ],
    "conflicts": null
@@ -2310,7 +2340,6 @@
     "data/v5/results_union.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json"
    ],
    "conflicts": null
@@ -2351,7 +2380,6 @@
     "data/v5/results_union.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json"
    ],
    "conflicts": null
@@ -2392,7 +2420,6 @@
     "data/v5/results_union.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json"
    ],
    "conflicts": null
@@ -2433,7 +2460,6 @@
     "data/v5/results_union.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json"
    ],
    "conflicts": null
@@ -2471,7 +2497,6 @@
     "data/raw/capture_2026-11-18/finals_2026-11-18.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/refresh_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json"
@@ -2511,7 +2536,6 @@
     "data/raw/capture_2026-11-18/finals_2026-11-18.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/refresh_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json"
@@ -2551,7 +2575,6 @@
     "data/raw/capture_2026-11-18/finals_2026-11-18.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/refresh_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json"
@@ -2593,7 +2616,6 @@
     "data/raw/capture_2026-11-18/finals_2026-11-18.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/refresh_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json"
@@ -2633,7 +2655,6 @@
     "data/raw/capture_2026-11-18/finals_2026-11-18.json"
    ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/refresh_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json"
@@ -2646,20 +2667,31 @@
    "matchup": "MEM @ CLE",
    "away": "MEM",
    "home": "CLE",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 124,
+   "home_pts": 121,
+   "away_quarters": [
+    30,
+    41,
+    29,
+    24
+   ],
+   "home_quarters": [
+    37,
+    35,
+    27,
+    22
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 30+41+29+24=124 vs 124; home 37+35+27+22=121 vs 121",
    "graded": false,
    "source_url": "https://www.nba.com/game/mem-vs-cle-0022600258",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_MEMCLE_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2672,20 +2704,31 @@
    "matchup": "HOU @ IND",
    "away": "HOU",
    "home": "IND",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 119,
+   "home_pts": 104,
+   "away_quarters": [
+    39,
+    23,
+    31,
+    26
+   ],
+   "home_quarters": [
+    28,
+    18,
+    30,
+    28
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 39+23+31+26=119 vs 119; home 28+18+30+28=104 vs 104",
    "graded": false,
    "source_url": "https://www.nba.com/game/hou-vs-ind-0022600259",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_HOUIND_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2698,20 +2741,31 @@
    "matchup": "MIL @ MIA",
    "away": "MIL",
    "home": "MIA",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 130,
+   "home_pts": 137,
+   "away_quarters": [
+    23,
+    25,
+    38,
+    44
+   ],
+   "home_quarters": [
+    34,
+    40,
+    38,
+    25
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 23+25+38+44=130 vs 130; home 34+40+38+25=137 vs 137",
    "graded": false,
    "source_url": "https://www.nba.com/game/mil-vs-mia-0022600260",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_MILMIA_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2724,20 +2778,31 @@
    "matchup": "PHI @ ORL",
    "away": "PHI",
    "home": "ORL",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 121,
+   "home_pts": 116,
+   "away_quarters": [
+    27,
+    37,
+    28,
+    29
+   ],
+   "home_quarters": [
+    40,
+    29,
+    28,
+    19
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 27+37+28+29=121 vs 121; home 40+29+28+19=116 vs 116",
    "graded": false,
    "source_url": "https://www.nba.com/game/phi-vs-orl-0022600261",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_PHIORL_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2750,20 +2815,31 @@
    "matchup": "CHI @ BKN",
    "away": "CHI",
    "home": "BKN",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 137,
+   "home_pts": 107,
+   "away_quarters": [
+    37,
+    39,
+    35,
+    26
+   ],
+   "home_quarters": [
+    21,
+    30,
+    26,
+    30
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 37+39+35+26=137 vs 137; home 21+30+26+30=107 vs 107",
    "graded": false,
    "source_url": "https://www.nba.com/game/chi-vs-bkn-0022600262",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_CHIBKN_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2776,20 +2852,31 @@
    "matchup": "WAS @ TOR",
    "away": "WAS",
    "home": "TOR",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 103,
+   "home_pts": 99,
+   "away_quarters": [
+    29,
+    20,
+    29,
+    25
+   ],
+   "home_quarters": [
+    23,
+    24,
+    32,
+    20
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 29+20+29+25=103 vs 103; home 23+24+32+20=99 vs 99",
    "graded": false,
    "source_url": "https://www.nba.com/game/was-vs-tor-0022600263",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_WASTOR_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2802,20 +2889,31 @@
    "matchup": "DET @ NOP",
    "away": "DET",
    "home": "NOP",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 122,
+   "home_pts": 109,
+   "away_quarters": [
+    31,
+    36,
+    25,
+    30
+   ],
+   "home_quarters": [
+    31,
+    29,
+    26,
+    23
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 31+36+25+30=122 vs 122; home 31+29+26+23=109 vs 109",
    "graded": false,
    "source_url": "https://www.nba.com/game/det-vs-nop-0022600264",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_DETNOP_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2828,20 +2926,31 @@
    "matchup": "ATL @ OKC",
    "away": "ATL",
    "home": "OKC",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 117,
+   "home_pts": 112,
+   "away_quarters": [
+    31,
+    33,
+    19,
+    34
+   ],
+   "home_quarters": [
+    29,
+    22,
+    32,
+    29
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 31+33+19+34=117 vs 117; home 29+22+32+29=112 vs 112",
    "graded": false,
    "source_url": "https://www.nba.com/game/atl-vs-okc-0022600265",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_ATLOKC_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2854,20 +2963,31 @@
    "matchup": "BOS @ DEN",
    "away": "BOS",
    "home": "DEN",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 101,
+   "home_pts": 105,
+   "away_quarters": [
+    30,
+    31,
+    19,
+    21
+   ],
+   "home_quarters": [
+    24,
+    25,
+    31,
+    25
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 30+31+19+21=101 vs 101; home 24+25+31+25=105 vs 105",
    "graded": false,
    "source_url": "https://www.nba.com/game/bos-vs-den-0022600266",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_BOSDEN_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2880,20 +3000,31 @@
    "matchup": "GSW @ DAL",
    "away": "GSW",
    "home": "DAL",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 94,
+   "home_pts": 116,
+   "away_quarters": [
+    25,
+    24,
+    23,
+    22
+   ],
+   "home_quarters": [
+    35,
+    27,
+    30,
+    24
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 25+24+23+22=94 vs 94; home 35+27+30+24=116 vs 116",
    "graded": false,
    "source_url": "https://www.nba.com/game/gsw-vs-dal-0022600267",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_GSWDAL_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2906,20 +3037,31 @@
    "matchup": "UTA @ LAL",
    "away": "UTA",
    "home": "LAL",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 109,
+   "home_pts": 97,
+   "away_quarters": [
+    29,
+    27,
+    22,
+    31
+   ],
+   "home_quarters": [
+    34,
+    20,
+    22,
+    21
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 29+27+22+31=109 vs 109; home 34+20+22+21=97 vs 97",
    "graded": false,
    "source_url": "https://www.nba.com/game/uta-vs-lal-0022600268",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_UTALAL_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2932,20 +3074,31 @@
    "matchup": "PHX @ SAC",
    "away": "PHX",
    "home": "SAC",
-   "away_pts": null,
-   "home_pts": null,
-   "away_quarters": null,
-   "home_quarters": null,
-   "ot_periods": null,
-   "period_schema": "no final committed — no period row to hold",
-   "quarter_verdict": "no official final is committed",
-   "quarter_detail": "blank, never inferred",
+   "away_pts": 128,
+   "home_pts": 107,
+   "away_quarters": [
+    36,
+    29,
+    34,
+    29
+   ],
+   "home_quarters": [
+    31,
+    29,
+    24,
+    23
+   ],
+   "ot_periods": 0,
+   "period_schema": "regulation only",
+   "quarter_verdict": "quarters sum to the final",
+   "quarter_detail": "away 36+29+34+29=128 vs 128; home 31+29+24+23=107 vs 107",
    "graded": false,
    "source_url": "https://www.nba.com/game/phx-vs-sac-0022600269",
-   "gamebook_url": null,
-   "finals_files": [],
+   "gamebook_url": "https://statsdmz.nba.com/pdfs/20261118/20261118_PHXSAC_book.pdf",
+   "finals_files": [
+    "data/raw/finals_2026-11-18.json"
+   ],
    "slate_files": [
-    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
     "data/raw/capture_2026-11-15/slate_2026-11-15_to_11-18.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
@@ -2972,6 +3125,7 @@
    "finals_files": [],
    "slate_files": [
     "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -2997,6 +3151,7 @@
    "finals_files": [],
    "slate_files": [
     "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -3022,6 +3177,7 @@
    "finals_files": [],
    "slate_files": [
     "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -3047,6 +3203,7 @@
    "finals_files": [],
    "slate_files": [
     "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-17/slate_2026-11-17.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
@@ -3067,10 +3224,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-21",
+   "source_url": "https://www.nba.com/game/mil-vs-phi-0022600274",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
    "conflicts": null
@@ -3090,10 +3249,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-21",
+   "source_url": "https://www.nba.com/game/por-vs-nyk-0022600275",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
    "conflicts": null
@@ -3113,10 +3274,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-21",
+   "source_url": "https://www.nba.com/game/lac-vs-dal-0022600276",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
    "conflicts": null
@@ -3136,10 +3299,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-21",
+   "source_url": "https://www.nba.com/game/mem-vs-min-0022600277",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
    "conflicts": null
@@ -3159,10 +3324,12 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-21",
+   "source_url": "https://www.nba.com/game/nop-vs-sas-0022600278",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
    ],
    "conflicts": null
@@ -3182,11 +3349,181 @@
    "quarter_verdict": "no official final is committed",
    "quarter_detail": "blank, never inferred",
    "graded": false,
-   "source_url": "https://www.nba.com/games?date=2026-11-21",
+   "source_url": "https://www.nba.com/game/bos-vs-sac-0022600279",
    "gamebook_url": null,
    "finals_files": [],
    "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json",
     "data/raw/capture_2026-11-18/slate_2026-11-18.json"
+   ],
+   "conflicts": null
+  },
+  {
+   "game_id": "0022600280",
+   "date": "2026-11-22",
+   "matchup": "DET @ ATL",
+   "away": "DET",
+   "home": "ATL",
+   "away_pts": null,
+   "home_pts": null,
+   "away_quarters": null,
+   "home_quarters": null,
+   "ot_periods": null,
+   "period_schema": "no final committed — no period row to hold",
+   "quarter_verdict": "no official final is committed",
+   "quarter_detail": "blank, never inferred",
+   "graded": false,
+   "source_url": "https://www.nba.com/game/det-vs-atl-0022600280",
+   "gamebook_url": null,
+   "finals_files": [],
+   "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json"
+   ],
+   "conflicts": null
+  },
+  {
+   "game_id": "0022600281",
+   "date": "2026-11-22",
+   "matchup": "OKC @ MIA",
+   "away": "OKC",
+   "home": "MIA",
+   "away_pts": null,
+   "home_pts": null,
+   "away_quarters": null,
+   "home_quarters": null,
+   "ot_periods": null,
+   "period_schema": "no final committed — no period row to hold",
+   "quarter_verdict": "no official final is committed",
+   "quarter_detail": "blank, never inferred",
+   "graded": false,
+   "source_url": "https://www.nba.com/game/okc-vs-mia-0022600281",
+   "gamebook_url": null,
+   "finals_files": [],
+   "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json"
+   ],
+   "conflicts": null
+  },
+  {
+   "game_id": "0022600282",
+   "date": "2026-11-22",
+   "matchup": "ORL @ WAS",
+   "away": "ORL",
+   "home": "WAS",
+   "away_pts": null,
+   "home_pts": null,
+   "away_quarters": null,
+   "home_quarters": null,
+   "ot_periods": null,
+   "period_schema": "no final committed — no period row to hold",
+   "quarter_verdict": "no official final is committed",
+   "quarter_detail": "blank, never inferred",
+   "graded": false,
+   "source_url": "https://www.nba.com/game/orl-vs-was-0022600282",
+   "gamebook_url": null,
+   "finals_files": [],
+   "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json"
+   ],
+   "conflicts": null
+  },
+  {
+   "game_id": "0022600283",
+   "date": "2026-11-22",
+   "matchup": "DEN @ CHI",
+   "away": "DEN",
+   "home": "CHI",
+   "away_pts": null,
+   "home_pts": null,
+   "away_quarters": null,
+   "home_quarters": null,
+   "ot_periods": null,
+   "period_schema": "no final committed — no period row to hold",
+   "quarter_verdict": "no official final is committed",
+   "quarter_detail": "blank, never inferred",
+   "graded": false,
+   "source_url": "https://www.nba.com/game/den-vs-chi-0022600283",
+   "gamebook_url": null,
+   "finals_files": [],
+   "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json"
+   ],
+   "conflicts": null
+  },
+  {
+   "game_id": "0022600284",
+   "date": "2026-11-22",
+   "matchup": "DAL @ UTA",
+   "away": "DAL",
+   "home": "UTA",
+   "away_pts": null,
+   "home_pts": null,
+   "away_quarters": null,
+   "home_quarters": null,
+   "ot_periods": null,
+   "period_schema": "no final committed — no period row to hold",
+   "quarter_verdict": "no official final is committed",
+   "quarter_detail": "blank, never inferred",
+   "graded": false,
+   "source_url": "https://www.nba.com/game/dal-vs-uta-0022600284",
+   "gamebook_url": null,
+   "finals_files": [],
+   "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json"
+   ],
+   "conflicts": null
+  },
+  {
+   "game_id": "0022600285",
+   "date": "2026-11-22",
+   "matchup": "IND @ NYK",
+   "away": "IND",
+   "home": "NYK",
+   "away_pts": null,
+   "home_pts": null,
+   "away_quarters": null,
+   "home_quarters": null,
+   "ot_periods": null,
+   "period_schema": "no final committed — no period row to hold",
+   "quarter_verdict": "no official final is committed",
+   "quarter_detail": "blank, never inferred",
+   "graded": false,
+   "source_url": "https://www.nba.com/game/ind-vs-nyk-0022600285",
+   "gamebook_url": null,
+   "finals_files": [],
+   "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json"
+   ],
+   "conflicts": null
+  },
+  {
+   "game_id": "0022600286",
+   "date": "2026-11-22",
+   "matchup": "BOS @ GSW",
+   "away": "BOS",
+   "home": "GSW",
+   "away_pts": null,
+   "home_pts": null,
+   "away_quarters": null,
+   "home_quarters": null,
+   "ot_periods": null,
+   "period_schema": "no final committed — no period row to hold",
+   "quarter_verdict": "no official final is committed",
+   "quarter_detail": "blank, never inferred",
+   "graded": false,
+   "source_url": "https://www.nba.com/game/bos-vs-gsw-0022600286",
+   "gamebook_url": null,
+   "finals_files": [],
+   "slate_files": [
+    "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
+    "data/raw/refresh_2026-11-19/slate_2026-11-19.json"
    ],
    "conflicts": null
   }

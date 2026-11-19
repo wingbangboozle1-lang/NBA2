@@ -216,7 +216,12 @@ def reconcile_three_way(mine_lines, their_picks: dict) -> dict:
                         ("session3_ex_injury", "Session 3 minus that adjustment"),
                         ("gap_raw", "Gap"), ("gap_after_stripping", "Gap after stripping"),
                         ("note", "Why they differ")],
-                 "Three originated lines for the same games — and how much of the gap is convention",
+                 "Three originated lines for the same games — and how much of the gap is convention"
+                 if rows else
+                 "Three-way reconciliation: 0 rows — this model prices the 2026-11-19..22 window "
+                 "(RQ-8892-02 re-cut) while the committed session-2/3 artefacts cover 2026-11-13..17, "
+                 "so the two vintages share no game. The comparison returns when a session again "
+                 "prices an overlapping window; nothing is matched by force.",
                  f"Mean |gap| across {len(gaps_raw)} games: {mean_raw:.1f} pts as published, "
                  f"{mean_adj:.1f} pts once session 3's own injury adjustment is stripped out using the "
                  "fields it published. The reduction is the point: two teams reading the same official data "

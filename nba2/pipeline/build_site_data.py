@@ -36,7 +36,7 @@ SRC_SLATE = "nba_schedule"
 SRC_GAMES = "nba_games"
 SRC_INJ = "nba_injury_pdf"
 SRC_INJ_W = "nba_injury_pdf_1114"
-SNAPSHOT_INJURY_WINDOW = "injury_report_2026-11-14_daybefore.json"
+SNAPSHOT_INJURY_WINDOW = "injury_report_2026-11-19_daybefore.json"  # RQ-8892-02 re-cut
 SRC_RAT = "bref_standings"
 SRC_DER = "derived_lines"
 SRC_DER_RAT = "derived_ratings"
@@ -405,7 +405,7 @@ def build_slate_rows(games: list[dict]) -> dict:
                         ("broadcast", "Broadcast"), ("cup", "Emirates NBA Cup"),
                         ("time_status", "Tip-time provenance"),
                         ("preview", "Official game page"), ("preview_status", "Link status")],
-                 "Verified slate — 2026-11-13 → 2026-11-17 (36 games; pick window 11/14 → 11/17)",
+                 "Verified slate — 2026-11-18 → 2026-11-22 (38 games; pick window 11/19 → 11/22)",
                  "Every field on this page is read off the official NBA.com schedule. Game IDs are the NBA's "
                  "own; per-date game counts (9 / 5 / 9 / 8 / 5) match the day headers on the same page. The "
                  "2026-11-14 refresh re-checked all 31 games carried forward from the previous capture against "
@@ -658,7 +658,7 @@ def build_availability_window_rows(games: list[dict]) -> dict:
                         ("filed", "Team-slots with a designation"), ("not_yet_submitted", "NOT YET SUBMITTED"),
                         ("no_rows_yet", "No row in any release yet"), ("coverage", "Designation coverage"),
                         ("note", "Note")],
-                "Availability coverage of the sealed pick window (2026-11-14 → 11-17)",
+                "Availability coverage of the sealed pick window (2026-11-19 → 11-22)",
                 "Computed from every official injury release this repository holds (11/13 16:15 ET, "
                 "11/13 19:30 ET and 11/14 05:00 a.m ET), never inferred. 'Coverage' is the share of "
                 "team-slots carrying any official participation designation at capture time; it rises as "
@@ -1084,12 +1084,12 @@ def build_audit_rows() -> dict:
                  method="node originated/engine/verify.js"),
         make_row("E-02-slate", SRC_SLATE, (),
                  check="E-02 slate vs official schedule",
-                 result="36/36 rows of the current slate (11/13 context + 11/14–17 pick window) "
+                 result="38/38 rows of the current slate (11/18 context + 11/19–22 pick window) "
                         "match the official page on game ID, date and matchup — 0 mismatches; "
                         "per-date counts 9/5/9/8/5 match the official day headers",
                  method="nba.com/schedule fetched 2026-11-14 ~01:55 UTC (capture: "
                         "audit/official_schedule_2026-11-14.json), diffed row-by-row against "
-                        "data/raw/slate_2026-11-14_to_11-17.json"),
+                        "data/raw/slate_2026-11-19_to_11-22.json"),
         make_row("E-02-tips", SRC_SLATE, (),
                  check="E-02 tip times",
                  result="30/30 displayed tips match (the six 11/13 games were already live at "
@@ -1330,7 +1330,7 @@ def build_verification_rows() -> dict:
                  classification="confirmed live; matches committed build"),
         make_row("VS-03-live-picks", SRC_VERIFY, (),
                  check="Live picks page re-fetch (F-03)",
-                 result="SERVES the current build: pick window 2026-11-14 → 11/17, every row a trigger "
+                 result="SERVES the current build: pick window 2026-11-19 → 11/22, every row a trigger "
                         "with 0.00% stake (no market price), each row carries a source cell.",
                  source="https://wingbangboozle1-lang.github.io/NBA2/pages/picks.html (fetched 2026-11-14)",
                  classification="confirmed live; policy (0% stake, no price) honoured"),
