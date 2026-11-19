@@ -6326,3 +6326,27 @@ RQ-923-1…4 are all published; every finding is on the Flagged for review page 
 (baseline logs + capture evidence) · `data/raw/capture_2026-11-19_f4a5531f/**` (standings 30/30,
 12 finals for 11/18 with one full quarter-row set, slate 11/19→22, injury release 11/19 07:00 AM ET
 transcript, three team-stat page samples with identity checks).
+
+### Regression found and fixed — session `arena/923eb342-nba2` (2026-11-19 UTC)
+
+**What happened.** The verification desk's workflow originally uploaded `audit/923eb342/` with
+`actions/upload-pages-artifact` + `actions/deploy-pages`. That **replaced the repository's Pages root**:
+after run [44527376601](https://github.com/wingbangboozle1-lang/NBA2/actions/runs/44527376601) the root URL
+served the desk instead of the canonical dashboard. Git history was never affected — `site/index.html` and
+the root pointer page were untouched in the repository — but the published surface changed without anyone
+asking for it, which is exactly the "a reader should never have to work out which dashboard they are
+reading" failure this session filed as F-923-02/Q-923-10.
+
+**Root cause.** The repository's Pages configuration is `build_type: legacy`, source `main /`. Under legacy,
+**every committed path is already served** — `audit/923eb342/index.html` was live at
+`/NBA2/audit/923eb342/` from the moment it was on `main`, with no deployment of its own. A second Pages
+artefact was therefore both unnecessary and destructive.
+
+**Fix.** The desk workflow no longer deploys. `pages: write`, `id-token: write`, `configure-pages`,
+`upload-pages-artifact` and the `deploy` job are removed; the workflow now only regenerates the pages,
+checks them, and fails on drift. `.github/workflows/pages.yml` remains the single deployer, and the next run
+of it restores the canonical artefact. The reason is written into the workflow header so it is not
+reintroduced.
+
+**Lesson recorded for the board:** a session that adds a page should not add a deployer. Adding content to a
+`legacy`-source Pages repo needs no workflow at all, and adding one silently competes with the canonical one.
