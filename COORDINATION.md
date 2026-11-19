@@ -6056,3 +6056,50 @@ clean tree. Baseline reproduced locally before any change: full `pages.yml` buil
 (`curl (35) SSL_ERROR_SYSCALL`). Official pages were therefore read through the agent's
 page-fetch channel, which returns HTTP content from those hosts; every capture row below
 records the URL and the retrieval time so the read can be re-checked manually.
+
+
+---
+
+## Session `arena/164d832b-nba2` — progress record (2026-11-19 UTC)
+
+**Work completed so far** (commits on branch `arena/164d832b-nba2`):
+
+| ID | Task | Status | Files | Verification |
+|----|------|--------|-------|--------------|
+| V8-1 | Read and archive the official pages for 2026-11-19 verbatim | done | `data/raw/verify_2026-11-19/raw/**` | 9 documents; each raw file names its URL + retrieval time; sha256 in the capture |
+| V8-2 | Fail-closed parser + identities | done | `tools/session-164d832b-capture.py`, `data/raw/verify_2026-11-19/official_2026-11-19.json` | 30 clubs, 12 finals, 4 scheduled, 21 injury rows; refuses to write on any identity failure; 12 selftest assertions incl. the 12-final → 11/19 standings reconstruction (0 mismatches) |
+| V8-3 | Verification-record page | done | `nba2/v8/build.py`, `site/verify-1119.html` | every row carries a source link; `nba2.v2.check` 0 structural / 0 semantic |
+| V8-4 | Unknowns register (10 entries, each with a route to the answer) | done | `site/unknowns.html` | each row names the missing dataset and how to get it |
+| V8-5 | Improvement proposals (8, none implemented) | done | `site/improvement.html` | explicitly states nothing is implemented; each has effort/risk + dependency |
+| V8-6 | Chain wiring + tests | done | `.github/workflows/pages.yml`, `.github/workflows/publish-parity.yml`, `nba2/v8/test_v8.py` | 17 v8 tests pass; v8 runs last so it inherits the categorised nav |
+
+**Local verification performed:** full chain v2 → v2.check → settlement_page → v3 → v3.check → v4
+→ v4.check → v5 → v6 → v8, `nba2.v2.check` 0/0, `nba2.v8` 3 pages, 17 v8 tests OK, 146 HTML files /
+7,814 internal links OK.
+
+**Irregularities found and recorded (published on the site, not blocking):**
+1. **Extractor lossiness on the injury PDFs.** The 06:45 AM release's text extraction drops
+   alternating club cells on page 3 (15 clubs "not filed" vs 11 on 07:00 AM). Player-level rows are
+   identical across all five releases (21 rows, zero status changes), so the diff is reported as a
+   rendering difference, not a league change. Rows that do not match the league's printed shape are
+   counted in `rejected_rows`, never guessed into a club.
+2. **Two injury rows (Kuminga, Pullin) are published without a club** because the extractor dropped
+   that column. They are labelled, not attributed.
+3. **Quarter scores are not on the games page.** The published quarter rows come from the earlier
+   committed capture `data/raw/capture_2026-11-18/finals_2026-11-18.json`, labelled as such.
+4. **Measured home-win rate is 0.5023 over 221 home games** (111 wins), i.e. indistinguishable from
+   0.5 at this sample size. Published as measured, with the band — not tuned.
+5. **The two "independent" estimators are algebraically tied** (points differential per game =
+   NetRtg × pace/100), so their agreement is a transcription check, not independent confirmation.
+   Recorded as U-03 on the unknowns page.
+6. **Transport:** direct HTTPS from the sandbox to nba.com / official.nba.com / cdn.nba.com fails in
+   the TLS handshake (curl 35, code 000). All reads went through the agent page-fetch channel; every
+   raw file states this.
+
+**Open requests (NOT fixed here — files owned by other sessions):** the v2 model snapshot is still
+2026-11-14 (`CC-FRESH-01`); `nba2/tests/test_pipeline.TestReproducibility` still has the
+`data/site.json` stateful side effect recorded by `arena/53c5afeb-nba2`; v6/settlement work is owned
+by PRs #130/#131. Re-cutting the model inputs to the 2026-11-19 capture is the deferred ACF-7 task
+and is listed as U-09/U-10 on the published unknowns page.
+
+
