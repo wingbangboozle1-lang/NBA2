@@ -1,0 +1,15 @@
+{
+ "schema": "nba2.v7.prereg.v1",
+ "strategy_id": "S-07",
+ "name": "Player points combo",
+ "signal": "two player point lines on clubs in the same game",
+ "thresholds": {
+  "min_games_per_player": 15
+ },
+ "universe": "players named on the day's official injury report",
+ "settlement_rule": "official box score, one grade per leg",
+ "market": "player prop parlay",
+ "frozen_by": "arena/6023d517-nba2",
+ "frozen_at_utc": "2026-11-19T06:05:00Z",
+ "note": "frozen before the first bet; a change to any field above is a NEW strategy with a new id, never an edit to this file"
+}

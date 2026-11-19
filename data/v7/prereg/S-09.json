@@ -1,0 +1,16 @@
+{
+ "schema": "nba2.v7.prereg.v1",
+ "strategy_id": "S-09",
+ "name": "Home-court only fade",
+ "signal": "shade the pinned home edge when the home club's measured home win rate over its own games is below the league rate",
+ "thresholds": {
+  "club_home_rate_lt": 0.52,
+  "min_club_home_games": 6
+ },
+ "universe": "home clubs with at least 6 home games",
+ "settlement_rule": "official final; no push",
+ "market": "moneyline",
+ "frozen_by": "arena/6023d517-nba2",
+ "frozen_at_utc": "2026-11-19T06:05:00Z",
+ "note": "frozen before the first bet; a change to any field above is a NEW strategy with a new id, never an edit to this file"
+}
