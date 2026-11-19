@@ -8,9 +8,12 @@ from __future__ import annotations
 
 import json
 import re
+import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
+from nba2.v6 import __main__ as V6Main
 from nba2.v6 import check as CH
 from nba2.v6 import flags as FL
 from nba2.v6.flags import FLAGS
@@ -91,11 +94,97 @@ class TestResultsCoverage(unittest.TestCase):
             self.assertEqual(r["n_missing_final"] + r["n_finals_committed"],
                              r["n_scheduled"])
 
+    def test_every_date_row_links_to_its_own_official_schedule_date(self):
+        for row in self.doc["rows"]:
+            self.assertEqual(RC._schedule_url_for_date(row["list_url"], row["date"]),
+                             row["list_url"], msg=row["date"])
+
+    def test_stale_schedule_url_cannot_override_the_matching_snapshot(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = root / "data" / "raw"
+            raw.mkdir(parents=True)
+            (raw / "slate_older.json").write_text(json.dumps({
+                "source": {"name": "NBA.com Schedule (official)",
+                           "url": "https://www.nba.com/schedule?date=2026-11-16"},
+                "games": [{"date": "2026-11-17", "game_id": "0022609997",
+                           "away": "AAA", "home": "BBB",
+                           "list_url": "https://www.nba.com/schedule?date=2026-11-16"}],
+            }))
+            (raw / "slate_current.json").write_text(json.dumps({
+                "source_url": "https://www.nba.com/schedule?date=2026-11-17",
+                "games": [{"date": "2026-11-17", "game_id": "0022609997",
+                           "away": "AAA", "home": "BBB"}],
+            }))
+            with mock.patch.object(RC, "ROOT", root), \
+                 mock.patch.object(RC, "SLATE_GLOBS", [raw / "slate_*.json"]):
+                row = RC.scheduled()["0022609997"]
+
+        self.assertEqual(row["list_url"], "https://www.nba.com/schedule?date=2026-11-17")
+
     def test_every_game_row_has_an_official_url(self):
         for g in self.doc["games"]:
             urls = [u for u in (g.get("source_url"), g.get("gamebook_url")) if u]
             self.assertTrue(urls, msg=g["game_id"])
             self.assertTrue(any("nba.com" in u for u in urls), msg=g["game_id"])
+
+    def test_same_score_duplicate_enriches_only_missing_provenance(self):
+        """Synthetic sparse-then-rich feed; no network and no score is copied or inferred."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = root / "data" / "raw"
+            results = raw / "results"
+            results.mkdir(parents=True)
+            (raw / "finals_2026-11-14.json").write_text(json.dumps({
+                "records": [{"game_id": "0022609999", "away_pts": 90, "home_pts": 100}],
+            }))
+            (results / "results_2026-11-14.json").write_text(json.dumps({
+                "records": [{
+                    "game_id": "0022609999", "date": "2026-11-14", "away": "AAA",
+                    "home": "BBB", "away_pts": 90, "home_pts": 100,
+                    "away_quarters": [20, 20, 25, 25],
+                    "home_quarters": [25, 25, 25, 25],
+                    "source_url": "https://www.nba.com/game/aaa-vs-bbb-0022609999",
+                    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261114/20261114_AAABBB_book.pdf",
+                }],
+            }))
+            patterns = [raw / "finals_*.json", results / "*.json"]
+            with mock.patch.object(RC, "ROOT", root), \
+                 mock.patch.object(RC, "RESULT_GLOBS", patterns):
+                row = RC.finals_committed()["0022609999"]
+
+        self.assertEqual((row["away_pts"], row["home_pts"]), (90, 100))
+        self.assertEqual(row["source_url"], "https://www.nba.com/game/aaa-vs-bbb-0022609999")
+        self.assertEqual(row["gamebook_url"],
+                         "https://statsdmz.nba.com/pdfs/20261114/20261114_AAABBB_book.pdf")
+        self.assertEqual(row["away_quarters"], [20, 20, 25, 25])
+        self.assertEqual(len(row["files"]), 2)
+        self.assertNotIn("conflicts", row)
+
+    def test_conflicting_score_row_does_not_enrich_selected_metadata(self):
+        """A score disagreement remains a conflict; its URL cannot make the row look settled."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            raw = root / "data" / "raw"
+            results = raw / "results"
+            results.mkdir(parents=True)
+            (raw / "finals_2026-11-14.json").write_text(json.dumps({
+                "records": [{"game_id": "0022609998", "away_pts": 90, "home_pts": 100}],
+            }))
+            (results / "results_2026-11-14.json").write_text(json.dumps({
+                "records": [{"game_id": "0022609998", "away_pts": 91, "home_pts": 100,
+                             "source_url": "https://www.nba.com/game/aaa-vs-bbb-0022609998"}],
+            }))
+            patterns = [raw / "finals_*.json", results / "*.json"]
+            with mock.patch.object(RC, "ROOT", root), \
+                 mock.patch.object(RC, "RESULT_GLOBS", patterns):
+                row = RC.finals_committed()["0022609998"]
+
+        self.assertIsNone(row["source_url"])
+        self.assertEqual(row["conflicts"], [
+            {"file": "data/raw/results/results_2026-11-14.json",
+             "away_pts": 91, "home_pts": 100},
+        ])
 
     def test_gamebook_urls_are_well_formed(self):
         for g in self.doc["games"]:
@@ -138,12 +227,134 @@ class TestResultsCoverage(unittest.TestCase):
         if row["status"] == "incomplete":
             self.assertIn("not scored against a sealed ledger", row["reason"])
 
-    def test_dates_after_latest_capture_remain_not_ended(self):
-        for d in ("2026-11-18", "2026-11-19", "2026-11-20", "2026-11-21"):
-            row = next(r for r in self.doc["rows"] if r["date"] == d)
-            self.assertEqual(row["status"], "not ended", msg=d)
-            self.assertEqual(row["n_finals_committed"], 0)
-            self.assertIn("has not ended", row["reason"])
+    def test_the_latest_official_finals_capture_advances_the_as_of_cutoff(self):
+        row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-17")
+        self.assertEqual(row["n_finals_committed"], 5)
+        self.assertEqual(row["n_graded"], 5)
+        self.assertEqual(row["status"], "complete")
+        self.assertEqual(self.doc["today"], RC.AS_OF_DATE)
+        self.assertEqual(self.doc["as_of_utc"], RC.AS_OF_UTC)
+
+    def test_a_date_that_has_not_ended_is_not_reported_as_a_gap(self):
+        """A future date with no committed final is "not ended" — never a gap.
+
+        The clock is derived (see `test_the_clock_is_derived_from_the_newest_committed_capture`),
+        so the dates in this test are taken from the clock the build actually used instead
+        of being typed in: after the 2026-11-18 capture, 2026-11-17 is no longer in the
+        future and does carry five committed finals, so asserting it here would be
+        asserting a stale fact. (Supersedes the typed-date `test_dates_after_latest_capture_remain_not_ended`
+        from session arena/8c7c8828-nba2 and the typed-date twin of this name: K-07 —
+        stale test logic is updated, never used to suppress committed captures.)
+        """
+        from nba2.v6 import results_coverage as RC
+        future = [r for r in self.doc["rows"] if r["date"] > RC.AS_OF_DATE]
+        self.assertTrue(future, "no future date in the coverage window")
+        for row in future:
+            if row["n_finals_committed"] == 0:
+                self.assertEqual(row["status"], "not ended", msg=row["date"])
+                self.assertIn("has not ended", row["reason"])
+
+    def test_a_date_past_the_clock_with_finals_is_incomplete_not_not_ended(self):
+        """A day that has ended and has finals cannot be published as "not ended".
+
+        This is the defect the 2026-11-18 capture exposed: `AS_OF_DATE` was a typed
+        literal (2026-11-17) while five 2026-11-17 finals sat in the tree, so the page
+        claimed the day had not ended. A status must be readable off the evidence.
+        """
+        from nba2.v6 import results_coverage as RC
+        for row in self.doc["rows"]:
+            if row["date"] <= RC.AS_OF_DATE and row["n_finals_committed"] > 0:
+                self.assertNotEqual(row["status"], "not ended", msg=row["date"])
+
+    def test_the_clock_is_derived_from_the_newest_committed_capture(self):
+        from nba2.v6 import results_coverage as RC
+        self.assertRegex(RC.AS_OF_UTC, r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+        newest = max(
+            p.name for p in (RC.DATA / "raw" / "capture_2026-11-18").glob("*.json")
+        )
+        self.assertTrue(newest)
+        # the derived clock must be at or after the newest committed capture directory
+        self.assertGreaterEqual(RC.AS_OF_DATE, "2026-11-18")
+
+    def test_graded_ids_include_the_nightly_settlement_feed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            v4 = root / "settled-all.json"
+            nightly = root / "settlement.json"
+            v4.write_text(json.dumps({
+                "ledgers": [{"ledger": "v4-ledger", "graded": [{"game_id": "game-v4"}],
+                            "ungraded": []}],
+                "finals_used": [{"game_id": "game-v4-unioned"}],
+                "settlement": {"settled_at_utc": "2026-11-16T23:59:59Z",
+                               "latest_graded_game_date": "2026-11-16"},
+            }))
+            nightly.write_text(json.dumps({
+                "settled_at_utc": "2026-11-18T19:30:52Z",
+                "ledgers": [{"ledger": "sealed-2026-11-14.json", "games_settled": 1,
+                             "games_expected": 1,
+                             "settled_rows": [{"game_id": "game-nightly"}]}],
+            }))
+            with mock.patch.object(RC, "SETTLED_ALL", v4), \
+                 mock.patch.object(RC, "PIPELINE_SETTLEMENT", nightly):
+                ids, info = RC.graded_ids()
+
+        # Only games a sealed pick was actually scored against are graded: the v4
+        # ledger's graded rows and the nightly settled_rows (session 8c7c8828). A
+        # finals_used row is provenance for what settlement *read*; it is surfaced in
+        # the info dict but never counted as graded (session af5df7a7 — otherwise the
+        # never-pre-registered 11/13 games would read as graded).
+        self.assertEqual(ids, {"game-v4", "game-nightly"})
+        self.assertEqual(info["finals_used_ids"], ["game-v4-unioned"])
+        self.assertEqual(info["pipeline_settled_at_utc"], "2026-11-18T19:30:52Z")
+        self.assertEqual(info["settled_at_utc"], "2026-11-18T19:30:52Z")
+        self.assertEqual(info["pipeline_ledgers"][0]["n_graded"], 1)
+
+    def test_as_of_uses_a_successful_committed_finals_verdict(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raw = Path(tmp) / "raw"
+            raw.mkdir(parents=True)
+            (raw / "refresh_verdict.json").write_text(json.dumps({
+                "attempted_at_utc": "2026-11-19T01:30:00Z",
+                "surfaces": {"finals": "success"},
+            }))
+            with mock.patch.object(RC, "DATA", Path(tmp)):
+                self.assertEqual(RC._as_of(),
+                                 ("2026-11-19T01:30:00Z", "2026-11-18 20:30 ET", "2026-11-18"))
+
+    def test_as_of_does_not_advance_on_failed_finals(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raw = Path(tmp) / "raw"
+            raw.mkdir(parents=True)
+            (raw / "refresh_verdict.json").write_text(json.dumps({
+                "attempted_at_utc": "2026-11-20T01:30:00Z",
+                "surfaces": {"finals": "failure"},
+            }))
+            (raw / "finals_2026-11-17.json").write_text(json.dumps({
+                "retrieved_at_utc": "2026-11-18T19:29:18+00:00", "records": [],
+            }))
+            with mock.patch.object(RC, "DATA", Path(tmp)):
+                self.assertEqual(RC._as_of(),
+                                 ("2026-11-18T19:29:18Z", "2026-11-18 14:29 ET", "2026-11-18"))
+
+    def test_team_aliases_survive_the_reader(self):
+        """`away_team`/`home_team` and `final_source_url` are committed spellings.
+
+        Measured before the repair: the 14 finals in `finals_2026-11-1{4,5}.json` reached
+        the page with no URL and no clubs because the reader only knew `source_url` and
+        `away`/`home`. The value was in the file; dropping it was a reader defect.
+        """
+        from nba2.v6 import results_coverage as RC
+        fin = RC.finals_committed()
+        self.assertTrue(fin)
+        for gid, rec in fin.items():
+            self.assertTrue(rec["source_url"] or rec["gamebook_url"], msg=gid)
+            self.assertTrue(rec["away"] and rec["home"], msg=gid)
+
+    def test_no_row_prints_the_string_none_as_a_team(self):
+        for g in self.doc["games"]:
+            self.assertNotIn("None", g["matchup"] or "", msg=g["game_id"])
+            self.assertNotIn("None", str(g["away"]), msg=g["game_id"])
+            self.assertNotIn("None", str(g["home"]), msg=g["game_id"])
 
     def test_the_prequest_1113_games_are_reported_as_unsettleable_not_missing(self):
         row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-13")
@@ -244,6 +455,19 @@ class TestGates(unittest.TestCase):
             self.assertIsInstance(g["tested"], int)
             self.assertLessEqual(g["passed"], g["tested"])
             self.assertTrue(g["detail"])
+
+
+class TestCheckOnly(unittest.TestCase):
+    def test_check_only_returns_gate_results_without_writing(self):
+        files = [SITE / "v6-verify.html", V6 / "checks.json"]
+        before = {p: p.read_bytes() for p in files if p.exists()}
+        written, report = V6Main.build(write=False)
+        after = {p: p.read_bytes() for p in files if p.exists()}
+
+        self.assertEqual(written, [])
+        self.assertTrue(report["publishable"])
+        self.assertEqual(report["nav_injected"], 0)
+        self.assertEqual(after, before)
 
 
 class TestNavigation(unittest.TestCase):

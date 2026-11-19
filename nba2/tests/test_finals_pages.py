@@ -13,9 +13,11 @@ import gzip
 import json
 import unittest
 import unittest.mock as mock
+from datetime import datetime, timezone
 from pathlib import Path
 
 from nba2.pipeline import refresh as RF
+from nba2.pipeline import settle as ST
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "data" / "raw" / "page_fixtures"
@@ -121,6 +123,42 @@ class TestFetchFinalsSourceOrder(unittest.TestCase):
             snap, url, kind = RF.fetch_finals("2026-11-16", [])
         self.assertIsNone(snap)
         self.assertEqual(kind, "unreachable")
+
+
+class TestSettlementTimestamp(unittest.TestCase):
+    def test_identical_settlement_content_keeps_its_first_timestamp(self):
+        body = {
+            "finals_snapshot": "official_finals_union.json",
+            "ledgers": [{"ledger": "sealed-2026-11-14.json", "games_settled": 27}],
+        }
+        previous = {"settled_at_utc": "2026-11-19T06:10:51+00:00", **body}
+        now = datetime(2026, 11, 19, 6, 20, tzinfo=timezone.utc)
+
+        self.assertEqual(ST.settlement_document(body, previous, now), previous)
+
+    def test_changed_settlement_content_gets_a_new_timestamp(self):
+        body = {
+            "finals_snapshot": "official_finals_union.json",
+            "ledgers": [{"ledger": "sealed-2026-11-14.json", "games_settled": 28}],
+        }
+        previous = {
+            "settled_at_utc": "2026-11-19T06:10:51+00:00",
+            "finals_snapshot": "official_finals_union.json",
+            "ledgers": [{"ledger": "sealed-2026-11-14.json", "games_settled": 27}],
+        }
+        now = datetime(2026, 11, 19, 6, 20, tzinfo=timezone.utc)
+
+        self.assertEqual(ST.settlement_document(body, previous, now), {
+            "settled_at_utc": "2026-11-19T06:20:00+00:00", **body,
+        })
+
+    def test_invalid_or_naive_prior_timestamp_is_not_reused(self):
+        body = {"finals_snapshot": "official_finals_union.json"}
+        for stamp in ("not-a-timestamp", "2026-11-19T06:10:51"):
+            previous = {"settled_at_utc": stamp, **body}
+            now = datetime(2026, 11, 19, 6, 20, tzinfo=timezone.utc)
+            self.assertEqual(ST.settlement_document(body, previous, now)["settled_at_utc"],
+                             "2026-11-19T06:20:00+00:00")
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 {
  "schema": "nba2.v6.results-coverage.v1",
  "session": "arena/f5ac4e74-nba2",
- "as_of_utc": "2026-11-18T19:30:20Z",
- "today": "2026-11-18",
+ "as_of_utc": "2026-11-19T12:24:30Z",
+ "today": "2026-11-19",
  "n_dates": 12,
  "n_games_known": 87,
  "n_games_with_final": 56,
@@ -13,22 +13,97 @@
     "ledger": "data/raw/ledger/sealed-2026-11-13.json",
     "n_graded": 22,
     "n_ungraded": 0,
-    "latest_graded_game_date": "2026-11-16"
+    "latest_graded_game_date": "2026-11-16",
+    "settlement_source": "data/v4/settlement/settled-all.json"
    },
    {
     "ledger": "data/raw/ledger/sealed-2026-11-14.json",
     "n_graded": 27,
     "n_ungraded": 0,
-    "latest_graded_game_date": "2026-11-17"
+    "latest_graded_game_date": "2026-11-17",
+    "settlement_source": "data/v4/settlement/settled-all.json"
    },
    {
     "ledger": "data/v3/ledger/sealed-2026-11-15.json",
     "n_graded": 22,
     "n_ungraded": 12,
-    "latest_graded_game_date": "2026-11-17"
+    "latest_graded_game_date": "2026-11-17",
+    "settlement_source": "data/v4/settlement/settled-all.json"
    }
   ],
-  "settled_at_utc": "2026-11-17T23:59:59Z",
+  "pipeline_ledgers": [
+   {
+    "ledger": "sealed-2026-11-13.json",
+    "n_graded": 22,
+    "games_settled": 22,
+    "games_expected": 22,
+    "status": "SETTLED",
+    "settlement_source": "data/settlement.json"
+   },
+   {
+    "ledger": "sealed-2026-11-14.json",
+    "n_graded": 27,
+    "games_settled": 27,
+    "games_expected": 27,
+    "status": "SETTLED",
+    "settlement_source": "data/settlement.json"
+   }
+  ],
+  "finals_used_ids": [
+   "0022600034",
+   "0022600035",
+   "0022600036",
+   "0022600037",
+   "0022600038",
+   "0022600039",
+   "0022600040",
+   "0022600041",
+   "0022600042",
+   "0022600217",
+   "0022600218",
+   "0022600219",
+   "0022600220",
+   "0022600221",
+   "0022600222",
+   "0022600223",
+   "0022600224",
+   "0022600225",
+   "0022600226",
+   "0022600227",
+   "0022600228",
+   "0022600229",
+   "0022600230",
+   "0022600231",
+   "0022600232",
+   "0022600233",
+   "0022600234",
+   "0022600235",
+   "0022600236",
+   "0022600237",
+   "0022600238",
+   "0022600239",
+   "0022600240",
+   "0022600241",
+   "0022600242",
+   "0022600243",
+   "0022600244",
+   "0022600245",
+   "0022600246",
+   "0022600247",
+   "0022600248",
+   "0022600249",
+   "0022600250",
+   "0022600251",
+   "0022600252",
+   "0022600253",
+   "0022600254",
+   "0022600255",
+   "0022600256",
+   "0022600257"
+  ],
+  "settled_at_utc": "2026-11-19T13:09:38+00:00",
+  "v4_settled_at_utc": "2026-11-17T23:59:59Z",
+  "pipeline_settled_at_utc": "2026-11-19T13:09:38+00:00",
   "latest_graded_game_date": "2026-11-17"
  },
  "rows": [
@@ -207,8 +282,8 @@
    "n_graded": 0,
    "n_missing_final": 12,
    "n_missing_grade": 0,
-   "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "status": "incomplete",
+   "reason": "no official final is committed for any game on this date: the scoreboard endpoints the nightly job reads are unreachable (see the endpoint register, F-F5-02)",
    "game_ids": [
     "0022600258",
     "0022600259",
@@ -247,7 +322,7 @@
    "n_missing_final": 4,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:24:30Z = 2026-11-19 07:24 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600270",
     "0022600271",
@@ -270,7 +345,7 @@
    "n_missing_final": 9,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:24:30Z = 2026-11-19 07:24 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600043",
     "0022600044",
@@ -303,7 +378,7 @@
    "n_missing_final": 6,
    "n_missing_grade": 0,
    "status": "not ended",
-   "reason": "this date has not ended yet (as-of 2026-11-18T19:30:20Z = 2026-11-18 14:30 ET) — no official final is claimed for a game that has not finished",
+   "reason": "this date has not ended yet (as-of 2026-11-19T12:24:30Z = 2026-11-19 07:24 ET) — no official final is claimed for a game that has not finished",
    "game_ids": [
     "0022600274",
     "0022600275",

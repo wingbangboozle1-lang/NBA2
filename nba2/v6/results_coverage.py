@@ -12,7 +12,8 @@ Three sets are built from committed files only:
   corroboration, not a second row);
 * **finals committed** — the union of every committed official result file, plus the v4
   settlement's own ``finals_used`` list. A game counts only when a final score is present;
-* **graded** — the distinct game ids the v4 settlement actually scored.
+* **graded** — the distinct game ids scored by either the v4 settlement or the nightly
+  sealed-ledger settlement in ``data/settlement.json``.
 
 The difference between those three numbers is the settlement backlog, and each row says
 which of the three is missing and why.
@@ -22,7 +23,10 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+from zoneinfo import ZoneInfo
 
 from .common import DATA, RAW, ROOT, maybe_load
 
@@ -45,19 +49,128 @@ RESULT_GLOBS = [
 ]
 
 SETTLED_ALL = DATA / "v4" / "settlement" / "settled-all.json"
+PIPELINE_SETTLEMENT = DATA / "settlement.json"
 SEALED_GLOBS = [DATA / "raw" / "ledger" / "sealed-*.json",
                 DATA / "v3" / "ledger" / "sealed-*.json"]
 
 _DATE_IN_NAME = re.compile(r"(\d{4}-\d{2}-\d{2})")
 BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book\.pdf$")
 
-# Frozen clock: the capture in `data/raw/capture_2026-11-18/finals_2026-11-18.json`
-# records retrieved_at_utc=2026-11-18T19:30:20+00:00. Using the committed source time
-# keeps the game-day classification reproducible and prevents a later wall-clock rebuild
-# from claiming that unobserved games are final. November is UTC-5 in US Eastern.
-AS_OF_UTC = "2026-11-18T19:30:20Z"
-AS_OF_ET = "2026-11-18 14:30 ET"
-AS_OF_DATE = "2026-11-18"
+# The result-feed page's "has this game day ended?" cutoff comes from committed capture
+# metadata, so rebuilds are deterministic and the displayed as-of stamp advances with the
+# scheduled ingest (sessions arena/8c7c8828-nba2 and arena/6023d517-nba2, independently).
+# A hard-coded AS_OF silently ages: when the ingest bot committed the 2026-11-18 capture
+# the page kept answering the question as of 2026-11-17 while captured finals sat in the
+# tree. It may not be `datetime.now()` either — pages.yml fails the deploy when a rebuild
+# differs from what is committed. So the clock is the **newest retrieval stamp of any
+# committed official capture**; a failed finals attempt is not evidence and never advances
+# it (session arena/8c7c8828-nba2). The typed fallback below is the committed capture in
+# `data/raw/capture_2026-11-18/finals_2026-11-18.json`, which records
+# retrieved_at_utc=2026-11-18T19:30:20+00:00 (session arena/af5df7a7-nba2: using the
+# committed source time — never wall-clock — keeps the game-day classification
+# reproducible). November is UTC-5 in US Eastern.
+_FALLBACK_AS_OF_UTC = "2026-11-18T19:30:20Z"
+_EASTERN = ZoneInfo("America/New_York")
+ET_OFFSET_HOURS = -5   # November: EST (UTC-5). Stated on the page; not applied elsewhere.
+
+
+def _parse_utc(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    try:
+        stamp = datetime.fromisoformat(value.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if stamp.tzinfo is None:
+        return None
+    return stamp.astimezone(timezone.utc).replace(microsecond=0)
+
+
+def latest_capture() -> tuple[str, str, str]:
+    """(utc stamp, ET stamp, date) of the most recent committed official capture.
+
+    Scans every committed capture family — results, slates, standings, refresh and
+    capture bundles — for a retrieval stamp (session arena/6023d517-nba2). The scan
+    resolves its paths at call time so tests can point it at a fixture tree. Returns
+    ("", "", "") when no committed capture carries a parseable stamp — the caller then
+    says the clock is unknown rather than inventing one.
+    """
+    raw = DATA / "raw"
+    patterns = ["finals_*.json", "results/*.json", "refresh_*/*.json",
+                "capture_*/*.json", "slate_*.json", "standings_*.json"]
+    newest: datetime | None = None
+    seen: set[Path] = set()
+    for pattern in patterns:
+        for p in sorted(raw.glob(pattern)):
+            if p in seen:
+                continue
+            seen.add(p)
+            try:
+                doc = json.loads(p.read_text())
+            except (OSError, json.JSONDecodeError):
+                continue
+            if not isinstance(doc, dict):
+                continue
+            stamp = (doc.get("retrieved_at_utc") or doc.get("retrieved_at")
+                     or doc.get("captured_at_utc") or doc.get("as_of_utc"))
+            t = _parse_utc(stamp)
+            if t is not None and (newest is None or t > newest):
+                newest = t
+    if newest is None:
+        return "", "", ""
+    et = newest.astimezone(_EASTERN)
+    return (newest.isoformat(timespec="seconds").replace("+00:00", "Z"),
+            et.strftime("%Y-%m-%d %H:%M") + " ET", et.strftime("%Y-%m-%d"))
+
+
+def _as_of() -> tuple[str, str, str]:
+    """Latest successful official results capture as UTC stamp, ET stamp, ET date.
+
+    The verdict-aware half of the clock: `refresh_verdict.json` counts as evidence only
+    when its finals surface succeeded, so a failed finals attempt never advances the
+    clock (session arena/8c7c8828-nba2). The broad scan in `latest_capture()` is unioned
+    in — any committed official capture is evidence that the world moved (session
+    arena/6023d517-nba2) — and when no committed evidence exists at all the typed
+    fallback is used. Never wall-clock.
+    """
+    raw = DATA / "raw"
+    candidates: list[datetime] = []
+
+    verdict_path = raw / "refresh_verdict.json"
+    try:
+        verdict = json.loads(verdict_path.read_text())
+    except (OSError, json.JSONDecodeError):
+        verdict = {}
+    if (verdict.get("surfaces") or {}).get("finals") == "success":
+        stamp = _parse_utc(verdict.get("attempted_at_utc"))
+        if stamp is not None:
+            candidates.append(stamp)
+
+    capture_paths = set(raw.glob("finals_*.json"))
+    for pattern in ("results/*.json", "refresh_*/results_*.json",
+                    "capture_*/results_*.json"):
+        capture_paths.update(raw.glob(pattern))
+    capture_paths.update(raw.glob("refresh_*/capture_index.json"))
+    capture_paths.update(raw.glob("capture_*/capture_index.json"))
+    for path in sorted(capture_paths):
+        try:
+            doc = json.loads(path.read_text())
+        except (OSError, json.JSONDecodeError):
+            continue
+        for key in ("retrieved_at_utc", "retrieved_utc"):
+            stamp = _parse_utc(doc.get(key))
+            if stamp is not None:
+                candidates.append(stamp)
+
+    broad_stamp = _parse_utc(latest_capture()[0])
+    if broad_stamp is not None:
+        candidates.append(broad_stamp)
+
+    latest = max(candidates) if candidates else _parse_utc(_FALLBACK_AS_OF_UTC)
+    assert latest is not None  # the committed fallback above is a valid UTC timestamp
+    et = latest.astimezone(_EASTERN)
+    return (latest.isoformat(timespec="seconds").replace("+00:00", "Z"),
+            et.strftime("%Y-%m-%d %H:%M ET"), et.date().isoformat())
 
 
 def _glob(paths) -> list[Path]:
@@ -65,6 +178,22 @@ def _glob(paths) -> list[Path]:
     for pat in paths:
         out.extend(sorted(Path(ROOT).glob(str(Path(pat).relative_to(ROOT)))))
     return out
+
+
+def _schedule_url_for_date(url: object, date: object) -> str | None:
+    """Accept only an official NBA schedule URL whose query names this exact date."""
+    if not isinstance(url, str) or not isinstance(date, str):
+        return None
+    parsed = urlparse(url)
+    if (parsed.scheme != "https" or parsed.netloc.lower() not in {"nba.com", "www.nba.com"}
+            or parsed.path not in {"/schedule", "/games"}):
+        return None
+    return url if parse_qs(parsed.query).get("date") == [date] else None
+
+
+# Resolved once, after the clock helpers and `_glob`, so the page and the scan share one
+# definition of "now" for the coverage window.
+AS_OF_UTC, AS_OF_ET, AS_OF_DATE = _as_of()
 
 
 # ------------------------------------------------------------------- scheduled
@@ -79,7 +208,12 @@ def scheduled() -> dict[str, dict]:
         games = doc.get("games") or []
         if not isinstance(games, list):
             continue
-        list_url = doc.get("source") if isinstance(doc.get("source"), str) else None
+        source = doc.get("source")
+        list_urls = [doc.get("source_url")]
+        if isinstance(source, str):
+            list_urls.append(source)
+        elif isinstance(source, dict):
+            list_urls.append(source.get("url"))
         for g in games:
             gid = g.get("game_id")
             if not gid:
@@ -95,24 +229,79 @@ def scheduled() -> dict[str, dict]:
             rel = str(p.relative_to(ROOT))
             if rel not in row["snapshots"]:
                 row["snapshots"].append(rel)
-            for key in ("source_url", "list_url"):
-                if not row.get(key) and g.get(key):
-                    row[key] = g[key]
-            if not row.get("list_url") and list_url:
-                row["list_url"] = list_url
+            if not row.get("source_url") and g.get("source_url"):
+                row["source_url"] = g["source_url"]
+            game_date = g.get("date") or row.get("date")
+            for candidate in (g.get("list_url"), *list_urls):
+                date_url = _schedule_url_for_date(candidate, game_date)
+                if date_url:
+                    if not row.get("list_url"):
+                        row["list_url"] = date_url
+                    break
     return out
 
 
 # -------------------------------------------------------------- finals on disk
+
+
+def _records_of(doc: dict) -> list[dict]:
+    """Every game-shaped row in the document: one raw row per sighting, unmerged.
+
+    Some committed feeds carry the same games twice in one file under different keys —
+    ``data/raw/finals_2026-11-13.json`` has a sparse ``records`` list (game id, score,
+    source) and a rich ``games`` list (date, teams, venue, quarter rows) for the same nine
+    games. Both spellings are returned here, one dict per sighting, because the field
+    names differ between the two source families and the alias resolution in
+    :func:`_final_record` has to see the raw keys: ``finals_2026-11-1{4,5}.json`` store
+    the official game URL under ``final_source_url`` and the clubs under
+    ``away_team``/``home_team``, and a merge-then-read would drop those whenever the other
+    sighting of the same game used a different spelling.
+    """
+    out: list[dict] = []
+    for key in ("records", "games", "results"):
+        v = doc.get(key)
+        if not isinstance(v, list):
+            continue
+        for r in v:
+            if isinstance(r, dict) and r.get("game_id"):
+                out.append(r)
+    return out
+
+
+# The two committed official result families spell the same facts differently. Both
+# spellings were read off the committed files, not guessed: `finals_2026-11-13.json` and
+# `finals_2026-11-1{5,6}.json` use `away`/`home` + `source_url`; `finals_2026-11-14.json`
+# and `finals_2026-11-15.json` use `away_team`/`home_team` + `final_source_url`; the v5
+# union and the 11/17-11/18 captures use `source_url` again; `official_finals_union.json`
+# (written by nba2.pipeline.settle) uses `source`. Aliases are resolved per sighting so a
+# value present in the file always reaches the row it belongs to.
+_ALIASES = {
+    "away": ("away", "away_team", "visitor", "visitor_team"),
+    "home": ("home", "home_team", "home_team_name"),
+    "source_url": ("source_url", "final_source_url", "official_source", "game_url", "source"),
+    "gamebook_url": ("gamebook_url", "gamebook_source", "book_url"),
+}
+
+
+def _alias(rec: dict, field: str):
+    for k in _ALIASES[field]:
+        v = rec.get(k)
+        if v:
+            return v
+    return None
+
+
 def _official_url(row: dict, *keys: str) -> str | None:
     """The first explicit official nba.com URL among ``keys``, else None.
 
     ``source`` is not a convenience alias: ``nba2.pipeline.settle`` writes the official game
     page into that key in ``official_finals_union.json``, the only file carrying the
-    11/14-11/16 finals, so leaving it out is what made those rows URL-less. The check stays
-    strict - a value that is not an https URL on an nba.com host is treated as absent - so a
-    malformed field can never be published as a source link. The caller renders None as a
-    blank with a reason; no URL is ever synthesised.
+    11/14-11/16 finals, so leaving it out is what made those rows URL-less (session
+    arena/f4a5531f-nba2, measured 2026-11-19 at ``a5380e1``). The check stays strict - a
+    value that is not an https URL on an nba.com host is treated as absent - so a prose
+    label or a malformed field can never be published as a source link (session
+    arena/af5df7a7-nba2). The caller renders None as a blank with a reason; no URL is ever
+    synthesised.
     """
     for k in keys:
         v = row.get(k)
@@ -121,42 +310,74 @@ def _official_url(row: dict, *keys: str) -> str | None:
     return None
 
 
-def _records_of(doc: dict) -> list[dict]:
-    """Every game-shaped row in the document, merged by game id.
+def _merge_into(dst: dict, rec: dict) -> None:
+    """Fill the blanks of ``dst`` from ``rec``; a second sighting never overwrites.
 
-    Some committed feeds carry the same games twice in one file under different keys —
-    ``data/raw/finals_2026-11-13.json`` has a sparse ``records`` list (game id, score,
-    source) and a rich ``games`` list (date, teams, venue, quarter rows) for the same nine
-    games. Picking the first key silently threw away the dates, so both are merged and a
-    non-null value always wins over a null one.
+    A richer sighting of a game can add fields the sparse sighting lacks; a sparse
+    sighting can never blank or replace a value the first sighting already supplied
+    (the fill-blanks rule of session arena/af5df7a7-nba2, kept over the non-null
+    overwrite this helper first shipped with — the call-site contract is "fills blanks;
+    never overwrites a value already read"). Nulls are carried only for keys nothing has
+    filled yet, so a downstream reader can still tell "absent everywhere" (missing key)
+    from "present and blank in some feed" (key with None).
     """
-    merged: dict[str, dict] = {}
-    order: list[str] = []
-    for key in ("records", "games", "results"):
-        v = doc.get(key)
-        if not isinstance(v, list):
-            continue
-        for r in v:
-            if not isinstance(r, dict):
-                continue
-            gid = r.get("game_id")
-            if not gid:
-                continue
-            if gid not in merged:
-                merged[gid] = {}
-                order.append(gid)
-            # A non-null value always wins over a null one, whichever document order the
-            # keys arrive in. The old form let the LAST row's explicit null overwrite a
-            # non-null from an earlier row in the same file, which is how the committed union
-            # (`data/raw/official_finals_union.json`, written by nba2.pipeline.settle) lost the
-            # official URL of its 11/14-11/16 rows. Measured 2026-11-19 at `a5380e1`: the
-            # scheduled rebuild failed G-V6-8 on ten rows that DO carry the official URL.
-            for k, val in r.items():
-                if val is not None:
-                    merged[gid][k] = val
-                elif k not in merged[gid]:
-                    merged[gid][k] = None
-    return [merged[g] for g in order]
+    for k, val in rec.items():
+        if k not in dst:
+            dst[k] = val                      # absent everywhere: carry it (even None)
+        elif dst[k] in (None, "", []) and val not in (None, "", []):
+            dst[k] = val                      # fill a blank; never overwrite a value
+
+
+def _https_url(value: object) -> str | None:
+    """Only an explicit HTTPS URL is ever published as a source link.
+
+    A prose source label ("NBA.com game page") is never promoted into a link
+    (session arena/af5df7a7-nba2). A blank stays blank and is flagged upstream.
+    """
+    return value if isinstance(value, str) and value.startswith("https://") else None
+
+
+def _final_record(rec: dict, fallback_date: str | None, rel: str) -> dict | None:
+    """One committed final, normalised — or None when the row holds no final score.
+
+    Nothing is derived: a row with no game id or without both scores is dropped, and a
+    status that is not a final is dropped, so a postponed or in-progress row can never be
+    published as a result.
+    """
+    gid = rec.get("game_id")
+    ap, hp = rec.get("away_pts"), rec.get("home_pts")
+    if not gid or ap is None or hp is None:
+        return None
+    status = rec.get("status")
+    if status and str(status).lower() not in ("final", "final/ot", "completed"):
+        return None
+    aq = rec.get("away_quarters") or rec.get("away_q")
+    hq = rec.get("home_quarters") or rec.get("home_q")
+    ot = rec.get("ot_quarters") or {}
+    ot_a = ot.get("away") if isinstance(ot, dict) else None
+    ot_h = ot.get("home") if isinstance(ot, dict) else None
+    # Two committed official feeds store overtime differently and both are correct: one
+    # appends the OT periods to the quarter row, the other keeps regulation in
+    # `away_quarters` and the extra periods in `ot_quarters`. Normalising both to a full
+    # period row is what makes the sum-to-final check mean anything.
+    if ot_a and not rec.get("away_q"):
+        aq = list(aq or []) + list(ot_a)
+    if ot_h and not rec.get("home_q"):
+        hq = list(hq or []) + list(ot_h)
+    schema = ("regulation + ot_quarters" if (ot_a or ot_h)
+              else "all periods inline" if (aq and len(aq) > 4)
+              else "regulation only")
+    return {
+        "game_id": gid, "date": rec.get("date") or fallback_date,
+        "away": _alias(rec, "away"), "home": _alias(rec, "home"),
+        "away_pts": ap, "home_pts": hp,
+        "away_quarters": aq, "home_quarters": hq,
+        "ot_periods": rec.get("ot_periods"),
+        "period_schema": schema,
+        "source_url": _official_url(rec, *_ALIASES["source_url"]),
+        "gamebook_url": _official_url(rec, *_ALIASES["gamebook_url"]),
+        "files": [rel],
+    }
 
 
 def finals_committed() -> dict[str, dict]:
@@ -172,61 +393,28 @@ def finals_committed() -> dict[str, dict]:
         fname_date = _DATE_IN_NAME.search(p.name)
         fallback_date = doc_date or (fname_date.group(1) if fname_date else None)
         for r in _records_of(doc):
-            gid = r.get("game_id")
-            ap, hp = r.get("away_pts"), r.get("home_pts")
-            if not gid or ap is None or hp is None:
+            rec = _final_record(r, fallback_date, rel)
+            if rec is None:
                 continue
-            status = r.get("status")
-            if status and str(status).lower() not in ("final", "final/ot", "completed"):
-                continue
-            aq = r.get("away_quarters") or r.get("away_q")
-            hq = r.get("home_quarters") or r.get("home_q")
-            ot = r.get("ot_quarters") or {}
-            ot_a = ot.get("away") if isinstance(ot, dict) else None
-            ot_h = ot.get("home") if isinstance(ot, dict) else None
-            # Two committed official feeds store overtime differently and both are correct:
-            # one appends the OT periods to the quarter row, the other keeps regulation in
-            # `away_quarters` and the extra periods in `ot_quarters`. Normalising both to a
-            # full period row is what makes the sum-to-final check mean anything.
-            if ot_a and r.get("away_q") is not aq:
-                aq = list(aq or []) + list(ot_a)
-            if ot_h and r.get("home_q") is not hq:
-                hq = list(hq or []) + list(ot_h)
-            schema = ("regulation + ot_quarters" if (ot_a or ot_h)
-                      else "all periods inline" if (aq and len(aq) > 4)
-                      else "regulation only")
-            rec = {
-                "game_id": gid, "date": r.get("date") or fallback_date,
-                "away": r.get("away") or r.get("away_team"),
-                "home": r.get("home") or r.get("home_team"),
-                "away_pts": ap, "home_pts": hp,
-                "away_quarters": aq, "home_quarters": hq,
-                "ot_periods": r.get("ot_periods"),
-                "period_schema": schema,
-                # Each committed feed names its URL field differently. Accept the feed's
-                # own HTTPS URL only; a prose source label is never promoted into a link.
-                "source_url": _official_url(r, "source_url", "final_source_url",
-                                            "official_source", "source"),
-                "gamebook_url": r.get("gamebook_url") or r.get("gamebook_source"),
-                "files": [rel],
-            }
+            gid = rec["game_id"]
             prev = out.get(gid)
             if prev is None:
                 out[gid] = rec
                 continue
-
             if rel not in prev["files"]:
                 prev["files"].append(rel)
-            # Conflicting finals are a finding, not something to average or enrich from.
-            if (prev["away_pts"], prev["home_pts"]) != (ap, hp):
+            # Two committed finals that disagree is a finding, not something to average.
+            # Do not use metadata from a conflicting score row to complete the selected
+            # record: the game is conflicted and its detail must remain reviewable.
+            if (prev["away_pts"], prev["home_pts"]) != (rec["away_pts"], rec["home_pts"]):
                 prev.setdefault("conflicts", []).append(
-                    {"file": rel, "away_pts": ap, "home_pts": hp})
+                    {"file": rel, "away_pts": rec["away_pts"],
+                     "home_pts": rec["home_pts"]})
                 continue
 
-            # Several independent official captures can describe the same game. Earlier
-            # score-only rows often lack team names or document links; preserve those blanks
-            # until a later row with the SAME official game ID and matching final supplies
-            # the metadata. Never construct a URL from a date or matchup.
+            # Several independent official captures can describe the same game. Rows that
+            # name different clubs for the same game id are a conflict, not enrichment
+            # (session arena/af5df7a7-nba2): never average or overwrite the identity.
             team_conflict = any(
                 prev.get(k) and rec.get(k) and prev[k] != rec[k]
                 for k in ("away", "home"))
@@ -238,10 +426,11 @@ def finals_committed() -> dict[str, dict]:
                 })
                 continue
 
-            for key in ("date", "away", "home", "away_quarters", "home_quarters",
-                        "ot_periods", "period_schema", "source_url", "gamebook_url"):
-                if prev.get(key) in (None, "") and rec.get(key) not in (None, ""):
-                    prev[key] = rec[key]
+            # A second sighting fills blanks; it never overwrites a value already read
+            # (sessions arena/6023d517-nba2 + arena/af5df7a7-nba2). Never construct a URL
+            # from a date or matchup — only committed URL fields reach the row.
+            _merge_into(prev, {k: v for k, v in rec.items()
+                               if k not in ("files", "conflicts")})
     return out
 
 
@@ -264,25 +453,58 @@ def sealed_ids() -> dict[str, set]:
 def graded_ids() -> tuple[set, dict]:
     """The distinct game ids a sealed pick was actually scored against.
 
-    Only the ledgers' graded rows count. ``finals_used`` is provenance for which
-    finals the settlement *read* — its 2026-11-18 capture file spans 2026-11-13→17,
-    so counting it here would report the pre-request 11/13 games as graded although
-    no sealed pick ever existed for them (session arena/af5df7a7-nba2, 2026-11-19:
-    the same rule the test below pins — a game that was never pre-registered can be
-    settled, but it can never be *graded*).
+    Only the ledgers' graded rows count — the v4 settlement's per-ledger graded rows
+    and the nightly sealed-ledger settlement's ``settled_rows`` in ``data/settlement.json``
+    (session arena/8c7c8828-nba2). ``finals_used`` is provenance for which finals the
+    settlement *read* — its 2026-11-18 capture file spans 2026-11-13→17, so counting it
+    here would report the pre-request 11/13 games as graded although no sealed pick ever
+    existed for them (session arena/af5df7a7-nba2, 2026-11-19: the same rule the test
+    below pins — a game that was never pre-registered can be settled, but it can never
+    be *graded*). The ``finals_used`` ids are surfaced in the info dict as provenance,
+    never merged into the graded set.
     """
     doc = maybe_load(SETTLED_ALL) or {}
+    pipeline = maybe_load(PIPELINE_SETTLEMENT) or {}
     graded: set = set()
     per_ledger = []
-    for L in doc.get("ledgers", []) or []:
-        rows = L.get("graded") or []
+    for ledger in doc.get("ledgers", []) or []:
+        rows = ledger.get("graded") or []
         ids = {r.get("game_id") for r in rows if isinstance(r, dict) and r.get("game_id")}
         graded |= ids
-        per_ledger.append({"ledger": L.get("ledger"), "n_graded": len(rows),
-                           "n_ungraded": len(L.get("ungraded") or []),
-                           "latest_graded_game_date": L.get("latest_graded_game_date")})
+        per_ledger.append({"ledger": ledger.get("ledger"), "n_graded": len(rows),
+                           "n_ungraded": len(ledger.get("ungraded") or []),
+                           "latest_graded_game_date": ledger.get("latest_graded_game_date"),
+                           "settlement_source": "data/v4/settlement/settled-all.json"})
+
+    # Provenance only: the finals the settlement read. These ids are NOT graded unless a
+    # ledger above (or the nightly feed below) actually scored a sealed pick against them.
+    finals_used_ids = sorted({row.get("game_id")
+                              for row in doc.get("finals_used", []) or []
+                              if isinstance(row, dict) and row.get("game_id")})
+
+    pipeline_ledgers = []
+    for ledger in pipeline.get("ledgers", []) or []:
+        rows = ledger.get("settled_rows") or []
+        ids = {r.get("game_id") for r in rows if isinstance(r, dict) and r.get("game_id")}
+        graded |= ids
+        pipeline_ledgers.append({"ledger": ledger.get("ledger"),
+                                 "n_graded": len(ids),
+                                 "games_settled": ledger.get("games_settled"),
+                                 "games_expected": ledger.get("games_expected"),
+                                 "status": ledger.get("status"),
+                                 "settlement_source": "data/settlement.json"})
+
+    v4_settled = (doc.get("settlement") or {}).get("settled_at_utc")
+    pipeline_settled = pipeline.get("settled_at_utc")
+    stamps = [stamp for stamp in (v4_settled, pipeline_settled)
+              if _parse_utc(stamp) is not None]
+    latest_stamp = max(stamps, key=lambda stamp: _parse_utc(stamp)) if stamps else None
     return graded, {"per_ledger": per_ledger,
-                    "settled_at_utc": (doc.get("settlement") or {}).get("settled_at_utc"),
+                    "pipeline_ledgers": pipeline_ledgers,
+                    "finals_used_ids": finals_used_ids,
+                    "settled_at_utc": latest_stamp,
+                    "v4_settled_at_utc": v4_settled,
+                    "pipeline_settled_at_utc": pipeline_settled,
                     "latest_graded_game_date": (doc.get("settlement") or {}).get("latest_graded_game_date")}
 
 
@@ -304,10 +526,32 @@ def quarter_check(rec: dict) -> tuple[str, str]:
             f"home {'+'.join(map(str, hq))}={sh} vs {rec['home_pts']}")
 
 
+def _matchup(slate: dict, final: dict | None) -> str | None:
+    """`AWY @ HOM` from whichever committed artefact carries both clubs, else None.
+
+    The previous expression interpolated the f-string first and only then consulted the
+    final for team names, so every game that came from a result file printed the literal
+    text "None @ None" — measured on 14 of 67 rows of the committed data/v6/results_coverage.json.
+    A blank is honest; the string "None @ None" is not. Club spellings are resolved
+    through the alias table (`away` vs `away_team` vs `visitor`, session
+    arena/6023d517-nba2 + arena/af5df7a7-nba2).
+    """
+    for src in (slate, final or {}):
+        away, home = _alias(src, "away"), _alias(src, "home")
+        if away and home:
+            return f"{away} @ {home}"
+    return None
+
+
 def build(today: str = AS_OF_DATE) -> dict:
     sched = scheduled()
     fin = finals_committed()
     graded, settle_info = graded_ids()
+    graded_dates = [fin[gid].get("date") for gid in graded
+                    if gid in fin and fin[gid].get("date")]
+    known_graded_dates = [d for d in [settle_info.get("latest_graded_game_date"),
+                                      *graded_dates] if d]
+    settle_info["latest_graded_game_date"] = max(known_graded_dates) if known_graded_dates else None
     sealed = sealed_ids()
 
     dates = sorted({g["date"] for g in sched.values() if g.get("date")}
@@ -323,10 +567,10 @@ def build(today: str = AS_OF_DATE) -> dict:
         missing_final = [gid for gid in gids if gid not in fin]
         missing_grade = [gid for gid in gids if gid in fin and gid not in graded]
 
-        if d >= today:
+        if d >= today and not have:
             # The published tree must not depend on the wall clock: pages.yml rebuilds the
             # site and fails if it differs from what is committed, so "has this date ended"
-            # is answered from the frozen AS_OF constant, not from datetime.now().
+            # is answered from the latest committed successful results capture, not now().
             reason = (f"this date has not ended yet (as-of {AS_OF_UTC} = "
                       f"{AS_OF_ET}) — no official final is claimed for a game that "
                       "has not finished")
@@ -353,12 +597,12 @@ def build(today: str = AS_OF_DATE) -> dict:
             "n_missing_final": len(missing_final),
             "n_missing_grade": len(missing_grade),
             "status": ("complete" if gids and not missing_final and not missing_grade
-                       else "not ended" if d >= today else "incomplete"),
+                       else "not ended" if (d >= today and not have) else "incomplete"),
             "reason": reason,
             "game_ids": gids,
             "missing_final_ids": missing_final,
-            "list_url": next((g.get("list_url") for g in gs
-                              if g.get("list_url") and d in g.get("list_url", "")), None)
+            "list_url": next((_schedule_url_for_date(g.get("list_url"), d)
+                               for g in gs if _schedule_url_for_date(g.get("list_url"), d)), None)
                         or f"https://www.nba.com/schedule?date={d}",
         })
 
@@ -376,16 +620,13 @@ def build(today: str = AS_OF_DATE) -> dict:
         # Committed feeds name the clubs their own way (away vs away_team); read every
         # known name, and when no committed row carries the clubs the matchup cell stays
         # BLANK — never the string "None @ None" (session arena/af5df7a7-nba2, 2026-11-19).
-        a_name = (g.get("away") or g.get("away_team")
-                  or (f or {}).get("away") or (f or {}).get("away_team"))
-        h_name = (g.get("home") or g.get("home_team")
-                  or (f or {}).get("home") or (f or {}).get("home_team"))
+        a_name = _alias(g, "away") or _alias(f or {}, "away")
+        h_name = _alias(g, "home") or _alias(f or {}, "home")
         games.append({
             "game_id": gid, "date": g.get("date") or (f or {}).get("date"),
-            "matchup": g.get("matchup")
-                       or (f"{a_name} @ {h_name}" if a_name and h_name else ""),
-            "away": a_name,
-            "home": h_name,
+            "matchup": g.get("matchup") or _matchup(g, f) or "",
+            "away": a_name or "",
+            "home": h_name or "",
             "away_pts": (f or {}).get("away_pts"), "home_pts": (f or {}).get("home_pts"),
             "away_quarters": (f or {}).get("away_quarters"),
             "home_quarters": (f or {}).get("home_quarters"),
@@ -393,7 +634,7 @@ def build(today: str = AS_OF_DATE) -> dict:
             "period_schema": schema,
             "quarter_verdict": verdict, "quarter_detail": detail,
             "graded": gid in graded,
-            "source_url": (f or {}).get("source_url") or g.get("source_url"),
+            "source_url": (f or {}).get("source_url") or _official_url(g, *_ALIASES["source_url"]),
             "gamebook_url": (f or {}).get("gamebook_url"),
             "finals_files": (f or {}).get("files", []),
             "slate_files": g.get("snapshots", []),

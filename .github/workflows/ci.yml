@@ -31,6 +31,9 @@ jobs:
       - name: Model + pipeline tests (stdlib unittest, no dependencies)
         run: python -m unittest discover -s nba2/tests -t . -v
 
+      - name: v7 organised-slate tests (transcription identities, gates, pages)
+        run: python -m unittest discover -s nba2/v7 -t . -p 'test_*.py'
+
       - name: Cross-check ingest status regression tests
         run: python -m unittest tools.test_crosscheck_site -v
 
