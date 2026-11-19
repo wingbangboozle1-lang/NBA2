@@ -287,6 +287,10 @@ class TestPublishedSite(unittest.TestCase):
         # still exercised; the tree is restored byte-for-byte afterwards.
         with _preserved(ROOT / "site", ROOT / "data" / "v2"):
             B.build()
+            landing = (ROOT / "site" / "index.html").read_text()
+            self.assertIn(f"This v2 model snapshot is as of {O.AS_OF}, not a live refresh.", landing)
+            self.assertIn("/actions/runs/44381003145", landing)
+            self.assertNotIn("latest scheduled ingest failed before rebuilding", landing)
             self.assertEqual(K.check(), [])
             self.assertEqual(K.semantic(), [])
 
