@@ -5848,3 +5848,39 @@ workflow steps remain unchanged. The explicit exclusion above is amended only fo
 |---|---|---|---|
 | 8C-02 | Reproduce the latest scheduled publish failure | done | exact failing module reproduced from committed capture; no cause inferred from run conclusion |
 | 8C-06 | Add the missing official-settlement build prerequisite to the stale workflow scope | in progress | settle from committed official sources before rendering; fail closed on seal/source conflicts |
+
+### Session `arena/8c7c8828-nba2` — scope amendment 2 (2026-11-19 UTC)
+
+A second isolated reproduction, after running the missing settlement prerequisite, proceeds
+through v5 but then v6 correctly blocks publication at `G-V6-8` for 14 game rows. Inspection
+of the committed sources shows the URLs are present in later same-game captures (for example,
+`data/v5/results_union.json` has the official gamebook URL for `0022600231`), but
+`nba2/v6/results_coverage.py::finals_committed()` keeps the first sparse row and, for duplicate
+game ids, records only the additional filename; it drops later non-null source/gamebook URL
+fields. This is an aggregation defect, not evidence that the official documents are missing.
+The fix will only enrich missing fields from another committed row with the same game id; score
+conflicts remain visible and are never selected or averaged. The v6 URL gate remains hard.
+
+The same stale-union check is present in all three rebuild paths: `refresh.yml`, `pages.yml`,
+and `publish-parity.yml` call `nba2.settlement_page` without first rebuilding the union from
+committed official captures. PR #112 touches only the nightly workflow among these; PR #125
+contains settlement data but no workflow file. No currently open PR touches `pages.yml`,
+`publish-parity.yml`, or `nba2/v6/results_coverage.py`. This session claims those paths for this
+bounded integration fix; generated outputs will be changed only by running their committed
+builders, never hand-edited.
+
+**Scope amendment 2:**
+- `.github/workflows/refresh.yml`, `.github/workflows/pages.yml`,
+  `.github/workflows/publish-parity.yml` — explicit committed-finals settlement prerequisite;
+  preserve the finals-failure policy and stage only the derived union/settlement files.
+- `nba2/v6/results_coverage.py` and `nba2/v6/test_v6.py` — merge missing provenance fields
+  across duplicate same-game rows without changing scores or suppressing conflicts.
+- `nba2/tests/test_refresh_workflow.py` — regression tests for workflow order and output staging.
+- Generated build outputs from the committed builders only (`site/**`, plus directly generated
+  data copies if the builders change them); no hand-authored row or unverified value.
+
+| ID | Task | Status | Acceptance / verification |
+|---|---|---|---|
+| 8C-07 | Add the settlement prerequisite to all rebuild/deploy/parity paths and persist its derived outputs only from a passing refresh | in progress | refresh-failure path preserves prior settlement; Pages/parity reproduce the committed tree |
+| 8C-08 | Preserve later official URLs while merging duplicate game results in v6 | in progress | regression test demonstrates official URL retained; G-V6-8 remains hard and conflicts remain blocking |
+| 8C-09 | Rebuild all generated trees, run every checker/test, verify internal links and fixed-point parity | pending | exact commands/results recorded; no sealed ledger changes |
