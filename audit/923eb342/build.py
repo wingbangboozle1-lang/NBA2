@@ -161,7 +161,7 @@ FINDINGS = [
 # url, so the row carries a source for its own claim rather than a link to this site.
 F_Q = {"Q-923-01": "F-923-01", "Q-923-02": "F-923-11", "Q-923-03": "F-923-12",
        "Q-923-04": "F-923-05", "Q-923-05": "F-923-05", "Q-923-06": "F-923-02",
-       "Q-923-07": "F-923-08", "Q-923-08": "F-923-04", "Q-923-09": "F-923-06",
+       "Q-923-07": "F-923-10", "Q-923-08": "F-923-04", "Q-923-09": "F-923-06",
        "Q-923-10": "F-923-02"}
 S_F = {"SG-923-01": "F-923-01", "SG-923-02": "F-923-09", "SG-923-03": "F-923-02",
        "SG-923-04": "F-923-04", "SG-923-05": "F-923-05", "SG-923-06": "F-923-12",
@@ -414,6 +414,10 @@ for c in checks:
     k = c["verdict"].split(" (")[0]
     vcount[k] = vcount.get(k, 0) + 1
 N_GAMES_VERIFIED = len(FIN17["records"]) + len(FIN18["records"])
+_ALL_GAMES = FIN17["records"] + FIN18["records"]
+_HOME_WIN = [r for r in _ALL_GAMES if r["home_pts"] > r["away_pts"]]
+N_HOME_WINS = len(_HOME_WIN)
+HOME_WIN_GAMES = [f"{r['away']}@{r['home']}" for r in _HOME_WIN]
 CAL = TEAMS.get("calibration", {})
 INTEG = TEAMS.get("integrity", {})
 BT_HOLD = (LAB.get("holdout") or {})
@@ -664,8 +668,9 @@ been verified — not that it does not exist.</div>
 <h2>Totals that follow from the rows above</h2>
 {table(["Count", "Value", "Derivation", "Source"],
        [["Games read", str(len(rows)), "5 (11/17) + 12 (11/18)", src("https://www.nba.com/games?date=2026-11-18")],
-        ["Home wins", str(sum(1 for d in (FIN17, FIN18) for r in d["records"] if r["home_pts"] > r["away_pts"])),
-         "home_pts > away_pts in the table above", src("https://www.nba.com/games?date=2026-11-18")],
+        ["Home wins", f"{N_HOME_WINS} of {N_GAMES_VERIFIED}",
+         "counted from the rows above (home_pts > away_pts): " + ", ".join(HOME_WIN_GAMES),
+         src("https://www.nba.com/games?date=2026-11-18")],
         ["Overtime games", "1", "CHA 114 @ LAL 118, Final/OT on 2026-11-17",
          src("https://www.nba.com/game/cha-vs-lal-0022600256")]])}
 
