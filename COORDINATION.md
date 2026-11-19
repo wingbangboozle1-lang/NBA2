@@ -5567,3 +5567,35 @@ every push; the site is never merged broken.
 | AF-4 | Regenerate every tree + full local verification (all suites, checks, lint, parity, links) | pending | regenerated artefacts only | exact commands + results recorded; build is a fixed point |
 | AF-5 | PR → `main`, merge without approval, Pages deploy confirmed by live fetch; record PR link + merge result | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of deployed pages |
 | AF-6 | Disposition of stale PRs #125 / #112 (merge-if-valuable or close-as-superseded, never silent) | pending | `COORDINATION.md` | `gh pr` actions logged with reasons |
+
+### Scope amendment — session `arena/af5df7a7-nba2` (2026-11-19 ~06:10 UTC, before the work)
+
+Found while implementing AF-2/AF-3: the brief's "settle the sealed ledger from official
+finals as soon as each game day ends" is blocked by two more instances of the **same
+alias/reader defect class**, in files no active session claims (v4 settlement last touched
+by completed sessions `arena/aa1d3c07`/`arena/669bccab`; `nba2/pipeline/settle.py` by
+completed `arena/4f780342`):
+
+1. `nba2/v4/settlement.py` — `FINALS_SOURCES` is a hand-maintained 4-tuple that ends at
+   2026-11-16, so the **five sealed 11/17 picks stay ungraded although their finals are
+   committed and verified** (`data/raw/finals_2026-11-17.json`,
+   `data/raw/capture_2026-11-18/finals_2026-11-18.json`; measured: settled-all stamp
+   `latest_graded_game_date = 2026-11-16`, 61/83 graded). The reader also does
+   `r["away"]` and would KeyError on the `away_team`-keyed feed.
+2. `nba2/pipeline/settle.py::normalise_source` — reads `away`/`home` and
+   `away_quarters` only, so the union rows for 0022600253–257 carry **no teams and no
+   quarter rows** even though both are in the committed official file (the quarter-sum
+   rejection rule is therefore silently skipped for them — weaker than the feed allows).
+
+**Added to this session's scope (reader + source-list fixes only, no gate, rule or
+settle-rule change):** `nba2/pipeline/settle.py` (alias keys in `normalise_source`:
+`away_team`/`home_team`, `away_q`/`home_q`, `final_source_url` — the same aliases
+`nba2/pipeline/settle.py` already partially reads for `source`),
+`nba2/v4/settlement.py` (`FINALS_SOURCES` += the committed 11/17 official captures;
+team aliases in `finals()`), and any **pin refresh** in `nba2/v4/test_v4.py`,
+`nba2/v5/test_v5.py`, `nba2/v3/**` tests or `nba2/tests/**` if regenerated outputs move a
+pinned count — every such change documented in the completion record. Sealed ledgers
+remain untouched; conflicting scores still refuse to settle (the existing `SystemExit`);
+a quarter row that does not sum to the final is still rejected. This amendment is pushed
+before those files are edited. Concurrent session `arena/53c5afeb-nba2` (docs audit) and
+stale PRs #125/#112 remain unclaimed by this session; no overlap with the files above.
