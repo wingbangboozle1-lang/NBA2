@@ -5489,3 +5489,56 @@ fixes were dropped during conflict resolution and are not re-applied; CC-DOC-01 
 | ACF-5 | End-to-end proof: refresh runs green on a real GitHub runner (capture + publish gates) | pending | run logs linked from the completion record | `refresh_verdict.json` shows `rolling=success`; publish job commits; no gate weakened |
 | ACF-6 | Integration: PR → `main`, merge without approval, confirm Pages deploy, record PR link + merge result; disposition of stale PRs #70/#72/#78/#80/#82/#98/#112 logged (merge-if-valuable or close-as-superseded, never silent) | pending | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch of deployed pages |
 | ACF-7 | RQ-8892-02 model re-cut to the 2026-11-17 capture (7 ordered steps, §4 spec) — conditional on PR #115 merging/closing first | pending | `nba2/v2/official.py`, `nba2/v2/report.py`, v3/v4/v5 repoint, regenerated artefacts | every checker green; `CC-FRESH-01` turns pass; PF/PA re-basing disclosed on the page |
+
+---
+
+## Session `arena/0b91edfc-nba2` — CLAIM (2026-11-19 UTC, branch `arena/0b91edfc-nba2`, base `a5380e1` = `main`)
+
+**State read at claim time (measured this session, not assumed).**
+- `main` = `a5380e1` (bot capture 2026-11-18T19:30:52Z). Official hosts (`www.nba.com`, `stats.nba.com`, `cdn.nba.com`, `ak-static.cms.nba.com`, `official.nba.com`, `statsdmz.nba.com`) return HTTP 000 from this sandbox (egress allowlist is github / npm / pypi only). **No new official value can be read by this session.**
+- Stale claim: `arena/acf5db08-nba2` (2026-11-17, ACF-1..ACF-7) has no remote branch and no commits on `origin`; more than 60 minutes old. Its ACF-3..ACF-5 transport repair cannot be verified from this sandbox, so **this session does not take it over**; it stays open and is listed below.
+- Baseline (run before edits): `python3 -m unittest discover -s nba2/tests -t .` → 88 tests, **1 failure** (`TestReproducibility.test_rebuild_produces_identical_rows`: committed `data/site.json` stamp 2026-11-14 vs rebuilt stamp 2026-11-18 — the committed build output is not a fixed point of its inputs). `tools/crosscheck_site.py` → 97 checks: 86 pass, **2 fail**: `CC-DOC-01` (README says 79 tests, measured 88) and `CC-FRESH-01` (snapshot 5 days old; disclosed, not repairable from this sandbox). v2/v3/v4/v5 checks all pass.
+
+**Tasks claimed (file scope is exactly this list):**
+
+| ID | Task | File scope | Verification rule |
+|----|------|-----------|-------------------|
+| 0B9-1 | Claim + push before any edit | `COORDINATION.md` (this section, append-only) | pushed before further work |
+| 0B9-2 | Make the committed v1 build output a fixed point of its inputs: regenerate `data/site.json` and the v1 pages it feeds by running the committed builders (`python3 -m nba2.pipeline.build_site_data`, then the existing build step) — no hand edits | `data/site.json`, `pages/**`, `index.html` (generated only) | `test_rebuild_produces_identical_rows` passes on the committed tree, run twice; `git diff` limited to builder output |
+| 0B9-3 | Regenerate the README counts with the committed sync mechanism (`audit/2026-11-14-3681/sync_readme_counts.py`), not by typing numbers | `README.md` (counts only) | `tools/crosscheck_site.py` → `CC-DOC-01` ok |
+| 0B9-4 | Re-run every checker and the full unit suite; record exact commands and results | `analysis/session-0b91edfc-repo-check.md` (new) | exact output recorded |
+| 0B9-5 | Disclose, do not fix: `CC-FRESH-01` (5-day-old snapshot), the failing scheduled refresh (`refresh_verdict.json`), and the ACF-3..5 transport repair | `analysis/session-0b91edfc-repo-check.md` | cited to the verdict file and the failing run URL |
+| 0B9-6 | PR → `main` → merge without approval (only if all checks green) → confirm Pages deploy by live fetch → record PR link and merge result here | `COORDINATION.md` (completion record) | `gh pr merge`, `gh run list`, live fetch |
+
+**Explicitly NOT edited:** `nba2/v2/**`, `nba2/v3/**`, `nba2/v4/**`, `nba2/v5/**`, `nba2/v6/**`, `nba2/pipeline/refresh.py`, `nba2/v2/refresh.py`, `.github/workflows/**`, `data/raw/**`, sealed ledgers (`data/raw/ledger/**`, `data/v3/ledger/**`), `data/settlement.json`, `data/v4/settlement/**`, `site/**` (unless a checker requires a rebuild — then logged).
+
+### Session `arena/0b91edfc-nba2` — scope extension (2026-11-19, pushed before editing)
+
+PR #127 (parity job) fails at `Rebuild every generated tree` because the committed union is stale (R-3). Root cause found and measured: `nba2/pipeline/settle.py::normalise_source` reads only the keys `away`/`home`/`away_quarters`/`home_quarters`/`source_url`, but `data/raw/finals_2026-11-17.json` uses `away_team`/`home_team`/`away_q`/`home_q`/`final_source_url` (verified in the file). Result: the 5 games 0022600253–57 lose their clubs and quarters, and 0022600240 loses quarters because only one candidate is considered per game (R-1, R-2 are the same defect).
+
+| ID | Task | File scope | Verification rule |
+|----|------|-----------|-------------------|
+| 0B9-7 | Accept the feed's own key names in `normalise_source` (no new source, no new rule); pick quarter rows per side across sources; regression tests | `nba2/pipeline/settle.py`, `nba2/tests/test_settle_aliases.py` (new) | new tests + existing settle tests green; quarter rows re-summed to the final |
+| 0B9-8 | Regenerate `data/raw/official_finals_union.json` and settlement outputs **only** via `python -m nba2.pipeline.settle`; both sealed seals re-verified before and after; `data/raw/ledger/**` and `data/v3/ledger/**` untouched | `data/raw/official_finals_union.json`, `data/settlement.json`, `data/v4/settlement/**`, `data/v5/**` (generated) | `git diff --stat` on the ledger paths empty; seal digests printed before/after |
+| 0B9-9 | Re-run the parity chain; record the exact result; publish R-4 (v6) as still open | `analysis/session-0b91edfc-repo-check.md` (append) | parity job green on the PR, or the exact remaining failure recorded |
+
+| 0B9-10 | R-4 / G-V6-8 hard gate: `nba2/v6/results_coverage.py` reads each committed feed's own URL key (`final_source_url`; `source` only when it is an `https://` URL) instead of leaving it blank; nothing inferred | `nba2/v6/results_coverage.py` (loader only), regenerated `data/v6/**`, `site/v6-verify.html` via builder | `python3 -m nba2.v6` renders (gate G-V6-8 passes or lists only rows whose feed has no URL); v6 suite result recorded |
+
+### Completion record — session `arena/0b91edfc-nba2` (2026-11-19 UTC)
+
+| ID | Status | Result | Evidence |
+|----|--------|--------|----------|
+| 0B9-1 | done | claim pushed before edits | commits `9dc55ca`, `cd08067` |
+| 0B9-2 | done | v1 build output is a fixed point: `test_rebuild_produces_identical_rows` passes (was the one failing test) | `data/site.json`, `pages/*.html` regenerated by `build_site_data` / `build_site` |
+| 0B9-3 | done | README test counts synced (92 / 167 / 49); CC-DOC-01 ok | `audit/2026-11-14-bc867bff/sync_readme_tests.py --check` exit 0 |
+| 0B9-4 | done | all suites green: nba2/tests 92, v2 167, v3 67, v5 26, v6 47, backtest 49; lint OK (1436 rows); links OK; crosscheck 87 pass / 1 fail (CC-FRESH-01, disclosed) | `analysis/session-0b91edfc-repo-check.md` |
+| 0B9-5 | done (disclosed, not fixed) | CC-FRESH-01, scheduled refresh failure (R-7), ACF-3..5 transport repair left to its stale claim | record R-7, R-8 |
+| 0B9-6 | in progress → PR | PR #127 (parity, v2, capture, refresh-dry-run, verify, backtest all pass) | see PR |
+| 0B9-7 | done | `normalise_source` reads each feed's own key names; quarter rows per side; 4 regression tests | `nba2/pipeline/settle.py`, `nba2/tests/test_settle_aliases.py` |
+| 0B9-8 | done | union regenerated 31 → 36 records (0 conflicts, 0 rejected); `data/settlement.json` sealed-2026-11-14 22 → 27 settled; sealed ledgers SHA-256 identical before/after | `LEDGERS_UNCHANGED` in the record |
+| 0B9-9 | done | full chain in CI order exits 0; every checker green except disclosed CC-FRESH-01 | record |
+| 0B9-10 | done | v6 G-V6-8 hard gate passes (13/13); as-of moved to the finals capture 2026-11-18T19:29:18Z; the one v6 test that encoded the stale as-of updated | `nba2/v6/results_coverage.py`, `nba2/v6/test_v6.py` |
+
+**Flagged for review (not fixed; logged in `analysis/session-0b91edfc-repo-check.md`):** R-2b (nine 11/13 games have blank clubs; the clubs sit in an unread `games` list), R-6 (README v3/v6 test counts), R-7 (scheduled refresh failing), R-8 (snapshot 5 days old), R-9 (misnamed capture `finals_2026-11-18.json` with unused, status-less records), R-10 (v4 settlement surface stops at 11/16 while v1 grades through 11/17; re-run reproduces the 11/16 result, reads a fixed file list), R-11 (test runs rewrite tracked files).
+
+**Sandbox limit (unchanged):** no official NBA host was reachable (HTTP 000), so no new official value was read. Every value in this change was reproduced from committed official captures by committed code.

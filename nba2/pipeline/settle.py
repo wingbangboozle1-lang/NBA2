@@ -106,6 +106,15 @@ def _quarters_ok(pts: int, quarters: Any, overtime: Any = ()) -> bool | None:
     return sum(quarters) + sum(overtime) == pts
 
 
+def _first_present(r: dict[str, Any], *keys: str) -> Any:
+    """First key whose value is not None/empty; None if none is present."""
+    for k in keys:
+        v = r.get(k)
+        if v is not None and v != "" and v != []:
+            return v
+    return None
+
+
 def normalise_source(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
     """Return (candidate final scores, rejections) for one committed source file."""
     doc = json.loads(path.read_text())
@@ -123,22 +132,28 @@ def normalise_source(path: Path) -> tuple[list[dict[str, Any]], list[dict[str, s
         a, h = _as_int(r.get("away_pts")), _as_int(r.get("home_pts"))
         if a is None or h is None:
             continue
+        # Each official feed names its fields its own way (e.g. finals_2026-11-17.json uses
+        # away_team / home_team / away_q / home_q / final_source_url). Read every known name;
+        # a key that is missing in one feed must not erase a value another feed carries.
+        away_q_raw = _first_present(r, "away_quarters", "away_q")
+        home_q_raw = _first_present(r, "home_quarters", "home_q")
         # Quarter check: a quarter row that does not reproduce the final is not trusted.
         ot = r.get("ot_quarters") if isinstance(r.get("ot_quarters"), dict) else {}
-        qa = _quarters_ok(a, r.get("away_quarters"), ot.get("away") or [])
-        qh = _quarters_ok(h, r.get("home_quarters"), ot.get("home") or [])
+        qa = _quarters_ok(a, away_q_raw, ot.get("away") or [])
+        qh = _quarters_ok(h, home_q_raw, ot.get("home") or [])
         if qa is False or qh is False:
             rejected.append({"game_id": gid, "source": name,
                              "reason": "quarter row does not sum to the final score; source ignored for this game"})
             continue
         out.append({
             "game_id": gid,
-            "away": r.get("away"), "home": r.get("home"),
+            "away": _first_present(r, "away", "away_team"),
+            "home": _first_present(r, "home", "home_team"),
             "away_pts": a, "home_pts": h,
-            "source": r.get("source_url") or r.get("source") or "",
+            "source": _first_present(r, "source_url", "final_source_url", "source") or "",
             "origin": name,
-            "away_quarters": r.get("away_quarters") if qa else None,
-            "home_quarters": r.get("home_quarters") if qh else None,
+            "away_quarters": away_q_raw if qa else None,
+            "home_quarters": home_q_raw if qh else None,
             "ot_periods": r.get("ot_periods"),
             "ot_quarters": {"away": ot.get("away"), "home": ot.get("home")} if ot else None,
         })
@@ -174,13 +189,17 @@ def build_union(paths: list[Path] | None = None) -> dict[str, Any]:
                               "readings": sorted(list(teams)), "origins": sorted({c["origin"] for c in cs})})
             continue
         best = next((c for c in cs if c["away_quarters"] and c["home_quarters"]), cs[0])
+        # Quarter rows are taken per side: the first candidate that carries a checked row for
+        # that side. A feed with only the home row must not erase the away row from another feed.
+        away_q = next((c["away_quarters"] for c in cs if c["away_quarters"]), None)
+        home_q = next((c["home_quarters"] for c in cs if c["home_quarters"]), None)
         away, home = (teams.pop() if teams else (best["away"], best["home"]))
         records.append({
             "game_id": gid, "away": away, "home": home,
             "away_pts": best["away_pts"], "home_pts": best["home_pts"],
             "source": best["source"] or next((c["source"] for c in cs if c["source"]), ""),
             "sources": sorted({c["origin"] for c in cs}),
-            "away_quarters": best["away_quarters"], "home_quarters": best["home_quarters"],
+            "away_quarters": away_q, "home_quarters": home_q,
             "ot_periods": best["ot_periods"],
             "ot_quarters": best.get("ot_quarters"),
         })

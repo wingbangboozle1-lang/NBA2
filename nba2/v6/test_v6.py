@@ -128,11 +128,17 @@ class TestResultsCoverage(unittest.TestCase):
         self.assertEqual(row["status"], "complete")
 
     def test_a_date_that_has_not_ended_is_not_reported_as_a_gap(self):
-        for d in ("2026-11-17", "2026-11-18", "2026-11-19"):
+        # As of 2026-11-18T19:29:18Z (the finals capture): 11/18 and 11/19 have not ended and
+        # claim no final. 11/17 HAS ended and its finals are committed, so it must not read as
+        # "not ended" (0B9-10: the old as-of 11/17 contradicted the committed finals).
+        for d in ("2026-11-18", "2026-11-19"):
             row = next(r for r in self.doc["rows"] if r["date"] == d)
             self.assertEqual(row["status"], "not ended", msg=d)
             self.assertEqual(row["n_finals_committed"], 0)
             self.assertIn("has not ended", row["reason"])
+        r17 = next(r for r in self.doc["rows"] if r["date"] == "2026-11-17")
+        self.assertNotEqual(r17["status"], "not ended")
+        self.assertEqual(r17["n_finals_committed"], r17["n_scheduled"])
 
     def test_the_prequest_1113_games_are_reported_as_unsettleable_not_missing(self):
         row = next(r for r in self.doc["rows"] if r["date"] == "2026-11-13")
