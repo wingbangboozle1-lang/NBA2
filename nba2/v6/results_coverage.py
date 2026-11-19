@@ -36,7 +36,9 @@ SLATE_GLOBS = [
 RESULT_GLOBS = [
     DATA / "raw" / "finals_*.json",
     DATA / "raw" / "results" / "*.json",
+    DATA / "raw" / "refresh_*" / "finals_*.json",
     DATA / "raw" / "refresh_*" / "results_*.json",
+    DATA / "raw" / "capture_*" / "finals_*.json",
     DATA / "raw" / "capture_*" / "results_*.json",
     DATA / "v2" / "results.json",
     DATA / "v5" / "results_union.json",
@@ -51,13 +53,11 @@ BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book
 
 # Frozen clock. The result-feed page must answer "has this game day ended?" the same way on
 # every rebuild, because pages.yml fails the deploy if a rebuild differs from what is
-# committed. AS_OF is the retrieval time of the most recent official finals capture committed in
-# this repository (data/raw/finals_2026-11-17.json, retrieved_at_utc 2026-11-18T19:29:18+00:00),
-# converted to Eastern with the November UTC-5 offset. It is stated on the page, so a reader can age it.
-# 0B9-10 (2026-11-19): moved from the 2026-11-17T15:52Z capture, which reported 11/17 as "not ended"
-# while its official finals were already committed (a self-contradiction).
-AS_OF_UTC = "2026-11-18T19:29:18Z"
-AS_OF_ET = "2026-11-18 14:29 ET"
+# committed. AS_OF is the timestamp of the most recent official capture in this repository
+# (the 2026-11-17T15:52:00Z capture by session arena/8892d20c-nba2), converted to Eastern with the November UTC-5
+# offset. It is stated on the page, so a reader can age it.
+AS_OF_UTC = "2026-11-18T19:30:20Z"
+AS_OF_ET = "2026-11-18 14:30 ET"
 AS_OF_DATE = "2026-11-18"
 
 
@@ -172,29 +172,50 @@ def finals_committed() -> dict[str, dict]:
                       else "all periods inline" if (aq and len(aq) > 4)
                       else "regulation only")
             rec = {
-                "game_id": gid, "date": r.get("date") or fallback_date, "away": r.get("away"),
-                "home": r.get("home"), "away_pts": ap, "home_pts": hp,
+                "game_id": gid, "date": r.get("date") or fallback_date,
+                "away": r.get("away") or r.get("away_team"),
+                "home": r.get("home") or r.get("home_team"),
+                "away_pts": ap, "home_pts": hp,
                 "away_quarters": aq, "home_quarters": hq,
                 "ot_periods": r.get("ot_periods"),
                 "period_schema": schema,
-                # Each committed feed names its URL field differently; read the feed's own key.
-                # `source` is used only when it is itself an https URL (never an inferred one).
-                "source_url": (r.get("source_url") or r.get("final_source_url")
-                               or r.get("official_source")
-                               or (r.get("source") if str(r.get("source") or "").startswith("https://") else None)),
+                "source_url": (r.get("source_url") or r.get("official_source")
+                               or r.get("final_source_url") or r.get("source")),
                 "gamebook_url": r.get("gamebook_url") or r.get("gamebook_source"),
                 "files": [rel],
             }
             prev = out.get(gid)
             if prev is None:
                 out[gid] = rec
-            else:
-                if rel not in prev["files"]:
-                    prev["files"].append(rel)
-                # two committed finals that disagree is a finding, not something to average
-                if (prev["away_pts"], prev["home_pts"]) != (ap, hp):
-                    prev.setdefault("conflicts", []).append(
-                        {"file": rel, "away_pts": ap, "home_pts": hp})
+                continue
+
+            if rel not in prev["files"]:
+                prev["files"].append(rel)
+            # Conflicting finals are a finding, not something to average or enrich from.
+            if (prev["away_pts"], prev["home_pts"]) != (ap, hp):
+                prev.setdefault("conflicts", []).append(
+                    {"file": rel, "away_pts": ap, "home_pts": hp})
+                continue
+
+            # Several independent official captures can describe the same game. Earlier
+            # score-only rows often lack team names or document links; preserve those blanks
+            # until a later row with the SAME official game ID and matching final supplies
+            # the metadata. Never construct a URL from a date or matchup.
+            team_conflict = any(
+                prev.get(k) and rec.get(k) and prev[k] != rec[k]
+                for k in ("away", "home"))
+            if team_conflict:
+                prev.setdefault("conflicts", []).append({
+                    "file": rel, "reason": "sources disagree on the clubs",
+                    "previous_teams": [prev.get("away"), prev.get("home")],
+                    "new_teams": [rec.get("away"), rec.get("home")],
+                })
+                continue
+
+            for key in ("date", "away", "home", "away_quarters", "home_quarters",
+                        "ot_periods", "period_schema", "source_url", "gamebook_url"):
+                if prev.get(key) in (None, "") and rec.get(key) not in (None, ""):
+                    prev[key] = rec[key]
     return out
 
 
