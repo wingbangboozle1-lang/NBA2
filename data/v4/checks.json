@@ -11,42 +11,42 @@
    "id": "G-V4-2",
    "name": "standings internally balanced",
    "ok": true,
-   "measured": "30 clubs, 197W/197L, home 102-94 vs road 94-102",
+   "measured": "30 clubs, 222W/222L, home 111-110 vs road 110-111",
    "detail": "wins=losses and home wins=road losses and 30 clubs"
   },
   {
    "id": "G-V4-3",
    "name": "three official team-stat pages complete and consistent",
    "ok": true,
-   "measured": "advanced 30, opponent 30, traditional 30; points diff 1.9 within ±39.4",
+   "measured": "advanced 30, opponent 30, traditional 30; points diff 3.9 within ±44.4",
    "detail": "2*FGM+3PM+FTM=PTS holds on all 30 rows and league points balance"
   },
   {
    "id": "G-V4-4",
    "name": "slate covers T+0..T+3 with unique official ids",
    "ok": true,
-   "measured": "29 games across 4 dates (2026-11-16..2026-11-19)",
+   "measured": "26 games across 4 dates (2026-11-19..2026-11-22)",
    "detail": "unique, well-formed, sourced, and the window edges are exact"
   },
   {
    "id": "G-V4-5",
    "name": "newest-indexed injury release is stamped three ways",
    "ok": true,
-   "measured": "revision 2026-11-17 11:00 AM ET, retrieved 2026-11-17T16:41:00Z, index checked 2026-11-17T16:39:00Z",
+   "measured": "revision 2026-11-19 07:15 AM ET, retrieved 2026-11-19T12:32:00Z, index checked 2026-11-19T12:20:00Z",
    "detail": "both stamps and the index check are recorded"
   },
   {
    "id": "G-V4-6",
    "name": "provenance: every captured row carries a source",
    "ok": true,
-   "measured": "11 capture documents scanned",
+   "measured": "16 capture documents scanned",
    "detail": "every row carries a source URL"
   },
   {
    "id": "G-V4-7",
    "name": "settlement re-hashes and the seal still verifies",
    "ok": true,
-   "measured": "settlement hash 6a624740bcd0fd52",
+   "measured": "settlement hash 68a4db1d77e9c463",
    "detail": "hash matches and the sealed ledger is unmodified"
   },
   {
@@ -59,8 +59,8 @@
  ],
  "settlement_verify": {
   "ok": true,
-  "stored": "6a624740bcd0fd52fbf0c9eb4d633e3d96534b79d89a4b8b9db5018685c11240",
-  "recomputed": "6a624740bcd0fd52fbf0c9eb4d633e3d96534b79d89a4b8b9db5018685c11240",
+  "stored": "68a4db1d77e9c46386dc4f634fd3434ce2b77ba01b7e35e7695368a583dff3da",
+  "recomputed": "68a4db1d77e9c46386dc4f634fd3434ce2b77ba01b7e35e7695368a583dff3da",
   "seal_still_verified": true,
   "seals_still_verified": {
    "sealed-2026-11-13.json": true,
@@ -76,7 +76,7 @@
   "data/raw/refresh_2026-11-16/standings_2026-11-16.json",
   "data/raw/refresh_2026-11-16/team_stats_2026-11-16.json",
   "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
-  "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
+  "data/raw/refresh_2026-11-16/injury_transcript_20261119_0715AM.json",
   "data/raw/refresh_2026-11-15/results_2026-11-15.json",
   "data/raw/refresh_2026-11-16/capture_index.json",
   "data/v4/injury/releases.json"

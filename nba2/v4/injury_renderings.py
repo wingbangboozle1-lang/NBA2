@@ -311,6 +311,76 @@ RENDERS = [
                           "continuation row; the junction is recorded, not merged (F-V4-10)",
         "text": "## Injury Report: 11/17/26 11:00 AM\n\n| Game Date | Game Time | Matchup | Team | Player Name | Current Status | Reason |\n| --- | --- | --- | --- | --- | --- | --- |\n| 11/17/2026 | 07:30 (ET) | NYK@TOR | Toronto Raptors | Bittle, Nate | Out | Injury/Illness - Right Foot Avulsion Fracture |\n| 11/17/2026 | 07:30 (ET) | NYK@TOR | Toronto Raptors | Leonard, Kawhi | Out | Injury/Illness - Left Knee Injury Management |\n| 11/17/2026 | 07:30 (ET) | NYK@TOR | Toronto Raptors | McCullar Jr., Kevin | Out | G League - Two-Way |\n| 11/17/2026 | 07:30 (ET) | NYK@TOR | Toronto Raptors | Smith, Malachi | Out | G League - Two-Way |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | Detroit Pistons | Duren, Jalen | Out | Injury/Illness - Right Hamstring Strain |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | Detroit Pistons | Holland II, Ronald | Out | Injury/Illness - Left Knee Contusion / Bone Bruise |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | Detroit Pistons | Joe, Isaiah | Doubtful | Injury/Illness - Right Hip Contusion |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | Detroit Pistons | Okorie, Ebuka | Out | G League - On Assignment |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | Detroit Pistons | Onyenso, Ugonna | Out | G League - Two-Way |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | Detroit Pistons | Prince, Taurean | Out | Injury/Illness - Right Knee Soreness |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | Detroit Pistons | Robinson, Duncan | Out | Injury/Illness - Left Quadriceps Strain |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | San Antonio Spurs | Brown, Maliq | Out | G League - Two-Way |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | San Antonio Spurs | Gillespie, Ja'Kobi | Out | G League - Two-Way |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | San Antonio Spurs | Harris, Tobias | Out | Injury/Illness - Left Calf Strain |\n| 11/17/2026 | 08:00 (ET) | DET@SAS | San Antonio Spurs | Quaintance, Jayden | Out | Injury/Illness - Right Knee Surgery |\n| 11/17/2026 | 08:00 (ET) | POR@MIN | Portland Trail Blazers |  |  | NOT YET SUBMITTED |\n\n---\n\n**Injury Report: 11/17/26 11:00 AM**\n\n|  |  | Minnesota Timberwolves |  |  | NOT YET SUBMITTED |\n| --- | --- | --- | --- | --- | --- |\n| 10:30 (ET) | UTA@LAC | Utah Jazz | Bufkin, Kobe | Out | G League - Two-Way |\n| 10:30 (ET) | UTA@LAC | Utah Jazz | Hayes, Jaxson | Out | Injury/Illness - Left Knee Strain |\n| 10:30 (ET) | UTA@LAC | Utah Jazz | Ingram, Harrison | Out | G League - Two-Way |\n| 10:30 (ET) | UTA@LAC | Utah Jazz | Jackson Jr., Jaren | Out | Injury/Illness - Right MCL Tear |\n| 10:30 (ET) | UTA@LAC | Utah Jazz | Markkanen, Lauri | Out | Injury/Illness - Right Hand Fracture |\n| 10:30 (ET) | UTA@LAC | Utah Jazz | Nurkic, Jusuf | Out | Injury/Illness - Right Right Foot; 2nd Plantar Plate Tear |\n| 10:30 (ET) | UTA@LAC | LA Clippers | Beal, Bradley | Out | Injury/Illness - Right Knee Injury Management |\n| 10:30 (ET) | UTA@LAC | LA Clippers | Ingram, Brandon | Out | Injury/Illness - Right Heel Surgery |\n| 10:30 (ET) | UTA@LAC | LA Clippers | Miller, Jordan | Out | Injury/Illness - Left Rotator Cuff Surgery |\n| 10:30 (ET) | UTA@LAC | LA Clippers | Niederhauser, Yanic Konan | Out | Injury/Illness - Right Lisfranc Surgery |\n| 11:00 (ET) | CHA@LAL | Charlotte Hornets | Ajayi, Michael | Out | G League - Two-Way |\n| 11:00 (ET) | CHA@LAL | Charlotte Hornets | Boswell, Kylan | Out | G League - Two-Way |\n| 11:00 (ET) | CHA@LAL | Charlotte Hornets | Knueppel, Kon | Out | Injury/Illness - Left Hamstring Strain |\n| 11:00 (ET) | CHA@LAL | Charlotte Hornets | Schroder, Dennis | Out | Injury/Illness - Left Hamstring Strain |\n| 11:00 (ET) | CHA@LAL | Charlotte Hornets | Steinbach, Hannes | Out | G League - On Assignment |\n| 11:00 (ET) | CHA@LAL | Los Angeles Lakers | Grimes, Quentin | Available | Injury/Illness - Right Finger Splint |\n| 11:00 (ET) | CHA@LAL | Los Angeles Lakers | Kessler, Walker | Out | Injury/Illness - Right Lower Leg |\n\n---\n\n**Injury Report: 11/17/26 11:00 AM**\n\n|  |  |  |  | Soreness |  |  |\n| --- | --- | --- | --- | --- | --- | --- |\n|  |  |  |  | Reaves, Austin | Out | Injury/Illness - Left Heel Contusion / Bone Bruise |\n| 11/18/2026 | 07:00 (ET) | HOU@IND | Houston Rockets |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:00 (ET) | HOU@IND | Indiana Pacers |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:00 (ET) | MEM@CLE | Memphis Grizzlies |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:00 (ET) | MEM@CLE | Cleveland Cavaliers |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:00 (ET) | MIL@MIA | Milwaukee Bucks |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:00 (ET) | MIL@MIA | Miami Heat |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:00 (ET) | PHI@ORL | Philadelphia 76ers |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:00 (ET) | PHI@ORL | Orlando Magic |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:30 (ET) | CHI@BKN | Chicago Bulls |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:30 (ET) | CHI@BKN | Brooklyn Nets |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:30 (ET) | WAS@TOR | Washington Wizards |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 07:30 (ET) | WAS@TOR | Toronto Raptors |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 08:00 (ET) | ATL@OKC | Atlanta Hawks |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 08:00 (ET) | ATL@OKC | Oklahoma City Thunder |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 08:00 (ET) | DET@NOP | Detroit Pistons |  |  | NOT YET SUBMITTED |\n| 11/18/2026 | 08:00 (ET) | DET@NOP | New Orleans Pelicans |  |  | NOT YET SUBMITTED |\n\n---\n\n**Injury Report: 11/17/26 11:00 AM**\n\n|  |  | GSW@DAL | Golden State Warriors | NOT YET SUBMITTED |\n| --- | --- | --- | --- | --- |\n|  |  | GSW@DAL | Dallas Mavericks | NOT YET SUBMITTED |\n|  | 09:30 (ET) | BOS@DEN | Boston Celtics | NOT YET SUBMITTED |\n|  | 09:30 (ET) | BOS@DEN | Denver Nuggets | NOT YET SUBMITTED |\n|  | 10:00 (ET) | PHX@SAC | Phoenix Suns | NOT YET SUBMITTED |\n|  | 10:00 (ET) | PHX@SAC | Sacramento Kings | NOT YET SUBMITTED |\n|  | 10:00 (ET) | UTA@LAL | Utah Jazz | NOT YET SUBMITTED |\n|  | 10:00 (ET) | UTA@LAL | Los Angeles Lakers | NOT YET SUBMITTED |\n",
     },
+    {
+        "stamp_et": "2026-11-19 07:15 AM ET",
+        "revision_et": "11/19/26 07:15 AM",
+        "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf",
+        "index_checked_utc": "2026-11-19T12:20:00Z",
+        "retrieved_utc": "2026-11-19T12:32:00Z",
+        "method": "platform page-fetch tool (fetch_page); returned as a single chunk",
+        "session": "arena/6b9f3bbe-nba2",
+        "text_sha256": "9afd054b120fe899d1f0f6c7763364bb4e3c3b346ef5492f2e062e85513faca7",
+        "text": """**Injury Report: 11/19/26 07:15 AM**
+
+| Game Date | Game Time | Matchup | Team | Player Name | Current Status | Reason |
+| --- | --- | --- | --- | --- | --- | --- |
+| 11/19/2026 | 08:00 (ET) | GSW@MEM | Golden State Warriors |  |  | NOT YET SUBMITTED |
+| 11/19/2026 | 08:00 (ET) | GSW@MEM | Memphis Grizzlies |  |  | NOT YET SUBMITTED |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | LA Clippers | Beal, Bradley | Out | Injury/Illness - Right Knee Injury Management |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | LA Clippers | Ingram, Brandon | Out | Injury/Illness - Right Heel Surgery |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | LA Clippers | Martinelli, Nick | Out | G League - Two-Way |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | LA Clippers | Miller, Jordan | Out | Injury/Illness - Left Rotator Cuff Surgery |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | San Antonio Spurs | Brown, Maliq | Out | G League - Two-Way |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | San Antonio Spurs | Gillespie, Ja'Kobi | Out | G League - Two-Way |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | San Antonio Spurs | Harper, Dylan | Out | Injury/Illness - Left Hip Soreness |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | San Antonio Spurs | Harris, Tobias | Out | Injury/Illness - Left Calf Strain |
+| 11/19/2026 | 08:00 (ET) | LAC@SAS | San Antonio Spurs | Quaintance, Jayden | Out | Injury/Illness - Right Knee Surgery |
+| 11/19/2026 | 08:00 (ET) | NYK@MIN | Minnesota Timberwolves | Beringer, Joan | Available | Injury/Illness - Face Mask |
+| 11/19/2026 | 08:00 (ET) | NYK@MIN | Minnesota Timberwolves | Clark, Jaylen | Out | Injury/Illness - Right Hamstring Strain |
+| 11/19/2026 | 08:00 (ET) | NYK@MIN | Minnesota Timberwolves | DiVincenzo, Donte | Out | Injury/Illness - Right Achilles Tendon Repair / Surgery |
+| 11/19/2026 | 08:00 (ET) | NYK@MIN | Minnesota Timberwolves | Edwards, Anthony | Out | Injury/Illness - Right Knee Arthroscopy |
+
+* * *
+
+**Injury Report: 11/19/26 07:15 AM**
+
+|  |  |  |  | Kuminga, Jonathan | Questionable | Injury/Illness - Right Shoulder Contusion |
+| --- | --- | --- | --- | --- | --- | --- |
+|  |  |  |  | Pullin, Zyon | Questionable | Injury/Illness - Right Quadriceps Contusion |
+|  |  | POR@MIL | Portland Trail Blazers | Avdija, Deni | Questionable | Injury/Illness - Left Foot Inflammation / Soreness |
+|  |  | POR@MIL | Portland Trail Blazers | Camara, Toumani | Questionable | Injury/Illness - Abdominal Soreness |
+|  |  | POR@MIL | Portland Trail Blazers | Carlson, Branden | Available | Injury/Illness - Face Mask |
+|  |  | POR@MIL | Portland Trail Blazers | Krejci, Vit | Out | Injury/Illness - Left Ankle Fracture |
+|  |  | POR@MIL | Portland Trail Blazers | Morant, Ja | Out | Injury/Illness - Left Hamstring Strain |
+|  |  | POR@MIL | Portland Trail Blazers | Sharpe, Shaedon | Out | Injury/Illness - Right Meniscus Surgery |
+|  |  | POR@MIL | Portland Trail Blazers | Williams III, Robert | Out | Rest |
+|  |  | POR@MIL | Portland Trail Blazers | Youngblood, Chris | Out | Injury/Illness - Right Heel Contusion / Bone Bruise |
+|  |  | POR@MIL | Milwaukee Bucks |  |  | NOT YET SUBMITTED |
+| 11/20/2026 | 07:00 (ET) | CHA@ATL | Charlotte Hornets |  |  | NOT YET SUBMITTED |
+| 11/20/2026 | 07:00 (ET) | CHA@ATL | Atlanta Hawks |  |  | NOT YET SUBMITTED |
+| 11/20/2026 | 07:30 (ET) | IND@CLE | Indiana Pacers |  |  | NOT YET SUBMITTED |
+| 11/20/2026 | 07:30 (ET) | IND@CLE | Cleveland Cavaliers |  |  | NOT YET SUBMITTED |
+| 11/20/2026 | 07:30 (ET) | ORL@BKN | Orlando Magic |  |  | NOT YET SUBMITTED |
+
+* * *
+
+**Injury Report: 11/19/26 07:15 AM**
+
+|  | Brooklyn Nets | NOT YET SUBMITTED |
+| --- | --- | --- |
+|  | TOR@DET | Toronto Raptors |
+|  | Detroit Pistons | NOT YET SUBMITTED |
+| 08:00 (ET) | NOP@OKC | New Orleans Pelicans |
+|  | Oklahoma City Thunder | NOT YET SUBMITTED |
+|  | WAS@CHI | Washington Wizards |
+|  | Chicago Bulls | NOT YET SUBMITTED |
+| 09:30 (ET) | PHX@UTA | Phoenix Suns |
+|  | Utah Jazz | NOT YET SUBMITTED |
+| 10:00 (ET) | HOU@DEN | Houston Rockets |
+|  | Denver Nuggets | NOT YET SUBMITTED |
+|  | SAC@LAL | Sacramento Kings |
+|  | Los Angeles Lakers | NOT YET SUBMITTED |""",
+    },
 ]
 
 

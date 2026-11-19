@@ -272,7 +272,12 @@ def numeric() -> list[str]:
     for p in res["projections"]:
         poss, ppph, pppa = p["possessions"], p["ppp_home"], p["ppp_away"]
         total = p["proj_total"]
-        if abs(poss * (ppph + pppa) - total) > 0.06:
+        # the published row rounds poss to 2 dp, each ppp to 4 dp and the total to 1 dp;
+        # recomputing the product from the ROUNDED factors can differ from the rounded
+        # product of the raw factors by up to 0.005 x (ppp sum) + 2 x 0.00005 x poss
+        # + 0.05 ~= 0.072 (measured knife-edge: 0022600278, 99.825 -> 99.82). The bound
+        # absorbs exactly that rounding; a real formula break moves this by points.
+        if abs(poss * (ppph + pppa) - total) > 0.08:
             problems.append(f"{p['game_id']}: total {total} != possessions x ppp "
                             f"({poss * (ppph + pppa):.2f})")
         if abs(M.phi(p["e1_margin"] / res["sigma"]) - p["p_home_e1"]) > 1e-3:
@@ -280,7 +285,8 @@ def numeric() -> list[str]:
         if p["market_price"] is not None or p["stake_pct"] not in (0.0, None):
             problems.append(f"{p['game_id']}: projection row carries a market price or stake")
     hc = res["home_court"]
-    if abs(hc["margin_sd"] * M.phi_inv(hc["home_win_rate"]) - hc["hca_points"]) > 1e-3:
+    # tolerance absorbs the published roundings (rate 4 dp, hca 3 dp); see v3/check.semantic
+    if abs(hc["margin_sd"] * M.phi_inv(hc["home_win_rate"]) - hc["hca_points"]) > 2.5e-3:
         problems.append("HCA is not the pinned identity sd x Phi^-1(home win rate)")
     for r in res["luck"]:
         if r["luck_z"] is None:

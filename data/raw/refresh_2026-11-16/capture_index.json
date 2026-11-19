@@ -1,14 +1,14 @@
 {
  "schema": "nba2.capture-index.v1",
- "retrieved_utc": "2026-11-16T14:30:00Z",
- "retrieved_et": "2026-11-16 09:30 ET",
+ "retrieved_utc": "2026-11-19T12:32:00Z",
+ "retrieved_et": "2026-11-19 07:32 ET",
  "session": "arena/b3914335-nba2",
  "method": "platform page-fetch tool (fetch_page); direct bash egress to nba.com returns HTTP 000 from this sandbox, so every read is recorded with this method",
  "source_pages": {
   "schedule": {
    "name": "NBA.com Schedule (official)",
-   "url": "https://www.nba.com/schedule?date=2026-11-16",
-   "read": "game ids, ET tip times, arena, city, state for 11/16 - 11/19, and the official finals + quarter-level scores of the 11/15 games"
+   "url": "https://www.nba.com/games?date=2026-11-19",
+   "read": "game ids and ET tip times for 11/19-11/22 from the /games day strips (2026-11-19 re-cut); arena/city/state for 11/19-11/20 carried from the committed 2026-11-17 schedule read (tips re-verified, all agree); the eleven 11/21-11/22 arena cells stay blank - the strips do not print them"
   },
   "standings": {
    "name": "NBA.com Standings (official)",
@@ -33,7 +33,7 @@
   "injury_index": {
    "name": "NBA Official - Injury Report index (official)",
    "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
-   "read": "the filing deadlines and the list of every published release; the newest indexed release at retrieval was 11/16/26 09:15 AM ET"
+   "read": "the filing deadlines and the list of every published release; the newest indexed release at retrieval was 11/19/26 07:15 AM ET"
   }
  },
  "unread": {
@@ -61,28 +61,28 @@
  "files": [
   "data/raw/refresh_2026-11-15/results_2026-11-15.json",
   "data/raw/refresh_2026-11-16/capture_index.json",
-  "data/raw/refresh_2026-11-16/injury_transcript_20261117_1100AM.json",
+  "data/raw/refresh_2026-11-16/injury_transcript_20261119_0715AM.json",
   "data/raw/refresh_2026-11-16/slate_2026-11-16_to_11-19.json",
   "data/raw/refresh_2026-11-16/standings_2026-11-16.json",
   "data/raw/refresh_2026-11-16/team_stats_2026-11-16.json"
  ],
  "crosschecks": {
   "n_clubs": 30,
-  "wins": 197,
-  "losses": 197,
+  "wins": 222,
+  "losses": 222,
   "wins_equal_losses": true,
-  "home_w": 102,
-  "road_l": 102,
+  "home_w": 111,
+  "road_l": 111,
   "home_w_equal_road_l": true,
-  "home_l": 94,
-  "road_w": 94,
+  "home_l": 110,
+  "road_w": 110,
   "home_l_equal_road_w": true,
-  "team_games": 394,
-  "league_games": 197.0,
-  "pts_for_sum": 44821.2,
-  "pts_against_sum": 44819.3,
-  "pts_diff": 1.9,
-  "rounding_bound": 39.4,
+  "team_games": 444,
+  "league_games": 222.0,
+  "pts_for_sum": 50499.6,
+  "pts_against_sum": 50495.7,
+  "pts_diff": 3.9,
+  "rounding_bound": 44.4,
   "pts_balance_within_bound": true,
   "games_whole": true,
   "n_teams_advanced": 30,

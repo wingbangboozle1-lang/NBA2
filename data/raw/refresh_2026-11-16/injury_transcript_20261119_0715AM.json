@@ -1,0 +1,464 @@
+{
+ "schema": "nba2.injury-transcript.v3",
+ "report_stamp_et": "2026-11-19 07:15 AM ET",
+ "revision_time_et": "2026-11-19 07:15 AM ET",
+ "retrieved_at_utc": "2026-11-19T12:32:00Z",
+ "index_checked_utc": "2026-11-19T12:20:00Z",
+ "retrieval_method": "platform page-fetch tool (fetch_page); returned as a single chunk",
+ "provenance": {
+  "publisher": "NBA Official Injury Report (official)",
+  "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf",
+  "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+  "note": "Rows transcribed from the release's own text. Where the text extraction lost a column, the cell is blank and the reason is in the row's note - never reconstructed. See F-V4-05/06/07."
+ },
+ "columns": [
+  "date",
+  "time_et",
+  "matchup",
+  "team",
+  "player",
+  "status",
+  "reason",
+  "note"
+ ],
+ "records": [
+  [
+   "2026-11-19",
+   "08:00",
+   "GSW@MEM",
+   "Golden State Warriors",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "GSW@MEM",
+   "Memphis Grizzlies",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "LA Clippers",
+   "Beal, Bradley",
+   "Out",
+   "Injury/Illness - Right Knee Injury Management",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "LA Clippers",
+   "Ingram, Brandon",
+   "Out",
+   "Injury/Illness - Right Heel Surgery",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "LA Clippers",
+   "Martinelli, Nick",
+   "Out",
+   "G League - Two-Way",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "LA Clippers",
+   "Miller, Jordan",
+   "Out",
+   "Injury/Illness - Left Rotator Cuff Surgery",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "San Antonio Spurs",
+   "Brown, Maliq",
+   "Out",
+   "G League - Two-Way",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "San Antonio Spurs",
+   "Gillespie, Ja'Kobi",
+   "Out",
+   "G League - Two-Way",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "San Antonio Spurs",
+   "Harper, Dylan",
+   "Out",
+   "Injury/Illness - Left Hip Soreness",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "San Antonio Spurs",
+   "Harris, Tobias",
+   "Out",
+   "Injury/Illness - Left Calf Strain",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "LAC@SAS",
+   "San Antonio Spurs",
+   "Quaintance, Jayden",
+   "Out",
+   "Injury/Illness - Right Knee Surgery",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "NYK@MIN",
+   "Minnesota Timberwolves",
+   "Beringer, Joan",
+   "Available",
+   "Injury/Illness - Face Mask",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "NYK@MIN",
+   "Minnesota Timberwolves",
+   "Clark, Jaylen",
+   "Out",
+   "Injury/Illness - Right Hamstring Strain",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "NYK@MIN",
+   "Minnesota Timberwolves",
+   "DiVincenzo, Donte",
+   "Out",
+   "Injury/Illness - Right Achilles Tendon Repair / Surgery",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "NYK@MIN",
+   "Minnesota Timberwolves",
+   "Edwards, Anthony",
+   "Out",
+   "Injury/Illness - Right Knee Arthroscopy",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "NYK@MIN",
+   "Minnesota Timberwolves",
+   "Pullin, Zyon",
+   "Questionable",
+   "Injury/Illness - Right Quadriceps Contusion",
+   "team carried from the block in progress"
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Portland Trail Blazers",
+   "Avdija, Deni",
+   "Questionable",
+   "Injury/Illness - Left Foot Inflammation / Soreness",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Portland Trail Blazers",
+   "Camara, Toumani",
+   "Questionable",
+   "Injury/Illness - Abdominal Soreness",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Portland Trail Blazers",
+   "Carlson, Branden",
+   "Available",
+   "Injury/Illness - Face Mask",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Portland Trail Blazers",
+   "Krejci, Vit",
+   "Out",
+   "Injury/Illness - Left Ankle Fracture",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Portland Trail Blazers",
+   "Morant, Ja",
+   "Out",
+   "Injury/Illness - Left Hamstring Strain",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Portland Trail Blazers",
+   "Sharpe, Shaedon",
+   "Out",
+   "Injury/Illness - Right Meniscus Surgery",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Portland Trail Blazers",
+   "Williams III, Robert",
+   "Out",
+   "Rest",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Portland Trail Blazers",
+   "Youngblood, Chris",
+   "Out",
+   "Injury/Illness - Right Heel Contusion / Bone Bruise",
+   ""
+  ],
+  [
+   "2026-11-19",
+   "08:00",
+   "POR@MIL",
+   "Milwaukee Bucks",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "07:00",
+   "CHA@ATL",
+   "Charlotte Hornets",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "07:00",
+   "CHA@ATL",
+   "Atlanta Hawks",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "07:30",
+   "IND@CLE",
+   "Indiana Pacers",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "07:30",
+   "IND@CLE",
+   "Cleveland Cavaliers",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "07:30",
+   "ORL@BKN",
+   "Orlando Magic",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "07:30",
+   "TOR@DET",
+   "Toronto Raptors",
+   "",
+   "",
+   "",
+   "no player cell in this row"
+  ],
+  [
+   "2026-11-20",
+   "07:30",
+   "TOR@DET",
+   "Detroit Pistons",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "08:00",
+   "NOP@OKC",
+   "New Orleans Pelicans",
+   "",
+   "",
+   "",
+   "no player cell in this row"
+  ],
+  [
+   "2026-11-20",
+   "08:00",
+   "NOP@OKC",
+   "Oklahoma City Thunder",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "08:00",
+   "WAS@CHI",
+   "Washington Wizards",
+   "",
+   "",
+   "",
+   "no player cell in this row"
+  ],
+  [
+   "2026-11-20",
+   "08:00",
+   "WAS@CHI",
+   "Chicago Bulls",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "09:30",
+   "PHX@UTA",
+   "Phoenix Suns",
+   "",
+   "",
+   "",
+   "no player cell in this row"
+  ],
+  [
+   "2026-11-20",
+   "09:30",
+   "PHX@UTA",
+   "Utah Jazz",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "10:00",
+   "HOU@DEN",
+   "Houston Rockets",
+   "",
+   "",
+   "",
+   "no player cell in this row"
+  ],
+  [
+   "2026-11-20",
+   "10:00",
+   "HOU@DEN",
+   "Denver Nuggets",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ],
+  [
+   "2026-11-20",
+   "10:00",
+   "SAC@LAL",
+   "Sacramento Kings",
+   "",
+   "",
+   "",
+   "no player cell in this row"
+  ],
+  [
+   "2026-11-20",
+   "10:00",
+   "SAC@LAL",
+   "Los Angeles Lakers",
+   "",
+   "",
+   "NOT YET SUBMITTED",
+   ""
+  ]
+ ],
+ "layout_notes": [
+  {
+   "id": "F-V4-06",
+   "finding": "GSW@NOP rows keep only Player | Status | Reason, or Player | Reason, depending on where the page broke. The parser resolves the status from the end of the row and leaves it genuinely blank where it is absent; it never assumes the middle cell is a status."
+  },
+  {
+   "id": "F-V4-05",
+   "finding": "Page-continuation rows print with empty date / time / matchup / team cells and are attributed to the block in progress; the attribution is written on the row."
+  },
+  {
+   "id": "F-V4-10",
+   "finding": "The 13:00 PM release was returned by the fetch tool in two chunks; the junction fell inside the PHX@DEN block and the join basis is recorded on the release."
+  }
+ ],
+ "content_sha256": "f575c558e7c0ca98788e12e793b9bdf8fbb6b15b90e261d53c12437e4b546d67",
+ "replication": null,
+ "binary_stored": false,
+ "binary_stored_reason": "The page-fetch tool returns the PDF's text, not its bytes, and bash egress to ak-static.cms.nba.com is blocked (HTTP 000). Every release this session therefore carries its official URL, its revision stamp and this session's retrieval stamp, plus a sha256 of the transcribed text (a content hash), but NOT the original file hash. Flagged F-V4-01; the fix is a runner with network access, not a guess."
+}

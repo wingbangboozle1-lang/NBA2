@@ -166,6 +166,29 @@ def played_games() -> dict:
             "neutral": False, "source_url": g["final_source_url"],
             "origin": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
         }
+    # RQ-8892-02 re-cut (arena/6b9f3bbe-nba2): join the committed official finals feeds
+    # through 2026-11-18 so the played pool is the exact 222 the standings card implies.
+    for pat in ("finals_2026-11-16.json", "finals_2026-11-17.json", "finals_2026-11-18.json"):
+        pf = RAW / pat
+        if not pf.exists():
+            continue
+        df = json.loads(pf.read_text())
+        files.append(str(pf.relative_to(ROOT)))
+        for g in df.get("records", []):
+            if g.get("status") != "final" or g.get("away_pts") is None or g.get("home_pts") is None:
+                continue
+            a, h = g.get("away_team") or g.get("away"), g.get("home_team") or g.get("home")
+            if not (a and h):
+                continue  # a row without club cells cannot enter the played pool (never inferred)
+            games[g["game_id"]] = {
+                "game_id": g["game_id"], "date": g["date"],
+                "away": a, "home": h,
+                "away_pts": g["away_pts"], "home_pts": g["home_pts"],
+                "home_margin": g["home_pts"] - g["away_pts"],
+                "total_pts": g["home_pts"] + g["away_pts"],
+                "neutral": False, "source_url": g.get("final_source_url") or g.get("source"),
+                "origin": str(pf.relative_to(ROOT)),
+            }
     return {"files": files, "games": [games[k] for k in sorted(games)]}
 
 

@@ -4303,7 +4303,7 @@
   {
    "file": "data/raw/refresh_2026-11-15/results_2026-11-15.json",
    "date": "2026-11-15",
-   "retrieved_utc": "2026-11-16T14:30:00Z",
+   "retrieved_utc": "2026-11-19T12:32:00Z",
    "method": "finals and quarter scores read from each game's official gamebook PDF 'SCORE BY PERIOD' table (statsdmz.nba.com) and cross-read against the final printed on nba.com/schedule for 2026-11-16, via the platform page-fetch tool. Bash egress cannot reach nba.com; the PDFs were read as text, not archived as binaries (F-V4-01).",
    "settle_rule": "A game is SETTLED only when its official gamebook period row sums to the final for that club AND the final matches the official schedule/scoreboard. A club whose period row was not transcribed carries null quarters and is shown as unverified; nothing is back-solved from the final.",
    "source_page": null,
@@ -4357,5 +4357,5 @@
  ],
  "settle_rule": "A game is settled only when a committed, official final covers it AND, where a period row was captured, that row sums to the final. Ungraded is not a loss and is never imputed. The stamp is the end of the latest graded game day.",
  "luck_rule": "Hit rate alone is not evidence. p_observed_run_under_model is the probability, under the seal's own probabilities, of the exact run of winners observed. If that number is not small, the run is luck.",
- "sha256_after_settlement": "6a624740bcd0fd52fbf0c9eb4d633e3d96534b79d89a4b8b9db5018685c11240"
+ "sha256_after_settlement": "68a4db1d77e9c46386dc4f634fd3434ce2b77ba01b7e35e7695368a583dff3da"
 }

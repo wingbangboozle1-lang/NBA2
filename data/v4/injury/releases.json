@@ -2,9 +2,9 @@
  "schema": "nba2.v4.injury-releases.v2",
  "session": "arena/4f780342-nba2",
  "index_url": "https://official.nba.com/nba-injury-report-2026-27-season/",
- "retrieved_utc": "2026-11-17T16:41:00Z",
+ "retrieved_utc": "2026-11-19T12:32:00Z",
  "ledger": {
-  "n_releases_stored_this_session": 3,
+  "n_releases_stored_this_session": 4,
   "releases": [
    {
     "report_stamp_et": "2026-11-16 09:30 AM ET",
@@ -92,6 +92,39 @@
     "text_lines": 82,
     "method": "platform page-fetch tool (fetch_page); returned as a single chunk",
     "chunk_junction": "the Kessler reason ends at 'Right Lower Leg' and the next rendered line prints a stray header cell 'Soreness' before the Reaves continuation row; the junction is recorded, not merged (F-V4-10)",
+    "binary_stored": false,
+    "binary_stored_reason": "the PDF bytes cannot be downloaded from this sandbox: bash egress to ak-static.cms.nba.com is TLS-reset. nba2/v4/injury_ingest.py attempts the byte archive from a GitHub runner and records the result; see data/v4/injury/binary_manifest.json (F-V4-01).",
+    "layout_notes": [
+     [
+      "F-V4-06",
+      "GSW@NOP rows in this release keep only Player | Status | Reason, or Player | Reason, depending on where the page broke. The parser resolves the status from the end of the row and leaves it blank where it is genuinely absent; it never assumes the middle cell is a status."
+     ],
+     [
+      "F-V4-05",
+      "Page-continuation rows print with empty date / time / matchup / team cells. They are attributed to the block in progress, and the attribution is written on the row."
+     ],
+     [
+      "F-V4-10",
+      "The 13:00 PM release was returned by the fetch tool in two chunks; the junction fell inside the PHX@DEN block. The join basis is recorded on the release and can be re-checked against the PDF."
+     ]
+    ]
+   },
+   {
+    "report_stamp_et": "2026-11-19 07:15 AM ET",
+    "revision_time_et": "11/19/26 07:15 AM",
+    "retrieved_at_utc": "2026-11-19T12:32:00Z",
+    "index_checked_utc": "2026-11-19T12:20:00Z",
+    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf",
+    "rows": 42,
+    "rows_with_status": 22,
+    "rows_blank_status": 6,
+    "placeholders": 14,
+    "unread": 0,
+    "text_sha256": "9afd054b120fe899d1f0f6c7763364bb4e3c3b346ef5492f2e062e85513faca7",
+    "content_sha256": "9afd054b120fe899d1f0f6c7763364bb4e3c3b346ef5492f2e062e85513faca7",
+    "text_lines": 60,
+    "method": "platform page-fetch tool (fetch_page); returned as a single chunk",
+    "chunk_junction": null,
     "binary_stored": false,
     "binary_stored_reason": "the PDF bytes cannot be downloaded from this sandbox: bash egress to ak-static.cms.nba.com is TLS-reset. nba2/v4/injury_ingest.py attempts the byte archive from a GitHub runner and records the result; see data/v4/injury/binary_manifest.json (F-V4-01).",
     "layout_notes": [
@@ -1833,9 +1866,1037 @@
     "became_unread": [],
     "placeholder_resolved": [],
     "note": "Matched on (date, matchup, team, player). A club's first filing replaces its NOT YET SUBMITTED placeholder, so one morning-to-afternoon pair legitimately adds many player rows: that is a filing, not instability. A blank status is diffed as blank and is never coerced to a value."
+   },
+   {
+    "from": {
+     "stamp_et": "2026-11-17 11:00 AM ET",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-17_11_00AM.pdf",
+     "retrieved_utc": "2026-11-17T16:41:00Z",
+     "rows": 57
+    },
+    "to": {
+     "stamp_et": "2026-11-19 07:15 AM ET",
+     "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-19_07_15AM.pdf",
+     "retrieved_utc": "2026-11-19T12:32:00Z",
+     "rows": 42
+    },
+    "match_key": [
+     "date",
+     "matchup",
+     "team",
+     "player"
+    ],
+    "counts": {
+     "status_changed": 0,
+     "reason_changed_only": 0,
+     "added": 42,
+     "removed": 57,
+     "became_unread": 0,
+     "placeholder_resolved": 0,
+     "still_placeholder": 0
+    },
+    "status_changes": [],
+    "reason_changes": [],
+    "added": [
+     {
+      "key": [
+       "2026-11-19",
+       "GSW@MEM",
+       "Golden State Warriors",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "GSW@MEM",
+       "Memphis Grizzlies",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "LA Clippers",
+       "Beal, Bradley"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Injury Management"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "LA Clippers",
+       "Ingram, Brandon"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Heel Surgery"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "LA Clippers",
+       "Martinelli, Nick"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "LA Clippers",
+       "Miller, Jordan"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Rotator Cuff Surgery"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "San Antonio Spurs",
+       "Brown, Maliq"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "San Antonio Spurs",
+       "Gillespie, Ja'Kobi"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "San Antonio Spurs",
+       "Harper, Dylan"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Hip Soreness"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "San Antonio Spurs",
+       "Harris, Tobias"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Calf Strain"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "LAC@SAS",
+       "San Antonio Spurs",
+       "Quaintance, Jayden"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Surgery"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "NYK@MIN",
+       "Minnesota Timberwolves",
+       "Beringer, Joan"
+      ],
+      "status": "Available",
+      "reason": "Injury/Illness - Face Mask"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "NYK@MIN",
+       "Minnesota Timberwolves",
+       "Clark, Jaylen"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Hamstring Strain"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "NYK@MIN",
+       "Minnesota Timberwolves",
+       "DiVincenzo, Donte"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Achilles Tendon Repair / Surgery"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "NYK@MIN",
+       "Minnesota Timberwolves",
+       "Edwards, Anthony"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Arthroscopy"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "NYK@MIN",
+       "Minnesota Timberwolves",
+       "Pullin, Zyon"
+      ],
+      "status": "Questionable",
+      "reason": "Injury/Illness - Right Quadriceps Contusion"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Milwaukee Bucks",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Portland Trail Blazers",
+       "Avdija, Deni"
+      ],
+      "status": "Questionable",
+      "reason": "Injury/Illness - Left Foot Inflammation / Soreness"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Portland Trail Blazers",
+       "Camara, Toumani"
+      ],
+      "status": "Questionable",
+      "reason": "Injury/Illness - Abdominal Soreness"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Portland Trail Blazers",
+       "Carlson, Branden"
+      ],
+      "status": "Available",
+      "reason": "Injury/Illness - Face Mask"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Portland Trail Blazers",
+       "Krejci, Vit"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Ankle Fracture"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Portland Trail Blazers",
+       "Morant, Ja"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Hamstring Strain"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Portland Trail Blazers",
+       "Sharpe, Shaedon"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Meniscus Surgery"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Portland Trail Blazers",
+       "Williams III, Robert"
+      ],
+      "status": "Out",
+      "reason": "Rest"
+     },
+     {
+      "key": [
+       "2026-11-19",
+       "POR@MIL",
+       "Portland Trail Blazers",
+       "Youngblood, Chris"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Heel Contusion / Bone Bruise"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "CHA@ATL",
+       "Atlanta Hawks",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "CHA@ATL",
+       "Charlotte Hornets",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "HOU@DEN",
+       "Denver Nuggets",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "HOU@DEN",
+       "Houston Rockets",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": null
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "IND@CLE",
+       "Cleveland Cavaliers",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "IND@CLE",
+       "Indiana Pacers",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "NOP@OKC",
+       "New Orleans Pelicans",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": null
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "NOP@OKC",
+       "Oklahoma City Thunder",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "ORL@BKN",
+       "Orlando Magic",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "PHX@UTA",
+       "Phoenix Suns",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": null
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "PHX@UTA",
+       "Utah Jazz",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "SAC@LAL",
+       "Los Angeles Lakers",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "SAC@LAL",
+       "Sacramento Kings",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": null
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "TOR@DET",
+       "Detroit Pistons",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "TOR@DET",
+       "Toronto Raptors",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": null
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "WAS@CHI",
+       "Chicago Bulls",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-20",
+       "WAS@CHI",
+       "Washington Wizards",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": null
+     }
+    ],
+    "removed": [
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Charlotte Hornets",
+       "Ajayi, Michael"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Charlotte Hornets",
+       "Boswell, Kylan"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Charlotte Hornets",
+       "Knueppel, Kon"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Hamstring Strain"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Charlotte Hornets",
+       "Schroder, Dennis"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Hamstring Strain"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Charlotte Hornets",
+       "Steinbach, Hannes"
+      ],
+      "status": "Out",
+      "reason": "G League - On Assignment"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Los Angeles Lakers",
+       "Grimes, Quentin"
+      ],
+      "status": "Available",
+      "reason": "Injury/Illness - Right Finger Splint"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Los Angeles Lakers",
+       "Kessler, Walker"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Lower Leg"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "CHA@LAL",
+       "Los Angeles Lakers",
+       "Reaves, Austin"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Heel Contusion / Bone Bruise"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "Detroit Pistons",
+       "Duren, Jalen"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Hamstring Strain"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "Detroit Pistons",
+       "Holland II, Ronald"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Knee Contusion / Bone Bruise"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "Detroit Pistons",
+       "Joe, Isaiah"
+      ],
+      "status": "Doubtful",
+      "reason": "Injury/Illness - Right Hip Contusion"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "Detroit Pistons",
+       "Okorie, Ebuka"
+      ],
+      "status": "Out",
+      "reason": "G League - On Assignment"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "Detroit Pistons",
+       "Onyenso, Ugonna"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "Detroit Pistons",
+       "Prince, Taurean"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Soreness"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "Detroit Pistons",
+       "Robinson, Duncan"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Quadriceps Strain"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "San Antonio Spurs",
+       "Brown, Maliq"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "San Antonio Spurs",
+       "Gillespie, Ja'Kobi"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "San Antonio Spurs",
+       "Harris, Tobias"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Calf Strain"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "DET@SAS",
+       "San Antonio Spurs",
+       "Quaintance, Jayden"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Surgery"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "NYK@TOR",
+       "Toronto Raptors",
+       "Bittle, Nate"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Foot Avulsion Fracture"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "NYK@TOR",
+       "Toronto Raptors",
+       "Leonard, Kawhi"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Knee Injury Management"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "NYK@TOR",
+       "Toronto Raptors",
+       "McCullar Jr., Kevin"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "NYK@TOR",
+       "Toronto Raptors",
+       "Smith, Malachi"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "POR@MIN",
+       "Portland Trail Blazers",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "LA Clippers",
+       "Beal, Bradley"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Knee Injury Management"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "LA Clippers",
+       "Ingram, Brandon"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Heel Surgery"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "LA Clippers",
+       "Miller, Jordan"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Rotator Cuff Surgery"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "LA Clippers",
+       "Niederhauser, Yanic Konan"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Lisfranc Surgery"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "Utah Jazz",
+       "Bufkin, Kobe"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "Utah Jazz",
+       "Hayes, Jaxson"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Left Knee Strain"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "Utah Jazz",
+       "Ingram, Harrison"
+      ],
+      "status": "Out",
+      "reason": "G League - Two-Way"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "Utah Jazz",
+       "Jackson Jr., Jaren"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right MCL Tear"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "Utah Jazz",
+       "Markkanen, Lauri"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Hand Fracture"
+     },
+     {
+      "key": [
+       "2026-11-17",
+       "UTA@LAC",
+       "Utah Jazz",
+       "Nurkic, Jusuf"
+      ],
+      "status": "Out",
+      "reason": "Injury/Illness - Right Right Foot; 2nd Plantar Plate Tear"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "ATL@OKC",
+       "Atlanta Hawks",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "ATL@OKC",
+       "Oklahoma City Thunder",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "BOS@DEN",
+       "Boston Celtics",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "BOS@DEN",
+       "Denver Nuggets",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "CHI@BKN",
+       "Brooklyn Nets",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "CHI@BKN",
+       "Chicago Bulls",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "DET@NOP",
+       "Detroit Pistons",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "DET@NOP",
+       "New Orleans Pelicans",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "GSW@DAL",
+       "Dallas Mavericks",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "HOU@IND",
+       "Houston Rockets",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "HOU@IND",
+       "Indiana Pacers",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "MEM@CLE",
+       "Cleveland Cavaliers",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "MEM@CLE",
+       "Memphis Grizzlies",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "MIL@MIA",
+       "Miami Heat",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "MIL@MIA",
+       "Milwaukee Bucks",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "PHI@ORL",
+       "Orlando Magic",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "PHI@ORL",
+       "Philadelphia 76ers",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "PHX@SAC",
+       "Phoenix Suns",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "PHX@SAC",
+       "Sacramento Kings",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "UTA@LAL",
+       "Los Angeles Lakers",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "UTA@LAL",
+       "Utah Jazz",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "WAS@TOR",
+       "Toronto Raptors",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     },
+     {
+      "key": [
+       "2026-11-18",
+       "WAS@TOR",
+       "Washington Wizards",
+       "<placeholder>"
+      ],
+      "status": null,
+      "reason": "NOT YET SUBMITTED"
+     }
+    ],
+    "became_unread": [],
+    "placeholder_resolved": [],
+    "note": "Matched on (date, matchup, team, player). A club's first filing replaces its NOT YET SUBMITTED placeholder, so one morning-to-afternoon pair legitimately adds many player rows: that is a filing, not instability. A blank status is diffed as blank and is never coerced to a value."
    }
   ],
-  "consecutive_release_diffs": 2,
+  "consecutive_release_diffs": 3,
   "gap": "Where two consecutive releases lie on the same day, the diff isolates revision drift. A night-to-morning diff mixes drift with the league's filing deadline, which is why the same-day pair is the one to read.",
   "binary_gap_flag": "F-V4-01"
  },

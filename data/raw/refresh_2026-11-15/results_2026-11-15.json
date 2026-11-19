@@ -1,7 +1,7 @@
 {
  "schema": "nba2.results-feed.v3",
  "game_date": "2026-11-15",
- "retrieved_utc": "2026-11-16T14:30:00Z",
+ "retrieved_utc": "2026-11-19T12:32:00Z",
  "retrieval_method": "finals and quarter scores read from each game's official gamebook PDF 'SCORE BY PERIOD' table (statsdmz.nba.com) and cross-read against the final printed on nba.com/schedule for 2026-11-16, via the platform page-fetch tool. Bash egress cannot reach nba.com; the PDFs were read as text, not archived as binaries (F-V4-01).",
  "settle_rule": "A game is SETTLED only when its official gamebook period row sums to the final for that club AND the final matches the official schedule/scoreboard. A club whose period row was not transcribed carries null quarters and is shown as unverified; nothing is back-solved from the final.",
  "records": [
@@ -31,7 +31,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
    "quarter_status": "read",
    "quarter_note": "both period rows sum to the final (124, 131)",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "game_id": "0022600237",
@@ -59,7 +59,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_LALPHX_book.pdf",
    "quarter_status": "read",
    "quarter_note": "period rows as captured 2026-11-16 by this session's schedule read",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "game_id": "0022600238",
@@ -87,7 +87,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_CHALAC_book.pdf",
    "quarter_status": "read",
    "quarter_note": "period rows as captured 2026-11-16 by this session's schedule read",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "game_id": "0022600239",
@@ -115,7 +115,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_SASUTA_book.pdf",
    "quarter_status": "read",
    "quarter_note": "period rows as captured 2026-11-16 by this session's schedule read",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "game_id": "0022600240",
@@ -138,7 +138,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_DALBOS_book.pdf",
    "quarter_status": "partial",
    "quarter_note": "away period row not transcribed; home row (42+25+37+27=131) checked",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "game_id": "0022600241",
@@ -168,7 +168,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_NYKTOR_book.pdf",
    "quarter_status": "read",
    "quarter_note": "five periods each; both rows sum to the final (112, 108)",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "game_id": "0022600242",
@@ -196,7 +196,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_HOUWAS_book.pdf",
    "quarter_status": "read",
    "quarter_note": "both period rows sum to the final (147, 119)",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "game_id": "0022600243",
@@ -224,7 +224,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_ATLMIL_book.pdf",
    "quarter_status": "read",
    "quarter_note": "both period rows sum to the final (113, 106)",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   },
   {
    "game_id": "0022600244",
@@ -252,7 +252,7 @@
    "gamebook_url": "https://statsdmz.nba.com/pdfs/20261115/20261115_OKCSAC_book.pdf",
    "quarter_status": "read",
    "quarter_note": "both period rows sum to the final (125, 103)",
-   "list_url": "https://www.nba.com/schedule?date=2026-11-16"
+   "list_url": "https://www.nba.com/games?date=2026-11-19"
   }
  ],
  "n_games": 9,
