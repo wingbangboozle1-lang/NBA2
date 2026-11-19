@@ -10,9 +10,13 @@ Three sets are built from committed files only:
 * **scheduled** — the union of every committed official slate snapshot, keyed by official
   game id (a game seen by two snapshots is one game, and the second sighting is a
   corroboration, not a second row);
-* **finals committed** — the union of every committed official result file, plus the v4
-  settlement's own ``finals_used`` list. A game counts only when a final score is present;
-* **graded** — the distinct game ids the v4 settlement actually scored.
+* **finals committed** — the union of every committed official result file. A game counts
+  only when a final score is present;
+* **graded** — the distinct game ids the v4 settlement actually scored (a ledger's
+  ``graded`` rows). A game with a final but no sealed pick is never counted here: it was
+  never pre-registered, so it cannot be graded — counting the settlement's ``finals_used``
+  list (which includes every final it read) used to report exactly those games as graded
+  (session arena/af5df7a7-nba2, 2026-11-19).
 
 The difference between those three numbers is the settlement backlog, and each row says
 which of the three is missing and why.
@@ -51,12 +55,32 @@ BOOK_RE = re.compile(r"^https://statsdmz\.nba\.com/pdfs/(\d{8})/\1_[A-Z]{6}_book
 
 # Frozen clock. The result-feed page must answer "has this game day ended?" the same way on
 # every rebuild, because pages.yml fails the deploy if a rebuild differs from what is
-# committed. AS_OF is the timestamp of the most recent official capture in this repository
-# (the 2026-11-17T15:52:00Z capture by session arena/8892d20c-nba2), converted to Eastern with the November UTC-5
-# offset. It is stated on the page, so a reader can age it.
-AS_OF_UTC = "2026-11-17T15:52:00Z"
-AS_OF_ET = "2026-11-17 10:52 ET"
-AS_OF_DATE = "2026-11-17"
+# committed. AS_OF is the timestamp of the most recent official capture in this repository —
+# read from data/raw/refresh_verdict.json, which the ingest job writes and commits on every
+# capture run — converted to Eastern with the November UTC-5 offset. It is stated on the
+# page, so a reader can age it. Deriving it from the committed capture (instead of a
+# hand-bumped constant) is still wall-clock-free — a rebuild of the same commit answers the
+# same way — and it cannot go stale behind the ingest bot, which is exactly how the pinned
+# 2026-11-17 constant came to disagree with the committed 2026-11-17 finals (nightly
+# publish failure, session arena/af5df7a7-nba2, 2026-11-19).
+_FALLBACK_AS_OF_UTC = "2026-11-18T19:30:52Z"
+
+
+def _as_of() -> tuple[str, str, str]:
+    """(utc, et, date) of the newest committed official capture attempt."""
+    import datetime as _dt
+    doc = maybe_load(RAW / "refresh_verdict.json") or {}
+    utc = doc.get("attempted_at_utc") or _FALLBACK_AS_OF_UTC
+    try:
+        stamp = _dt.datetime.fromisoformat(str(utc).replace("Z", "+00:00"))
+    except ValueError:
+        utc, stamp = _FALLBACK_AS_OF_UTC, _dt.datetime.fromisoformat(
+            _FALLBACK_AS_OF_UTC.replace("Z", "+00:00"))
+    et = stamp - _dt.timedelta(hours=5)  # in-season US Eastern is UTC-5 (EST)
+    return str(utc), et.strftime("%Y-%m-%d %H:%M ET"), et.date().isoformat()
+
+
+AS_OF_UTC, AS_OF_ET, AS_OF_DATE = _as_of()
 
 
 def _glob(paths) -> list[Path]:
@@ -113,7 +137,7 @@ def _records_of(doc: dict) -> list[dict]:
     """
     merged: dict[str, dict] = {}
     order: list[str] = []
-    for key in ("records", "games", "results"):
+    for key in ("records", "games", "results", "rows"):
         v = doc.get(key)
         if not isinstance(v, list):
             continue
@@ -170,12 +194,18 @@ def finals_committed() -> dict[str, dict]:
                       else "all periods inline" if (aq and len(aq) > 4)
                       else "regulation only")
             rec = {
-                "game_id": gid, "date": r.get("date") or fallback_date, "away": r.get("away"),
-                "home": r.get("home"), "away_pts": ap, "home_pts": hp,
+                "game_id": gid, "date": r.get("date") or fallback_date,
+                "away": r.get("away") or r.get("away_team"),
+                "home": r.get("home") or r.get("home_team"),
+                "away_pts": ap, "home_pts": hp,
                 "away_quarters": aq, "home_quarters": hq,
                 "ot_periods": r.get("ot_periods"),
                 "period_schema": schema,
-                "source_url": r.get("source_url") or r.get("official_source"),
+                # Committed feeds key the same official link three different ways;
+                # every alias here is read by nba2/pipeline/settle.py::normalise_source
+                # as well, so the two readers cannot disagree about provenance.
+                "source_url": r.get("source_url") or r.get("official_source")
+                              or r.get("final_source_url") or r.get("source"),
                 "gamebook_url": r.get("gamebook_url") or r.get("gamebook_source"),
                 "files": [rel],
             }
@@ -189,6 +219,15 @@ def finals_committed() -> dict[str, dict]:
                 if (prev["away_pts"], prev["home_pts"]) != (ap, hp):
                     prev.setdefault("conflicts", []).append(
                         {"file": rel, "away_pts": ap, "home_pts": hp})
+                # A file seen later can carry facts an earlier sparse row lacks (club
+                # names, quarter rows, the official URL). A non-null value fills a blank;
+                # it never overwrites what another committed file already states; a
+                # disagreeing score was flagged above and is not merged away.
+                for k, v in rec.items():
+                    if k in ("files", "conflicts", "away_pts", "home_pts"):
+                        continue
+                    if prev.get(k) is None and v is not None:
+                        prev[k] = v
     return out
 
 
@@ -219,10 +258,6 @@ def graded_ids() -> tuple[set, dict]:
         per_ledger.append({"ledger": L.get("ledger"), "n_graded": len(rows),
                            "n_ungraded": len(L.get("ungraded") or []),
                            "latest_graded_game_date": L.get("latest_graded_game_date")})
-    for r in doc.get("finals_used", []) or []:
-        gid = r.get("game_id")
-        if gid:
-            graded.add(gid)
     return graded, {"per_ledger": per_ledger,
                     "settled_at_utc": (doc.get("settlement") or {}).get("settled_at_utc"),
                     "latest_graded_game_date": (doc.get("settlement") or {}).get("latest_graded_game_date")}
@@ -307,6 +342,8 @@ def build(today: str = AS_OF_DATE) -> dict:
     for gid in sorted(set(sched) | set(fin)):
         g = sched.get(gid, {})
         f = fin.get(gid)
+        away = g.get("away") or (f or {}).get("away")
+        home = g.get("home") or (f or {}).get("home")
         verdict, detail = ("no official final is committed", "blank, never inferred") \
             if not f else quarter_check(f)
         schema = (f or {}).get("period_schema")
@@ -316,10 +353,10 @@ def build(today: str = AS_OF_DATE) -> dict:
             schema = "no final committed — no period row to hold"
         games.append({
             "game_id": gid, "date": g.get("date") or (f or {}).get("date"),
-            "matchup": g.get("matchup") or f"{g.get('away')} @ {g.get('home')}"
-                       or f"{(f or {}).get('away')} @ {(f or {}).get('home')}",
-            "away": g.get("away") or (f or {}).get("away"),
-            "home": g.get("home") or (f or {}).get("home"),
+            # f-strings are always truthy, so the fallbacks must be chosen by content:
+            # an empty slate row must not stamp "None @ None" over a committed final.
+            "matchup": g.get("matchup") or (f"{away} @ {home}" if away and home else None),
+            "away": away, "home": home,
             "away_pts": (f or {}).get("away_pts"), "home_pts": (f or {}).get("home_pts"),
             "away_quarters": (f or {}).get("away_quarters"),
             "home_quarters": (f or {}).get("home_quarters"),
@@ -337,7 +374,7 @@ def build(today: str = AS_OF_DATE) -> dict:
     return {
         "schema": "nba2.v6.results-coverage.v1",
         "session": "arena/f5ac4e74-nba2",
-        "as_of_utc": "2026-11-17T00:00:00Z",
+        "as_of_utc": AS_OF_UTC,
         "today": today,
         "n_dates": len(rows),
         "n_games_known": len(games),

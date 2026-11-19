@@ -11,8 +11,10 @@ from __future__ import annotations
 
 import json
 import math
+import shutil
 import tempfile
 import unittest
+from contextlib import contextmanager
 from pathlib import Path
 
 from . import official as O
@@ -23,6 +25,35 @@ from . import ledger as LD
 from . import gates as G
 from . import build as B
 from . import check as CK
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+@contextmanager
+def _preserved(*paths: Path):
+    """Snapshot the given directories and restore them exactly on exit.
+
+    Same fix as A6-1 in nba2/v2/test_v2.py: B.build() rewrites the PUBLISHED tree
+    (site/) and data/v3/, and the rewrite drops the v4/v5/v6 navigation grouping
+    that the later passes apply — so running the suite used to leave the tree
+    dirty and a later commit would capture test output instead of pipeline
+    output, failing the zero-tolerance publish-parity check. The build is still
+    exercised; the tree is restored byte-for-byte afterwards
+    (session arena/af5df7a7-nba2, 2026-11-19).
+    """
+    tmp = Path(tempfile.mkdtemp(prefix="nba2-preserve-"))
+    saved = []
+    try:
+        for i, p in enumerate(paths):
+            dst = tmp / str(i)
+            shutil.copytree(p, dst)
+            saved.append((p, dst))
+        yield
+    finally:
+        for p, dst in saved:
+            shutil.rmtree(p, ignore_errors=True)
+            shutil.copytree(dst, p)
+        shutil.rmtree(tmp, ignore_errors=True)
 
 
 class TestSnapshot(unittest.TestCase):
@@ -267,23 +298,25 @@ class TestGates(unittest.TestCase):
 
 class TestPublishedPages(unittest.TestCase):
     def test_pages_exist_and_are_checked(self):
-        pages, _ = B.build()
-        # Derived from the nav rather than a magic number so that adding a page to
-        # V3_NAV cannot silently break this assertion (session arena/f8f8f2b8-nba2
-        # added player-logs.html, minutes.html and injury-diff.html).
-        self.assertEqual(len(pages), len(B.V3_NAV))
-        for href, _label in B.V3_NAV:
-            self.assertIn(href, pages)
-            self.assertTrue((Path(B.SITE) / href).exists(), href)
-        self.assertEqual(CK.structural(), [])
-        self.assertEqual(CK.semantic(), [])
+        with _preserved(ROOT / "site", ROOT / "data" / "v3"):
+            pages, _ = B.build()
+            # Derived from the nav rather than a magic number so that adding a page to
+            # V3_NAV cannot silently break this assertion (session arena/f8f8f2b8-nba2
+            # added player-logs.html, minutes.html and injury-diff.html).
+            self.assertEqual(len(pages), len(B.V3_NAV))
+            for href, _label in B.V3_NAV:
+                self.assertIn(href, pages)
+                self.assertTrue((Path(B.SITE) / href).exists(), href)
+            self.assertEqual(CK.structural(), [])
+            self.assertEqual(CK.semantic(), [])
 
     def test_nav_injection_is_idempotent(self):
-        B.inject_nav()
-        first = {p.name: p.read_text() for p in Path(B.SITE).glob("*.html")}
-        B.inject_nav()
-        second = {p.name: p.read_text() for p in Path(B.SITE).glob("*.html")}
-        self.assertEqual(first, second)
+        with _preserved(ROOT / "site"):
+            B.inject_nav()
+            first = {p.name: p.read_text() for p in Path(B.SITE).glob("*.html")}
+            B.inject_nav()
+            second = {p.name: p.read_text() for p in Path(B.SITE).glob("*.html")}
+            self.assertEqual(first, second)
 
     def test_every_published_row_links_out(self):
         import re
