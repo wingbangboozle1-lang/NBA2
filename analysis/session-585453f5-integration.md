@@ -247,3 +247,17 @@ root+v6+v7 tests pass, `nba2.v6.check` exits 0, 8024 internal links OK, 1436 sou
 next scheduled fire (or after a manual dispatch). This session can prove the sequence is
 reproducible from the committed inputs — which is exactly what the publish job does — but it
 cannot observe the next cron run.
+
+### Follow-through: the dual-deploy race was found and fixed
+
+While checking the deploy, this session noticed that **two** workflows declared the
+`github-pages` environment — `pages.yml` and `verification-desk.yml` — and that the desk
+workflow uploaded `audit/923eb342/` as the *entire* Pages artefact. Whichever run finished
+second would replace the site root, so the front door could silently become a 25 KB audit page
+instead of the dashboard. It was recorded here and, before this branch merged, session
+`arena/923eb342-nba2` landed the fix on `main` in PR #149 (`2ae9ee2`, "stop deploying a second
+Pages artefact — it replaced the canonical site root").
+
+Measured outcome on `main` after that fix: `grep -rn 'deploy-pages' .github/workflows/` resolves
+to `pages.yml` only, and the live root `/NBA2/index.html` is the dashboard (verified through the
+page-fetch transport after the merge of PR #146).
