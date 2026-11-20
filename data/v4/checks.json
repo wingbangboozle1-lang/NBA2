@@ -46,7 +46,7 @@
    "id": "G-V4-7",
    "name": "settlement re-hashes and the seal still verifies",
    "ok": true,
-   "measured": "settlement hash 819af6fed430d82c",
+   "measured": "settlement hash 78aff6bad97a770d",
    "detail": "hash matches and the sealed ledger is unmodified"
   },
   {
@@ -59,8 +59,8 @@
  ],
  "settlement_verify": {
   "ok": true,
-  "stored": "819af6fed430d82cf62e54933740b52224357ec022a809ad9e5d683b07304891",
-  "recomputed": "819af6fed430d82cf62e54933740b52224357ec022a809ad9e5d683b07304891",
+  "stored": "78aff6bad97a770d12fe13ae4f9db0f62c230294f31be75a1a3924a4301fc1b7",
+  "recomputed": "78aff6bad97a770d12fe13ae4f9db0f62c230294f31be75a1a3924a4301fc1b7",
   "seal_still_verified": true,
   "seals_still_verified": {
    "sealed-2026-11-13.json": true,
