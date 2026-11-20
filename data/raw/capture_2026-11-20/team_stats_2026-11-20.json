@@ -1,0 +1,32 @@
+{
+ "schema": "nba2.team-stats-3page.v1",
+ "unavailable_transports": {
+  "stats_leaguestandingsv3": "timeout or 403 from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json)",
+  "stats_leaguedashteamstats": "timeout or 403 from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json)",
+  "stats_scoreboardv3": "timeout or 403 from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json)",
+  "cdn_scoreboard": "timeout or 403 from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json)"
+ },
+ "pages": {
+  "team_traditional": {
+   "source_url": "https://www.nba.com/stats/teams/traditional?Season=2026-27&SeasonType=Regular+Season",
+   "status": "unavailable",
+   "measured_at_utc": "2026-11-20T14:52:06+00:00",
+   "reason": "the page is server-rendered without its table: nba.com loads the rows in the browser from stats.nba.com, which times out from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json)",
+   "checked_by": "nba2.v2.refresh.fetch_team_stats"
+  },
+  "team_advanced": {
+   "source_url": "https://www.nba.com/stats/teams/advanced?Season=2026-27&SeasonType=Regular+Season",
+   "status": "unavailable",
+   "measured_at_utc": "2026-11-20T14:52:06+00:00",
+   "reason": "the page is server-rendered without its table: nba.com loads the rows in the browser from stats.nba.com, which times out from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json)",
+   "checked_by": "nba2.v2.refresh.fetch_team_stats"
+  },
+  "team_opponent": {
+   "source_url": "https://www.nba.com/stats/teams/opponent?Season=2026-27&SeasonType=Regular+Season",
+   "status": "unavailable",
+   "measured_at_utc": "2026-11-20T14:52:07+00:00",
+   "reason": "the page is server-rendered without its table: nba.com loads the rows in the browser from stats.nba.com, which times out from a GitHub-hosted runner (data/raw/page_fixtures/transport_probe.json)",
+   "checked_by": "nba2.v2.refresh.fetch_team_stats"
+  }
+ }
+}

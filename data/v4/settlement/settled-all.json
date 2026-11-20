@@ -4339,7 +4339,7 @@
   {
    "file": "data/raw/finals_2026-11-17.json",
    "date": "2026-11-17",
-   "retrieved_utc": "2026-11-19T19:34:16+00:00",
+   "retrieved_utc": "2026-11-20T14:51:09+00:00",
    "method": "not filed in this capture file — see the source link",
    "settle_rule": null,
    "source_page": null,
@@ -4357,5 +4357,5 @@
  ],
  "settle_rule": "A game is settled only when a committed, official final covers it AND, where a period row was captured, that row sums to the final. Ungraded is not a loss and is never imputed. The stamp is the end of the latest graded game day.",
  "luck_rule": "Hit rate alone is not evidence. p_observed_run_under_model is the probability, under the seal's own probabilities, of the exact run of winners observed. If that number is not small, the run is luck.",
- "sha256_after_settlement": "2d1df07e4cb64e5f08e79d4e94f69bafa8f1d963c061d56d38599db3a43b9a97"
+ "sha256_after_settlement": "819af6fed430d82cf62e54933740b52224357ec022a809ad9e5d683b07304891"
 }
