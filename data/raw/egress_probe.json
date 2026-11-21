@@ -1,6 +1,6 @@
 {
  "schema": "nba2.egress-probe.v1",
- "probed_at_utc": "2026-11-20T14:25:19Z",
+ "probed_at_utc": "2026-11-21T14:12:22Z",
  "runner": "GitHub-hosted ubuntu-latest",
  "purpose": "answers, with a timestamp, which official endpoints the nightly job can actually reach from a runner - replacing the assumption inherited from a development sandbox where all nba.com egress is TLS-reset",
  "rows": [
@@ -8,8 +8,8 @@
    "name": "injury_index",
    "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
    "http_status": 200,
-   "bytes": 41170,
-   "elapsed_ms": 332,
+   "bytes": 218019,
+   "elapsed_ms": 380,
    "ok": true,
    "error": null,
    "is_pdf": false
@@ -19,7 +19,7 @@
    "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-11-16_01_00PM.pdf",
    "http_status": 200,
    "bytes": 95928,
-   "elapsed_ms": 103,
+   "elapsed_ms": 109,
    "ok": true,
    "error": null,
    "is_pdf": true
@@ -29,7 +29,7 @@
    "url": "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json",
    "http_status": 403,
    "bytes": null,
-   "elapsed_ms": 159,
+   "elapsed_ms": 146,
    "ok": false,
    "error": "HTTP 403",
    "is_pdf": null
@@ -39,7 +39,7 @@
    "url": "https://stats.nba.com/stats/scoreboardv2?LeagueID=00&GameDate=11/16/2026&DayOffset=0",
    "http_status": null,
    "bytes": null,
-   "elapsed_ms": 25086,
+   "elapsed_ms": 25093,
    "ok": false,
    "error": "TimeoutError: The read operation timed out",
    "is_pdf": null
@@ -48,8 +48,8 @@
    "name": "schedule",
    "url": "https://www.nba.com/schedule?date=2026-11-16",
    "http_status": 200,
-   "bytes": 203333,
-   "elapsed_ms": 1152,
+   "bytes": 203336,
+   "elapsed_ms": 386,
    "ok": true,
    "error": null,
    "is_pdf": false
@@ -58,8 +58,8 @@
    "name": "standings",
    "url": "https://www.nba.com/standings",
    "http_status": 200,
-   "bytes": 225070,
-   "elapsed_ms": 470,
+   "bytes": 225132,
+   "elapsed_ms": 223,
    "ok": true,
    "error": null,
    "is_pdf": false
@@ -69,7 +69,7 @@
    "url": "https://statsdmz.nba.com/pdfs/20261115/20261115_INDPHI_book.pdf",
    "http_status": 200,
    "bytes": 146951,
-   "elapsed_ms": 264,
+   "elapsed_ms": 381,
    "ok": true,
    "error": null,
    "is_pdf": true
